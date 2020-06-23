@@ -1,4 +1,4 @@
-package sample;
+package shinyhunttracker;
 
 public class Method {
     String name;
@@ -19,6 +19,7 @@ public class Method {
             case "DexNav":
             case "SOS Chaining":
             case "Ultra Wormholes":
+            case "Total Encounters":
         }
     }
 }

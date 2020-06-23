@@ -1,7 +1,6 @@
-package sample;
+package shinyhunttracker;
 
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -43,7 +42,7 @@ public class Controller implements Initializable {
         GameList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
-                        selectedGame = new Game(newValue.toString().substring(18, newValue.toString().length() - 2));
+                        selectedGame = new Game(newValue.toString().substring(18, newValue.toString().length() - 2), findGeneration(newValue.toString().substring(18, newValue.toString().length() - 2)), selectedPokemon);
                         System.out.println(selectedGame.getName());
                     }
                 });
@@ -135,6 +134,31 @@ public class Controller implements Initializable {
     }
 
     public int findGeneration(String name){
+        for(String i: Games1)
+            if(name.compareTo(i) == 0)
+                return 1;
+        for(String i: Games2)
+            if(i.compareTo(name) == 0)
+                return 2;
+        for(String i: Games3)
+            if(i.compareTo(name) == 0)
+                return 3;
+        for(String i: Games4)
+            if(i.compareTo(name) == 0)
+                return 4;
+        for(String i: Games5)
+            if(i.compareTo(name) == 0)
+                return 5;
+        for(String i: Games6)
+            if(i.compareTo(name) == 0)
+                return 6;
+        for(String i: Games7)
+            if(i.compareTo(name) == 0)
+                return 7;
+        for(String i: Games8)
+            if(i.compareTo(name) == 0)
+                return 8;
+
         for(String i: gen1)
             if(name.compareTo(i) == 0)
                 return 1;

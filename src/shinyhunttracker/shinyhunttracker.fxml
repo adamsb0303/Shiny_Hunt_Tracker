@@ -9,12 +9,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.Controller">
    <left>
-      <TreeView fx:id="PokemonList" prefHeight="328.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="GameList" prefHeight="328.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <TreeView fx:id="GameList" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="PokemonList" BorderPane.alignment="CENTER" />
    </center>
    <right>
       <VBox>
