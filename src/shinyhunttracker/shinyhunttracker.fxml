@@ -19,7 +19,7 @@
    <right>
       <VBox>
          <children>
-            <TreeView fx:id="PokemonMethods" prefHeight="289.0" prefWidth="200.0" />
+            <TreeView fx:id="MethodList" prefHeight="289.0" prefWidth="200.0" />
             <HBox>
                <children>
                   <CheckBox mnemonicParsing="false" text="Shiny Charm" HBox.hgrow="ALWAYS">

@@ -46,7 +46,8 @@ public class Game {
                         Methods[4] = "Friend Safari";
                 }
                 else{
-                    Methods[3] = "DexNav";
+                    if(isWild(selectedPokemon))
+                        Methods[3] = "DexNav";
                 }
                 break;
             case 7:
@@ -59,6 +60,7 @@ public class Game {
                     Methods[3] = "Ultra Wormholes";
                 }
                 if(name.substring(0,3).compareTo("Let") == 0)
+                    Methods[1] = null;
                     if(isWild(selectedPokemon))
                         Methods[2] = "Catch Combo";
                 break;
@@ -78,7 +80,7 @@ public class Game {
         for(String i: ShinyLocked)
             if(i != null && i.compareTo(selectedPokemon.name) == 0)
                 selectedPokemon.setHuntable(false);
-        if(!selectedPokemon.huntable && selectedPokemon.getBreedable())
+        if(selectedPokemon.getHuntable() && selectedPokemon.getBreedable())
             Methods[0] = "None";
     }
 
@@ -114,14 +116,17 @@ public class Game {
                         for(String i: Diamond)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Pearl":
                         for(String i: Pearl)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Platinum":
                         for(String i: Platinum)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                 }
             case 6:
                 switch (this.name){
@@ -132,6 +137,7 @@ public class Game {
                         for(String i: X)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Y":
                         for(String i: XY)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -139,6 +145,7 @@ public class Game {
                         for(String i: Y)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Omega Ruby":
                         for(String i: ORAS)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -146,6 +153,7 @@ public class Game {
                         for(String i: OmegaRuby)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Alpha Sapphire":
                         for(String i: ORAS)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -153,6 +161,7 @@ public class Game {
                         for(String i: AlphaSapphire)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                 }
             case 7:
                 for(String i: LetsGo)
@@ -163,10 +172,12 @@ public class Game {
                         for(String i: LetsGoPikachu)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Let's Go Eevee":
                         for(String i: LetsGoEevee)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                 }
             case 8:
                 for(String i: SWSH)
@@ -177,10 +188,12 @@ public class Game {
                         for(String i: Sword)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Shield":
                         for(String i: Shield)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                 }
             default:
                 break;
@@ -1129,5 +1142,9 @@ public class Game {
 
     public int getGeneration(){
         return generation;
+    }
+
+    public String[] getMethods(){
+        return Methods;
     }
 }
