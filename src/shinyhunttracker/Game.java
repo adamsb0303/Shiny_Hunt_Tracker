@@ -3,8 +3,8 @@ package shinyhunttracker;
 public class Game {
     String name;
     int generation;
-    Method[] Methods;
-    String[] ShinyLocked;
+    Method[] Methods = new Method[5];
+    String[] ShinyLocked = new String[16];
 
     Game(){
         name = "";
@@ -20,19 +20,22 @@ public class Game {
     public void generateMethods(String name, int generation, Pokemon selectedPokemon){
         switch(generation){
             case 2:
-                if(selectedPokemon.breedable)
+                if(selectedPokemon.getBreedable())
                     Methods[1] = new Method("Breeding with Shiny", 2);
+                break;
             case 4:
-                if (selectedPokemon.breedable)
+                if (selectedPokemon.getBreedable())
                     Methods[1] = new Method("Masuda", 4);
                 if (name.compareTo("Diamond") == 0 || name.compareTo("Pearl") == 0 || name.compareTo("Platinum") == 0)
                     if (isWild(selectedPokemon))
                         Methods[2] = new Method("Radar Chaining", 4);
+                break;
             case 5:
-                if(selectedPokemon.breedable)
+                if(selectedPokemon.getBreedable())
                     Methods[1] = new Method("Masuda", 5);
+                break;
             case 6:
-                if(selectedPokemon.breedable)
+                if(selectedPokemon.getBreedable())
                     Methods[1] = new Method("Masuda", 6);
                 if(isFish(selectedPokemon))
                     Methods[2] = new Method("Chain Fishing", 6);
@@ -45,20 +48,26 @@ public class Game {
                 else{
                     Methods[3] = new Method("DexNav", 6);
                 }
+                break;
             case 7:
-                if(selectedPokemon.breedable)
+                if(selectedPokemon.getBreedable())
                     Methods[1] = new Method("Masuda", 7);
-                if(isSOS(selectedPokemon))
+                if(isSOS(selectedPokemon) && !(name.substring(0,3).compareTo("Let") == 0))
                     Methods[2] = new Method("SOS Chaining", 7);
-                if(name.substring(0,5).compareTo("Ultra") == 0) {
+                if(name.substring(0,3).compareTo("Ult") == 0) {
                     if(isWormhole(selectedPokemon))
                     Methods[3] = new Method("Ultra Wormholes", 7);
                 }
+                if(name.substring(0,3).compareTo("Let") == 0)
+                    if(isWild(selectedPokemon))
+                        Methods[2] = new Method("Catch Combo", 7);
+                break;
             case 8:
-                if(selectedPokemon.breedable)
+                if(selectedPokemon.getBreedable())
                     Methods[1] = new Method("Masuda", 8);
                 if(isWild(selectedPokemon))
                     Methods[2] = new Method("Total Encounters", 8);
+                break;
             default:
                 break;
         }
@@ -67,9 +76,9 @@ public class Game {
             legendaryIsAvaliable(selectedPokemon);
         setShinyLocked();
         for(String i: ShinyLocked)
-            if(i.compareTo(selectedPokemon.name) == 0)
+            if(i != null && i.compareTo(selectedPokemon.name) == 0)
                 selectedPokemon.setHuntable(false);
-        if(!selectedPokemon.huntable)
+        if(!selectedPokemon.huntable && selectedPokemon.getBreedable())
             Methods[0] = new Method("None", generation);
     }
 
@@ -218,7 +227,7 @@ public class Game {
     public boolean isSOS(Pokemon selectedPokemon){
         String[] SOS ={"Caterpie", "Metapod", "Butterfree", "Golbat", "Crobat", "Tentacruel", "Lumineon", "Slowpoke", "Slowbro", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Pichu", "Pikachu", "Happiny", "Igglybuff", "Jigglypuff", "Corsola", "Mareanie", "Elekid", "Electabuzz", "Chansey", "Magby", "Magmar", "Wailmer", "Wailord", "Barbaoch", "Whiscash", "Snorunt", "Bagon", "Shelgon", "Salamence", "Bonsly", "Sudowoodo", "Muchlax", "Snorlax", "Riolu", "Lucario", "Tubbish", "Pancham", "Carbink", "Sableye", "Trumbeak", "Oranguru", "Passimian", "Jangmo-o", "Hakamo-o", "Kommo-o"};
         String[] SOSUltra = {"Caterpie", "Metapod", "Butterfree", "Rattata", "Raticate", "Zubat", "Golbat", "Crobat", "Dugtrio", "Meowth", "Persian", "Psyduck", "Slowpoke", "Slowbro", "Slowking", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Chansey", "Blissey", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Hoothoot", "Noctowl", "Chinchou", "Lanturn", "Pichu", "Pikachu", "Cleffa", "Clefairy", "Happiny", "Natu", "Xatu", "Aipom", "Ambipom", "Corsola", "Mareanie", "Remoraid", "Octillery", "Smoochum", "Jynx", "Elekid", "Electabuzz", "Magby", "Magmar", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Trapinch", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Clamperl", "Huntail", "Gorebyss", "Bagon", "Shelgon", "Salamence", "Buneary", "Lopunny", "Bonsly", "Sudowoodo", "Mime Jr.", "Mr. Mime", "Munchlax", "Snorlax", "Riolu", "Lucario", "Finneon", "Lumineon", "Mantyke", "Krokorok", "Scraggy", "Fearow", "Druddigon", "Bisharp", "Pawniard", "Larvesta", "Volcarona", "Fletchling", "Fletchinder", "Pancham", "Pangoro", "Dedenne", "Togedemaru", "Carbink", "Sableye", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Charjabug", "Grubbin", "Vikavolt", "Mudbray", "Mudsdale", "Salandit", "Salazzle", "Stufful", "Oranguru", "Passimian", "Pyukumuku", "Wingull", "Togedemaru", "Janhmo-o", "Hakamo-o", "Kommo-o"};
-        if(this.name.substring(0,5).compareTo("Ultra") == 0) {
+        if(this.name.substring(0,3).compareTo("Ult") == 0) {
             for (String i : SOSUltra)
                 if (i.compareTo(selectedPokemon.getName()) == 0)
                     return true;
@@ -247,6 +256,7 @@ public class Game {
                 ShinyLocked[1] = "Zekrom";
                 if(name.compareTo("Black") == 0 || name.compareTo("White") == 0)
                     ShinyLocked[2] = "Victini";
+                break;
             case 6:
                 if(name.compareTo("X") == 0 || name.compareTo("Y") == 0) {
                     ShinyLocked[0] = "Articuno";
@@ -262,8 +272,9 @@ public class Game {
                     ShinyLocked[2] = "Rayquaza";
                     ShinyLocked[3] = "Deoxys";
                 }
+                break;
             case 7:
-                if(name.substring(0,5).compareTo("Ultra") == 0) {
+                if(name.substring(0,3).compareTo("Ult") == 0) {
                     ShinyLocked[0] = "Tapu Koko";
                     ShinyLocked[1] = "Tapu Lele";
                     ShinyLocked[2] = "Tapu Bulu";
@@ -272,7 +283,14 @@ public class Game {
                     ShinyLocked[5] = "Solgaleo";
                     ShinyLocked[6] = "Lunala";
                     ShinyLocked[7] = "Zygarde";
-                }else {
+                }
+                else if(name.substring(0,3).compareTo("Let") == 0){
+                    ShinyLocked[0] = "Articuno";
+                    ShinyLocked[1] = "Zapdos";
+                    ShinyLocked[2] = "Moltres";
+                    ShinyLocked[3] = "Mewtwo";
+                }
+                else{
                     ShinyLocked[0] = "Tapu Koko";
                     ShinyLocked[1] = "Tapu Lele";
                     ShinyLocked[2] = "Tapu Bulu";
@@ -290,12 +308,14 @@ public class Game {
                     ShinyLocked[14] = "Necrozma";
                     ShinyLocked[15] = "Zygarde";
                 }
+                break;
             case 8:
                 ShinyLocked[0] = "Type: Null";
                 ShinyLocked[1] = "Zacian";
                 ShinyLocked[2] = "Zamazenta";
                 ShinyLocked[3] = "Eternatus";
                 ShinyLocked[4] = "Kubfu";
+                break;
             default:
                 break;
         }

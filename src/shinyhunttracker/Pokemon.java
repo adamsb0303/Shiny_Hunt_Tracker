@@ -20,6 +20,10 @@ public class Pokemon {
         huntable = true;
     }
 
+    public Boolean getBreedable(){
+        return breedable;
+    }
+
     public Boolean isBreedable(){
         return true;
     }
