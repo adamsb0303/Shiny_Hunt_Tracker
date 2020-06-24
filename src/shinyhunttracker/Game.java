@@ -10,7 +10,7 @@ public class Game {
 
     }
 
-    Game(String name, int generaiton){
+    Game(String name, int generation){
         this.name = name;
         this.generation = generation;
     }
@@ -78,9 +78,6 @@ public class Game {
             default:
                 break;
         }
-        selectedPokemon.isLegendary();
-        if(!selectedPokemon.getHuntable())
-            selectedPokemon.setHuntable(legendaryIsAvaliable(selectedPokemon));
         setShinyLocked();
         for(String i: ShinyLocked)
             if(i != null && i.compareTo(selectedPokemon.name) == 0)
@@ -341,6 +338,17 @@ public class Game {
 
     public Boolean legendaryIsAvaliable(Pokemon selectedPokemon){
         switch(this.generation) {
+            case 1:
+                switch(selectedPokemon.getName()){
+                    case "Articuno":
+                    case "Zapdos":
+                    case "Moltres":
+                    case "Mewtwo":
+                        return true;
+                    default:
+                        break;
+                }
+                return false;
             case 2:
                 switch (selectedPokemon.getName()) {
                     case "Raikou":
@@ -352,6 +360,7 @@ public class Game {
                     default:
                         break;
                 }
+                return false;
             case 3:
                 switch (this.name) {
                     case "Ruby":
@@ -368,13 +377,11 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Ruby") == 0) {
-                            if (selectedPokemon.getName().compareTo("Groudon") == 0)
-                                return true;
-                        } else if (this.name.compareTo("Sapphire") == 0) {
-                            if (selectedPokemon.getName().compareTo("Kyogre") == 0)
-                                return true;
-                        } else
+                        if (this.name.compareTo("Ruby") == 0)
+                            return selectedPokemon.getName().compareTo("Groudon") == 0;
+                        else if (this.name.compareTo("Sapphire") == 0)
+                            return selectedPokemon.getName().compareTo("Kyogre") == 0;
+                        else
                             switch (selectedPokemon.getName()) {
                                 case "Lugia":
                                 case "Ho-Oh":
@@ -384,6 +391,7 @@ public class Game {
                                 default:
                                     break;
                             }
+                        return false;
                     }
                     case "LeafGreen":
                     case "FireRed": {
@@ -401,7 +409,10 @@ public class Game {
                             default:
                                 break;
                         }
+                        return false;
                     }
+                    default:
+                        break;
                 }
             case 4:
                 switch (this.name) {
@@ -420,13 +431,11 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Diamond") == 0) {
-                            if (selectedPokemon.getName().compareTo("Dialga") == 0)
-                                return true;
-                        } else if (this.name.compareTo("Pearl") == 0) {
-                            if (selectedPokemon.getName().compareTo("Palkia") == 0)
-                                return true;
-                        } else
+                        if (this.name.compareTo("Diamond") == 0)
+                            return selectedPokemon.getName().compareTo("Dialga") == 0;
+                        else if (this.name.compareTo("Pearl") == 0)
+                            return selectedPokemon.getName().compareTo("Palkia") == 0;
+                        else
                             switch (selectedPokemon.getName()) {
                                 case "Articuno":
                                 case "Zapdos":
@@ -440,6 +449,7 @@ public class Game {
                                 default:
                                     break;
                             }
+                        return false;
                     }
                     case "SoulSilver":
                     case "HeartGold": {
@@ -462,11 +472,11 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("SoulSilver") == 0) {
-                            if (selectedPokemon.getName().compareTo("Groudon") == 0)
-                                return true;
-                        } else if (selectedPokemon.getName().compareTo("Kyogre") == 0)
-                            return true;
+                        if (this.name.compareTo("SoulSilver") == 0)
+                            return selectedPokemon.getName().compareTo("Groudon") == 0;
+                        else if(this.name.compareTo("HeartGold") == 0)
+                            return selectedPokemon.getName().compareTo("Kyogre") == 0;
+                        return false;
                     }
                 }
             case 5:
@@ -486,10 +496,10 @@ public class Game {
                                 break;
                         }
                         if (this.name.compareTo("Black") == 0) {
-                            if (selectedPokemon.getName().compareTo("Zekrom") == 0)
-                                return true;
-                        } else if (selectedPokemon.getName().compareTo("Reshiram") == 0)
-                            return true;
+                            return selectedPokemon.getName().compareTo("Zekrom") == 0;
+                        } else if(this.name.compareTo("White") == 0)
+                            return selectedPokemon.getName().compareTo("Reshiram") == 0;
+                        return false;
                     }
                     case "Black 2":
                     case "White 2": {
@@ -527,6 +537,7 @@ public class Game {
                                 default:
                                     break;
                             }
+                        return false;
                     }
                 }
             case 6:
@@ -544,10 +555,10 @@ public class Game {
                                 break;
                         }
                         if (this.name.compareTo("X") == 0) {
-                            if (selectedPokemon.getName().compareTo("Xerneas") == 0)
-                                return true;
-                        } else if (selectedPokemon.getName().compareTo("Yveltal") == 0)
-                            return true;
+                            return selectedPokemon.getName().compareTo("Xerneas") == 0;
+                        } else if (this.name.compareTo("Y") == 0)
+                            return selectedPokemon.getName().compareTo("Yveltal") == 0;
+                        return false;
                     }
                     case "Omega Ruby":
                     case "Alpha Sapphire": {
@@ -599,6 +610,7 @@ public class Game {
                                 default:
                                     break;
                             }
+                        return false;
                     }
                 }
             case 7:
@@ -618,11 +630,11 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Sun") == 0) {
-                            if (selectedPokemon.getName().compareTo("Solgaleo") == 0)
-                                return true;
-                        } else if (selectedPokemon.getName().compareTo("Lunala") == 0)
-                            return true;
+                        if (this.name.compareTo("Sun") == 0)
+                            return selectedPokemon.getName().compareTo("Solgaleo") == 0;
+                        else if (this.name.compareTo("Moon") == 0)
+                            return selectedPokemon.getName().compareTo("Lunala") == 0;
+                        return false;
                     }
                     case "Ultra Sun":
                     case "Ultra Moon": {
@@ -690,6 +702,7 @@ public class Game {
                                 default:
                                     break;
                             }
+                        return false;
                     }
                     case "Let's Go Pikachu":
                     case "Let's Go Eevee": {
@@ -702,6 +715,7 @@ public class Game {
                             default:
                                 break;
                         }
+                        return false;
                     }
                 }
             case 8:
@@ -717,12 +731,11 @@ public class Game {
                                 break;
                         }
                         if (this.name.compareTo("Sword") == 0) {
-                            if (selectedPokemon.name.compareTo("Zacian") == 0)
-                                return true;
-                        } else {
-                            if (selectedPokemon.name.compareTo("Zamazenta") == 0)
-                                return true;
+                            return selectedPokemon.name.compareTo("Zacian") == 0;
+                        } else if(this.name.compareTo("Sheild") == 0){
+                            return selectedPokemon.name.compareTo("Zamazenta") == 0;
                         }
+                        return false;
                     }
                 }
             default:
