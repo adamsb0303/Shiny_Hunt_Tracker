@@ -7,8 +7,7 @@ public class Game {
     String[] ShinyLocked = new String[16];
 
     Game(){
-        name = "";
-        generation = 0;
+
     }
 
     Game(String name, int generation, Pokemon selectedPokemon){

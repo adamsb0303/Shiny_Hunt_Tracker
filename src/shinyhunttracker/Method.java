@@ -6,7 +6,6 @@ public class Method {
     int modifier;
 
     Method(){
-        name = "";
         base = 8192;
         modifier = 0;
     }
@@ -49,5 +48,7 @@ public class Method {
         }
     }
 
-
+    public String getName(){
+        return name;
+    }
 }
