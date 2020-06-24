@@ -11,8 +11,7 @@ public class Controller implements Initializable {
     public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
     public Label pokemonLabel, gameLabel, methodLabel;
-    public RadioButton galarianRadioButton, alolanRadioButton;
-    public CheckBox shinyCharmCheckBox, lureCheckBox;
+    public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox;
     Game selectedGame = new Game();
     Pokemon selectedPokemon;
     Method selectedMethod = new Method();
@@ -52,10 +51,10 @@ public class Controller implements Initializable {
                             }
                             selectedPokemon = new Pokemon(newSelectionPokemon, findGeneration(newSelectionPokemon));
                             pokemonLabel.setText(selectedPokemon.getName());
-                            alolanRadioButton.setDisable(!selectedPokemon.isAlolan());
-                            alolanRadioButton.setSelected(false);
-                            galarianRadioButton.setDisable(!selectedPokemon.isGalarian());
-                            galarianRadioButton.setSelected(false);
+                            alolanCheckBox.setDisable(!selectedPokemon.isAlolan());
+                            alolanCheckBox.setSelected(false);
+                            galarianCheckBox.setDisable(!selectedPokemon.isGalarian());
+                            galarianCheckBox.setSelected(false);
                             if (oldValue == null) {
                                 InitializeGameList(selectedPokemon.getGeneration());
                             }else if (oldSelectionGeneration != findGeneration(newSelectionPokemon)){
@@ -252,13 +251,39 @@ public class Controller implements Initializable {
         return 0;
     }
 
+    public void setAlolan(){
+        galarianCheckBox.setSelected(false);
+        if(selectedPokemon.getName().length() > 9 && selectedPokemon.getName().substring(0, 9).compareTo("Galarian ") == 0)
+            selectedPokemon.setName(selectedPokemon.getName().substring(9, selectedPokemon.getName().length()));
+        if(alolanCheckBox.isSelected())
+            selectedPokemon.setName("Alolan " + selectedPokemon.getName());
+        else
+            selectedPokemon.setName(selectedPokemon.getName().substring(7, selectedPokemon.getName().length()));
+        pokemonLabel.setText(selectedPokemon.getName());
+    }
+
+    public void setGalarian(){
+        alolanCheckBox.setSelected(false);
+        if(selectedPokemon.getName().length() > 7 && selectedPokemon.getName().substring(0, 7).compareTo("Alolan ") == 0)
+            selectedPokemon.setName(selectedPokemon.getName().substring(7, selectedPokemon.getName().length()));
+        if(galarianCheckBox.isSelected())
+            selectedPokemon.setName("Galarian " + selectedPokemon.getName());
+        else
+            selectedPokemon.setName(selectedPokemon.getName().substring(9, selectedPokemon.getName().length()));
+        pokemonLabel.setText(selectedPokemon.getName());
+    }
+
+    public void setShinyCharm(){
+
+    }
+
+    public void setLure(){
+
+    }
+
     public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
         TreeItem<String> item = new TreeItem<>(title);
         parent.getChildren().add(item);
         return item;
-    }
-
-    public void buttonClick(){
-        System.out.println("This is a test");
     }
 }

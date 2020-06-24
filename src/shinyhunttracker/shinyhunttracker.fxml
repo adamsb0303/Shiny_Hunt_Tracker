@@ -75,37 +75,34 @@
          <children>
             <VBox layoutX="664.0" layoutY="15.0" prefHeight="50.0" prefWidth="100.0">
                <children>
-                  <RadioButton fx:id="alolanRadioButton" disable="true" mnemonicParsing="false" text="Alolan">
+                  <CheckBox fx:id="alolanCheckBox" disable="true" mnemonicParsing="false" onAction="#setAlolan" prefHeight="20.0" prefWidth="60.0" text="Alolan">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="regionVariant" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="galarianRadioButton" disable="true" mnemonicParsing="false" text="Galarian" toggleGroup="$regionVariant">
+                  </CheckBox>
+                  <CheckBox fx:id="galarianCheckBox" disable="true" mnemonicParsing="false" onAction="#setGalarian" prefHeight="20.0" prefWidth="70.0" text="Galarian">
                      <VBox.margin>
-                        <Insets left="15.0" top="5.0" />
+                        <Insets left="15.0" />
                      </VBox.margin>
-                  </RadioButton>
+                  </CheckBox>
                </children>
                <HBox.margin>
                   <Insets left="75.0" top="5.0" />
                </HBox.margin>
             </VBox>
-            <Button fx:id="BeginHunt" mnemonicParsing="false" onAction="#buttonClick" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
+            <Button fx:id="BeginHunt" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="155.0" top="10.0" />
                </HBox.margin>
             </Button>
             <VBox prefHeight="50.0" prefWidth="100.0">
                <children>
-                  <CheckBox fx:id="shinyCharmCheckBox" disable="true" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" text="Shiny Charm">
+                  <CheckBox fx:id="shinyCharmCheckBox" disable="true" mnemonicParsing="false" onAction="#setShinyCharm" prefHeight="20.0" prefWidth="90.0" text="Shiny Charm">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin>
                   </CheckBox>
-                  <CheckBox fx:id="lureCheckBox" disable="true" mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="Lure">
+                  <CheckBox fx:id="lureCheckBox" disable="true" mnemonicParsing="false" onAction="#setLure" prefHeight="20.0" prefWidth="50.0" text="Lure">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin>
