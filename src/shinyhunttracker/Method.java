@@ -51,4 +51,12 @@ public class Method {
     public String getName(){
         return name;
     }
+
+    public int getModifier(){
+        return modifier;
+    }
+
+    public void setModifier(int modifier){
+        this.modifier = modifier;
+    }
 }

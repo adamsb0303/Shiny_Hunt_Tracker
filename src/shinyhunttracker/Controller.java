@@ -75,6 +75,8 @@ public class Controller implements Initializable {
                         if(findGeneration(newSelectionGame) != 0) {
                             selectedGame = new Game(newSelectionGame, findGeneration(newSelectionGame), selectedPokemon);
                             gameLabel.setText(selectedGame.getName());
+                            shinyCharmCheckBox.setSelected(false);
+                            lureCheckBox.setSelected(false);
                             if(selectedGame.generation >= 5) {
                                 if (!(selectedGame.getName().compareTo("Black") == 0) || !(selectedGame.getName().compareTo("White") == 0))
                                     shinyCharmCheckBox.setDisable(false);
@@ -274,11 +276,17 @@ public class Controller implements Initializable {
     }
 
     public void setShinyCharm(){
-
+        if(shinyCharmCheckBox.isSelected())
+            selectedMethod.setModifier(selectedMethod.getModifier() + 2);
+        else
+            selectedMethod.setModifier(selectedMethod.getModifier() - 2);
     }
 
     public void setLure(){
-
+        if(shinyCharmCheckBox.isSelected())
+            selectedMethod.setModifier(selectedMethod.getModifier() + 1);
+        else
+            selectedMethod.setModifier(selectedMethod.getModifier() - 1);
     }
 
     public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
