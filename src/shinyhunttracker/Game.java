@@ -58,10 +58,11 @@ public class Game {
                     if(isWormhole(selectedPokemon))
                     Methods[3] = "Ultra Wormholes";
                 }
-                if(name.substring(0,3).compareTo("Let") == 0)
+                if(name.substring(0,3).compareTo("Let") == 0) {
                     Methods[1] = null;
-                    if(isWild(selectedPokemon))
+                    if (isWild(selectedPokemon))
                         Methods[2] = "Catch Combo";
+                }
                 break;
             case 8:
                 if(selectedPokemon.getBreedable())

@@ -18,7 +18,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("shinyhunttracker.fxml"));
         primaryStage.setTitle("Shiny Hunt Tracker");
-        primaryStage.setScene(new Scene(root, 650, 500));
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 750, 480));
         primaryStage.show();
     }
 

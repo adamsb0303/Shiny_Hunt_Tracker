@@ -38,6 +38,22 @@ public class Pokemon {
         huntable = true;
     }
 
+    public Boolean isAlolan(){
+        String[] alolanPokemon = {"Rattata", "Raticate", "Raichu", "Sandshrew", "Sandslash", "Vulpix", "Ninetales", "Diglett", "Dugtrio", "Meowth", "Persian", "Geodude", "Graveler", "Golem", "Grimer", "Muk", "Exeggutor", "Marowak"};
+        for(String i: alolanPokemon)
+            if(i.compareTo(this.name) == 0)
+                return true;
+        return false;
+    }
+
+    public Boolean isGalarian(){
+        String[] galarianPokemon = {"Meowth", "Ponyta", "Rapidash", "Slowpoke", "Farfetch'd", "Weezing", "Mr. Mime", "Corsola", "Zigzagoon", "Linoone", "Darumaka", "Darmanitan", "Yamask", "Stunfisk", "Slowpoke", "Slowbro"};
+        for(String i: galarianPokemon)
+            if(i.compareTo(this.name) == 0)
+                return true;
+        return false;
+    }
+
     public String getName(){
         return name;
     }

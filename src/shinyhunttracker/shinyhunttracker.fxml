@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.Controller">
+<BorderPane fx:id="shinyTrackerScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.Controller">
    <left>
-      <TreeView fx:id="PokemonList" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="PokemonList" prefHeight="400.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <TreeView fx:id="GameList" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="GameList" prefHeight="400.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
    </center>
    <right>
       <VBox>
          <children>
-            <TreeView fx:id="MethodList" prefHeight="327.0" prefWidth="248.0" />
+            <TreeView fx:id="MethodList" prefHeight="330.0" prefWidth="250.0" />
             <HBox prefHeight="25.0" prefWidth="248.0">
                <children>
                   <Label text="Pokemon: ">
@@ -22,7 +23,7 @@
                         <Insets left="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="pokemonLabel" text="Label">
+                  <Label fx:id="pokemonLabel">
                      <padding>
                         <Insets top="5.0" />
                      </padding>
@@ -39,7 +40,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="gameLabel" text="Label">
+                  <Label fx:id="gameLabel">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -56,7 +57,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="methodLabel" text="Label">
+                  <Label fx:id="methodLabel">
                      <padding>
                         <Insets left="5.0" top="5.0" />
                      </padding>
@@ -70,15 +71,50 @@
       </VBox>
    </right>
    <bottom>
-      <HBox prefHeight="47.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_CENTER">
+      <HBox prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <Button fx:id="BeginHunt" mnemonicParsing="false" onAction="#buttonClick" text="Button" HBox.hgrow="ALWAYS">
+            <VBox layoutX="664.0" layoutY="15.0" prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <RadioButton fx:id="alolanRadioButton" disable="true" mnemonicParsing="false" text="Alolan">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="regionVariant" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="galarianRadioButton" disable="true" mnemonicParsing="false" text="Galarian" toggleGroup="$regionVariant">
+                     <VBox.margin>
+                        <Insets left="15.0" top="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+               </children>
                <HBox.margin>
-                  <Insets />
+                  <Insets left="75.0" top="5.0" />
+               </HBox.margin>
+            </VBox>
+            <Button fx:id="BeginHunt" mnemonicParsing="false" onAction="#buttonClick" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets left="155.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <CheckBox mnemonicParsing="false" text="Shiny Charm" HBox.hgrow="ALWAYS" />
-            <CheckBox mnemonicParsing="false" text="Lure" HBox.hgrow="ALWAYS" />
+            <VBox prefHeight="50.0" prefWidth="100.0">
+               <children>
+                  <CheckBox fx:id="shinyCharmCheckBox" disable="true" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" text="Shiny Charm">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="lureCheckBox" disable="true" mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="Lure">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </CheckBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="150.0" top="5.0" />
+               </HBox.margin>
+            </VBox>
          </children>
       </HBox>
    </bottom>
@@ -88,6 +124,9 @@
             <Menu mnemonicParsing="false" text="Save" />
             <Menu mnemonicParsing="false" text="Settings" />
          </menus>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </MenuBar>
    </top>
 </BorderPane>

@@ -1,15 +1,18 @@
 package shinyhunttracker;
 
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
     public Label pokemonLabel, gameLabel, methodLabel;
+    public RadioButton galarianRadioButton, alolanRadioButton;
+    public CheckBox shinyCharmCheckBox, lureCheckBox;
     Game selectedGame = new Game();
     Pokemon selectedPokemon;
     Method selectedMethod = new Method();
@@ -49,6 +52,10 @@ public class Controller implements Initializable {
                             }
                             selectedPokemon = new Pokemon(newSelectionPokemon, findGeneration(newSelectionPokemon));
                             pokemonLabel.setText(selectedPokemon.getName());
+                            alolanRadioButton.setDisable(!selectedPokemon.isAlolan());
+                            alolanRadioButton.setSelected(false);
+                            galarianRadioButton.setDisable(!selectedPokemon.isGalarian());
+                            galarianRadioButton.setSelected(false);
                             if (oldValue == null) {
                                 InitializeGameList(selectedPokemon.getGeneration());
                             }else if (oldSelectionGeneration != findGeneration(newSelectionPokemon)){
@@ -69,6 +76,12 @@ public class Controller implements Initializable {
                         if(findGeneration(newSelectionGame) != 0) {
                             selectedGame = new Game(newSelectionGame, findGeneration(newSelectionGame), selectedPokemon);
                             gameLabel.setText(selectedGame.getName());
+                            if(selectedGame.generation >= 5) {
+                                if (!(selectedGame.getName().compareTo("Black") == 0) || !(selectedGame.getName().compareTo("White") == 0))
+                                    shinyCharmCheckBox.setDisable(false);
+                            }else
+                                shinyCharmCheckBox.setDisable(true);
+                            lureCheckBox.setDisable(!(selectedGame.getName().substring(0,3).compareTo("Let") == 0));
                             InitializeMethodList(selectedGame.getMethods());
                         }
                     }
@@ -120,6 +133,8 @@ public class Controller implements Initializable {
 
     public void InitializeGameList(int generation){
         selectedGame = new Game();
+        shinyCharmCheckBox.setSelected(false);
+        lureCheckBox.setSelected(false);
         gameLabel.setText(selectedGame.getName());
         TreeItem<String> gameRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
         gameRoot = new TreeItem<>();
