@@ -3,7 +3,7 @@ package shinyhunttracker;
 public class Game {
     String name;
     int generation;
-    Method[] Methods = new Method[5];
+    String[] Methods = new String[5];
     String[] ShinyLocked = new String[16];
 
     Game(){
@@ -21,52 +21,52 @@ public class Game {
         switch(generation){
             case 2:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = new Method("Breeding with Shiny", 2);
+                    Methods[1] = "Breeding with Shiny";
                 break;
             case 4:
                 if (selectedPokemon.getBreedable())
-                    Methods[1] = new Method("Masuda", 4);
+                    Methods[1] = "Masuda";
                 if (name.compareTo("Diamond") == 0 || name.compareTo("Pearl") == 0 || name.compareTo("Platinum") == 0)
                     if (isWild(selectedPokemon))
-                        Methods[2] = new Method("Radar Chaining", 4);
+                        Methods[2] = "Radar Chaining";
                 break;
             case 5:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = new Method("Masuda", 5);
+                    Methods[1] = "Masuda";
                 break;
             case 6:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = new Method("Masuda", 6);
+                    Methods[1] = "Masuda";
                 if(isFish(selectedPokemon))
-                    Methods[2] = new Method("Chain Fishing", 6);
+                    Methods[2] = "Chain Fishing";
                 if(name.compareTo("X") == 0 || name.compareTo("Y") == 0){
                     if(isWild(selectedPokemon))
-                        Methods[3] = new Method("Radar Chaining", 6);
+                        Methods[3] = "Radar Chaining";
                     if(isFriendSafari(selectedPokemon))
-                        Methods[4] = new Method("Friend Safari", 6);
+                        Methods[4] = "Friend Safari";
                 }
                 else{
-                    Methods[3] = new Method("DexNav", 6);
+                    Methods[3] = "DexNav";
                 }
                 break;
             case 7:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = new Method("Masuda", 7);
+                    Methods[1] = "Masuda";
                 if(isSOS(selectedPokemon) && !(name.substring(0,3).compareTo("Let") == 0))
-                    Methods[2] = new Method("SOS Chaining", 7);
+                    Methods[2] = "SOS Chaining";
                 if(name.substring(0,3).compareTo("Ult") == 0) {
                     if(isWormhole(selectedPokemon))
-                    Methods[3] = new Method("Ultra Wormholes", 7);
+                    Methods[3] = "Ultra Wormholes";
                 }
                 if(name.substring(0,3).compareTo("Let") == 0)
                     if(isWild(selectedPokemon))
-                        Methods[2] = new Method("Catch Combo", 7);
+                        Methods[2] = "Catch Combo";
                 break;
             case 8:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = new Method("Masuda", 8);
+                    Methods[1] = "Masuda";
                 if(isWild(selectedPokemon))
-                    Methods[2] = new Method("Total Encounters", 8);
+                    Methods[2] = "Total Encounters";
                 break;
             default:
                 break;
@@ -79,7 +79,7 @@ public class Game {
             if(i != null && i.compareTo(selectedPokemon.name) == 0)
                 selectedPokemon.setHuntable(false);
         if(!selectedPokemon.huntable && selectedPokemon.getBreedable())
-            Methods[0] = new Method("None", generation);
+            Methods[0] = "None";
     }
 
     public boolean isWild(Pokemon selectedPokemon){
