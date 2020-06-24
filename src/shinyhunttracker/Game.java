@@ -10,6 +10,11 @@ public class Game {
 
     }
 
+    Game(String name, int generaiton){
+        this.name = name;
+        this.generation = generation;
+    }
+
     Game(String name, int generation, Pokemon selectedPokemon){
         this.name = name;
         this.generation = generation;
@@ -75,7 +80,7 @@ public class Game {
         }
         selectedPokemon.isLegendary();
         if(!selectedPokemon.getHuntable())
-            legendaryIsAvaliable(selectedPokemon);
+            selectedPokemon.setHuntable(legendaryIsAvaliable(selectedPokemon));
         setShinyLocked();
         for(String i: ShinyLocked)
             if(i != null && i.compareTo(selectedPokemon.name) == 0)
@@ -334,806 +339,396 @@ public class Game {
         }
     }
 
-    public void legendaryIsAvaliable(Pokemon selectedPokemon){
+    public Boolean legendaryIsAvaliable(Pokemon selectedPokemon){
         switch(this.generation) {
             case 2:
                 switch (selectedPokemon.getName()) {
                     case "Raikou":
-                        selectedPokemon.setHuntable(true);
-                    case "Entei":
-                        selectedPokemon.setHuntable(true);
-                    case "Suicune":
-                        selectedPokemon.setHuntable(true);
                     case "Lugia":
-                        selectedPokemon.setHuntable(true);
+                    case "Entei":
+                    case "Suicune":
                     case "Ho-Oh":
-                        selectedPokemon.setHuntable(true);
+                        return true;
                     default:
                         break;
                 }
             case 3:
                 switch (this.name) {
                     case "Ruby":
-                        switch(selectedPokemon.name) {
-                            case "Regirock":
-                                selectedPokemon.setHuntable(true);
-                            case "Regice":
-                                selectedPokemon.setHuntable(true);
-                            case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latias":
-                                selectedPokemon.setHuntable(true);
-                            case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Groudon":
-                                selectedPokemon.setHuntable(true);
-                            case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
                     case "Sapphire":
-                        switch(selectedPokemon.name) {
+                    case "Emerald": {
+                        switch (selectedPokemon.getName()) {
                             case "Regirock":
-                                selectedPokemon.setHuntable(true);
                             case "Regice":
-                                selectedPokemon.setHuntable(true);
                             case "Registeel":
-                                selectedPokemon.setHuntable(true);
                             case "Latias":
-                                selectedPokemon.setHuntable(true);
                             case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyogre":
-                                selectedPokemon.setHuntable(true);
                             case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
+                        if (this.name.compareTo("Ruby") == 0) {
+                            if (selectedPokemon.getName().compareTo("Groudon") == 0)
+                                return true;
+                        } else if (this.name.compareTo("Sapphire") == 0) {
+                            if (selectedPokemon.getName().compareTo("Kyogre") == 0)
+                                return true;
+                        } else
+                            switch (selectedPokemon.getName()) {
+                                case "Lugia":
+                                case "Ho-Oh":
+                                case "Kyogre":
+                                case "Groudon":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                    }
                     case "LeafGreen":
-                        switch(selectedPokemon.name) {
+                    case "FireRed": {
+                        switch (selectedPokemon.getName()) {
                             case "Articuno":
-                                selectedPokemon.setHuntable(true);
                             case "Zapdos":
-                                selectedPokemon.setHuntable(true);
                             case "Moltres":
-                                selectedPokemon.setHuntable(true);
                             case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
                             case "Raikou":
-                                selectedPokemon.setHuntable(true);
                             case "Entei":
-                                selectedPokemon.setHuntable(true);
                             case "Suicune":
-                                selectedPokemon.setHuntable(true);
                             case "Lugia":
-                                selectedPokemon.setHuntable(true);
                             case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "FireRed":
-                        switch(selectedPokemon.name) {
-                            case "Articuno":
-                                selectedPokemon.setHuntable(true);
-                            case "Zapdos":
-                                selectedPokemon.setHuntable(true);
-                            case "Moltres":
-                                selectedPokemon.setHuntable(true);
-                            case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            case "Raikou":
-                                selectedPokemon.setHuntable(true);
-                            case "Entei":
-                                selectedPokemon.setHuntable(true);
-                            case "Suicune":
-                                selectedPokemon.setHuntable(true);
-                            case "Lugia":
-                                selectedPokemon.setHuntable(true);
-                            case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
-                    case "Emerald":
-                        switch(selectedPokemon.name) {
-                            case "Lugia":
-                                selectedPokemon.setHuntable(true);
-                            case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
-                            case "Regirock":
-                                selectedPokemon.setHuntable(true);
-                            case "Regice":
-                                selectedPokemon.setHuntable(true);
-                            case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latias":
-                                selectedPokemon.setHuntable(true);
-                            case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyogre":
-                                selectedPokemon.setHuntable(true);
-                            case "Groudon":
-                                selectedPokemon.setHuntable(true);
-                            case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
-
+                    }
                 }
             case 4:
                 switch (this.name) {
                     case "Diamond":
-                        switch (selectedPokemon.name) {
-                            case "Uxie":
-                                selectedPokemon.setHuntable(true);
-                            case "Mesprit":
-                                selectedPokemon.setHuntable(true);
-                            case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Dialga":
-                                selectedPokemon.setHuntable(true);
-                            case "Heatran":
-                                selectedPokemon.setHuntable(true);
-                            case "Regigigas":
-                                selectedPokemon.setHuntable(true);
-                            case "Giratina":
-                                selectedPokemon.setHuntable(true);
-                            case "Cresselia":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
                     case "Pearl":
-                        switch (selectedPokemon.name) {
+                    case "Platinum": {
+                        switch (selectedPokemon.getName()) {
                             case "Uxie":
-                                selectedPokemon.setHuntable(true);
                             case "Mesprit":
-                                selectedPokemon.setHuntable(true);
                             case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Palkia":
-                                selectedPokemon.setHuntable(true);
                             case "Heatran":
-                                selectedPokemon.setHuntable(true);
                             case "Regigigas":
-                                selectedPokemon.setHuntable(true);
                             case "Giratina":
-                                selectedPokemon.setHuntable(true);
                             case "Cresselia":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Platinum":
-                        switch (selectedPokemon.name) {
-                            case "Articuno":
-                                selectedPokemon.setHuntable(true);
-                            case "Zapdos":
-                                selectedPokemon.setHuntable(true);
-                            case "Moltres":
-                                selectedPokemon.setHuntable(true);
-                            case "Regirock":
-                                selectedPokemon.setHuntable(true);
-                            case "Regice":
-                                selectedPokemon.setHuntable(true);
-                            case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Uxie":
-                                selectedPokemon.setHuntable(true);
-                            case "Mesprit":
-                                selectedPokemon.setHuntable(true);
-                            case "Dialga":
-                                selectedPokemon.setHuntable(true);
-                            case "Palkia":
-                                selectedPokemon.setHuntable(true);
-                            case "Heatran":
-                                selectedPokemon.setHuntable(true);
-                            case "Regigigas":
-                                selectedPokemon.setHuntable(true);
-                            case "Giratina":
-                                selectedPokemon.setHuntable(true);
-                            case "Cresselia":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("Diamond") == 0) {
+                            if (selectedPokemon.getName().compareTo("Dialga") == 0)
+                                return true;
+                        } else if (this.name.compareTo("Pearl") == 0) {
+                            if (selectedPokemon.getName().compareTo("Palkia") == 0)
+                                return true;
+                        } else
+                            switch (selectedPokemon.getName()) {
+                                case "Articuno":
+                                case "Zapdos":
+                                case "Moltres":
+                                case "Regirock":
+                                case "Regice":
+                                case "Registeel":
+                                case "Dialga":
+                                case "Palkia":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                    }
                     case "SoulSilver":
-                        switch (selectedPokemon.name) {
+                    case "HeartGold": {
+                        switch (selectedPokemon.getName()) {
                             case "Articuno":
-                                selectedPokemon.setHuntable(true);
                             case "Zapdos":
-                                selectedPokemon.setHuntable(true);
                             case "Moltres":
-                                selectedPokemon.setHuntable(true);
                             case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
                             case "Raikou":
-                                selectedPokemon.setHuntable(true);
                             case "Entei":
-                                selectedPokemon.setHuntable(true);
                             case "Suicune":
-                                selectedPokemon.setHuntable(true);
                             case "Lugia":
-                                selectedPokemon.setHuntable(true);
                             case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
                             case "Latias":
-                                selectedPokemon.setHuntable(true);
                             case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Groudon":
-                                selectedPokemon.setHuntable(true);
                             case "Dialga":
-                                selectedPokemon.setHuntable(true);
+                            case "Palkia":
                             case "Giratina":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "HeartGold":
-                        switch (selectedPokemon.name) {
-                            case "Articuno":
-                                selectedPokemon.setHuntable(true);
-                            case "Zapdos":
-                                selectedPokemon.setHuntable(true);
-                            case "Moltres":
-                                selectedPokemon.setHuntable(true);
-                            case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            case "Raikou":
-                                selectedPokemon.setHuntable(true);
-                            case "Entei":
-                                selectedPokemon.setHuntable(true);
-                            case "Suicune":
-                                selectedPokemon.setHuntable(true);
-                            case "Lugia":
-                                selectedPokemon.setHuntable(true);
-                            case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
-                            case "Latias":
-                                selectedPokemon.setHuntable(true);
-                            case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyogre":
-                                selectedPokemon.setHuntable(true);
-                            case "Dialga":
-                                selectedPokemon.setHuntable(true);
-                            case "Giratina":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("SoulSilver") == 0) {
+                            if (selectedPokemon.getName().compareTo("Groudon") == 0)
+                                return true;
+                        } else if (selectedPokemon.getName().compareTo("Kyogre") == 0)
+                            return true;
+                    }
                 }
             case 5:
                 switch (this.name) {
                     case "Black":
-                        switch (selectedPokemon.name) {
+                    case "White":{
+                        switch (selectedPokemon.getName()) {
                             case "Cobalion":
-                                selectedPokemon.setHuntable(true);
                             case "Terrakion":
-                                selectedPokemon.setHuntable(true);
                             case "Virizion":
-                                selectedPokemon.setHuntable(true);
                             case "Thundurus":
-                                selectedPokemon.setHuntable(true);
                             case "Zekrom":
-                                selectedPokemon.setHuntable(true);
                             case "Landorus":
-                                selectedPokemon.setHuntable(true);
                             case "Kyurem":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "White":
-                        switch (selectedPokemon.name) {
-                            case "Cobalion":
-                                selectedPokemon.setHuntable(true);
-                            case "Terrakion":
-                                selectedPokemon.setHuntable(true);
-                            case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Thundurus":
-                                selectedPokemon.setHuntable(true);
-                            case "Reshiram":
-                                selectedPokemon.setHuntable(true);
-                            case "Landorus":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyurem":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("Black") == 0) {
+                            if (selectedPokemon.getName().compareTo("Zekrom") == 0)
+                                return true;
+                        } else if (selectedPokemon.getName().compareTo("Reshiram") == 0)
+                            return true;
+                    }
                     case "Black 2":
-                        switch (selectedPokemon.name) {
+                    case "White 2": {
+                        switch (selectedPokemon.getName()) {
                             case "Regirock":
-                                selectedPokemon.setHuntable(true);
                             case "Regice":
-                                selectedPokemon.setHuntable(true);
                             case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latios":
-                                selectedPokemon.setHuntable(true);
                             case "Uxie":
-                                selectedPokemon.setHuntable(true);
                             case "Mesprit":
-                                selectedPokemon.setHuntable(true);
                             case "Azelf":
-                                selectedPokemon.setHuntable(true);
                             case "Heatran":
-                                selectedPokemon.setHuntable(true);
                             case "Regigigas":
-                                selectedPokemon.setHuntable(true);
                             case "Cresselia":
-                                selectedPokemon.setHuntable(true);
                             case "Cobalion":
-                                selectedPokemon.setHuntable(true);
                             case "Terrakion":
-                                selectedPokemon.setHuntable(true);
                             case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Zekrom":
-                                selectedPokemon.setHuntable(true);
                             case "Kyurem":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "White 2":
-                        switch (selectedPokemon.name) {
-                            case "Regirock":
-                                selectedPokemon.setHuntable(true);
-                            case "Regice":
-                                selectedPokemon.setHuntable(true);
-                            case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latias":
-                                selectedPokemon.setHuntable(true);
-                            case "Uxie":
-                                selectedPokemon.setHuntable(true);
-                            case "Mesprit":
-                                selectedPokemon.setHuntable(true);
-                            case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Heatran":
-                                selectedPokemon.setHuntable(true);
-                            case "Regigigas":
-                                selectedPokemon.setHuntable(true);
-                            case "Cresselia":
-                                selectedPokemon.setHuntable(true);
-                            case "Cobalion":
-                                selectedPokemon.setHuntable(true);
-                            case "Terrakion":
-                                selectedPokemon.setHuntable(true);
-                            case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Reshiram":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyurem":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("Black 2") == 0) {
+                            switch (selectedPokemon.getName()) {
+                                case "Latias":
+                                case "Reshiram":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                        } else
+                            switch (selectedPokemon.getName()) {
+                                case "Latios":
+                                case "Zekrom":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                    }
                 }
             case 6:
                 switch (this.name) {
                     case "X":
-                        switch (selectedPokemon.name) {
+                    case "Y": {
+                        switch (selectedPokemon.getName()) {
                             case "Articuno":
-                                selectedPokemon.setHuntable(true);
                             case "Zapdos":
-                                selectedPokemon.setHuntable(true);
                             case "Moltres":
-                                selectedPokemon.setHuntable(true);
                             case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            case "Xerneas":
-                                selectedPokemon.setHuntable(true);
                             case "Zygarde":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Y":
-                        switch (selectedPokemon.name) {
-                            case "Articuno":
-                                selectedPokemon.setHuntable(true);
-                            case "Zapdos":
-                                selectedPokemon.setHuntable(true);
-                            case "Moltres":
-                                selectedPokemon.setHuntable(true);
-                            case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            case "Yveltal":
-                                selectedPokemon.setHuntable(true);
-                            case "Zygarde":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("X") == 0) {
+                            if (selectedPokemon.getName().compareTo("Xerneas") == 0)
+                                return true;
+                        } else if (selectedPokemon.getName().compareTo("Yveltal") == 0)
+                            return true;
+                    }
                     case "Omega Ruby":
-                        switch (selectedPokemon.name) {
+                    case "Alpha Sapphire": {
+                        switch (selectedPokemon.getName()) {
                             case "Raikou":
-                                selectedPokemon.setHuntable(true);
                             case "Entei":
-                                selectedPokemon.setHuntable(true);
                             case "Suicune":
-                                selectedPokemon.setHuntable(true);
-                            case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
                             case "Regirock":
-                                selectedPokemon.setHuntable(true);
                             case "Regice":
-                                selectedPokemon.setHuntable(true);
                             case "Registeel":
-                                selectedPokemon.setHuntable(true);
                             case "Latias":
-                                selectedPokemon.setHuntable(true);
                             case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Groudon":
-                                selectedPokemon.setHuntable(true);
                             case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
                             case "Uxie":
-                                selectedPokemon.setHuntable(true);
                             case "Mesprit":
-                                selectedPokemon.setHuntable(true);
                             case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Palkia":
-                                selectedPokemon.setHuntable(true);
                             case "Heatran":
-                                selectedPokemon.setHuntable(true);
                             case "Regigigas":
-                                selectedPokemon.setHuntable(true);
                             case "Giratina":
-                                selectedPokemon.setHuntable(true);
                             case "Cresselia":
-                                selectedPokemon.setHuntable(true);
                             case "Cobalion":
-                                selectedPokemon.setHuntable(true);
                             case "Terrakion":
-                                selectedPokemon.setHuntable(true);
                             case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Tornadus":
-                                selectedPokemon.setHuntable(true);
-                            case "Reshiram":
-                                selectedPokemon.setHuntable(true);
                             case "Landorus":
-                                selectedPokemon.setHuntable(true);
                             case "Kyurem":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Alpha Sapphire":
-                        switch (selectedPokemon.name) {
-                            case "Raikou":
-                                selectedPokemon.setHuntable(true);
-                            case "Entei":
-                                selectedPokemon.setHuntable(true);
-                            case "Suicune":
-                                selectedPokemon.setHuntable(true);
-                            case "Lugia":
-                                selectedPokemon.setHuntable(true);
-                            case "Regirock":
-                                selectedPokemon.setHuntable(true);
-                            case "Regice":
-                                selectedPokemon.setHuntable(true);
-                            case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latias":
-                                selectedPokemon.setHuntable(true);
-                            case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyogre":
-                                selectedPokemon.setHuntable(true);
-                            case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
-                            case "Uxie":
-                                selectedPokemon.setHuntable(true);
-                            case "Mesprit":
-                                selectedPokemon.setHuntable(true);
-                            case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Dialga":
-                                selectedPokemon.setHuntable(true);
-                            case "Heatran":
-                                selectedPokemon.setHuntable(true);
-                            case "Regigigas":
-                                selectedPokemon.setHuntable(true);
-                            case "Giratina":
-                                selectedPokemon.setHuntable(true);
-                            case "Cresselia":
-                                selectedPokemon.setHuntable(true);
-                            case "Cobalion":
-                                selectedPokemon.setHuntable(true);
-                            case "Terrakion":
-                                selectedPokemon.setHuntable(true);
-                            case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Thundurus":
-                                selectedPokemon.setHuntable(true);
-                            case "Zekrom":
-                                selectedPokemon.setHuntable(true);
-                            case "Landorus":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyurem":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("Omega Ruby") == 0) {
+                            switch (selectedPokemon.getName()) {
+                                case "Ho-Oh":
+                                case "Groudon":
+                                case "Palkia":
+                                case "Tornadus":
+                                case "Reshiram":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                        } else
+                            switch (selectedPokemon.getName()) {
+                                case "Lugia":
+                                case "Kyogre":
+                                case "Dialga":
+                                case "Thundurus":
+                                case "Zekrom":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                    }
                 }
             case 7:
                 switch (this.name) {
                     case "Sun":
-                        switch (selectedPokemon.name) {
+                    case "Moon": {
+                        switch (selectedPokemon.getName()) {
                             case "Zygarde":
-                                selectedPokemon.setHuntable(true);
                             case "Type: Null":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Koko":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Lele":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Bulu":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Fini":
-                                selectedPokemon.setHuntable(true);
                             case "Cosmog":
-                                selectedPokemon.setHuntable(true);
-                            case "Lunala":
-                                selectedPokemon.setHuntable(true);
                             case "Necrozma":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Moon":
-                        switch (selectedPokemon.name) {
-                            case "Zygarde":
-                                selectedPokemon.setHuntable(true);
-                            case "Type: Null":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Koko":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Lele":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Bulu":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Fini":
-                                selectedPokemon.setHuntable(true);
-                            case "Cosmog":
-                                selectedPokemon.setHuntable(true);
-                            case "Solgaleo":
-                                selectedPokemon.setHuntable(true);
-                            case "Necrozma":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("Sun") == 0) {
+                            if (selectedPokemon.getName().compareTo("Solgaleo") == 0)
+                                return true;
+                        } else if (selectedPokemon.getName().compareTo("Lunala") == 0)
+                            return true;
+                    }
                     case "Ultra Sun":
-                        switch (selectedPokemon.name) {
+                    case "Ultra Moon": {
+                        switch (selectedPokemon.getName()) {
                             case "Articuno":
-                                selectedPokemon.setHuntable(true);
                             case "Zapdos":
-                                selectedPokemon.setHuntable(true);
                             case "Moltres":
-                                selectedPokemon.setHuntable(true);
                             case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            case "Raikou":
-                                selectedPokemon.setHuntable(true);
                             case "Suicune":
-                                selectedPokemon.setHuntable(true);
-                            case "Ho-Oh":
-                                selectedPokemon.setHuntable(true);
                             case "Regirock":
-                                selectedPokemon.setHuntable(true);
                             case "Regice":
-                                selectedPokemon.setHuntable(true);
                             case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latios":
-                                selectedPokemon.setHuntable(true);
-                            case "Groudon":
-                                selectedPokemon.setHuntable(true);
                             case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
                             case "Uxie":
-                                selectedPokemon.setHuntable(true);
                             case "Mesprit":
-                                selectedPokemon.setHuntable(true);
                             case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Dialga":
-                                selectedPokemon.setHuntable(true);
-                            case "Heatran":
-                                selectedPokemon.setHuntable(true);
                             case "Giratina":
-                                selectedPokemon.setHuntable(true);
                             case "Cresselia":
-                                selectedPokemon.setHuntable(true);
                             case "Cobalion":
-                                selectedPokemon.setHuntable(true);
                             case "Terrakion":
-                                selectedPokemon.setHuntable(true);
                             case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Tornadus":
-                                selectedPokemon.setHuntable(true);
-                            case "Reshiram":
-                                selectedPokemon.setHuntable(true);
                             case "Landorus":
-                                selectedPokemon.setHuntable(true);
                             case "Kyurem":
-                                selectedPokemon.setHuntable(true);
-                            case "Xerneas":
-                                selectedPokemon.setHuntable(true);
                             case "Zygarde":
-                                selectedPokemon.setHuntable(true);
                             case "Type: Null":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Koko":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Lele":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Bulu":
-                                selectedPokemon.setHuntable(true);
                             case "Tapu Fini":
-                                selectedPokemon.setHuntable(true);
                             case "Cosmog":
-                                selectedPokemon.setHuntable(true);
-                            case "Solgaleo":
-                                selectedPokemon.setHuntable(true);
                             case "Necrozma":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Ultra Moon":
-                        switch (selectedPokemon.name) {
-                            case "Articuno":
-                                selectedPokemon.setHuntable(true);
-                            case "Zapdos":
-                                selectedPokemon.setHuntable(true);
-                            case "Moltres":
-                                selectedPokemon.setHuntable(true);
-                            case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            case "Entei":
-                                selectedPokemon.setHuntable(true);
-                            case "Suicune":
-                                selectedPokemon.setHuntable(true);
-                            case "Lugia":
-                                selectedPokemon.setHuntable(true);
-                            case "Regirock":
-                                selectedPokemon.setHuntable(true);
-                            case "Regice":
-                                selectedPokemon.setHuntable(true);
-                            case "Registeel":
-                                selectedPokemon.setHuntable(true);
-                            case "Latias":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyogre":
-                                selectedPokemon.setHuntable(true);
-                            case "Rayquaza":
-                                selectedPokemon.setHuntable(true);
-                            case "Uxie":
-                                selectedPokemon.setHuntable(true);
-                            case "Mesprit":
-                                selectedPokemon.setHuntable(true);
-                            case "Azelf":
-                                selectedPokemon.setHuntable(true);
-                            case "Palkia":
-                                selectedPokemon.setHuntable(true);
-                            case "Regigigas":
-                                selectedPokemon.setHuntable(true);
-                            case "Giratina":
-                                selectedPokemon.setHuntable(true);
-                            case "Cresselia":
-                                selectedPokemon.setHuntable(true);
-                            case "Cobalion":
-                                selectedPokemon.setHuntable(true);
-                            case "Terrakion":
-                                selectedPokemon.setHuntable(true);
-                            case "Virizion":
-                                selectedPokemon.setHuntable(true);
-                            case "Thundurus":
-                                selectedPokemon.setHuntable(true);
-                            case "Zekrom":
-                                selectedPokemon.setHuntable(true);
-                            case "Landorus":
-                                selectedPokemon.setHuntable(true);
-                            case "Kyurem":
-                                selectedPokemon.setHuntable(true);
-                            case "Yveltal":
-                                selectedPokemon.setHuntable(true);
-                            case "Zygarde":
-                                selectedPokemon.setHuntable(true);
-                            case "Type: Null":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Koko":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Lele":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Bulu":
-                                selectedPokemon.setHuntable(true);
-                            case "Tapu Fini":
-                                selectedPokemon.setHuntable(true);
-                            case "Cosmog":
-                                selectedPokemon.setHuntable(true);
-                            case "Lunala":
-                                selectedPokemon.setHuntable(true);
-                            case "Necrozma":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                        if (this.name.compareTo("Ultra Sun") == 0) {
+                            switch (selectedPokemon.getName()) {
+                                case "Raikou":
+                                case "Ho-Oh":
+                                case "Latios":
+                                case "Groudon":
+                                case "Dialga":
+                                case "Heatran":
+                                case "Tornadus":
+                                case "Reshiram":
+                                case "Xerneas":
+                                case "Solgaleo":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                        } else
+                            switch (selectedPokemon.getName()) {
+                                case "Entei":
+                                case "Lugia":
+                                case "Latias":
+                                case "Kyogre":
+                                case "Palkia":
+                                case "Regigigas":
+                                case "Thundurus":
+                                case "Zekrom":
+                                case "Yveltal":
+                                case "Lunala":
+                                    return true;
+                                default:
+                                    break;
+                            }
+                    }
                     case "Let's Go Pikachu":
-                        switch (selectedPokemon.name) {
+                    case "Let's Go Eevee": {
+                        switch (selectedPokemon.getName()) {
                             case "Articuno":
-                                selectedPokemon.setHuntable(true);
                             case "Zapdos":
-                                selectedPokemon.setHuntable(true);
                             case "Moltres":
-                                selectedPokemon.setHuntable(true);
                             case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Let's Go Eevee":
-                        switch (selectedPokemon.name) {
-                            case "Articuno":
-                                selectedPokemon.setHuntable(true);
-                            case "Zapdos":
-                                selectedPokemon.setHuntable(true);
-                            case "Moltres":
-                                selectedPokemon.setHuntable(true);
-                            case "Mewtwo":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
-                        }
+                    }
                 }
             case 8:
                 switch (this.name) {
                     case "Sword":
-                        switch (selectedPokemon.name) {
+                    case "Shield": {
+                        switch (selectedPokemon.getName()) {
                             case "Type: Null":
-                                selectedPokemon.setHuntable(true);
-                            case "Zacian":
-                                selectedPokemon.setHuntable(true);
                             case "Eternatus":
-                                selectedPokemon.setHuntable(true);
                             case "Kubfu":
-                                selectedPokemon.setHuntable(true);
+                                return true;
                             default:
                                 break;
                         }
-                    case "Shield":
-                        switch (selectedPokemon.name) {
-                            case "Type: Null":
-                                selectedPokemon.setHuntable(true);
-                            case "Zamazenta":
-                                selectedPokemon.setHuntable(true);
-                            case "Eternatus":
-                                selectedPokemon.setHuntable(true);
-                            case "Kubfu":
-                                selectedPokemon.setHuntable(true);
-                            default:
-                                break;
+                        if (this.name.compareTo("Sword") == 0) {
+                            if (selectedPokemon.name.compareTo("Zacian") == 0)
+                                return true;
+                        } else {
+                            if (selectedPokemon.name.compareTo("Zamazenta") == 0)
+                                return true;
                         }
+                    }
                 }
             default:
+                break;
         }
+        return false;
     }
 
     public String getName() {
