@@ -12,8 +12,6 @@
       <HBox layoutX="24.0" layoutY="357.0" prefHeight="26.0" prefWidth="135.0">
          <children>
             <Label fx:id="oddFractionLabel" text="fraction" />
-            <Label text=" | " />
-            <Label fx:id="oddPercentLabel" text="percentage" />
          </children>
       </HBox>
       <Label fx:id="currentHuntingGameLabel" layoutX="24.0" layoutY="320.0" text="Game" />
