@@ -484,17 +484,23 @@ public class selectionPageController implements Initializable {
     }
 
     public void beginHunt(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("hunter.fxml"));
-        Parent hunterParent = loader.load();
-
-        hunterController controller = loader.getController();
+        FXMLLoader huntLoader = new FXMLLoader();
+        huntLoader.setLocation(getClass().getResource("hunter.fxml"));
+        Parent hunterParent = huntLoader.load();
+        hunterController controller = huntLoader.getController();
         controller.importData(selectedPokemon, selectedGame, selectedMethod);
         Scene huntScene = new Scene(hunterParent);
+        Stage hunter = (Stage)((Node)event.getSource()).getScene().getWindow();
+        hunter.setScene(huntScene);
+        hunter.show();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-        window.setScene(huntScene);
-        window.show();
+        FXMLLoader huntControlsLoader = new FXMLLoader(getClass().getResource("huntControls.fxml"));
+        Parent hunterControlsParent = huntControlsLoader.load();
+        Stage huntControls = new Stage();
+        huntControls.setTitle("Hunt Controls");
+        huntControls.setResizable(false);
+        huntControls.setScene(new Scene(hunterControlsParent, 600, 100));
+        huntControls.show();
     }
 }
