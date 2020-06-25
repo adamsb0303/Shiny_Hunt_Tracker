@@ -4,7 +4,7 @@ public class Game {
     String name;
     int generation;
     String[] Methods = new String[5];
-    String[] ShinyLocked = new String[16];
+    String[] ShinyLocked = new String[18];
 
     Game(){
 
@@ -78,13 +78,14 @@ public class Game {
                 break;
         }
         setShinyLocked();
+        selectedPokemon.setHuntable(legendaryIsAvaliable(selectedPokemon));
         for(String i: ShinyLocked) {
             if (i != null && i.compareTo(selectedPokemon.getName()) == 0) {
                 selectedPokemon.setHuntable(false);
                 break;
             }
         }
-        if(selectedPokemon.getHuntable() && legendaryIsAvaliable(selectedPokemon))
+        if(selectedPokemon.getHuntable() || (selectedPokemon.getHuntable() && legendaryIsAvaliable(selectedPokemon)))
             Methods[0] = "None";
     }
 
@@ -312,6 +313,8 @@ public class Game {
                     ShinyLocked[5] = "Solgaleo";
                     ShinyLocked[6] = "Lunala";
                     ShinyLocked[7] = "Zygarde";
+                    ShinyLocked[8] = "Silvally";
+                    ShinyLocked[9] = "Naganadel";
                 }
                 else if(name.substring(0,3).compareTo("Let") == 0){
                     ShinyLocked[0] = "Articuno";
@@ -336,14 +339,18 @@ public class Game {
                     ShinyLocked[13] = "Guzzlord";
                     ShinyLocked[14] = "Necrozma";
                     ShinyLocked[15] = "Zygarde";
+                    ShinyLocked[16] = "Silvally";
+                    ShinyLocked[17] = "Naganadel";
                 }
                 break;
             case 8:
                 ShinyLocked[0] = "Type: Null";
-                ShinyLocked[1] = "Zacian";
-                ShinyLocked[2] = "Zamazenta";
-                ShinyLocked[3] = "Eternatus";
-                ShinyLocked[4] = "Kubfu";
+                ShinyLocked[1] = "Silvally";
+                ShinyLocked[2] = "Zacian";
+                ShinyLocked[3] = "Zamazenta";
+                ShinyLocked[4] = "Eternatus";
+                ShinyLocked[5] = "Kubfu";
+                ShinyLocked[6] = "Urshifu";
                 break;
             default:
                 break;
@@ -506,16 +513,15 @@ public class Game {
                             case "Terrakion":
                             case "Virizion":
                             case "Thundurus":
-                            case "Zekrom":
                             case "Landorus":
                             case "Kyurem":
                                 return true;
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Black") == 0) {
+                        if (this.name.compareTo("White") == 0) {
                             return selectedPokemon.getName().compareTo("Zekrom") == 0;
-                        } else if(this.name.compareTo("White") == 0)
+                        } else if(this.name.compareTo("Black") == 0)
                             return selectedPokemon.getName().compareTo("Reshiram") == 0;
                         return false;
                     }
@@ -539,7 +545,7 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Black 2") == 0) {
+                        if (this.name.compareTo("White 2") == 0) {
                             switch (selectedPokemon.getName()) {
                                 case "Latias":
                                 case "Reshiram":
@@ -639,20 +645,40 @@ public class Game {
                         switch (selectedPokemon.getName()) {
                             case "Zygarde":
                             case "Type: Null":
+                            case "Silvally":
                             case "Tapu Koko":
                             case "Tapu Lele":
                             case "Tapu Bulu":
                             case "Tapu Fini":
                             case "Cosmog":
                             case "Necrozma":
+                            case "Nihilego":
+                            case "Xurkitree":
+                            case "Guzzlord":
+                            case "Poipole":
+                            case "Naganadel":
                                 return true;
                             default:
                                 break;
                         }
                         if (this.name.compareTo("Sun") == 0)
-                            return selectedPokemon.getName().compareTo("Solgaleo") == 0;
+                            switch (selectedPokemon.getName()){
+                                case "Solgaleo":
+                                case "Buzzwole":
+                                case "Kartana":
+                                    return true;
+                                default:
+                                    break;
+                            }
                         else if (this.name.compareTo("Moon") == 0)
-                            return selectedPokemon.getName().compareTo("Lunala") == 0;
+                            switch (selectedPokemon.getName()){
+                                case "Lunala":
+                                case "Pheromosa":
+                                case "Celesteela":
+                                    return true;
+                                default:
+                                    break;
+                            }
                         return false;
                     }
                     case "Ultra Sun":
@@ -679,12 +705,19 @@ public class Game {
                             case "Kyurem":
                             case "Zygarde":
                             case "Type: Null":
+                            case "Silvally":
                             case "Tapu Koko":
                             case "Tapu Lele":
                             case "Tapu Bulu":
                             case "Tapu Fini":
                             case "Cosmog":
                             case "Necrozma":
+                            case "Nihilego":
+                            case "Xurkitree":
+                            case "Guzzlord":
+                            case "Poipole":
+                            case "Naganadel":
+                            case "Magearna":
                                 return true;
                             default:
                                 break;
@@ -701,6 +734,9 @@ public class Game {
                                 case "Reshiram":
                                 case "Xerneas":
                                 case "Solgaleo":
+                                case "Buzzwole":
+                                case "Kartana":
+                                case "Blacephalon":
                                     return true;
                                 default:
                                     break;
@@ -717,6 +753,9 @@ public class Game {
                                 case "Zekrom":
                                 case "Yveltal":
                                 case "Lunala":
+                                case "Pheromosa":
+                                case "Celesteela":
+                                case "Stakataka":
                                     return true;
                                 default:
                                     break;
@@ -745,13 +784,14 @@ public class Game {
                             case "Type: Null":
                             case "Eternatus":
                             case "Kubfu":
+                            case "Urshifu":
                                 return true;
                             default:
                                 break;
                         }
                         if (this.name.compareTo("Sword") == 0) {
                             return selectedPokemon.name.compareTo("Zacian") == 0;
-                        } else if(this.name.compareTo("Sheild") == 0){
+                        } else if(this.name.compareTo("Shield") == 0){
                             return selectedPokemon.name.compareTo("Zamazenta") == 0;
                         }
                         return false;
