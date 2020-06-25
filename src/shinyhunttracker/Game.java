@@ -78,10 +78,13 @@ public class Game {
                 break;
         }
         setShinyLocked();
-        for(String i: ShinyLocked)
-            if(i != null && i.compareTo(selectedPokemon.name) == 0)
+        for(String i: ShinyLocked) {
+            if (i != null && i.compareTo(selectedPokemon.getName()) == 0) {
                 selectedPokemon.setHuntable(false);
-        if(selectedPokemon.getHuntable() || legendaryIsAvaliable(selectedPokemon))
+                break;
+            }
+        }
+        if(selectedPokemon.getHuntable() && legendaryIsAvaliable(selectedPokemon))
             Methods[0] = "None";
     }
 
