@@ -78,14 +78,15 @@ public class Game {
                 break;
         }
         setShinyLocked();
-        selectedPokemon.setHuntable(legendaryIsAvaliable(selectedPokemon));
+        if(!selectedPokemon.getHuntable())
+            selectedPokemon.setHuntable(legendaryIsAvaliable(selectedPokemon));
         for(String i: ShinyLocked) {
             if (i != null && i.compareTo(selectedPokemon.getName()) == 0) {
                 selectedPokemon.setHuntable(false);
                 break;
             }
         }
-        if(selectedPokemon.getHuntable() || (selectedPokemon.getHuntable() && legendaryIsAvaliable(selectedPokemon)))
+        if(selectedPokemon.getHuntable())
             Methods[0] = "None";
     }
 

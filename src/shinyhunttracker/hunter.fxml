@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="hunterScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.hunterController">
+   <children>
+      <HBox layoutX="24.0" layoutY="357.0" prefHeight="26.0" prefWidth="135.0">
+         <children>
+            <Label fx:id="oddFractionLabel" text="fraction" />
+            <Label text=" | " />
+            <Label fx:id="oddPercentLabel" text="percentage" />
+         </children>
+      </HBox>
+      <Label fx:id="currentHuntingGameLabel" layoutX="24.0" layoutY="320.0" text="Game" />
+      <Label fx:id="currentHuntingPokemonLabel" layoutX="24.0" layoutY="303.0" text="Pokemon" />
+      <Label fx:id="currentHuntingMethodLabel" layoutX="28.0" layoutY="337.0" text="Method" />
+      <Button fx:id="increment" layoutX="288.0" layoutY="345.0" mnemonicParsing="false" text="+" />
+      <ImageView fx:id="currentPokemonImage" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>

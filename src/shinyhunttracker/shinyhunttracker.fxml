@@ -90,7 +90,7 @@
                   <Insets left="75.0" top="5.0" />
                </HBox.margin>
             </VBox>
-            <Button fx:id="BeginHunt" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
+            <Button mnemonicParsing="false" onAction="#beginHunt" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="155.0" top="10.0" />
                </HBox.margin>
