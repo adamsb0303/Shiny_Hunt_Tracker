@@ -11,13 +11,15 @@ import java.util.ResourceBundle;
 
 public class hunterController implements Initializable{
     public Pane hunterScene;
-    public Label oddFractionLabel, currentHuntingGameLabel, currentHuntingPokemonLabel, currentHuntingMethodLabel;
+    public Label oddFractionLabel, encountersLabel, currentHuntingGameLabel, currentHuntingPokemonLabel, currentHuntingMethodLabel;
     public Button increment;
     public ImageView currentPokemonImage;
 
     Pokemon selectedPokemon;
     Game selectedGame;
     Method selectedMethod;
+
+    int encounters = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -32,9 +34,15 @@ public class hunterController implements Initializable{
         this.selectedMethod = selectedMethod;
         currentHuntingMethodLabel.setText(selectedMethod.getName());
         oddFractionLabel.setText("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
+        encountersLabel.setText(String.valueOf(encounters));
     }
 
     private int simplifyFraction(double num, int den){
         return (int)(den / num);
+    }
+
+    public void incrementEncounters(){
+        encounters++;
+        encountersLabel.setText(String.valueOf(encounters));
     }
 }
