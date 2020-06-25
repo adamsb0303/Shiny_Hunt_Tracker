@@ -1,7 +1,5 @@
 package shinyhunttracker;
 
-import javax.sql.rowset.JoinRowSet;
-
 public class Pokemon {
     String name;
     int generation;
@@ -83,10 +81,6 @@ public class Pokemon {
 
     public void setName(String name){
         this.name = name;
-    }
-
-    public void setBreedable(Boolean breedable){
-        this.breedable = breedable;
     }
 
     public void setHuntable(Boolean huntable){

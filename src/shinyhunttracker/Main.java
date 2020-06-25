@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("shinyhunttracker.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
         primaryStage.setTitle("Shiny Hunt Tracker");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 750, 480));

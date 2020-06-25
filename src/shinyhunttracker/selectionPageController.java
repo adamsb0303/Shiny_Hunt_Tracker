@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class selectionPageController implements Initializable {
     public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
     public Label pokemonLabel, gameLabel, methodLabel;
