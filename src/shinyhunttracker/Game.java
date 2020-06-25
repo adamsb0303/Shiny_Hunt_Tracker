@@ -33,6 +33,7 @@ public class Game {
                 if (name.compareTo("Diamond") == 0 || name.compareTo("Pearl") == 0 || name.compareTo("Platinum") == 0)
                     if (isWild(selectedPokemon))
                         Methods[2] = "Radar Chaining";
+                    System.out.println(isWild(selectedPokemon));
                 break;
             case 5:
                 if(selectedPokemon.getBreedable())
@@ -118,18 +119,18 @@ public class Game {
                         for(String i: Diamond)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Pearl":
                         for(String i: Pearl)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Platinum":
                         for(String i: Platinum)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                    default:
                         break;
                 }
+                break;
             case 6:
                 switch (this.name){
                     case "X":
@@ -139,7 +140,6 @@ public class Game {
                         for(String i: X)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Y":
                         for(String i: XY)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -147,7 +147,6 @@ public class Game {
                         for(String i: Y)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Omega Ruby":
                         for(String i: ORAS)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -155,7 +154,6 @@ public class Game {
                         for(String i: OmegaRuby)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Alpha Sapphire":
                         for(String i: ORAS)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -163,8 +161,10 @@ public class Game {
                         for(String i: AlphaSapphire)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                    default:
                         break;
                 }
+                break;
             case 7:
                 for(String i: LetsGo)
                     if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -174,13 +174,14 @@ public class Game {
                         for(String i: LetsGoPikachu)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Let's Go Eevee":
                         for(String i: LetsGoEevee)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                    default:
                         break;
                 }
+                break;
             case 8:
                 for(String i: SWSH)
                     if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -190,13 +191,14 @@ public class Game {
                         for(String i: Sword)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
-                        break;
                     case "Shield":
                         for(String i: Shield)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                    default:
                         break;
                 }
+                break;
             default:
                 break;
         }

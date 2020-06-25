@@ -276,7 +276,7 @@ public class Controller implements Initializable {
         TreeItem<String> methodRoot;
         methodRoot = new TreeItem<>();
         for(String i: gameMethods)
-            if(i != null)
+            if (i != null)
                 makeBranch(i, methodRoot);
 
         MethodList.setRoot(methodRoot);
