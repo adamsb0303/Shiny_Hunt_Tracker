@@ -26,6 +26,10 @@ public class Pokemon {
 
 
     public void isLegendary(){
+        if(name.compareTo("Unown") == 0) {
+            huntable = false;
+            return;
+        }
         for(String i: Legendaries)
             if(i.compareTo(name) == 0) {
                 huntable = false;
@@ -59,7 +63,7 @@ public class Pokemon {
     }
 
     public Boolean isBreedable(){
-        String[] BreedablePokemon = {"Nidorina", "Nidoqueen", "Pichu", "Cleffa", "Igglybuff", "Togepi", "Unown", "Tyrogue", "Smoochum", "Elekid", "Magby", "Azurill", "Wynaut", "Budew", "Chingling", "Bonsly", "Mime Jr.", "Happiny", "Munchlax", "Riolu", "Mantyke", "Toxel", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish"};
+        String[] BreedablePokemon = {"Unown", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish"};
         for(String i: Legendaries)
             if(i.compareTo(name) == 0)
                 return false;

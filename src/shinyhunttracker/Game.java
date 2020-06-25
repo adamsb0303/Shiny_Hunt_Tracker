@@ -33,7 +33,6 @@ public class Game {
                 if (name.compareTo("Diamond") == 0 || name.compareTo("Pearl") == 0 || name.compareTo("Platinum") == 0)
                     if (isWild(selectedPokemon))
                         Methods[2] = "Radar Chaining";
-                    System.out.println(isWild(selectedPokemon));
                 break;
             case 5:
                 if(selectedPokemon.getBreedable())
@@ -83,7 +82,7 @@ public class Game {
         for(String i: ShinyLocked)
             if(i != null && i.compareTo(selectedPokemon.name) == 0)
                 selectedPokemon.setHuntable(false);
-        if(selectedPokemon.getHuntable() && selectedPokemon.getBreedable())
+        if(selectedPokemon.getHuntable() || legendaryIsAvaliable(selectedPokemon))
             Methods[0] = "None";
     }
 
@@ -119,14 +118,17 @@ public class Game {
                         for(String i: Diamond)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Pearl":
                         for(String i: Pearl)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Platinum":
                         for(String i: Platinum)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     default:
                         break;
                 }
@@ -140,6 +142,7 @@ public class Game {
                         for(String i: X)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Y":
                         for(String i: XY)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -147,6 +150,7 @@ public class Game {
                         for(String i: Y)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Omega Ruby":
                         for(String i: ORAS)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -154,13 +158,15 @@ public class Game {
                         for(String i: OmegaRuby)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Alpha Sapphire":
                         for(String i: ORAS)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
                         for(String i: AlphaSapphire)
-                            if(i.compareTo(selectedPokemon.getName()) == 0)
-                                return true;
+                                if(i.compareTo(selectedPokemon.getName()) == 0)
+                                    return true;
+                        break;
                     default:
                         break;
                 }
@@ -174,10 +180,12 @@ public class Game {
                         for(String i: LetsGoPikachu)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Let's Go Eevee":
                         for(String i: LetsGoEevee)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     default:
                         break;
                 }
@@ -191,10 +199,12 @@ public class Game {
                         for(String i: Sword)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     case "Shield":
                         for(String i: Shield)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
                                 return true;
+                        break;
                     default:
                         break;
                 }
@@ -338,7 +348,7 @@ public class Game {
         }
     }
 
-    public Boolean legendaryIsAvaliable(Pokemon selectedPokemon){
+    public boolean legendaryIsAvaliable(Pokemon selectedPokemon){
         switch(this.generation) {
             case 1:
                 switch(selectedPokemon.getName()){
@@ -358,6 +368,7 @@ public class Game {
                     case "Entei":
                     case "Suicune":
                     case "Ho-Oh":
+                    case "Unown":
                         return true;
                     default:
                         break;
@@ -407,6 +418,7 @@ public class Game {
                             case "Suicune":
                             case "Lugia":
                             case "Ho-Oh":
+                            case "Unown":
                                 return true;
                             default:
                                 break;
@@ -429,6 +441,7 @@ public class Game {
                             case "Regigigas":
                             case "Giratina":
                             case "Cresselia":
+                            case "Unown":
                                 return true;
                             default:
                                 break;
@@ -470,6 +483,7 @@ public class Game {
                             case "Dialga":
                             case "Palkia":
                             case "Giratina":
+                            case "Unown":
                                 return true;
                             default:
                                 break;
@@ -586,6 +600,7 @@ public class Game {
                             case "Virizion":
                             case "Landorus":
                             case "Kyurem":
+                            case "Unown":
                                 return true;
                             default:
                                 break;

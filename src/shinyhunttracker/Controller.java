@@ -133,11 +133,11 @@ public class Controller implements Initializable {
         selectedGame = new Game();
         shinyCharmCheckBox.setSelected(false);
         lureCheckBox.setSelected(false);
-        gameLabel.setText(selectedGame.getName());
+        gameLabel.setText(selectedGame.getName());/*
         if(!selectedPokemon.getHuntable()) {
             InitializeRestrictedGameList(generation);
             return;
-        }
+        }*/
         gameRoot = new TreeItem<>();
         treeGamesGen1 = new TreeItem<>();
         treeGamesGen2 = new TreeItem<>();
@@ -147,124 +147,66 @@ public class Controller implements Initializable {
         treeGamesGen6 = new TreeItem<>();
         treeGamesGen7 = new TreeItem<>();
         treeGamesGen8 = new TreeItem<>();
+        Game testGame = new Game();
 
         if(generation == 0)
             return;
         if(generation <= 1)
             treeGamesGen1 = makeBranch("Generation 1", gameRoot);
-            for (String i: Games1)
-                makeBranch(i, treeGamesGen1);
-        if(generation <= 2)
-            treeGamesGen2 = makeBranch("Generation 2", gameRoot);
-            for(String i: Games2)
-                makeBranch(i,treeGamesGen2);
-        if(generation <= 3)
-            treeGamesGen3 = makeBranch("Generation 3", gameRoot);
-            for(String i: Games3)
-                makeBranch(i,treeGamesGen3);
-        if(generation <= 4)
-            treeGamesGen4 = makeBranch("Generation 4", gameRoot);
-            for(String i: Games4)
-                makeBranch(i,treeGamesGen4);
-        if(generation <= 5)
-            treeGamesGen5 = makeBranch("Generation 5", gameRoot);
-            for(String i: Games5)
-                makeBranch(i,treeGamesGen5);
-        if(generation <= 6)
-            treeGamesGen6 = makeBranch("Generation 6", gameRoot);
-            for(String i: Games6)
-                makeBranch(i,treeGamesGen6);
-        if(generation <= 7)
-            treeGamesGen7 = makeBranch("Generation 7", gameRoot);
-            for(String i: Games7)
-                makeBranch(i,treeGamesGen7);
-        if(generation <= 8)
-            treeGamesGen8 = makeBranch("Generation 8", gameRoot);
-            for(String i: Games8)
-                makeBranch(i,treeGamesGen8);
-
-        GameList.setRoot(gameRoot);
-        GameList.setShowRoot(false);
-    }
-
-    public void InitializeRestrictedGameList(int generation){
-        gameRoot = new TreeItem<>();
-        treeGamesGen1 = new TreeItem<>();
-        treeGamesGen2 = new TreeItem<>();
-        treeGamesGen3 = new TreeItem<>();
-        treeGamesGen4 = new TreeItem<>();
-        treeGamesGen5 = new TreeItem<>();
-        treeGamesGen6 = new TreeItem<>();
-        treeGamesGen7 = new TreeItem<>();
-        treeGamesGen8 = new TreeItem<>();
-
-        Game testGame = new Game();
-        if(generation == 0)
-            return;
-        if(generation <= 1) {
-            treeGamesGen1 = makeBranch("Generation 1", gameRoot);
-            for (String i : Games1) {
-                testGame = new Game(i, 1);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for (String i: Games1) {
+                testGame = new Game(i, 1, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen1);
             }
-        }
-        if(generation <= 2) {
+        if(generation <= 2)
             treeGamesGen2 = makeBranch("Generation 2", gameRoot);
-            for (String i : Games2) {
-                testGame = new Game(i, 2);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games2) {
+                testGame = new Game(i, 2, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen2);
             }
-        }
-        if(generation <= 3) {
+        if(generation <= 3)
             treeGamesGen3 = makeBranch("Generation 3", gameRoot);
-            for (String i : Games3) {
-                testGame = new Game(i, 3);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games3) {
+                testGame = new Game(i, 3, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen3);
             }
-        }
-        if(generation <= 4) {
+        if(generation <= 4)
             treeGamesGen4 = makeBranch("Generation 4", gameRoot);
-            for (String i : Games4) {
-                testGame = new Game(i, 4);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games4) {
+                testGame = new Game(i, 4, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen4);
             }
-        }
-        if(generation <= 5) {
+        if(generation <= 5)
             treeGamesGen5 = makeBranch("Generation 5", gameRoot);
-            for (String i : Games5) {
-                testGame = new Game(i, 5);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games5) {
+                testGame = new Game(i, 5, selectedPokemon);
+                if (isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen5);
             }
-        }
-        if(generation <= 6) {
+        if(generation <= 6)
             treeGamesGen6 = makeBranch("Generation 6", gameRoot);
-            for (String i : Games6) {
-                testGame = new Game(i, 6);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games6) {
+                testGame = new Game(i, 6, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen6);
             }
-        }
-        if(generation <= 7) {
+        if(generation <= 7)
             treeGamesGen7 = makeBranch("Generation 7", gameRoot);
-            for (String i : Games7) {
-                testGame = new Game(i, 7);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games7) {
+                testGame = new Game(i, 7, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen7);
             }
-        }
-        if(generation <= 8) {
+        if(generation <= 8)
             treeGamesGen8 = makeBranch("Generation 8", gameRoot);
-            for (String i : Games8) {
-                testGame = new Game(i, 8);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
+            for(String i: Games8) {
+                testGame = new Game(i, 8, selectedPokemon);
+                if(isEmpty(testGame.getMethods()))
                     makeBranch(i, treeGamesGen8);
             }
-        }
 
         GameList.setRoot(gameRoot);
         GameList.setShowRoot(false);
@@ -401,6 +343,13 @@ public class Controller implements Initializable {
             selectedMethod.setModifier(selectedMethod.getModifier() + 1);
         else
             selectedMethod.setModifier(selectedMethod.getModifier() - 1);
+    }
+
+    public boolean isEmpty(String[] arr){
+        for(String i: arr)
+            if(i != null)
+                return true;
+        return false;
     }
 
     public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
