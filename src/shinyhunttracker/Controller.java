@@ -12,12 +12,13 @@ public class Controller implements Initializable {
     public TreeView<String> PokemonList, GameList, MethodList;
     public Label pokemonLabel, gameLabel, methodLabel;
     public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox;
+    public TreeItem<String> gameRoot, treeGamesGen1, treeGamesGen2, treeGamesGen3, treeGamesGen4, treeGamesGen5, treeGamesGen6, treeGamesGen7, treeGamesGen8;
     Game selectedGame = new Game();
     Pokemon selectedPokemon;
     Method selectedMethod = new Method();
     String newSelectionPokemon, oldSelectionPokemon = "";
     String newSelectionGame = "";
-    int oldSelectionGeneration = 0;
+    int oldSelectionGeneration, oldSelectionGameGeneration = 0;
     String[] gen1 = {"Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch’d", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"};
     String[] gen2 = {"Chikorita", "Bayleef", "Meganium", "Cyndaquil", "Quilava", "Typhlosion", "Totodile", "Croconaw", "Feraligatr", "Sentret", "Furret", "Hoothoot", "Noctowl", "Ledyba", "Ledian", "Spinarak", "Ariados", "Crobat", "Chinchou", "Lanturn", "Pichu", "Cleffa", "Igglybuff", "Togepi", "Togetic", "Natu", "Xatu", "Mareep", "Flaaffy", "Ampharos", "Bellossom", "Marill", "Azumarill", "Sudowoodo", "Politoed", "Hoppip", "Skiploom", "Jumpluff", "Aipom", "Sunkern", "Sunflora", "Yanma", "Wooper", "Quagsire", "Espeon", "Umbreon", "Murkrow", "Slowking", "Misdreavus", "Unown", "Wobbuffet", "Girafarig", "Pineco", "Forretress", "Dunsparce", "Gligar", "Steelix", "Snubbull", "Granbull", "Qwilfish", "Scizor", "Shuckle", "Heracross", "Sneasel", "Teddiursa", "Ursaring", "Slugma", "Magcargo", "Swinub", "Piloswine", "Corsola", "Remoraid", "Octillery", "Delibird", "Mantine", "Skarmory", "Houndour", "Houndoom", "Kingdra", "Phanpy", "Donphan", "Porygon2", "Stantler", "Smeargle", "Tyrogue", "Hitmontop", "Smoochum", "Elekid", "Magby", "Miltank", "Blissey", "Raikou", "Entei", "Suicune", "Larvitar", "Pupitar", "Tyranitar", "Lugia", "Ho-Oh", "Celebi"};
     String[] gen3 = {"Treecko", "Grovyle", "Sceptile", "Torchic", "Combusken", "Blaziken", "Mudkip", "Marshtomp", "Swampert", "Poochyena", "Mightyena", "Zigzagoon", "Linoone", "Wurmple", "Silcoon", "Beautifly", "Cascoon", "Dustox", "Lotad", "Lombre", "Ludicolo", "Seedot", "Nuzleaf", "Shiftry", "Taillow", "Swellow", "Wingull", "Pelipper", "Ralts", "Kirlia", "Gardevoir", "Surskit", "Masquerain", "Shroomish", "Breloom", "Slakoth", "Vigoroth", "Slaking", "Nincada", "Ninjask", "Shedinja", "Whismur", "Loudred", "Exploud", "Makuhita", "Hariyama", "Azurill", "Nosepass", "Skitty", "Delcatty", "Sableye", "Mawile", "Aron", "Lairon", "Aggron", "Meditite", "Medicham", "Electrike", "Manectric", "Plusle", "Minun", "Volbeat", "Illumise", "Roselia", "Gulpin", "Swalot", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Numel", "Camerupt", "Torkoal", "Spoink", "Grumpig", "Spinda", "Trapinch", "Vibrava", "Flygon", "Cacnea", "Cacturne", "Swablu", "Altaria", "Zangoose", "Seviper", "Lunatone", "Solrock", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Baltoy", "Claydol", "Lileep", "Cradily", "Anorith", "Armaldo", "Feebas", "Milotic", "Castform", "Kecleon", "Shuppet", "Banette", "Duskull", "Dusclops", "Tropius", "Chimecho", "Absol", "Wynaut", "Snorunt", "Glalie", "Spheal", "Sealeo", "Walrein", "Clamperl", "Huntail", "Gorebyss", "Relicanth", "Luvdisc", "Bagon", "Shelgon", "Salamence", "Beldum", "Metang", "Metagross", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Jirachi", "Deoxys"};
@@ -55,16 +56,11 @@ public class Controller implements Initializable {
                             alolanCheckBox.setSelected(false);
                             galarianCheckBox.setDisable(!selectedPokemon.isGalarian());
                             galarianCheckBox.setSelected(false);
-                            //if (oldValue == null) {
-                                InitializeGameList(selectedPokemon.getGeneration());/*
-                            }else if (oldSelectionGeneration != findGeneration(newSelectionPokemon)){
-                                InitializeGameList(selectedPokemon.getGeneration());
-                                InitializeMethodList(selectedGame.getMethods());
-                            }*/
-                            if (selectedGame.getName() != null) {
-                                selectedGame = new Game(selectedGame.getName(), selectedGame.getGeneration(), selectedPokemon);
-                                InitializeMethodList(selectedGame.getMethods());
-                            }
+                            if(selectedGame.getName() != null)
+                                oldSelectionGameGeneration = selectedGame.getGeneration();
+                            InitializeGameList(selectedPokemon.getGeneration());
+                            collapseGeneration(oldSelectionGameGeneration);
+                            InitializeMethodList(selectedGame.getMethods());
                         }
                     }
                 });
@@ -78,11 +74,12 @@ public class Controller implements Initializable {
                             shinyCharmCheckBox.setSelected(false);
                             lureCheckBox.setSelected(false);
                             if(selectedGame.generation >= 5) {
-                                if (!(selectedGame.getName().compareTo("Black") == 0) || !(selectedGame.getName().compareTo("White") == 0))
+                                if (!(selectedGame.getName().compareTo("Black") == 0 || selectedGame.getName().compareTo("White") == 0))
                                     shinyCharmCheckBox.setDisable(false);
                             }else
                                 shinyCharmCheckBox.setDisable(true);
-                            lureCheckBox.setDisable(!(selectedGame.getName().substring(0,3).compareTo("Let") == 0));
+                            if(selectedGame.getName().length() >= 3)
+                                lureCheckBox.setDisable(!(selectedGame.getName().substring(0,3).compareTo("Let") == 0));
                             InitializeMethodList(selectedGame.getMethods());
                         }
                     }
@@ -97,9 +94,9 @@ public class Controller implements Initializable {
     }
 
     public void InitializePokemonList(){
+        TreeItem<String> pokemonRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
         selectedPokemon = new Pokemon();
         pokemonLabel.setText(selectedPokemon.getName());
-        TreeItem<String> pokemonRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
         pokemonRoot = new TreeItem<>();
 
         Gen1 = makeBranch("Generation 1", pokemonRoot);
@@ -141,133 +138,131 @@ public class Controller implements Initializable {
             InitializeRestrictedGameList(generation);
             return;
         }
-        TreeItem<String> gameRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
         gameRoot = new TreeItem<>();
-        Gen1 = new TreeItem<>();
-        Gen2 = new TreeItem<>();
-        Gen3 = new TreeItem<>();
-        Gen4 = new TreeItem<>();
-        Gen5 = new TreeItem<>();
-        Gen6 = new TreeItem<>();
-        Gen7 = new TreeItem<>();
-        Gen8 = new TreeItem<>();
+        treeGamesGen1 = new TreeItem<>();
+        treeGamesGen2 = new TreeItem<>();
+        treeGamesGen3 = new TreeItem<>();
+        treeGamesGen4 = new TreeItem<>();
+        treeGamesGen5 = new TreeItem<>();
+        treeGamesGen6 = new TreeItem<>();
+        treeGamesGen7 = new TreeItem<>();
+        treeGamesGen8 = new TreeItem<>();
 
         if(generation == 0)
             return;
         if(generation <= 1)
-            Gen1 = makeBranch("Generation 1", gameRoot);
+            treeGamesGen1 = makeBranch("Generation 1", gameRoot);
             for (String i: Games1)
-                makeBranch(i, Gen1);
+                makeBranch(i, treeGamesGen1);
         if(generation <= 2)
-            Gen2 = makeBranch("Generation 2", gameRoot);
+            treeGamesGen2 = makeBranch("Generation 2", gameRoot);
             for(String i: Games2)
-                makeBranch(i,Gen2);
+                makeBranch(i,treeGamesGen2);
         if(generation <= 3)
-            Gen3 = makeBranch("Generation 3", gameRoot);
+            treeGamesGen3 = makeBranch("Generation 3", gameRoot);
             for(String i: Games3)
-                makeBranch(i,Gen3);
+                makeBranch(i,treeGamesGen3);
         if(generation <= 4)
-            Gen4 = makeBranch("Generation 4", gameRoot);
+            treeGamesGen4 = makeBranch("Generation 4", gameRoot);
             for(String i: Games4)
-                makeBranch(i,Gen4);
+                makeBranch(i,treeGamesGen4);
         if(generation <= 5)
-            Gen5 = makeBranch("Generation 5", gameRoot);
+            treeGamesGen5 = makeBranch("Generation 5", gameRoot);
             for(String i: Games5)
-                makeBranch(i,Gen5);
+                makeBranch(i,treeGamesGen5);
         if(generation <= 6)
-            Gen6 = makeBranch("Generation 6", gameRoot);
+            treeGamesGen6 = makeBranch("Generation 6", gameRoot);
             for(String i: Games6)
-                makeBranch(i,Gen6);
+                makeBranch(i,treeGamesGen6);
         if(generation <= 7)
-            Gen7 = makeBranch("Generation 7", gameRoot);
+            treeGamesGen7 = makeBranch("Generation 7", gameRoot);
             for(String i: Games7)
-                makeBranch(i,Gen7);
+                makeBranch(i,treeGamesGen7);
         if(generation <= 8)
-            Gen8 = makeBranch("Generation 8", gameRoot);
+            treeGamesGen8 = makeBranch("Generation 8", gameRoot);
             for(String i: Games8)
-                makeBranch(i,Gen8);
+                makeBranch(i,treeGamesGen8);
 
         GameList.setRoot(gameRoot);
         GameList.setShowRoot(false);
     }
 
     public void InitializeRestrictedGameList(int generation){
-        TreeItem<String> gameRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
         gameRoot = new TreeItem<>();
-        Gen1 = new TreeItem<>();
-        Gen2 = new TreeItem<>();
-        Gen3 = new TreeItem<>();
-        Gen4 = new TreeItem<>();
-        Gen5 = new TreeItem<>();
-        Gen6 = new TreeItem<>();
-        Gen7 = new TreeItem<>();
-        Gen8 = new TreeItem<>();
+        treeGamesGen1 = new TreeItem<>();
+        treeGamesGen2 = new TreeItem<>();
+        treeGamesGen3 = new TreeItem<>();
+        treeGamesGen4 = new TreeItem<>();
+        treeGamesGen5 = new TreeItem<>();
+        treeGamesGen6 = new TreeItem<>();
+        treeGamesGen7 = new TreeItem<>();
+        treeGamesGen8 = new TreeItem<>();
 
         Game testGame = new Game();
         if(generation == 0)
             return;
         if(generation <= 1) {
-            Gen1 = makeBranch("Generation 1", gameRoot);
+            treeGamesGen1 = makeBranch("Generation 1", gameRoot);
             for (String i : Games1) {
                 testGame = new Game(i, 1);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen1);
+                    makeBranch(i, treeGamesGen1);
             }
         }
         if(generation <= 2) {
-            Gen2 = makeBranch("Generation 2", gameRoot);
+            treeGamesGen2 = makeBranch("Generation 2", gameRoot);
             for (String i : Games2) {
                 testGame = new Game(i, 2);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen2);
+                    makeBranch(i, treeGamesGen2);
             }
         }
         if(generation <= 3) {
-            Gen3 = makeBranch("Generation 3", gameRoot);
+            treeGamesGen3 = makeBranch("Generation 3", gameRoot);
             for (String i : Games3) {
                 testGame = new Game(i, 3);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen3);
+                    makeBranch(i, treeGamesGen3);
             }
         }
         if(generation <= 4) {
-            Gen4 = makeBranch("Generation 4", gameRoot);
+            treeGamesGen4 = makeBranch("Generation 4", gameRoot);
             for (String i : Games4) {
                 testGame = new Game(i, 4);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen4);
+                    makeBranch(i, treeGamesGen4);
             }
         }
         if(generation <= 5) {
-            Gen5 = makeBranch("Generation 5", gameRoot);
+            treeGamesGen5 = makeBranch("Generation 5", gameRoot);
             for (String i : Games5) {
                 testGame = new Game(i, 5);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen5);
+                    makeBranch(i, treeGamesGen5);
             }
         }
         if(generation <= 6) {
-            Gen6 = makeBranch("Generation 6", gameRoot);
+            treeGamesGen6 = makeBranch("Generation 6", gameRoot);
             for (String i : Games6) {
                 testGame = new Game(i, 6);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen6);
+                    makeBranch(i, treeGamesGen6);
             }
         }
         if(generation <= 7) {
-            Gen7 = makeBranch("Generation 7", gameRoot);
+            treeGamesGen7 = makeBranch("Generation 7", gameRoot);
             for (String i : Games7) {
                 testGame = new Game(i, 7);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen7);
+                    makeBranch(i, treeGamesGen7);
             }
         }
         if(generation <= 8) {
-            Gen8 = makeBranch("Generation 8", gameRoot);
+            treeGamesGen8 = makeBranch("Generation 8", gameRoot);
             for (String i : Games8) {
                 testGame = new Game(i, 8);
                 if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, Gen8);
+                    makeBranch(i, treeGamesGen8);
             }
         }
 
@@ -339,6 +334,37 @@ public class Controller implements Initializable {
             if(i.compareTo(name) == 0)
                 return 8;
         return 0;
+    }
+
+    public void collapseGeneration(int generation){
+        switch(generation){
+            case 1:
+                treeGamesGen1.setExpanded(true);
+                break;
+            case 2:
+                treeGamesGen2.setExpanded(true);
+                break;
+            case 3:
+                treeGamesGen3.setExpanded(true);
+                break;
+            case 4:
+                treeGamesGen4.setExpanded(true);
+                break;
+            case 5:
+                treeGamesGen5.setExpanded(true);
+                break;
+            case 6:
+                treeGamesGen6.setExpanded(true);
+                break;
+            case 7:
+                treeGamesGen7.setExpanded(true);
+                break;
+            case 8:
+                treeGamesGen8.setExpanded(true);
+                break;
+            default:
+                break;
+        }
     }
 
     public void setAlolan(){
