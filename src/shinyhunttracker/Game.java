@@ -18,10 +18,9 @@ public class Game {
     Game(String name, int generation, Pokemon selectedPokemon){
         this.name = name;
         this.generation = generation;
-        generateMethods(name, generation, selectedPokemon);
     }
 
-    public void generateMethods(String name, int generation, Pokemon selectedPokemon){
+    public void generateMethods(Pokemon selectedPokemon){
         switch(generation){
             case 2:
                 if(selectedPokemon.getBreedable())

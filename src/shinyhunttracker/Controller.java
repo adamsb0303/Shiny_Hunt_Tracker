@@ -13,12 +13,14 @@ public class Controller implements Initializable {
     public Label pokemonLabel, gameLabel, methodLabel;
     public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox;
     public TreeItem<String> gameRoot, treeGamesGen1, treeGamesGen2, treeGamesGen3, treeGamesGen4, treeGamesGen5, treeGamesGen6, treeGamesGen7, treeGamesGen8;
+    public TreeItem<String> methodRoot, evolution0, evolution1, evolution2;
     Game selectedGame = new Game();
-    Pokemon selectedPokemon;
+    Pokemon selectedPokemon, Stage0, Stage1 = new Pokemon();
     Method selectedMethod = new Method();
     String newSelectionPokemon, oldSelectionPokemon = "";
     String newSelectionGame = "";
     int oldSelectionGeneration, oldSelectionGameGeneration = 0;
+    int evolutionStage;
     String[] gen1 = {"Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch’d", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"};
     String[] gen2 = {"Chikorita", "Bayleef", "Meganium", "Cyndaquil", "Quilava", "Typhlosion", "Totodile", "Croconaw", "Feraligatr", "Sentret", "Furret", "Hoothoot", "Noctowl", "Ledyba", "Ledian", "Spinarak", "Ariados", "Crobat", "Chinchou", "Lanturn", "Pichu", "Cleffa", "Igglybuff", "Togepi", "Togetic", "Natu", "Xatu", "Mareep", "Flaaffy", "Ampharos", "Bellossom", "Marill", "Azumarill", "Sudowoodo", "Politoed", "Hoppip", "Skiploom", "Jumpluff", "Aipom", "Sunkern", "Sunflora", "Yanma", "Wooper", "Quagsire", "Espeon", "Umbreon", "Murkrow", "Slowking", "Misdreavus", "Unown", "Wobbuffet", "Girafarig", "Pineco", "Forretress", "Dunsparce", "Gligar", "Steelix", "Snubbull", "Granbull", "Qwilfish", "Scizor", "Shuckle", "Heracross", "Sneasel", "Teddiursa", "Ursaring", "Slugma", "Magcargo", "Swinub", "Piloswine", "Corsola", "Remoraid", "Octillery", "Delibird", "Mantine", "Skarmory", "Houndour", "Houndoom", "Kingdra", "Phanpy", "Donphan", "Porygon2", "Stantler", "Smeargle", "Tyrogue", "Hitmontop", "Smoochum", "Elekid", "Magby", "Miltank", "Blissey", "Raikou", "Entei", "Suicune", "Larvitar", "Pupitar", "Tyranitar", "Lugia", "Ho-Oh", "Celebi"};
     String[] gen3 = {"Treecko", "Grovyle", "Sceptile", "Torchic", "Combusken", "Blaziken", "Mudkip", "Marshtomp", "Swampert", "Poochyena", "Mightyena", "Zigzagoon", "Linoone", "Wurmple", "Silcoon", "Beautifly", "Cascoon", "Dustox", "Lotad", "Lombre", "Ludicolo", "Seedot", "Nuzleaf", "Shiftry", "Taillow", "Swellow", "Wingull", "Pelipper", "Ralts", "Kirlia", "Gardevoir", "Surskit", "Masquerain", "Shroomish", "Breloom", "Slakoth", "Vigoroth", "Slaking", "Nincada", "Ninjask", "Shedinja", "Whismur", "Loudred", "Exploud", "Makuhita", "Hariyama", "Azurill", "Nosepass", "Skitty", "Delcatty", "Sableye", "Mawile", "Aron", "Lairon", "Aggron", "Meditite", "Medicham", "Electrike", "Manectric", "Plusle", "Minun", "Volbeat", "Illumise", "Roselia", "Gulpin", "Swalot", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Numel", "Camerupt", "Torkoal", "Spoink", "Grumpig", "Spinda", "Trapinch", "Vibrava", "Flygon", "Cacnea", "Cacturne", "Swablu", "Altaria", "Zangoose", "Seviper", "Lunatone", "Solrock", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Baltoy", "Claydol", "Lileep", "Cradily", "Anorith", "Armaldo", "Feebas", "Milotic", "Castform", "Kecleon", "Shuppet", "Banette", "Duskull", "Dusclops", "Tropius", "Chimecho", "Absol", "Wynaut", "Snorunt", "Glalie", "Spheal", "Sealeo", "Walrein", "Clamperl", "Huntail", "Gorebyss", "Relicanth", "Luvdisc", "Bagon", "Shelgon", "Salamence", "Beldum", "Metang", "Metagross", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Jirachi", "Deoxys"};
@@ -60,7 +62,7 @@ public class Controller implements Initializable {
                                 oldSelectionGameGeneration = selectedGame.getGeneration();
                             InitializeGameList(selectedPokemon.getGeneration());
                             collapseGeneration(oldSelectionGameGeneration);
-                            InitializeMethodList(selectedGame.getMethods());
+                            clearMethodList();
                         }
                     }
                 });
@@ -80,7 +82,7 @@ public class Controller implements Initializable {
                                 shinyCharmCheckBox.setDisable(true);
                             if(selectedGame.getName().length() >= 3)
                                 lureCheckBox.setDisable(!(selectedGame.getName().substring(0,3).compareTo("Let") == 0));
-                            InitializeMethodList(selectedGame.getMethods());
+                            InitializeMethodList();
                         }
                     }
                 });
@@ -270,17 +272,62 @@ public class Controller implements Initializable {
         GameList.setShowRoot(false);
     }
 
-    public void InitializeMethodList(String[] gameMethods){
+    public void InitializeMethodList(){
         selectedMethod = new Method();
         methodLabel.setText(selectedMethod.getName());
-        TreeItem<String> methodRoot;
+        if(selectedGame.getGeneration() == 1)
+            return;
         methodRoot = new TreeItem<>();
-        for(String i: gameMethods)
+        createFamily();
+        selectedGame.generateMethods(selectedPokemon);
+        evolution2 = makeBranch(selectedPokemon.getName(), methodRoot);
+        for(String i: selectedGame.getMethods())
             if (i != null)
-                makeBranch(i, methodRoot);
+                makeBranch(i, evolution2);
+            evolution2.setExpanded(true);
+        if(evolutionStage == 2 && findGeneration(Stage1.getName()) <= selectedGame.getGeneration()){
+            selectedGame.generateMethods(Stage1);
+            evolution1 = makeBranch(Stage1.getName(), methodRoot);
+            for(String i: selectedGame.getMethods())
+                if (i != null)
+                    makeBranch(i, evolution1);
+        }if(evolutionStage >= 1 && findGeneration(Stage0.getName()) <= selectedGame.getGeneration()){
+            selectedGame.generateMethods(Stage0);
+            evolution0 = makeBranch(Stage0.getName(), methodRoot);
+            for(String i: selectedGame.getMethods())
+                if (i != null)
+                    makeBranch(i, evolution0);
+        }
 
         MethodList.setRoot(methodRoot);
         MethodList.setShowRoot(false);
+    }
+
+    public void clearMethodList(){
+        selectedMethod = new Method();
+        methodLabel.setText(selectedMethod.getName());
+        methodRoot = new TreeItem<>();
+
+        MethodList.setRoot(methodRoot);
+        MethodList.setShowRoot(false);
+    }
+
+    public void createFamily(){
+        String[][] pokemonEvolutions= {{"Bulbasaur","Ivysaur","Venusaur"},{"Charmander", "Charmeleon", "Charizard"}, {"Squirtle", "Wartortle", "Blastoise"}, {"Azurill", "Marill", "Azumarill"}};
+        for (String[] pokemonEvolution : pokemonEvolutions) {
+            for (int j = 0; j < pokemonEvolutions[0].length; j++) {
+                if (selectedPokemon.getName().compareTo(pokemonEvolution[j]) == 0) {
+                    evolutionStage = j;
+                    if (j >= 1) {
+                        Stage0 = new Pokemon(pokemonEvolution[0], findGeneration(pokemonEvolution[0]));
+                    }
+                    if (j == 2) {
+                        Stage1 = new Pokemon(pokemonEvolution[1], findGeneration(pokemonEvolution[1]));
+                    }
+                    return;
+                }
+            }
+        }
     }
 
     public int findGeneration(String name){
