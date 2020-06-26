@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -484,26 +485,24 @@ public class selectionPageController implements Initializable {
     }
 
     public void beginHunt(ActionEvent event) throws IOException {
-        FXMLLoader huntLoader = new FXMLLoader();
-        huntLoader.setLocation(getClass().getResource("hunter.fxml"));
-        Parent hunterParent = huntLoader.load();
-        hunterController huntController = huntLoader.getController();
-        huntController.importData(selectedPokemon, selectedGame, selectedMethod);
-        Scene huntScene = new Scene(hunterParent);
-        Stage hunter = (Stage)((Node)event.getSource()).getScene().getWindow();
-        hunter.setScene(huntScene);
-        hunter.show();
-
+        Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        selectionWindow.close();
 
         FXMLLoader huntControlsLoader = new FXMLLoader();
         huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
         Parent hunterControlsParent = huntControlsLoader.load();
+
         huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createLink(huntController);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod);
+
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
         huntControls.setResizable(false);
         huntControls.setScene(new Scene(hunterControlsParent, 600, 100));
         huntControls.show();
+
+        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
+            huntControlsController.promptPreviousEncounters();
+        }
     }
 }
