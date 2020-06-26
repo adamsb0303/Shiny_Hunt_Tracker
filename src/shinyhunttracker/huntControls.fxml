@@ -10,11 +10,11 @@
    <top>
        <MenuBar BorderPane.alignment="CENTER">
           <menus>
-              <Menu mnemonicParsing="false" text="Save" />
+              <Menu fx:id="saveButton" mnemonicParsing="false" text="Save" />
               <Menu mnemonicParsing="false" text="Settings">
-                 <items>
-                     <MenuItem mnemonicParsing="false" text="Delete" />
-                 </items>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#CustomizeHuntWindow" text="Customize Hunt Window" />
+               </items>
               </Menu>
           </menus>
        </MenuBar>

@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -14,6 +15,8 @@ import java.util.ResourceBundle;
 
 public class huntControlsController implements Initializable {
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
+    public Menu saveButton = new Menu();
+    Stage huntControls, huntWindow = new Stage();
 
     Label oddFractionLabel, encountersLabel, previousEncountersLabel;
 
@@ -25,15 +28,14 @@ public class huntControlsController implements Initializable {
     int encounters, previousEncounters = 0;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){ }
+    public void initialize(URL url, ResourceBundle rb){
+    }
 
     public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         methodBase = selectedMethod.getBase();
-
-        Stage huntWindow = new Stage();
 
         Label currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
         Label currentHuntingGameLabel = new Label(selectedGame.getName());
@@ -50,6 +52,17 @@ public class huntControlsController implements Initializable {
         Scene promptScene = new Scene(promptLayout, 750, 480);
         huntWindow.setScene(promptScene);
         huntWindow.show();
+
+        huntWindow.setOnCloseRequest(e -> {
+            huntControls.close();
+        });
+    }
+
+    public void importStage(Stage stage){
+        huntControls = stage;
+        huntControls.setOnCloseRequest(e -> {
+            huntWindow.close();
+        });
     }
 
     public void promptPreviousEncounters(){
@@ -91,6 +104,24 @@ public class huntControlsController implements Initializable {
         Scene promptScene = new Scene(promptLayout, 275, 75);
         promptWindow.setScene(promptScene);
         promptWindow.show();
+
+        promptWindow.setOnCloseRequest(e -> {
+            huntControls.close();
+            huntWindow.close();
+        });
+    }
+
+    public void CustomizeHuntWindow(){
+        Stage CustomizeHuntStage = new Stage();
+
+        VBox CustomizeHuntLayout = new VBox();
+        CustomizeHuntLayout.setSpacing(10);
+        CustomizeHuntLayout.setAlignment(Pos.CENTER);
+        CustomizeHuntLayout.getChildren().addAll();
+
+        Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 300, 300);
+        CustomizeHuntStage.setScene(CustomizeHuntScene);
+        CustomizeHuntStage.show();
     }
 
     public void incrementEncounters(){
