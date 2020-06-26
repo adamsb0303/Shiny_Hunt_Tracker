@@ -15,6 +15,13 @@ public class Method {
             base = 4096;
         switch(name){
             case "None":
+            case "Radar Chaining":
+            case "Chain Fishing":
+            case "DexNav":
+            case "SOS Chaining":
+            case "Ultra Wormholes":
+            case "Catch Combo":
+            case "Total Encounters":
                 this.name = name;
                 modifier = 1;
                 break;
@@ -29,34 +36,37 @@ public class Method {
                 else
                     modifier = 6;
                 break;
-            case "Rader Chaining":
-                this.name = name;
-                break;
-            case "Chain Fishing":
-                this.name = name;
-                break;
             case "Friend Safari":
                 this.name = name;
                 modifier = 6;
                 break;
-            case "DexNav":
-                this.name = name;
-                break;
-            case "SOS Chaining":
-                this.name = name;
-                break;
-            case "Ultra Wormholes":
-                this.name = name;
-                break;
-            case "Catch Combo":
-                this.name = name;
-                break;
-            case "Total Encounters":
-                this.name = name;
-                break;
             default:
                 break;
         }
+    }
+
+    public void radarChaining(int encounters){
+
+    }
+
+    public void chainFishing(int encounters){
+
+    }
+
+    public void dexNav(int encounters){
+
+    }
+
+    public void sosChaining(int encounters){
+
+    }
+
+    public void catchCombo(int encounters){
+
+    }
+
+    public void totalEncounters(int encounters){
+
     }
 
     public String getName(){

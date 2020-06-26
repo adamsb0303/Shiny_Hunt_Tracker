@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 public class hunterController implements Initializable{
     public Pane hunterScene;
     public Label oddFractionLabel, encountersLabel, currentHuntingGameLabel, currentHuntingPokemonLabel, currentHuntingMethodLabel;
-    public Button increment;
     public ImageView currentPokemonImage;
 
     Pokemon selectedPokemon;
@@ -44,5 +43,30 @@ public class hunterController implements Initializable{
     public void incrementEncounters(){
         encounters++;
         encountersLabel.setText(String.valueOf(encounters));
+        dynamicOddsMethods();
+    }
+
+    public void resetEncounters(){
+        encounters = 0;
+        encountersLabel.setText("0");
+    }
+
+    private void dynamicOddsMethods(){
+        switch(selectedMethod.getName()){
+            case "Radar Chaining":
+                break;
+            case "Chain Fishing":
+                break;
+            case "DexNav":
+                break;
+            case "SOS Chaining":
+                break;
+            case "Catch Combo":
+                break;
+            case "Total Encounters":
+                break;
+            default:
+                break;
+        }
     }
 }

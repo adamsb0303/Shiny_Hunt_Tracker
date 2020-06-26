@@ -487,16 +487,19 @@ public class selectionPageController implements Initializable {
         FXMLLoader huntLoader = new FXMLLoader();
         huntLoader.setLocation(getClass().getResource("hunter.fxml"));
         Parent hunterParent = huntLoader.load();
-        hunterController controller = huntLoader.getController();
-        controller.importData(selectedPokemon, selectedGame, selectedMethod);
+        hunterController huntController = huntLoader.getController();
+        huntController.importData(selectedPokemon, selectedGame, selectedMethod);
         Scene huntScene = new Scene(hunterParent);
         Stage hunter = (Stage)((Node)event.getSource()).getScene().getWindow();
         hunter.setScene(huntScene);
         hunter.show();
 
 
-        FXMLLoader huntControlsLoader = new FXMLLoader(getClass().getResource("huntControls.fxml"));
+        FXMLLoader huntControlsLoader = new FXMLLoader();
+        huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
         Parent hunterControlsParent = huntControlsLoader.load();
+        huntControlsController huntControlsController = huntControlsLoader.getController();
+        huntControlsController.createLink(huntController);
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
         huntControls.setResizable(false);
