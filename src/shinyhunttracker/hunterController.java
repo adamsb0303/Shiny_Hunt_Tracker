@@ -1,9 +1,17 @@
 package shinyhunttracker;
 
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +27,7 @@ public class hunterController implements Initializable{
     int methodBase;
 
     int encounters = 0;
+    int previousEncounters = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -28,13 +37,20 @@ public class hunterController implements Initializable{
     public void importData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod){
         this.selectedPokemon = selectedPokemon;
         currentHuntingPokemonLabel.setText(selectedPokemon.getName());
+
         this.selectedGame = selectedGame;
         currentHuntingGameLabel.setText(selectedGame.getName());
+
         this.selectedMethod = selectedMethod;
         methodBase = selectedMethod.getBase();
         currentHuntingMethodLabel.setText(selectedMethod.getName());
+
         oddFractionLabel.setText("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel.setText(String.valueOf(encounters));
+
+        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
+            promptPreviousEncounters();
+        }
     }
 
     private int simplifyFraction(double num, int den){
@@ -74,9 +90,39 @@ public class hunterController implements Initializable{
                 oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(encounters), methodBase));
                 break;
             case "Total Encounters":
+                promptPreviousEncounters();
                 break;
             default:
                 break;
         }
+    }
+
+    private void promptPreviousEncounters(){
+        Stage promptWindow = new Stage();
+        promptWindow.setResizable(false);
+        promptWindow.initModality(Modality.APPLICATION_MODAL);
+
+        Label promptLabel = new Label();
+        if(selectedMethod.getName().compareTo("DexNav") == 0) {
+            promptWindow.setTitle("Enter Search Level");
+            promptLabel.setText("Please enter the current Search Level for " + selectedPokemon.getName());
+        }
+        else if(selectedMethod.getName().compareTo("Total Encounters") == 0) {
+            promptWindow.setTitle("Enter Number Battled");
+            promptLabel.setText("Please enter the current Number Battled for " + selectedPokemon.getName());
+        }
+
+        TextField previousInput = new TextField();
+
+        Button enterPreviousEncounters = new Button("Enter");
+        enterPreviousEncounters.setOnAction(e-> System.out.println(previousInput.getText()));
+
+        VBox promptLayout = new VBox();
+        promptLayout.setAlignment(Pos.CENTER);
+        promptLayout.getChildren().addAll(promptLabel, previousInput, enterPreviousEncounters);
+
+        Scene promptScene = new Scene(promptLayout, 300, 200);
+        promptWindow.setScene(promptScene);
+        promptWindow.show();
     }
 }
