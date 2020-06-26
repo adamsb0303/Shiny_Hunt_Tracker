@@ -1,7 +1,6 @@
 package shinyhunttracker;
 
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -17,6 +16,7 @@ public class hunterController implements Initializable{
     Pokemon selectedPokemon;
     Game selectedGame;
     Method selectedMethod;
+    int methodBase;
 
     int encounters = 0;
 
@@ -31,13 +31,14 @@ public class hunterController implements Initializable{
         this.selectedGame = selectedGame;
         currentHuntingGameLabel.setText(selectedGame.getName());
         this.selectedMethod = selectedMethod;
+        methodBase = selectedMethod.getBase();
         currentHuntingMethodLabel.setText(selectedMethod.getName());
         oddFractionLabel.setText("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel.setText(String.valueOf(encounters));
     }
 
     private int simplifyFraction(double num, int den){
-        return (int)(den / num);
+        return (int)Math.round(den / num);
     }
 
     public void incrementEncounters(){
@@ -56,6 +57,7 @@ public class hunterController implements Initializable{
             case "Radar Chaining":
                 break;
             case "Chain Fishing":
+                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(encounters), methodBase));
                 break;
             case "DexNav":
                 break;

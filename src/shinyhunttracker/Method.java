@@ -49,8 +49,10 @@ public class Method {
 
     }
 
-    public void chainFishing(int encounters){
-
+    public int chainFishing(int encounters){
+        if(encounters >= 20)
+            encounters = 20;
+        return encounters * 2;
     }
 
     public void dexNav(int encounters){
