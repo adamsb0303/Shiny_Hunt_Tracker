@@ -62,6 +62,7 @@ public class hunterController implements Initializable{
             case "DexNav":
                 break;
             case "SOS Chaining":
+                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(encounters), methodBase));
                 break;
             case "Catch Combo":
                 break;

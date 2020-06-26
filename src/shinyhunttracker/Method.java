@@ -59,8 +59,20 @@ public class Method {
 
     }
 
-    public void sosChaining(int encounters){
-
+    public int sosChaining(int encounters){
+        if(encounters >= 255 && (name.compareTo("Sun") == 0 || name.compareTo("Moon") == 0)) {
+            while(encounters >= 255){
+                encounters = encounters - 255;
+            }
+        }
+        if (encounters >= 0 && encounters < 10)
+            return 0;
+        else if (encounters >= 10 && encounters < 20)
+            return 4;
+        else if (encounters >= 20 && encounters < 30)
+            return 8;
+        else
+            return 12;
     }
 
     public void catchCombo(int encounters){
