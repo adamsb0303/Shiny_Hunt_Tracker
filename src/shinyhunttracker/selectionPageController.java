@@ -169,7 +169,6 @@ public class selectionPageController implements Initializable {
         treeGamesGen6 = new TreeItem<>();
         treeGamesGen7 = new TreeItem<>();
         treeGamesGen8 = new TreeItem<>();
-        Game testGame = new Game();
 
         if(selectedPokemon.getName().length() > 6)
             if(selectedPokemon.getName().substring(0,6).compareTo("Alolan") == 0)
@@ -179,37 +178,43 @@ public class selectionPageController implements Initializable {
                 generation = 8;
         if(generation == 0)
             return;
-        if(generation <= 1)
+        if(generation <= 1) {
             treeGamesGen1 = makeBranch("Generation 1", gameRoot);
-            for (String i: Games1) {
-                    makeBranch(i, treeGamesGen1);
+            for (String i : Games1) {
+                makeBranch(i, treeGamesGen1);
             }
-        if(generation <= 2)
+        }
+        if(generation <= 2) {
             treeGamesGen2 = makeBranch("Generation 2", gameRoot);
-            for(String i: Games2) {
-                    makeBranch(i, treeGamesGen2);
+            for (String i : Games2) {
+                makeBranch(i, treeGamesGen2);
             }
-        if(generation <= 3)
+        }
+        if(generation <= 3) {
             treeGamesGen3 = makeBranch("Generation 3", gameRoot);
-            for(String i: Games3) {
-                    makeBranch(i, treeGamesGen3);
+            for (String i : Games3) {
+                makeBranch(i, treeGamesGen3);
             }
-        if(generation <= 4)
+        }
+        if(generation <= 4) {
             treeGamesGen4 = makeBranch("Generation 4", gameRoot);
-            for(String i: Games4) {
-                    makeBranch(i, treeGamesGen4);
+            for (String i : Games4) {
+                makeBranch(i, treeGamesGen4);
             }
-        if(generation <= 5)
+        }
+        if(generation <= 5) {
             treeGamesGen5 = makeBranch("Generation 5", gameRoot);
-            for(String i: Games5) {
-                    makeBranch(i, treeGamesGen5);
+            for (String i : Games5) {
+                makeBranch(i, treeGamesGen5);
             }
-        if(generation <= 6)
+        }
+        if(generation <= 6) {
             treeGamesGen6 = makeBranch("Generation 6", gameRoot);
-            for(String i: Games6) {
-                    makeBranch(i, treeGamesGen6);
+            for (String i : Games6) {
+                makeBranch(i, treeGamesGen6);
             }
-        if(generation <= 7)
+        }
+        if(generation <= 7){
             treeGamesGen7 = makeBranch("Generation 7", gameRoot);
             for(String i: Games7) {
                 if(i.substring(0,3).compareTo("Let") == 0) {
@@ -221,15 +226,18 @@ public class selectionPageController implements Initializable {
                 }else
                     makeBranch(i, treeGamesGen7);
             }
-        if(generation <= 8)
+        }
+        if(generation <= 8) {
             treeGamesGen8 = makeBranch("Generation 8", gameRoot);
-            for(String i: Games8) {
-                if(generation < 8) {
-                    for (String j: SWSHPokedex)
+            for (String i : Games8) {
+                if (generation < 8) {
+                    for (String j : SWSHPokedex)
                         if (j.compareTo(selectedPokemon.getName()) == 0)
                             makeBranch(i, treeGamesGen8);
-                }
+                } else
+                    makeBranch(i, treeGamesGen8);
             }
+        }
 
         GameList.setRoot(gameRoot);
         GameList.setShowRoot(false);
@@ -529,7 +537,7 @@ public class selectionPageController implements Initializable {
                 helpButton.setTooltip(methodToolTip);
                 break;
             case "Radar Chaining":
-                methodToolTip.setText("Using the PokeRadar, encounter and defeat a " + selectedPokemon.getName() + "\n once the chain has started run into grass that is violently shaking\nIf no violently shaking grass appears, walk 50 steps to reset your radar\nOnce a shiny pokemon appears, sparkles will accompany the shaking grass\nThe shiny odds cap at a chain of 40\n\nThe chain is broken when a pokemon other than " + selectedPokemon.getName() + " is encountered or you leave the grass area that you where hunting in\nIf the chain is broken, the music will change back to default music of the route");
+                methodToolTip.setText("Using the PokeRadar, encounter and defeat a " + selectedPokemon.getName() + "\nOnce the chain has started run into grass that is violently shaking\nIf no violently shaking grass appears, walk 50 steps to reset your radar\nOnce a shiny pokemon appears, sparkles will accompany the shaking grass\nThe shiny odds cap at a chain of 40\n\nThe chain is broken when a pokemon other than " + selectedPokemon.getName() + " is encountered or you leave the grass area that you where hunting in\nIf the chain is broken, the music will change back to default music of the route");
                 helpButton.setTooltip(methodToolTip);
                 break;
             case "Chain Fishing":
