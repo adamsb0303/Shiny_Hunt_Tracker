@@ -55,8 +55,43 @@ public class Method {
         return encounters * 2;
     }
 
-    public void dexNav(int encounters){
+    public int dexNav(int encounters, int searchLevel){
+        int searchPoints = searchLevel;
+        double points = 0;
+        if (searchLevel < 999) {
+            searchLevel++;
+            if (searchPoints >= 100) {
+                points += 100 * 6.0;
+                searchPoints -= 100;
+            }
+            else
+                points += searchLevel * 6.0;
 
+            if (searchPoints >= 100) {
+                points += 100 * 2.0;
+                searchPoints -= 100;
+            }
+            else
+                points += searchLevel * 2.0;
+
+            if (searchPoints > 0) {
+                points += searchPoints;
+            }
+        }
+        else
+            points = 1599;
+        points = points / 100;
+        double shinyOdds = points / 10000;
+        double normalOdds = 1 - shinyOdds;
+
+        if(encounters == 50)
+            return (int)(1/(1 - Math.pow(normalOdds, modifier + 5)));
+        else if (encounters == 100)
+            return (int)(1 /(1 - Math.pow(normalOdds, modifier + 10)));
+        else if((int)(1 / (1 - Math.pow(normalOdds, modifier))) < base && searchLevel != 0)
+            return (int)(1 /(1 - Math.pow(normalOdds, modifier)));
+        else
+            return 1;
     }
 
     public int sosChaining(int encounters){
@@ -65,11 +100,11 @@ public class Method {
                 encounters = encounters - 255;
             }
         }
-        if (encounters >= 0 && encounters < 10)
+        if (encounters < 10)
             return 0;
-        else if (encounters >= 10 && encounters < 20)
+        else if (encounters < 20)
             return 4;
-        else if (encounters >= 20 && encounters < 30)
+        else if (encounters < 30)
             return 8;
         else
             return 12;
@@ -86,8 +121,19 @@ public class Method {
             return 11;
     }
 
-    public void totalEncounters(int encounters){
-
+    public int totalEncounters(int previousEncounters){
+        if(previousEncounters < 50)
+            return 0;
+        else if(previousEncounters < 100)
+            return 1;
+        else if (previousEncounters < 200)
+            return 2;
+        else if (previousEncounters < 300)
+            return 3;
+        else if (previousEncounters < 500)
+            return 4;
+        else
+            return 5;
     }
 
     public String getName(){

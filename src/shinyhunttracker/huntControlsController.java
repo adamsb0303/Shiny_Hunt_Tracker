@@ -24,25 +24,23 @@ import java.util.ResourceBundle;
 public class huntControlsController implements Initializable {
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
 
-    Label oddFractionLabel, encountersLabel;
+    Label oddFractionLabel, encountersLabel, previousEncountersLabel;
 
     Pokemon selectedPokemon = new Pokemon();
     Game selectedGame = new Game();
     Method selectedMethod = new Method();
 
     int methodBase;
-    int encounters = 0;
-    int previousEncounters = 0;
+    int encounters, previousEncounters = 0;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
-    }
+    public void initialize(URL url, ResourceBundle rb){ }
 
     public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
-        dynamicOddsMethods();
+        methodBase = selectedMethod.getBase();
 
         Stage huntWindow = new Stage();
 
@@ -51,10 +49,12 @@ public class huntControlsController implements Initializable {
         Label currentHuntingMethodLabel= new Label(selectedMethod.getName());
         oddFractionLabel= new Label("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel= new Label(String.valueOf(encounters));
+        previousEncountersLabel = new Label();
+        previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
 
         VBox promptLayout = new VBox();
         promptLayout.setAlignment(Pos.CENTER);
-        promptLayout.getChildren().addAll(currentHuntingGameLabel, currentHuntingMethodLabel, currentHuntingPokemonLabel, encountersLabel, oddFractionLabel);
+        promptLayout.getChildren().addAll(currentHuntingGameLabel, currentHuntingMethodLabel, currentHuntingPokemonLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
 
         Scene promptScene = new Scene(promptLayout, 750, 480);
         huntWindow.setScene(promptScene);
@@ -81,6 +81,11 @@ public class huntControlsController implements Initializable {
         previousInput.setOnAction(e-> {
             try{
                 previousEncounters = Integer.parseInt(previousInput.getText());
+                previousEncountersLabel.setText(String.valueOf(previousEncounters));
+                if(selectedMethod.getName().compareTo("DexNav") == 0)
+                    oddFractionLabel.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
+                else
+                    oddFractionLabel.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
                 promptWindow.close();
             }catch (NumberFormatException f){
                 previousInput.setText("");
@@ -100,6 +105,7 @@ public class huntControlsController implements Initializable {
     public void incrementEncounters(){
         encounters++;
         encountersLabel.setText(String.valueOf(encounters));
+        dynamicOddsMethods();
     }
 
     public void resetEncounters(){
@@ -121,6 +127,12 @@ public class huntControlsController implements Initializable {
                 oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(encounters), methodBase));
                 break;
             case "DexNav":
+                if (previousEncounters < 999) {
+                    previousEncounters++;
+                    previousEncountersLabel.setText(String.valueOf(previousEncounters));
+                }else
+                    previousEncountersLabel.setText("999");
+                oddFractionLabel.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
                 break;
             case "SOS Chaining":
                 oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(encounters), methodBase));
@@ -129,6 +141,8 @@ public class huntControlsController implements Initializable {
                 oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(encounters), methodBase));
                 break;
             case "Total Encounters":
+                previousEncounters++;
+                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), methodBase));
                 break;
             default:
                 break;
