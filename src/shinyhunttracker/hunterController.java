@@ -65,6 +65,7 @@ public class hunterController implements Initializable{
                 oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(encounters), methodBase));
                 break;
             case "Catch Combo":
+                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(encounters), methodBase));
                 break;
             case "Total Encounters":
                 break;
