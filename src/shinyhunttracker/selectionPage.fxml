@@ -90,7 +90,7 @@
                   </CheckBox>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#beginHunt" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
+            <Button fx:id="beginHuntButton" disable="true" mnemonicParsing="false" onAction="#beginHunt" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="155.0" top="10.0" />
                </HBox.margin>
