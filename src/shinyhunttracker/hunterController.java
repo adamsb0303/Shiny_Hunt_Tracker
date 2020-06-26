@@ -55,6 +55,12 @@ public class hunterController implements Initializable{
     private void dynamicOddsMethods(){
         switch(selectedMethod.getName()){
             case "Radar Chaining":
+                int tempEncounters;
+                if (encounters >= 40)
+                    tempEncounters = 39;
+                else
+                    tempEncounters = encounters;
+                oddFractionLabel.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(methodBase - 8196) / 4096)))));
                 break;
             case "Chain Fishing":
                 oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(encounters), methodBase));
