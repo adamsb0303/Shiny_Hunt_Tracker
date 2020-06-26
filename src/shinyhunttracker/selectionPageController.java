@@ -11,13 +11,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import static javafx.util.Duration.INDEFINITE;
+import static javafx.util.Duration.ZERO;
 
 public class selectionPageController implements Initializable {
     public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
     public Label pokemonLabel, gameLabel, methodLabel;
     public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox;
-    public Button beginHuntButton;
+    public Button beginHuntButton, helpButton;
+    Tooltip methodToolTip = new Tooltip();
 
     public TreeItem<String> gameRoot, treeGamesGen1, treeGamesGen2, treeGamesGen3, treeGamesGen4, treeGamesGen5, treeGamesGen6, treeGamesGen7, treeGamesGen8;
     public TreeItem<String> methodRoot, evolution0, evolution1, evolution2;
@@ -53,6 +56,8 @@ public class selectionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();
+        methodToolTip.setShowDelay(ZERO);
+        methodToolTip.setShowDuration(INDEFINITE);
         PokemonList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
@@ -103,10 +108,9 @@ public class selectionPageController implements Initializable {
                     if(newValue != null) {
                         selectedMethod = new Method(newValue.toString().substring(18, newValue.toString().length() - 2), selectedGame.getGeneration());
                         methodLabel.setText(selectedMethod.getName());
-                        if(selectedMethod.getName() != null)
-                            beginHuntButton.setDisable(false);
-                        else
-                            beginHuntButton.setDisable(true);
+                        beginHuntButton.setDisable(selectedMethod.getName() == null);
+                        setToolTip(selectedMethod.getName());
+                        helpButton.setVisible(selectedMethod.getName() != null);
                     }
                 });
     }
@@ -324,15 +328,18 @@ public class selectionPageController implements Initializable {
         selectedGame.generateMethods(selectedPokemon);
         evolution2 = makeBranch(selectedPokemon.getName(), methodRoot);
         for(String i: selectedGame.getMethods())
-            if (i != null)
+            if (i != null) {
                 makeBranch(i, evolution2);
+            }
             evolution2.setExpanded(true);
+
         if(evolutionStage == 2 && findGeneration(Stage1.getName()) <= selectedGame.getGeneration()){
             selectedGame.generateMethods(Stage1);
             evolution1 = makeBranch(Stage1.getName(), methodRoot);
             for(String i: selectedGame.getMethods())
                 if (i != null)
                     makeBranch(i, evolution1);
+
         }if(evolutionStage >= 1 && findGeneration(Stage0.getName()) <= selectedGame.getGeneration()){
             selectedGame.generateMethods(Stage0);
             evolution0 = makeBranch(Stage0.getName(), methodRoot);
@@ -505,6 +512,59 @@ public class selectionPageController implements Initializable {
             selectedMethod.setModifier(selectedMethod.getModifier() + 1);
         else
             selectedMethod.setModifier(selectedMethod.getModifier() - 1);
+    }
+
+    public void setToolTip(String selectedMethod){
+        switch (selectedMethod){
+            case "None":
+                methodToolTip.setText("Base odds are being used");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Breeding with Shiny":
+                methodToolTip.setText("Breeding a normal pokemon with a shiny pokemon increases your shiny odds dramatically");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Masuda":
+                methodToolTip.setText("Breeding pokemon from 2 different languages (ie. English and French) increases your shiny odds");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Radar Chaining":
+                methodToolTip.setText("Using the PokeRadar, encounter and defeat a " + selectedPokemon.getName() + "\n once the chain has started run into grass that is violently shaking\nIf no violently shaking grass appears, walk 50 steps to reset your radar\nOnce a shiny pokemon appears, sparkles will accompany the shaking grass\nThe shiny odds cap at a chain of 40\n\nThe chain is broken when a pokemon other than " + selectedPokemon.getName() + " is encountered or you leave the grass area that you where hunting in\nIf the chain is broken, the music will change back to default music of the route");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Chain Fishing":
+                methodToolTip.setText("For every fish that is encountered, your shiny odds increase\n\nCaps at a chain of 20\nChain is broken when no fish is encountered (\"Nothing seems to be biting...\", \"You Reeled it in too fast!\", or \"You Reeled it in too slow!\")");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Friend Safari":
+                methodToolTip.setText("Shiny odds are better in the Friend Safari");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "DexNav":
+                methodToolTip.setText("Shiny odds increase as Search Level increases\nLarge shiny odd boosts are given at a chain of 50 and 100\nChain is broken when different Pokemon is encountered or the pokemon runs away");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "SOS Chaining":
+                methodToolTip.setText("Every time a pokemon calls for help, the shiny odds increase\nAdrenaline orbs and the Intimidate ability increase the chance of a pokemon calling for help\n\nShiny odds cap at a chain of 30\nChain is broken when all pokemon are defeated");
+                if(selectedGame.getName().compareTo("Sun") == 0 || selectedGame.getName().compareTo("Moon") == 0)
+                    methodToolTip.setText(methodToolTip.getText() + "\nShiny odds reset at a chain of 255");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Catch Combo":
+                methodToolTip.setText("When you catch the same pokemon back to back the shiny odds increase\n\nShiny odds cap at a chain of 30\nChain is broked when the pokemon flees or you catch a different pokemon");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Ultra Wormholes":
+                methodToolTip.setText("Shiny odds increase based on distance, and number of rings surrounding the wormhole");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            case "Total Encounters":
+                methodToolTip.setText("The more of the pokemon that you have caught/defeated in total your shiny odds increase\n\nShiny odds cap at 500 total encounters");
+                helpButton.setTooltip(methodToolTip);
+                break;
+            default:
+                break;
+        }
     }
 
     public TreeItem<String> makeBranch(String title, TreeItem<String> parent){

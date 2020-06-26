@@ -45,10 +45,6 @@ public class Method {
         }
     }
 
-    public void radarChaining(int encounters){
-
-    }
-
     public int chainFishing(int encounters){
         if(encounters >= 20)
             encounters = 20;

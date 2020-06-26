@@ -65,6 +65,10 @@
                         <Insets left="5.0" top="5.0" />
                      </padding>
                   </Label>
+                  <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" text="?" visible="false">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
          </children>
