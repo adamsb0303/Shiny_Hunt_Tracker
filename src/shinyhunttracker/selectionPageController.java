@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +42,7 @@ public class selectionPageController implements Initializable {
     String[] Games6= {"X", "Y", "Omega Ruby", "Alpha Sapphire"};
     String[] Games7= {"Sun", "Moon", "Ultra Sun", "Ultra Moon", "Let's Go Pikachu", "Let's Go Eevee"};
     String[] Games8= {"Sword", "Shield"};
+    String[] SWSHPokedex = {"Caterpie", "Metapod", "Butterfree", "Grubbin", "Charjabug", "Vikavolt", "Hoothoot", "Noctowl", "Pidove", "Tranquill", "Unfezant", "Zigzagoon", "Linoone", "Lotad", "Lombre", "Ludicolo", "Seedot", "Nuzleaf", "Shiftry", "Purrloin", "Liepard", "Bunnelby", "Diggersby", "Minccino", "Cinccino", "Bounsweet", "Steenee", "Tsareena", "Oddish", "Gloom", "Vileplume", "Bellossom", "Budew", "Roselia", "Roserade", "Wingull", "Pelipper", "Joltik", "Galvantula", "Electrike", "Manectric", "Vulpix", "Ninetales", "Growlithe", "Arcanine", "Vanillite", "Vanillish", "Vaniluxe", "Swinub", "Piloswine", "Mamoswine", "Snorunt", "Glalie", "Froslass", "Baltoy", "Claydol", "Mudbray", "Mudsdale", "Dwebble", "Crustle", "Golett", "Golurk", "Munna", "Musharna", "Natu", "Xatu", "Stufful", "Bewear", "Snover", "Abomasnow", "Krabby", "Kingler", "Wooper", "Quagsire", "Corphish", "Crawdaunt", "Nincada", "Ninjask", "Shedinja", "Tyrogue", "Hitmonlee", "Hitmonchan", "Hitmontop", "Pancham", "Pangoro", "Klink", "Klinklang", "Combee", "Vespiquen", "Bronzor", "Bronzong", "Ralts", "Kirlia", "Gardevoir", "Gallade", "Drifblim", "Gossifleur", "Eldegoss","Cherubi", "Cherrim", "Stunky", "Skuntank", "Tympole", "Palpitoad", "Seismitoad", "Duskull", "Dusclops","Dusknoir", "Machop", "Machoke", "Machamp", "Gastly", "Haunter", "Gengar", "Magikarp", "Gyarados","Goldeen", "Seaking", "Remoraid", "Octillery", "Shellder", "Cloyster", "Feebas", "Milotic", "Basculin", "Wishiwashi", "Pyukumuku", "Trubbish", "Garbodor", "Diglett", "Dugtrio", "Drilbur", "Excadrill", "Roggenrola", "Boldore", "Gigalith", "Timburr", "Gurdurr", "Conkeldurr", "Woobat", "Swoobat", "Noibat", "Noivern", "Onix", "Steelix", "Meowth", "Persian", "Cutiefly", "Ribombee", "Ferroseed", "Ferrothorn", "Pumpkaboo", "Gourgeist", "Pichu", "Pikachu", "Raichu", "Alolan Raichu", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Espeon", "Umbreon", "Leafeon", "Glaceon", "Sylveon", "Espurr", "Meowstic", "Swirlix", "Slurpuff", "Spritzee", "Aromatisse", "Dewpider", "Araquanid", "Wynaut", "Wobbuffet", "Farfetch'd", "Chinchou", "Croagunk", "Toxicroak", "Scraggy", "Scrafty", "Stunfisk", "Shuckle", "Barboach", "Whiscash", "Shellos", "Gastrodon", "Wimpod", "Golisopod", "Binacle", "Barbaracle", "Corsola", "Salandit", "Salazzle", "Pawniard", "Bisharp", "Throh", "Sawk", "Koffing", "Weezing", "Bonsly", "Sudowoodo", "Cleffa", "Clefairy", "Clefable", "Togepi", "Togetic", "Togekiss", "Munchlax", "Snorlax", "Cottonee", "Whimsicott", "Rhyhorn", "Rhydon", "Rhyperior", "Gothita", "Gothorita", "Gothitelle", "Solosis", "Duosion", "Reuniclus", "Karrablast", "Escavalier", "Shelmet", "Accelgor", "Elgyem", "Beheeyem", "Cubchoo", "Beartic", "Rufflet", "Braviary", "Vullaby", "Mandibuzz", "Skorupi", "Drapion", "Litwick", "Lampent", "Chandelure", "Inkay", "Malamar", "Sneasel", "Weavile", "Sableye", "Mawile", "Maractus", "Sigilyph", "Riolu", "Lucario", "Torkoal", "Mimikyu", "Qwilfish", "Frillish", "Jellicent", "Mareanie", "Toxapex", "Hippopotas", "Hippowdon", "Durant", "Heatmor", "Helioptile", "Heliolisk", "Hawlucha", "Trapinch", "Vibrava","Flygon", "Axew", "Fraxure", "Haxorus", "Yamask", "Cofagrigus", "Honedge", "Doublade", "Aegislash", "Ponyta", "Rapidash", "Phantump", "Trevenant", "Morelull", "Shiinotic", "Oranguru", "Passimian", "Drampa", "Turtonator", "Togedemaru", "Mantyke", "Mantine", "Wailmer", "Wailord", "Bergmite", "Avalugg", "Dehlmise", "Lapras", "Lunatone", "Solrock", "Mime Jr.", "Mr. Mime", "Mr. Rime", "Darumaka", "Darmanitan", "Rotom", "Ditto", "Charmander", "Charmeleon", "Charizard", "Type: Null", "Silvally", "Larvitar", "Pupitar", "Tyranitar", "Deino", "Zweilous", "Hydreigon", "Goomy", "Sliggoo", "Goodra", "Jangmo-o", "Hakamo-o", "Kommo-o", "Bulbasaur", "Ivysaur", "Venusaur", "Squirtle", "Wartortle", "Blastoise", "Mewtwo", "Mew", "Celebi", "Jirachi", "Cobalion", "Terrakion", "Virizion", "Reshiram", "Zekrom", "Kyurem", "Keldeo", "Rowlet", "Dartrix", "Decidueye", "Litten", "Torracat", "Incineroar", "Popplio", "Brionne", "Primarina", "Cosmog", "Cosmoem", "Solgaleo", "Lunala", "Necrozma", "Marshadow", "Zeraora", "Meltan", "Melmetal", "Kubfu", "Urshifu", "Zarude", "Slowpoke", "Slowbro", "Sandshrew", "Sandslash", "Jigglypuff", "Wigglytuff", "Psyduck", "Golduck", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Tentacool", "Tentacruel", "Magnemite", "Magneton", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Lickitung", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Staryu", "Starmie", "Scyther", "Pinsir", "Tauros", "Porygon", "Igglybuff", "Marill", "Azumarill", "Politoed", "Slowking", "Dunsparce", "Scizor", "Heracross", "Skarmory", "Kingdra", "Porygon2", "Miltank", "Blissey", "Whismur", "Loudred", "Exploud", "Azurill", "Carvanha", "Sharpedo", "Shinx", "Luxio", "Luxray", "Buneary", "Lopunny", "Happiny", "Magnezone", "Lickilicky", "Tangwoth", "Porygon-Z", "Lillipup", "Herdier", "Stoutland", "Venipede", "Whirlipede", "Scolipede", "Petilil", "Lilligant", "Sandile", "Krokorok", "Krookodile", "Zorua", "Zoroark", "Emolga", "Foongus", "Amoonguss", "Mienfoo", "Mienshao", "Druddigon", "Bouffalant", "Larvesta", "Volcarona", "Fletchling", "Fletchinder", "Talonflame", "Skrelp", "Dragalge", "Clauncher", "Clawitzer", "Dedenne", "Klefki", "Rockruff", "Lycanroc", "Fomantis", "Lurantis", "Comfey", "Sandygast", "Palossand", "Magearna"};
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -158,6 +157,12 @@ public class selectionPageController implements Initializable {
         treeGamesGen8 = new TreeItem<>();
         Game testGame = new Game();
 
+        if(selectedPokemon.getName().length() > 6)
+            if(selectedPokemon.getName().substring(0,6).compareTo("Alolan") == 0)
+                generation = 7;
+        if(selectedPokemon.getName().length() > 8)
+            if(selectedPokemon.getName().substring(0,8).compareTo("Galarian") == 0)
+                generation = 8;
         if(generation == 0)
             return;
         if(generation <= 1)
@@ -193,12 +198,23 @@ public class selectionPageController implements Initializable {
         if(generation <= 7)
             treeGamesGen7 = makeBranch("Generation 7", gameRoot);
             for(String i: Games7) {
+                if(i.substring(0,3).compareTo("Let") == 0) {
+                    if (generation == 1)
+                        makeBranch(i, treeGamesGen7);
+                    if(selectedPokemon.getName().length() > 6)
+                        if(selectedPokemon.getName().substring(0,6).compareTo("Alolan") == 0)
+                            makeBranch(i, treeGamesGen7);
+                }else
                     makeBranch(i, treeGamesGen7);
             }
         if(generation <= 8)
             treeGamesGen8 = makeBranch("Generation 8", gameRoot);
             for(String i: Games8) {
-                    makeBranch(i, treeGamesGen8);
+                if(generation < 8) {
+                    for (String j: SWSHPokedex)
+                        if (j.compareTo(selectedPokemon.getName()) == 0)
+                            makeBranch(i, treeGamesGen8);
+                }
             }
 
         GameList.setRoot(gameRoot);
@@ -451,6 +467,7 @@ public class selectionPageController implements Initializable {
         else
             selectedPokemon.setName(selectedPokemon.getName().substring(7, selectedPokemon.getName().length()));
         pokemonLabel.setText(selectedPokemon.getName());
+        InitializeGameList(selectedPokemon.getGeneration());
     }
 
     public void setGalarian(){
@@ -462,6 +479,7 @@ public class selectionPageController implements Initializable {
         else
             selectedPokemon.setName(selectedPokemon.getName().substring(9, selectedPokemon.getName().length()));
         pokemonLabel.setText(selectedPokemon.getName());
+        InitializeGameList(selectedPokemon.getGeneration());
     }
 
     public void setShinyCharm(){
