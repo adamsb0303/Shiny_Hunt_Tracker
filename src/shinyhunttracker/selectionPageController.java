@@ -152,6 +152,7 @@ public class selectionPageController implements Initializable {
     }
 
     public void InitializeGameList(int generation){
+        clearMethodList();
         selectedGame = new Game();
         shinyCharmCheckBox.setSelected(false);
         lureCheckBox.setSelected(false);
@@ -370,6 +371,7 @@ public class selectionPageController implements Initializable {
         shinyCharmCheckBox.setDisable(true);
         lureCheckBox.setDisable(true);
         beginHuntButton.setDisable(true);
+        helpButton.setVisible(false);
 
         MethodList.setRoot(methodRoot);
         MethodList.setShowRoot(false);
