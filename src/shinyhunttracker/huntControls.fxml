@@ -10,9 +10,9 @@
    <top>
        <MenuBar BorderPane.alignment="CENTER">
           <menus>
-              <Menu fx:id="saveButton" mnemonicParsing="false" text="Save" />
               <Menu mnemonicParsing="false" text="Settings">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#saveHunt" text="Save Hunt" />
                   <MenuItem mnemonicParsing="false" onAction="#CustomizeHuntWindow" text="Customize Hunt Window" />
                </items>
               </Menu>

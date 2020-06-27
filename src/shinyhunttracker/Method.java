@@ -1,6 +1,9 @@
 package shinyhunttracker;
 
-public class Method {
+import java.io.Serializable;
+
+public class Method  implements Serializable {
+    private static final long serialVersionUID = 1L;
     String name;
     int base;
     int modifier;

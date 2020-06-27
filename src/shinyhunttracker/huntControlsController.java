@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -15,7 +14,6 @@ import java.util.ResourceBundle;
 
 public class huntControlsController implements Initializable {
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
-    public Menu saveButton = new Menu();
     Stage huntControls, huntWindow = new Stage();
 
     Label oddFractionLabel, encountersLabel, previousEncountersLabel;
@@ -28,8 +26,7 @@ public class huntControlsController implements Initializable {
     int encounters, previousEncounters = 0;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
-    }
+    public void initialize(URL url, ResourceBundle rb){ }
 
     public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod){
         this.selectedPokemon = selectedPokemon;
@@ -122,6 +119,11 @@ public class huntControlsController implements Initializable {
         Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 300, 300);
         CustomizeHuntStage.setScene(CustomizeHuntScene);
         CustomizeHuntStage.show();
+    }
+
+    public void saveHunt(){
+        SaveData test = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        test.saveHunt();
     }
 
     public void incrementEncounters(){

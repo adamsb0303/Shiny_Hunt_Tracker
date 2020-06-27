@@ -79,7 +79,6 @@ public class selectionPageController implements Initializable {
                                 oldSelectionGameGeneration = selectedGame.getGeneration();
                             InitializeGameList(selectedPokemon.getGeneration());
                             collapseGeneration(oldSelectionGameGeneration);
-                            clearMethodList();
                         }
                     }
                 });
