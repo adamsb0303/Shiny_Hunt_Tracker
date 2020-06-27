@@ -19,38 +19,37 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //SaveData checkForData = new SaveData();
-        //if(checkForData.getHuntPokemon() != null){
-        Platform.runLater(() -> {
-            Stage loadStage = new Stage();
-            VBox loadLayout = new VBox();
-            Label prompt = new Label("Would you like to Continue a Previous hunt or \nstart a new one?");
-            Button continuePrevious = new Button("Continue Previous Hunt");
-            Button newHunt = new Button("Start New Hunt");
-            loadLayout.getChildren().addAll(prompt, continuePrevious, newHunt);
-            loadLayout.setSpacing(10);
-            loadLayout.setAlignment(Pos.CENTER);
+        Stage huntSelectionWindow = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
+        huntSelectionWindow.setTitle("Shiny Hunt Tracker");
+        huntSelectionWindow.setResizable(false);
+        huntSelectionWindow.setScene(new Scene(root, 750, 480));
 
-            Scene loadScene = new Scene(loadLayout, 275, 150);
-            loadStage.setTitle("Load previous save");
-            loadStage.setResizable(false);
-            loadStage.setScene(loadScene);
-            loadStage.show();
+        SaveData checkForData = new SaveData();
+        checkForData.loadHunt();
+        if(checkForData.getHuntPokemon() != null) {
+            Platform.runLater(() -> {
+                Stage loadStage = new Stage();
+                VBox loadLayout = new VBox();
+                Label prompt = new Label("Would you like to Continue a Previous hunt or \nstart a new one?");
+                Button continuePrevious = new Button("Continue Previous Hunt");
+                Button newHunt = new Button("Start New Hunt");
+                loadLayout.getChildren().addAll(prompt, continuePrevious, newHunt);
+                loadLayout.setSpacing(10);
+                loadLayout.setAlignment(Pos.CENTER);
 
-            newHunt.setOnAction(e -> {
-                try {
-                    Stage huntSelectionWindow = new Stage();
-                    Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
-                    huntSelectionWindow.setTitle("Shiny Hunt Tracker");
-                    huntSelectionWindow.setResizable(false);
-                    huntSelectionWindow.setScene(new Scene(root, 750, 480));
+                Scene loadScene = new Scene(loadLayout, 275, 150);
+                loadStage.setTitle("Load previous save");
+                loadStage.setResizable(false);
+                loadStage.setScene(loadScene);
+                loadStage.show();
+
+                newHunt.setOnAction(e -> {
                     huntSelectionWindow.show();
                     loadStage.close();
-                }catch (IOException f){
-                    System.out.println("Error");
-                }
+                });
             });
-        });
+        }else
+            huntSelectionWindow.show();
     }
-
 }

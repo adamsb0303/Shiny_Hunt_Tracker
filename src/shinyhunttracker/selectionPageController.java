@@ -87,7 +87,7 @@ public class selectionPageController implements Initializable {
                     if(newValue != null) {
                         newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
                         if(findGeneration(newSelectionGame) != 0) {
-                            selectedGame = new Game(newSelectionGame, findGeneration(newSelectionGame), selectedPokemon);
+                            selectedGame = new Game(newSelectionGame, findGeneration(newSelectionGame));
                             gameLabel.setText(selectedGame.getName());
                             shinyCharmCheckBox.setSelected(false);
                             lureCheckBox.setSelected(false);

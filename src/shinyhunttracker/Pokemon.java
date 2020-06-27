@@ -1,9 +1,6 @@
 package shinyhunttracker;
 
-import java.io.Serializable;
-
-public class Pokemon implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class Pokemon{
     String name;
     int generation;
     Boolean breedable;

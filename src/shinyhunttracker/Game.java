@@ -1,9 +1,6 @@
 package shinyhunttracker;
 
-import java.io.Serializable;
-
-public class Game  implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Game {
     String name;
     int generation;
     String[] Methods = new String[5];
@@ -14,11 +11,6 @@ public class Game  implements Serializable {
     }
 
     Game(String name, int generation){
-        this.name = name;
-        this.generation = generation;
-    }
-
-    Game(String name, int generation, Pokemon selectedPokemon){
         this.name = name;
         this.generation = generation;
     }
