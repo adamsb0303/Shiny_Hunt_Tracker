@@ -8,6 +8,9 @@ public class SaveData {
     Method selectedMethod;
     int encounters;
 
+    SaveData(){
+
+    }
     SaveData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
