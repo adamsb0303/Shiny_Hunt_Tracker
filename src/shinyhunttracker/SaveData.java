@@ -1,11 +1,9 @@
 package shinyhunttracker;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.*;
 
 import static java.lang.Integer.parseInt;
@@ -29,11 +27,18 @@ public class SaveData {
 
     public void saveHunt(){
         try {
+            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
             File file = new File("Save Data/PreviousHunts.txt");
-            FileWriter test = new FileWriter(file, true);
-            BufferedWriter fileWriter = new BufferedWriter(test);
-            fileWriter.write(selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",\n");
-            fileWriter.close();
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            int sameDataLine = checkForPreviousData(saveData);
+            if(sameDataLine == -1)
+                bufferedWriter.write(saveData);
+            else
+                replaceLine(sameDataLine, saveData);
+
+            bufferedWriter.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -117,5 +122,41 @@ public class SaveData {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public int checkForPreviousData(String saveData) throws IOException{
+        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+        int lineNumber = -1;
+
+        String line;
+        while((line = fileReader.readLine()) != null){
+            lineNumber++;
+            for(int i = 0; i < 6; i++){
+                if(i == 5)
+                    return lineNumber;
+                if(spiltString(saveData,i).compareTo(spiltString(line,i)) != 0) {
+                    break;
+                }
+            }
+        }
+        return lineNumber;
+    }
+
+    public void replaceLine(int lineNumber, String saveData) throws IOException{
+        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+        StringBuilder inputBuffer = new StringBuilder();
+
+        for(int i = 0; i < getfileLength(); i++){
+            String line = fileReader.readLine();
+            if(i == lineNumber){
+                line = saveData;
+            }
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+        }
+
+        FileOutputStream fileOut = new FileOutputStream("Save Data/PreviousHunts.txt");
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
     }
 }
