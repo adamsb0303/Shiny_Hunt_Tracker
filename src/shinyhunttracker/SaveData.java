@@ -53,6 +53,21 @@ public class SaveData {
         }
     }
 
+    public String getLinefromFile(int lineNumber){
+        try {
+            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+
+            for(int i = 0; i < getfileLength(); i++) {
+                String line = fileReader.readLine();
+                if(i == lineNumber)
+                    return spiltString(line, 0) + " | " + spiltString(line, 1) + " | " + spiltString(line, 3) + " | " + spiltString(line, 5) + " encounters";
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private String spiltString(String line, int word){
         int index;
         for(int i = 0; i < word; i++){
@@ -76,5 +91,18 @@ public class SaveData {
 
     public int getHuntEncounters(){
         return encounters;
+    }
+
+    public int getfileLength(){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+            int lines = 0;
+            while(reader.readLine() != null)
+                lines++;
+            return lines;
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

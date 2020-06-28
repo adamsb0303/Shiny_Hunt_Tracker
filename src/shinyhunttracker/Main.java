@@ -8,9 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -48,8 +49,36 @@ public class Main extends Application {
                     huntSelectionWindow.show();
                     loadStage.close();
                 });
+
+                continuePrevious.setOnAction(e -> {
+                    Stage selectedPreviousHuntsStage = new Stage();
+                    selectedPreviousHuntsStage.setTitle("Select a previous hunt");
+                    TreeView<String> previousHuntsView = new TreeView<>();
+                    TreeItem<String> previousHuntsRoot = new TreeItem<>();
+
+                    SaveData previousHuntData = new SaveData();
+
+                    for(int i = 0; i < previousHuntData.getfileLength(); i++){
+                        makeBranch(previousHuntData.getLinefromFile(i), previousHuntsRoot);
+                    }
+
+                    previousHuntsView.setRoot(previousHuntsRoot);
+                    previousHuntsView.setShowRoot(false);
+
+                    VBox previousHuntsLayout = new VBox();
+                    previousHuntsLayout.getChildren().addAll(previousHuntsView);
+                    Scene previousHuntsScene = new Scene(previousHuntsLayout);
+                    selectedPreviousHuntsStage.setScene(previousHuntsScene);
+                    selectedPreviousHuntsStage.show();
+                    loadStage.close();
+                });
             });
         }else
             huntSelectionWindow.show();
+    }
+
+    public void makeBranch(String title, TreeItem<String> parent){
+        TreeItem<String> item = new TreeItem<>(title);
+        parent.getChildren().add(item);
     }
 }
