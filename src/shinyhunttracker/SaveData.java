@@ -1,7 +1,6 @@
 package shinyhunttracker;
 
 import java.io.*;
-import java.nio.Buffer;
 
 import static java.lang.Integer.parseInt;
 
@@ -34,20 +33,21 @@ public class SaveData {
         }
     }
 
-    public void loadHunt(){
+    public void loadHunt(int lineNumber){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
 
-            String line = fileReader.readLine();
-            if(line != null) {
-                int generation = parseInt(spiltString(line, 2));
-                selectedPokemon = new Pokemon(spiltString(line, 0), generation);
-                selectedGame = new Game(spiltString(line, 1), generation);
-                selectedMethod = new Method(spiltString(line, 3), generation);
-                selectedMethod.setModifier(parseInt(spiltString(line, 4)));
-                encounters = parseInt(spiltString(line, 5));
+            for(int i = 0; i < getfileLength(); i++) {
+                String line = fileReader.readLine();
+                if(i == lineNumber) {
+                    int generation = parseInt(spiltString(line, 2));
+                    selectedPokemon = new Pokemon(spiltString(line, 0), generation);
+                    selectedGame = new Game(spiltString(line, 1), generation);
+                    selectedMethod = new Method(spiltString(line, 3), generation);
+                    selectedMethod.setModifier(parseInt(spiltString(line, 4)));
+                    encounters = parseInt(spiltString(line, 5));
+                }
             }
-
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class SaveData {
             for(int i = 0; i < getfileLength(); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber)
-                    return spiltString(line, 0) + " | " + spiltString(line, 1) + " | " + spiltString(line, 3) + " | " + spiltString(line, 5) + " encounters";
+                    return (i+1) + ") " + spiltString(line, 0) + " | " + spiltString(line, 1) + " | " + spiltString(line, 3) + " | " + spiltString(line, 5) + " encounters";
             }
         }catch (IOException e){
             e.printStackTrace();

@@ -13,6 +13,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import static java.lang.Integer.parseInt;
+
 public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -27,8 +29,7 @@ public class Main extends Application {
         huntSelectionWindow.setScene(new Scene(root, 750, 480));
 
         SaveData checkForData = new SaveData();
-        checkForData.loadHunt();
-        if(checkForData.getHuntPokemon() != null) {
+        if(checkForData.getLinefromFile(0) != null) {
             Platform.runLater(() -> {
                 Stage loadStage = new Stage();
                 VBox loadLayout = new VBox();
@@ -71,6 +72,12 @@ public class Main extends Application {
                     selectedPreviousHuntsStage.setScene(previousHuntsScene);
                     selectedPreviousHuntsStage.show();
                     loadStage.close();
+
+                    previousHuntsView.getSelectionModel().selectedItemProperty()
+                            .addListener((v, oldValue, newValue) -> {
+                                String line = newValue.toString().substring(18);
+                                previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1);
+                            });
                 });
             });
         }else
