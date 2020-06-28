@@ -33,6 +33,7 @@ public class SaveData {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
             int sameDataLine = checkForPreviousData(saveData);
+            System.out.println(sameDataLine);
             if(sameDataLine == -1)
                 bufferedWriter.write(saveData);
             else
@@ -126,11 +127,10 @@ public class SaveData {
 
     public int checkForPreviousData(String saveData) throws IOException{
         BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
-        int lineNumber = -1;
 
+        int lineNumber = 0;
         String line;
         while((line = fileReader.readLine()) != null){
-            lineNumber++;
             for(int i = 0; i < 6; i++){
                 if(i == 5)
                     return lineNumber;
@@ -138,8 +138,9 @@ public class SaveData {
                     break;
                 }
             }
+            lineNumber++;
         }
-        return lineNumber;
+        return -1;
     }
 
     public void replaceLine(int lineNumber, String saveData) throws IOException{
