@@ -596,7 +596,7 @@ public class selectionPageController implements Initializable {
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
         huntControls.setResizable(false);
-        huntControls.setScene(new Scene(hunterControlsParent, 600, 100));
+        huntControls.setScene(new Scene(hunterControlsParent, 600, 150));
         huntControlsController.importStage(huntControls);
         huntControls.show();
 

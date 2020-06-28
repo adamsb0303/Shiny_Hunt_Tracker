@@ -52,8 +52,8 @@ public class Main extends Application {
                 });
 
                 continuePrevious.setOnAction(e -> {
-                    Stage selectedPreviousHuntsStage = new Stage();
-                    selectedPreviousHuntsStage.setTitle("Select a previous hunt");
+                    Stage previousHuntsStage = new Stage();
+                    previousHuntsStage.setTitle("Select a previous hunt");
                     TreeView<String> previousHuntsView = new TreeView<>();
                     TreeItem<String> previousHuntsRoot = new TreeItem<>();
 
@@ -69,14 +69,15 @@ public class Main extends Application {
                     VBox previousHuntsLayout = new VBox();
                     previousHuntsLayout.getChildren().addAll(previousHuntsView);
                     Scene previousHuntsScene = new Scene(previousHuntsLayout);
-                    selectedPreviousHuntsStage.setScene(previousHuntsScene);
-                    selectedPreviousHuntsStage.show();
+                    previousHuntsStage.setScene(previousHuntsScene);
+                    previousHuntsStage.show();
                     loadStage.close();
 
                     previousHuntsView.getSelectionModel().selectedItemProperty()
                             .addListener((v, oldValue, newValue) -> {
                                 String line = newValue.toString().substring(18);
                                 previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1);
+                                previousHuntsStage.close();
                             });
                 });
             });

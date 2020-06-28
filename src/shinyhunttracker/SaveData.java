@@ -1,5 +1,11 @@
 package shinyhunttracker;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.*;
 
 import static java.lang.Integer.parseInt;
@@ -46,10 +52,33 @@ public class SaveData {
                     selectedMethod = new Method(spiltString(line, 3), generation);
                     selectedMethod.setModifier(parseInt(spiltString(line, 4)));
                     encounters = parseInt(spiltString(line, 5));
+                    break;
                 }
             }
+
+            beginHunt();
         }catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    public void beginHunt() throws IOException{
+        FXMLLoader huntControlsLoader = new FXMLLoader();
+        huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
+        Parent hunterControlsParent = huntControlsLoader.load();
+
+        huntControlsController huntControlsController = huntControlsLoader.getController();
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod);
+
+        Stage huntControls = new Stage();
+        huntControls.setTitle("Hunt Controls");
+        huntControls.setResizable(false);
+        huntControls.setScene(new Scene(hunterControlsParent, 600, 150));
+        huntControlsController.importStage(huntControls);
+        huntControls.show();
+
+        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
+            huntControlsController.promptPreviousEncounters();
         }
     }
 
@@ -75,22 +104,6 @@ public class SaveData {
             line = line.substring(index + 1);
         }
         return line.substring(0,line.indexOf(','));
-    }
-
-    public Pokemon getHuntPokemon(){
-        return selectedPokemon;
-    }
-
-    public Game getHuntGame(){
-        return selectedGame;
-    }
-
-    public Method getHuntMethod(){
-        return selectedMethod;
-    }
-
-    public int getHuntEncounters(){
-        return encounters;
     }
 
     public int getfileLength(){
