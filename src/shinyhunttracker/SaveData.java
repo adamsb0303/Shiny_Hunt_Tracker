@@ -33,12 +33,12 @@ public class SaveData {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
             int sameDataLine = checkForPreviousData(saveData);
-            System.out.println(sameDataLine);
-            if(sameDataLine == -1)
+            if(sameDataLine == -1) {
                 bufferedWriter.write(saveData);
+                bufferedWriter.write("\n");
+            }
             else
                 replaceLine(sameDataLine, saveData);
-
             bufferedWriter.close();
         }catch (IOException e){
             e.printStackTrace();
@@ -63,6 +63,24 @@ public class SaveData {
             }
 
             beginHunt();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void pokemonCaught(){
+        try{
+            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
+            File file = new File("Save Data/CaughtPokemon.txt");
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            int sameDataLine = checkForPreviousData(saveData);
+            if(sameDataLine != -1)
+                deleteLine(sameDataLine);
+            bufferedWriter.write(saveData);
+            bufferedWriter.write("\n");
+            bufferedWriter.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -151,6 +169,24 @@ public class SaveData {
             String line = fileReader.readLine();
             if(i == lineNumber){
                 line = saveData;
+            }
+            inputBuffer.append(line);
+            inputBuffer.append('\n');
+        }
+
+        FileOutputStream fileOut = new FileOutputStream("Save Data/PreviousHunts.txt");
+        fileOut.write(inputBuffer.toString().getBytes());
+        fileOut.close();
+    }
+
+    public void deleteLine(int lineNumber) throws IOException{
+        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+        StringBuilder inputBuffer = new StringBuilder();
+
+        for(int i = 0; i < getfileLength(); i++){
+            String line = fileReader.readLine();
+            if(i == lineNumber){
+                continue;
             }
             inputBuffer.append(line);
             inputBuffer.append('\n');

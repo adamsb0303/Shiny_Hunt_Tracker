@@ -122,8 +122,15 @@ public class huntControlsController implements Initializable {
     }
 
     public void saveHunt(){
-        SaveData test = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
-        test.saveHunt();
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        data.saveHunt();
+    }
+
+    public void pokemonCaught(){
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        data.pokemonCaught();
+        huntControls.close();
+        huntWindow.close();
     }
 
     public void incrementEncounters(){
