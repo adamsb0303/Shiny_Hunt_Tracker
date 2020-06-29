@@ -141,86 +141,94 @@ public class selectionPageController implements Initializable {
 
         for(String i: Pokedex[0]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 1/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 1/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen1).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen1);
             }
         }
         for(String i: Pokedex[1]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 2/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 2/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen2).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen2);
             }
         }
         for(String i: Pokedex[2]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 3/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 3/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen3).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen3);
             }
         }
         for(String i: Pokedex[3]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 4/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 4/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen4).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen4);
             }
         }
         for(String i: Pokedex[4]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 5/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 5/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen5).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen5);
             }
         }
         for(String i: Pokedex[5]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 6/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 6/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen6).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen6);
             }
         }
         for(String i: Pokedex[6]) {
             try {
                 FileInputStream input;
                 if(i.compareTo("Type: Null") == 0)
-                    input = new FileInputStream("Images/Sprites/Generation 7/type null.png");
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/type null.png");
                 else
-                    input = new FileInputStream("Images/Sprites/Generation 7/" + i.toLowerCase() + ".png");
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen7).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen7);
             }
         }
         for(String i: Pokedex[7]) {
             try {
-                FileInputStream input = new FileInputStream("Images/Sprites/Generation 8/" + i.toLowerCase() + ".png");
+                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 8/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen8).setGraphic(sprite);
             }catch (FileNotFoundException e){
                 System.out.println(i + " wasn't found");
+                makeBranch(i, Gen8);
             }
         }
 

@@ -4,10 +4,15 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,9 +52,21 @@ public class huntControlsController implements Initializable {
         encountersLabel= new Label(String.valueOf(encounters));
         previousEncountersLabel = new Label();
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
-
         VBox promptLayout = new VBox();
         promptLayout.setAlignment(Pos.CENTER);
+        try {
+            FileInputStream input;
+            if(selectedGame.getGeneration() >= 6)
+                input = new FileInputStream("Images/Sprites/3d Sprites/" + selectedPokemon.getName().toLowerCase() + ".gif");
+            else
+                input = new FileInputStream("Images/Sprites/Generation "+ selectedGame.getGeneration() + "/" + selectedPokemon.getName().toLowerCase() + ".png");
+            Image image = new Image(input);
+            ImageView sprite = new ImageView(image);
+            promptLayout.getChildren().add(sprite);
+        }catch (FileNotFoundException e){
+            System.out.println("Sprite not found");
+        }
+
         promptLayout.getChildren().addAll(currentHuntingGameLabel, currentHuntingMethodLabel, currentHuntingPokemonLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
 
         Scene promptScene = new Scene(promptLayout, 750, 480);
