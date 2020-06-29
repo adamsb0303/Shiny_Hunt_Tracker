@@ -144,6 +144,7 @@ public class huntControlsController implements Initializable {
         Stage phaseStage = new Stage();
         phaseStage.initModality(Modality.APPLICATION_MODAL);
         phaseStage.setResizable(false);
+        phaseStage.setTitle("Phase");
 
         VBox phaseLayout = new VBox();
         phaseLayout.setAlignment(Pos.CENTER);
@@ -159,10 +160,12 @@ public class huntControlsController implements Initializable {
 
         phasePokemon.setOnAction(e -> {
             selectionPageController temp = new selectionPageController();
-            if(temp.findGenerationPokemon(phasePokemon.getText()) == 0)
+            String userInput = phasePokemon.getText().toLowerCase();
+            userInput = userInput.substring(0,1).toUpperCase() + userInput.substring(1);
+            if(temp.findGenerationPokemon(userInput) == 0)
                 phasePokemon.setText("");
             else{
-                SaveData data = new SaveData(new Pokemon(phasePokemon.getText(), 0), selectedGame, selectedMethod, encounters);
+                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters);
                 data.pokemonCaught();
                 resetEncounters();
                 phaseStage.close();
