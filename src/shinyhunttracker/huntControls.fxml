@@ -6,9 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.huntControlsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.huntControlsController">
    <top>
-       <MenuBar BorderPane.alignment="CENTER">
+       <MenuBar prefWidth="0.0" BorderPane.alignment="CENTER">
           <menus>
               <Menu mnemonicParsing="false" text="Settings">
                <items>
@@ -23,7 +23,7 @@
    <center>
        <HBox fx:id="huntControlsButtonHBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
           <children>
-              <Button fx:id="encountersButton" mnemonicParsing="false" onAction="#incrementEncounters" text="increment" />
+              <Button fx:id="encountersButton" mnemonicParsing="false" onAction="#incrementEncounters" text="Increment" />
               <Button fx:id="pokemonCaughtButton" mnemonicParsing="false" onAction="#pokemonCaught" text="Caught" />
               <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#phaseHunt" text="Phase" />
             <Button fx:id="resetEncountersButton" mnemonicParsing="false" onAction="#resetEncounters" text="Reset Counter" />

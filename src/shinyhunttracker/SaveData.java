@@ -97,7 +97,7 @@ public class SaveData {
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
         huntControls.setResizable(false);
-        huntControls.setScene(new Scene(hunterControlsParent, 600, 150));
+        huntControls.setScene(new Scene(hunterControlsParent, 350, 100));
         huntControlsController.importStage(huntControls);
         huntControls.show();
 

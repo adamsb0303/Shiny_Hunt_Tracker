@@ -68,7 +68,7 @@ public class Main extends Application {
 
                     VBox previousHuntsLayout = new VBox();
                     previousHuntsLayout.getChildren().addAll(previousHuntsView);
-                    Scene previousHuntsScene = new Scene(previousHuntsLayout);
+                    Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
                     previousHuntsStage.setScene(previousHuntsScene);
                     previousHuntsStage.show();
                     loadStage.close();

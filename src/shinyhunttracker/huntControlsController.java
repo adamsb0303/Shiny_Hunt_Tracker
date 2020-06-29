@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -14,6 +15,7 @@ import static java.lang.Integer.parseInt;
 
 public class huntControlsController implements Initializable {
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
+    public HBox huntControlsButtonHBox;
     Stage huntControls, huntWindow = new Stage();
 
     Label oddFractionLabel, encountersLabel, previousEncountersLabel;
@@ -27,7 +29,10 @@ public class huntControlsController implements Initializable {
     int increment = 1;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){ }
+    public void initialize(URL url, ResourceBundle rb){
+        huntControlsButtonHBox.setAlignment(Pos.CENTER);
+        huntControlsButtonHBox.setSpacing(10);
+    }
 
     public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod){
         this.selectedPokemon = selectedPokemon;
