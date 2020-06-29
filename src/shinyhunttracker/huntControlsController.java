@@ -3,9 +3,7 @@ package shinyhunttracker;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -121,27 +119,60 @@ public class huntControlsController implements Initializable {
         CustomizeHuntStage.show();
     }
 
-    public void saveHunt(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
-        data.saveHunt();
-    }
-
-    public void pokemonCaught(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
-        data.pokemonCaught();
-        huntControls.close();
-        huntWindow.close();
-    }
-
     public void incrementEncounters(){
         encounters++;
         encountersLabel.setText(String.valueOf(encounters));
         dynamicOddsMethods();
     }
 
+    public void pokemonCaught() {
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        data.pokemonCaught();
+        huntControls.close();
+        huntWindow.close();
+    }
+
+    public void pokemonCaught(String name) {
+    }
+
+    public void phaseHunt(){
+        Stage phaseStage = new Stage();
+        phaseStage.initModality(Modality.APPLICATION_MODAL);
+        phaseStage.setResizable(false);
+
+        VBox phaseLayout = new VBox();
+        phaseLayout.setAlignment(Pos.CENTER);
+        phaseLayout.setSpacing(10);
+
+        Label phaseLabel = new Label("Please enter the phase pokemon");
+        TextField phasePokemon = new TextField();
+        phaseLayout.getChildren().addAll(phaseLabel, phasePokemon);
+
+        Scene phaseScene = new Scene(phaseLayout, 200,100);
+        phaseStage.setScene(phaseScene);
+        phaseStage.show();
+
+        phasePokemon.setOnAction(e -> {
+            selectionPageController temp = new selectionPageController();
+            if(temp.findGenerationPokemon(phasePokemon.getText()) == 0)
+                phasePokemon.setText("");
+            else{
+                SaveData data = new SaveData(new Pokemon(phasePokemon.getText(), 0), selectedGame, selectedMethod, encounters);
+                data.pokemonCaught();
+                resetEncounters();
+                phaseStage.close();
+            }
+        });
+    }
+
     public void resetEncounters(){
         encounters = 0;
         encountersLabel.setText(String.valueOf(encounters));
+    }
+
+    public void saveHunt(){
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        data.saveHunt();
     }
 
     private void dynamicOddsMethods(){

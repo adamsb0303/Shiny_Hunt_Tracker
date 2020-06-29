@@ -20,11 +20,11 @@
        </MenuBar>
    </top>
    <center>
-       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+       <HBox fx:id="huntControlsButtonHBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
           <children>
               <Button fx:id="encountersButton" mnemonicParsing="false" onAction="#incrementEncounters" text="increment" />
               <Button fx:id="pokemonCaughtButton" mnemonicParsing="false" onAction="#pokemonCaught" text="Caught" />
-              <Button fx:id="phaseButton" mnemonicParsing="false" text="Phase" />
+              <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#phaseHunt" text="Phase" />
             <Button fx:id="resetEncountersButton" mnemonicParsing="false" onAction="#resetEncounters" text="Reset Counter" />
           </children>
        </HBox>
