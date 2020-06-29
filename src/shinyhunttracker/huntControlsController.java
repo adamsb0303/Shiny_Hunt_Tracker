@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.lang.Integer.parseInt;
+
 public class huntControlsController implements Initializable {
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
     Stage huntControls, huntWindow = new Stage();
@@ -21,7 +23,8 @@ public class huntControlsController implements Initializable {
     Method selectedMethod = new Method();
 
     int methodBase;
-    int encounters, previousEncounters = 0;
+    int encounters, previousEncounters= 0;
+    int increment = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){ }
@@ -79,7 +82,7 @@ public class huntControlsController implements Initializable {
 
         previousInput.setOnAction(e-> {
             try{
-                previousEncounters = Integer.parseInt(previousInput.getText());
+                previousEncounters = parseInt(previousInput.getText());
                 previousEncountersLabel.setText(String.valueOf(previousEncounters));
                 if(selectedMethod.getName().compareTo("DexNav") == 0)
                     oddFractionLabel.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
@@ -120,7 +123,7 @@ public class huntControlsController implements Initializable {
     }
 
     public void incrementEncounters(){
-        encounters++;
+        encounters += increment;
         encountersLabel.setText(String.valueOf(encounters));
         dynamicOddsMethods();
     }
@@ -130,9 +133,6 @@ public class huntControlsController implements Initializable {
         data.pokemonCaught();
         huntControls.close();
         huntWindow.close();
-    }
-
-    public void pokemonCaught(String name) {
     }
 
     public void phaseHunt(){
@@ -173,6 +173,30 @@ public class huntControlsController implements Initializable {
     public void saveHunt(){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
         data.saveHunt();
+    }
+
+    public void changeIncrement(){
+        Stage changeIncrementStage = new Stage();
+        changeIncrementStage.setResizable(false);
+        changeIncrementStage.initModality(Modality.APPLICATION_MODAL);
+        VBox changeIncrementsLayout = new VBox();
+        changeIncrementsLayout.setAlignment(Pos.CENTER);
+        changeIncrementsLayout.setSpacing(10);
+        Label changeIncrementsLabel = new Label("Enter the number by which the encounters increase for every button press");
+        TextField changeIncrementsText = new TextField();
+        changeIncrementsLayout.getChildren().addAll(changeIncrementsLabel, changeIncrementsText);
+        Scene changeIncrementsScene = new Scene(changeIncrementsLayout, 400, 100);
+        changeIncrementStage.setScene(changeIncrementsScene);
+        changeIncrementStage.show();
+
+        changeIncrementsText.setOnAction(e -> {
+            try{
+                increment = parseInt(changeIncrementsText.getText());
+                changeIncrementStage.close();
+            }catch (NumberFormatException f){
+                changeIncrementsText.setText("");
+            }
+        });
     }
 
     private void dynamicOddsMethods(){
