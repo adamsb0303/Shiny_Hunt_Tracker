@@ -85,6 +85,8 @@ public class selectionPageController implements Initializable {
         GameList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
+                        shinyCharmCheckBox.setDisable(true);
+                        lureCheckBox.setDisable(true);
                         newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
                         if(findGenerationGame(newSelectionGame) != 0) {
                             selectedGame = new Game(newSelectionGame, findGenerationGame(newSelectionGame));
@@ -105,11 +107,13 @@ public class selectionPageController implements Initializable {
         MethodList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
-                        selectedMethod = new Method(newValue.toString().substring(18, newValue.toString().length() - 2), selectedGame.getGeneration());
-                        methodLabel.setText(selectedMethod.getName());
-                        beginHuntButton.setDisable(selectedMethod.getName() == null);
-                        setToolTip(selectedMethod.getName());
-                        helpButton.setVisible(selectedMethod.getName() != null);
+                        if(findGenerationPokemon(newValue.toString().substring(18, newValue.toString().length() - 2)) == 0) {
+                            selectedMethod = new Method(newValue.toString().substring(18, newValue.toString().length() - 2), selectedGame.getGeneration());
+                            methodLabel.setText(selectedMethod.getName());
+                            beginHuntButton.setDisable(selectedMethod.getName() == null);
+                            setToolTip(selectedMethod.getName());
+                            helpButton.setVisible(selectedMethod.getName() != null);
+                        }
                     }
                 });
     }

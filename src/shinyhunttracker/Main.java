@@ -32,11 +32,14 @@ public class Main extends Application {
         if(checkForData.getLinefromFile(0) != null) {
             Platform.runLater(() -> {
                 Stage loadStage = new Stage();
-                VBox loadLayout = new VBox();
-                Label prompt = new Label("Would you like to Continue a Previous hunt or \nstart a new one?");
+
+                Label prompt1 = new Label("Would you like to continue a previous hunt or");
+                Label prompt2 = new Label("start a new one?");
                 Button continuePrevious = new Button("Continue Previous Hunt");
                 Button newHunt = new Button("Start New Hunt");
-                loadLayout.getChildren().addAll(prompt, continuePrevious, newHunt);
+
+                VBox loadLayout = new VBox();
+                loadLayout.getChildren().addAll(prompt1, prompt2, continuePrevious, newHunt);
                 loadLayout.setSpacing(10);
                 loadLayout.setAlignment(Pos.CENTER);
 
@@ -53,6 +56,7 @@ public class Main extends Application {
 
                 continuePrevious.setOnAction(e -> {
                     Stage previousHuntsStage = new Stage();
+
                     previousHuntsStage.setTitle("Select a previous hunt");
                     TreeView<String> previousHuntsView = new TreeView<>();
                     TreeItem<String> previousHuntsRoot = new TreeItem<>();
@@ -68,6 +72,7 @@ public class Main extends Application {
 
                     VBox previousHuntsLayout = new VBox();
                     previousHuntsLayout.getChildren().addAll(previousHuntsView);
+
                     Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
                     previousHuntsStage.setScene(previousHuntsScene);
                     previousHuntsStage.show();
