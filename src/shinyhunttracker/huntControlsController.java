@@ -55,12 +55,53 @@ public class huntControlsController implements Initializable {
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
         VBox promptLayout = new VBox();
         promptLayout.setAlignment(Pos.CENTER);
+
         try {
-            FileInputStream input;
-            if(selectedGame.getGeneration() >= 6)
-                input = new FileInputStream("Images/Sprites/3d Sprites/" + selectedPokemon.getName().toLowerCase() + ".gif");
-            else
-                input = new FileInputStream("Images/Sprites/Generation "+ selectedGame.getGeneration() + "/" + selectedPokemon.getName().toLowerCase() + ".png");
+            FileInputStream input = new FileInputStream("Images/Sprites/3d Sprites/" + selectedPokemon.getName().toLowerCase() + ".gif");
+            switch(selectedGame.getGeneration()) {
+                case 2:
+                    input = new FileInputStream("Images/Sprites/Generation 2/" + selectedGame.getName().toLowerCase() + "/" + selectedPokemon.getName().toLowerCase() + ".png");
+                    break;
+                case 3:
+                    switch(selectedGame.getName()){
+                        case "Ruby":
+                        case "Sapphire":
+                            input = new FileInputStream("Images/Sprites/Generation 3/ruby-sapphire/" + selectedPokemon.getName().toLowerCase() + ".png");
+                            break;
+                        case "Emerald":
+                            input = new FileInputStream("Images/Sprites/Generation 3/emerald/" + selectedPokemon.getName().toLowerCase() + ".png");
+                            break;
+                        case "FireRed":
+                        case "LeafGreen":
+                            input = new FileInputStream("Images/Sprites/Generation 3/firered-leafgreen/" + selectedPokemon.getName().toLowerCase() + ".png");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch(selectedGame.getName()){
+                        case "Diamond":
+                        case "Pearl":
+                            input = new FileInputStream("Images/Sprites/Generation 4/diamond-pearl/" + selectedPokemon.getName().toLowerCase() + ".png");
+                            break;
+                        case "Platinum":
+                            input = new FileInputStream("Images/Sprites/Generation 4/platinum/" + selectedPokemon.getName().toLowerCase() + ".png");
+                            break;
+                        case "HeartGold":
+                        case "SoulSilver":
+                            input = new FileInputStream("Images/Sprites/Generation 4/heartgold-soulsilver/" + selectedPokemon.getName().toLowerCase() + ".png");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 5:
+                    input = new FileInputStream("Images/Sprites/Generation 5/" + selectedPokemon.getName().toLowerCase() + ".png");
+                    break;
+                default:
+                    break;
+            }
             Image image = new Image(input);
             ImageView sprite = new ImageView(image);
             promptLayout.getChildren().add(sprite);
