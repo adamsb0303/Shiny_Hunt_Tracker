@@ -57,7 +57,11 @@ public class huntControlsController implements Initializable {
         promptLayout.setAlignment(Pos.CENTER);
 
         try {
-            FileInputStream input = new FileInputStream("Images/Sprites/3d Sprites/" + selectedPokemon.getName().toLowerCase() + ".gif");
+            FileInputStream input;
+            if(selectedPokemon.getName().compareTo("Type: Null") == 0)
+                input = new FileInputStream("Images/Sprites/3d Sprites/type null.gif");
+            else
+                input = new FileInputStream("Images/Sprites/3d Sprites/" + selectedPokemon.getName().toLowerCase() + ".gif");
             switch(selectedGame.getGeneration()) {
                 case 2:
                     input = new FileInputStream("Images/Sprites/Generation 2/" + selectedGame.getName().toLowerCase() + "/" + selectedPokemon.getName().toLowerCase() + ".png");
