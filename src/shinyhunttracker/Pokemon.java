@@ -22,7 +22,6 @@ public class Pokemon{
         isLegendary();
     }
 
-
     public void isLegendary(){
         if(name.compareTo("Unown") == 0) {
             huntable = false;

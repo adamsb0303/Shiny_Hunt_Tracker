@@ -92,7 +92,7 @@ public class SaveData {
         Parent hunterControlsParent = huntControlsLoader.load();
 
         huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, encounters);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");

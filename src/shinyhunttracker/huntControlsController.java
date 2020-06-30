@@ -39,11 +39,12 @@ public class huntControlsController implements Initializable {
         huntControlsButtonHBox.setSpacing(10);
     }
 
-    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod){
+    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         methodBase = selectedMethod.getBase();
+        this.encounters = encounters;
 
         Label currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
         Label currentHuntingGameLabel = new Label(selectedGame.getName());
