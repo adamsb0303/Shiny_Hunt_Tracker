@@ -25,7 +25,7 @@ public class Method {
                 this.name = name;
                 modifier = 1;
                 break;
-            case "Breeding with a Shiny":
+            case "Breeding with Shiny":
                 this.name = name;
                 modifier += 128;
                 break;
