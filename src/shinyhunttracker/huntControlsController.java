@@ -16,22 +16,29 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class huntControlsController implements Initializable {
+    Stage huntControls = new Stage();
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
     public HBox huntControlsButtonHBox;
-    Stage huntControls, huntWindow = new Stage();
 
+    Stage huntWindow = new Stage();
+    Label currentHuntingPokemonLabel, currentHuntingGameLabel, currentHuntingMethodLabel;
     Label oddFractionLabel, encountersLabel, previousEncountersLabel;
+    VBox promptLayout = new VBox();
+    int encounters, previousEncounters= 0;
+    int increment = 1;
+
+    Stage CustomizeHuntStage = new Stage();
+    ImageView sprite;
+    double scale = 1;
 
     Pokemon selectedPokemon = new Pokemon();
     Game selectedGame = new Game();
     Method selectedMethod = new Method();
-
     int methodBase;
-    int encounters, previousEncounters= 0;
-    int increment = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -46,14 +53,13 @@ public class huntControlsController implements Initializable {
         methodBase = selectedMethod.getBase();
         this.encounters = encounters;
 
-        Label currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
-        Label currentHuntingGameLabel = new Label(selectedGame.getName());
-        Label currentHuntingMethodLabel= new Label(selectedMethod.getName());
+        currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
+        currentHuntingGameLabel = new Label(selectedGame.getName());
+        currentHuntingMethodLabel= new Label(selectedMethod.getName());
         oddFractionLabel= new Label("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel= new Label(String.valueOf(encounters));
         previousEncountersLabel = new Label();
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
-        VBox promptLayout = new VBox();
         promptLayout.setAlignment(Pos.CENTER);
 
         try {
@@ -107,7 +113,7 @@ public class huntControlsController implements Initializable {
                     break;
             }
             Image image = new Image(input);
-            ImageView sprite = new ImageView(image);
+            sprite = new ImageView(image);
             promptLayout.getChildren().add(sprite);
         }catch (FileNotFoundException e){
             System.out.println("Sprite not found");
@@ -120,6 +126,7 @@ public class huntControlsController implements Initializable {
         huntWindow.show();
 
         huntWindow.setOnCloseRequest(e -> {
+            CustomizeHuntStage.close();
             huntControls.close();
         });
     }
@@ -128,6 +135,7 @@ public class huntControlsController implements Initializable {
         huntControls = stage;
         huntControls.setOnCloseRequest(e -> {
             huntWindow.close();
+            CustomizeHuntStage.close();
         });
     }
 
@@ -178,12 +186,27 @@ public class huntControlsController implements Initializable {
     }
 
     public void CustomizeHuntWindow(){
-        Stage CustomizeHuntStage = new Stage();
+        HBox changeImageSize = new HBox();
+        changeImageSize.setSpacing(5);
+        Label sizeLabel = new Label("Image Scale:");
+        TextField sizeField = new TextField();
+        changeImageSize.getChildren().addAll(sizeLabel, sizeField);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
 
         VBox CustomizeHuntLayout = new VBox();
         CustomizeHuntLayout.setSpacing(10);
         CustomizeHuntLayout.setAlignment(Pos.CENTER);
-        CustomizeHuntLayout.getChildren().addAll();
+        CustomizeHuntLayout.getChildren().addAll(changeImageSize);
 
         Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 300, 300);
         CustomizeHuntStage.setScene(CustomizeHuntScene);
