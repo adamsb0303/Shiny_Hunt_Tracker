@@ -1,11 +1,13 @@
 package shinyhunttracker;
 
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -25,9 +27,7 @@ public class huntControlsController implements Initializable {
     public HBox huntControlsButtonHBox;
 
     Stage huntWindow = new Stage();
-    Label currentHuntingPokemonLabel, currentHuntingGameLabel, currentHuntingMethodLabel;
     Label oddFractionLabel, encountersLabel, previousEncountersLabel;
-    VBox promptLayout = new VBox();
     int encounters, previousEncounters= 0;
     int increment = 1;
 
@@ -53,14 +53,14 @@ public class huntControlsController implements Initializable {
         methodBase = selectedMethod.getBase();
         this.encounters = encounters;
 
-        currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
-        currentHuntingGameLabel = new Label(selectedGame.getName());
-        currentHuntingMethodLabel= new Label(selectedMethod.getName());
+        Label currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
+        Label currentHuntingGameLabel = new Label(selectedGame.getName());
+        Label currentHuntingMethodLabel= new Label(selectedMethod.getName());
         oddFractionLabel= new Label("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel= new Label(String.valueOf(encounters));
         previousEncountersLabel = new Label();
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
-        promptLayout.setAlignment(Pos.CENTER);
+        AnchorPane promptLayout = new AnchorPane();
 
         try {
             FileInputStream input;
@@ -120,6 +120,23 @@ public class huntControlsController implements Initializable {
         }
 
         promptLayout.getChildren().addAll(currentHuntingGameLabel, currentHuntingMethodLabel, currentHuntingPokemonLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
+        currentHuntingGameLabel.setLayoutX(200);
+        currentHuntingGameLabel.setLayoutY(50);
+
+        currentHuntingMethodLabel.setLayoutX(200);
+        currentHuntingMethodLabel.setLayoutY(65);
+
+        currentHuntingPokemonLabel.setLayoutX(200);
+        currentHuntingPokemonLabel.setLayoutY(80);
+
+        encountersLabel.setLayoutX(200);
+        encountersLabel.setLayoutY(95);
+
+        previousEncountersLabel.setLayoutX(200);
+        previousEncountersLabel.setLayoutY(110);
+
+        oddFractionLabel.setLayoutX(200);
+        oddFractionLabel.setLayoutY(125);
 
         Scene promptScene = new Scene(promptLayout, 750, 480);
         huntWindow.setScene(promptScene);
@@ -186,11 +203,58 @@ public class huntControlsController implements Initializable {
     }
 
     public void CustomizeHuntWindow(){
-        HBox changeImageSize = new HBox();
-        changeImageSize.setSpacing(5);
-        Label sizeLabel = new Label("Image Scale:");
+        VBox imageSettings = createImageSettings();
+        VBox currentGameSettings = createCurrentGameLabelSettings();
+        VBox currentMethodSettings = createCurrentMethodLabelSettings();
+        VBox currentPokemonSettings = createCurrentPokemonLabelSettings();
+        VBox encountersSettings = createEncountersLabelSettings();
+        VBox previousEncountersSettings = createPreviousEncountersLabelSettings();
+        VBox oddsFraction = createOddsFractionLabel();
+
+        VBox CustomizeHuntVBox = new VBox();
+        CustomizeHuntVBox.getChildren().addAll(imageSettings, currentGameSettings, currentMethodSettings, currentPokemonSettings, encountersSettings, previousEncountersSettings, oddsFraction);
+
+        AnchorPane CustomizeHuntLayout = new AnchorPane();
+        CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
+        AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
+
+        ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
+        CustomizeHuntScrollpane.setFitToHeight(true);
+
+        Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 300, 300);
+        CustomizeHuntStage.setScene(CustomizeHuntScene);
+        CustomizeHuntStage.show();
+    }
+
+    public VBox createImageSettings(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Image");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
         TextField sizeField = new TextField();
-        changeImageSize.getChildren().addAll(sizeLabel, sizeField);
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
 
         sizeField.setOnAction(e -> {
             try{
@@ -203,14 +267,271 @@ public class huntControlsController implements Initializable {
             sizeField.setText("");
         });
 
-        VBox CustomizeHuntLayout = new VBox();
-        CustomizeHuntLayout.setSpacing(10);
-        CustomizeHuntLayout.setAlignment(Pos.CENTER);
-        CustomizeHuntLayout.getChildren().addAll(changeImageSize);
+        return Settings;
+    }
 
-        Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 300, 300);
-        CustomizeHuntStage.setScene(CustomizeHuntScene);
-        CustomizeHuntStage.show();
+    public VBox createCurrentGameLabelSettings(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Game Label");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
+
+        return Settings;
+    }
+
+    public VBox createCurrentMethodLabelSettings(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Method Label");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
+
+        return Settings;
+    }
+
+    public VBox createCurrentPokemonLabelSettings(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Pokemon Label");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
+
+        return Settings;
+    }
+
+    public VBox createEncountersLabelSettings(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Encounters Label");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
+
+        return Settings;
+    }
+
+    public VBox createPreviousEncountersLabelSettings(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Search Level/Previous Encounters Label");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
+
+        return Settings;
+    }
+
+    public VBox createOddsFractionLabel(){
+        HBox groupLabel = new HBox();
+        Label Group = new Label("Odds Label");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        changeY.getChildren().addAll(YLabel, YField);
+
+        VBox Settings = new VBox();
+        Settings.setSpacing(10);
+        Settings.setAlignment(Pos.CENTER);
+        Settings.setPadding(new Insets(10,10,10,10));
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+
+        sizeField.setOnAction(e -> {
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+            sizeField.setText("");
+        });
+
+        return Settings;
     }
 
     public void incrementEncounters(){
