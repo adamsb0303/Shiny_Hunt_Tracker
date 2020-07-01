@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -400,6 +401,19 @@ public class huntControlsController implements Initializable {
             }
             label.setLayoutY(Y);
             sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+        });
+
+        fontField.setOnAction(e -> {
+
+        });
+
+        colorField.setOnAction(e -> {
+            try {
+                label.setTextFill(Paint.valueOf(colorField.getText()));
+                colorField.setPromptText("");
+            }catch(IllegalArgumentException f){
+                colorField.setPromptText("");
+            }
         });
 
         visableCheck.setOnAction(e ->{
