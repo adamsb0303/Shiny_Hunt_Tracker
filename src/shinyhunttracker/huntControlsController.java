@@ -32,7 +32,7 @@ public class huntControlsController implements Initializable {
 
     Stage huntWindow = new Stage();
     AnchorPane promptLayout = new AnchorPane();
-    Label currentHuntingMethodLabel, currentHuntingGameLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
+    Label currentHuntingMethodLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
     int encounters, previousEncounters= 0;
     int increment = 1;
 
@@ -51,6 +51,7 @@ public class huntControlsController implements Initializable {
     }
 
     public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters){
+        huntWindow.setTitle("Hunt Window");
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
@@ -58,7 +59,6 @@ public class huntControlsController implements Initializable {
         this.encounters = encounters;
 
         currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
-        currentHuntingGameLabel = new Label(selectedGame.getName());
         currentHuntingMethodLabel= new Label(selectedMethod.getName());
         oddFractionLabel= new Label("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel= new Label(String.valueOf(encounters));
@@ -122,18 +122,16 @@ public class huntControlsController implements Initializable {
             System.out.println("Sprite not found");
         }
 
-        promptLayout.getChildren().addAll(currentHuntingGameLabel, currentHuntingMethodLabel, currentHuntingPokemonLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
-        currentHuntingGameLabel.setLayoutX(200);
-        currentHuntingGameLabel.setLayoutY(50);
-
-        currentHuntingMethodLabel.setLayoutX(200);
-        currentHuntingMethodLabel.setLayoutY(65);
+        promptLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
 
         currentHuntingPokemonLabel.setLayoutX(200);
-        currentHuntingPokemonLabel.setLayoutY(80);
+        currentHuntingPokemonLabel.setLayoutY(65);
 
         encountersLabel.setLayoutX(200);
-        encountersLabel.setLayoutY(95);
+        encountersLabel.setLayoutY(80);
+
+        currentHuntingMethodLabel.setLayoutX(200);
+        currentHuntingMethodLabel.setLayoutY(95);
 
         previousEncountersLabel.setLayoutX(200);
         previousEncountersLabel.setLayoutY(110);
@@ -208,7 +206,6 @@ public class huntControlsController implements Initializable {
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
         VBox imageSettings = createImageSettings();
-        VBox currentGameSettings = createLabelSettings(currentHuntingGameLabel, "Game");
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonLabel, "Pokemon");
         VBox encountersSettings = createLabelSettings(encountersLabel, "Encounters");
@@ -236,7 +233,7 @@ public class huntControlsController implements Initializable {
         saveClose.getChildren().addAll(Save,Load,Close);
 
         VBox CustomizeHuntVBox = new VBox();
-        CustomizeHuntVBox.getChildren().addAll(imageSettings, currentGameSettings, currentMethodSettings, currentPokemonSettings, encountersSettings, previousEncountersSettings, oddsFraction, background, saveClose);
+        CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, oddsFraction, currentMethodSettings, previousEncountersSettings, background, saveClose);
 
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
@@ -260,6 +257,7 @@ public class huntControlsController implements Initializable {
         Load.setOnAction(e -> {
 
         });
+
         Close.setOnAction(e -> {
             CustomizeHuntStage.close();
         });
