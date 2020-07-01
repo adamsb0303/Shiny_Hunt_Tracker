@@ -27,13 +27,12 @@ public class huntControlsController implements Initializable {
     public HBox huntControlsButtonHBox;
 
     Stage huntWindow = new Stage();
-    Label oddFractionLabel, encountersLabel, previousEncountersLabel;
+    Label currentHuntingMethodLabel, currentHuntingGameLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
     int encounters, previousEncounters= 0;
     int increment = 1;
 
     Stage CustomizeHuntStage = new Stage();
     ImageView sprite;
-    double scale = 1;
 
     Pokemon selectedPokemon = new Pokemon();
     Game selectedGame = new Game();
@@ -53,9 +52,9 @@ public class huntControlsController implements Initializable {
         methodBase = selectedMethod.getBase();
         this.encounters = encounters;
 
-        Label currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
-        Label currentHuntingGameLabel = new Label(selectedGame.getName());
-        Label currentHuntingMethodLabel= new Label(selectedMethod.getName());
+        currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
+        currentHuntingGameLabel = new Label(selectedGame.getName());
+        currentHuntingMethodLabel= new Label(selectedMethod.getName());
         oddFractionLabel= new Label("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         encountersLabel= new Label(String.valueOf(encounters));
         previousEncountersLabel = new Label();
@@ -204,15 +203,22 @@ public class huntControlsController implements Initializable {
 
     public void CustomizeHuntWindow(){
         VBox imageSettings = createImageSettings();
-        VBox currentGameSettings = createCurrentGameLabelSettings();
-        VBox currentMethodSettings = createCurrentMethodLabelSettings();
-        VBox currentPokemonSettings = createCurrentPokemonLabelSettings();
-        VBox encountersSettings = createEncountersLabelSettings();
-        VBox previousEncountersSettings = createPreviousEncountersLabelSettings();
-        VBox oddsFraction = createOddsFractionLabel();
+        VBox currentGameSettings = createLabelSettings(currentHuntingGameLabel, "Game");
+        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
+        VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonLabel, "Pokemon");
+        VBox encountersSettings = createLabelSettings(encountersLabel, "Encounters");
+        VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Search Level/Total Encounters");
+        VBox oddsFraction = createLabelSettings(oddFractionLabel, "Odds");
+
+        HBox saveClose = new HBox();
+        saveClose.setPadding(new Insets(10,10,10,10));
+        saveClose.setSpacing(5);
+        Button Save = new Button("Save");
+        Button Close = new Button("Close");
+        saveClose.getChildren().addAll(Save,Close);
 
         VBox CustomizeHuntVBox = new VBox();
-        CustomizeHuntVBox.getChildren().addAll(imageSettings, currentGameSettings, currentMethodSettings, currentPokemonSettings, encountersSettings, previousEncountersSettings, oddsFraction);
+        CustomizeHuntVBox.getChildren().addAll(imageSettings, currentGameSettings, currentMethodSettings, currentPokemonSettings, encountersSettings, previousEncountersSettings, oddsFraction, saveClose);
 
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
@@ -236,24 +242,28 @@ public class huntControlsController implements Initializable {
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale:");
         TextField sizeField = new TextField();
+        sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         Label XLabel = new Label("X Location:");
         TextField XField = new TextField();
+        XField.setPromptText(String.valueOf(sprite.getLayoutX()));
         changeX.getChildren().addAll(XLabel, XField);
 
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         Label YLabel = new Label("Y Location:");
         TextField YField = new TextField();
+        YField.setPromptText(String.valueOf(sprite.getLayoutY()));
         changeY.getChildren().addAll(YLabel, YField);
 
         HBox visablility = new HBox();
         visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
+        Label visableLabel = new Label("Visable:");
         CheckBox visableCheck = new CheckBox();
+        visableCheck.setSelected(true);
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
         VBox Settings = new VBox();
@@ -263,6 +273,7 @@ public class huntControlsController implements Initializable {
         Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
+            double scale = 0;
             try{
                 scale = parseDouble(sizeField.getText());
             }catch(NumberFormatException f){
@@ -270,15 +281,41 @@ public class huntControlsController implements Initializable {
             }
             sprite.setScaleX(scale);
             sprite.setScaleY(scale);
-            sizeField.setText("");
+            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+        });
+
+        XField.setOnAction(e ->{
+            double X = 0;
+            try{
+                X = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setLayoutX(X);
+            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+        });
+
+        YField.setOnAction(e ->{
+            double Y = 0;
+            try{
+                Y = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            sprite.setLayoutY(Y);
+            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+        });
+
+        visableCheck.setOnAction(e ->{
+            sprite.setVisible(visableCheck.isSelected());
         });
 
         return Settings;
     }
 
-    public VBox createCurrentGameLabelSettings(){
+    public VBox createLabelSettings(Label label, String labelName){
         HBox groupLabel = new HBox();
-        Label Group = new Label("Game Label");
+        Label Group = new Label(labelName + " Label");
         Group.setUnderline(true);
         groupLabel.getChildren().add(Group);
 
@@ -286,291 +323,87 @@ public class huntControlsController implements Initializable {
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale:");
         TextField sizeField = new TextField();
+        sizeField.setPromptText(String.valueOf(label.getScaleX()));
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         Label XLabel = new Label("X Location:");
         TextField XField = new TextField();
+        XField.setPromptText(String.valueOf(label.getLayoutX()));
         changeX.getChildren().addAll(XLabel, XField);
 
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         Label YLabel = new Label("Y Location:");
         TextField YField = new TextField();
+        YField.setPromptText(String.valueOf(label.getLayoutY()));
         changeY.getChildren().addAll(YLabel, YField);
+
+        HBox font = new HBox();
+        font.setSpacing(5);
+        Label fontLabel = new Label("Font:");
+        TextField fontField = new TextField();
+        fontField.setPromptText(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
+        font.getChildren().addAll(fontLabel, fontField);
+
+        HBox color = new HBox();
+        color.setSpacing(5);
+        Label colorLabel = new Label("Color:");
+        TextField colorField = new TextField();
+        colorField.setPromptText(String.valueOf(label.getTextFill()).substring(2));
+        color.getChildren().addAll(colorLabel, colorField);
 
         HBox visablility = new HBox();
         visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
+        Label visableLabel = new Label("Visable:");
         CheckBox visableCheck = new CheckBox();
+        visableCheck.setSelected(true);
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, visablility);
+
 
         sizeField.setOnAction(e -> {
+            double scale = 0;
             try{
                 scale = parseDouble(sizeField.getText());
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
-            sizeField.setText("");
+            label.setScaleX(scale);
+            label.setScaleY(scale);
+            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         });
 
-        return Settings;
-    }
-
-    public VBox createCurrentMethodLabelSettings(){
-        HBox groupLabel = new HBox();
-        Label Group = new Label("Method Label");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
-
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        changeX.getChildren().addAll(XLabel, XField);
-
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
-        CheckBox visableCheck = new CheckBox();
-        visablility.getChildren().addAll(visableLabel, visableCheck);
-
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
-
-        sizeField.setOnAction(e -> {
+        XField.setOnAction(e ->{
+            double X = 0;
             try{
-                scale = parseDouble(sizeField.getText());
+                X = parseDouble(sizeField.getText());
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
-            sizeField.setText("");
+            label.setLayoutX(X);
+            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         });
 
-        return Settings;
-    }
-
-    public VBox createCurrentPokemonLabelSettings(){
-        HBox groupLabel = new HBox();
-        Label Group = new Label("Pokemon Label");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
-
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        changeX.getChildren().addAll(XLabel, XField);
-
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
-        CheckBox visableCheck = new CheckBox();
-        visablility.getChildren().addAll(visableLabel, visableCheck);
-
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
-
-        sizeField.setOnAction(e -> {
+        YField.setOnAction(e ->{
+            double Y = 0;
             try{
-                scale = parseDouble(sizeField.getText());
+                Y = parseDouble(sizeField.getText());
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
-            sizeField.setText("");
+            label.setLayoutY(Y);
+            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         });
 
-        return Settings;
-    }
-
-    public VBox createEncountersLabelSettings(){
-        HBox groupLabel = new HBox();
-        Label Group = new Label("Encounters Label");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
-
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        changeX.getChildren().addAll(XLabel, XField);
-
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
-        CheckBox visableCheck = new CheckBox();
-        visablility.getChildren().addAll(visableLabel, visableCheck);
-
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
-
-        sizeField.setOnAction(e -> {
-            try{
-                scale = parseDouble(sizeField.getText());
-            }catch(NumberFormatException f){
-                sizeField.setText("");
-            }
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
-            sizeField.setText("");
-        });
-
-        return Settings;
-    }
-
-    public VBox createPreviousEncountersLabelSettings(){
-        HBox groupLabel = new HBox();
-        Label Group = new Label("Search Level/Previous Encounters Label");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
-
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        changeX.getChildren().addAll(XLabel, XField);
-
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
-        CheckBox visableCheck = new CheckBox();
-        visablility.getChildren().addAll(visableLabel, visableCheck);
-
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
-
-        sizeField.setOnAction(e -> {
-            try{
-                scale = parseDouble(sizeField.getText());
-            }catch(NumberFormatException f){
-                sizeField.setText("");
-            }
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
-            sizeField.setText("");
-        });
-
-        return Settings;
-    }
-
-    public VBox createOddsFractionLabel(){
-        HBox groupLabel = new HBox();
-        Label Group = new Label("Odds Label");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
-
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        changeX.getChildren().addAll(XLabel, XField);
-
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable");
-        CheckBox visableCheck = new CheckBox();
-        visablility.getChildren().addAll(visableLabel, visableCheck);
-
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
-
-        sizeField.setOnAction(e -> {
-            try{
-                scale = parseDouble(sizeField.getText());
-            }catch(NumberFormatException f){
-                sizeField.setText("");
-            }
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
-            sizeField.setText("");
+        visableCheck.setOnAction(e ->{
+            label.setVisible(visableCheck.isSelected());
         });
 
         return Settings;
