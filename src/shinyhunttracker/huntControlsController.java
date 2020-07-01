@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -378,7 +379,7 @@ public class huntControlsController implements Initializable {
             }
             label.setScaleX(scale);
             label.setScaleY(scale);
-            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+            sizeField.setPromptText(String.valueOf(label.getScaleX()));
         });
 
         XField.setOnAction(e ->{
@@ -389,7 +390,7 @@ public class huntControlsController implements Initializable {
                 sizeField.setText("");
             }
             label.setLayoutX(X);
-            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+            sizeField.setPromptText(String.valueOf(label.getScaleX()));
         });
 
         YField.setOnAction(e ->{
@@ -400,19 +401,23 @@ public class huntControlsController implements Initializable {
                 sizeField.setText("");
             }
             label.setLayoutY(Y);
-            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+            sizeField.setPromptText(String.valueOf(label.getScaleX()));
         });
 
         fontField.setOnAction(e -> {
-
+            String fontName = fontField.getText();
+            label.setFont(new Font(fontName, 12));
+            fontField.setPromptText(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
+            fontField.setText("");
         });
 
         colorField.setOnAction(e -> {
             try {
                 label.setTextFill(Paint.valueOf(colorField.getText()));
-                colorField.setPromptText("");
+                colorField.setPromptText(String.valueOf(label.getTextFill()));
+                colorField.setText("");
             }catch(IllegalArgumentException f){
-                colorField.setPromptText("");
+                colorField.setText("");
             }
         });
 
