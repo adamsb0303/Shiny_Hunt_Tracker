@@ -5,16 +5,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -29,6 +31,7 @@ public class huntControlsController implements Initializable {
     public HBox huntControlsButtonHBox;
 
     Stage huntWindow = new Stage();
+    AnchorPane promptLayout = new AnchorPane();
     Label currentHuntingMethodLabel, currentHuntingGameLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
     int encounters, previousEncounters= 0;
     int increment = 1;
@@ -61,7 +64,6 @@ public class huntControlsController implements Initializable {
         encountersLabel= new Label(String.valueOf(encounters));
         previousEncountersLabel = new Label();
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
-        AnchorPane promptLayout = new AnchorPane();
 
         try {
             FileInputStream input;
@@ -204,6 +206,7 @@ public class huntControlsController implements Initializable {
     }
 
     public void CustomizeHuntWindow(){
+        CustomizeHuntStage.setTitle("Settings");
         VBox imageSettings = createImageSettings();
         VBox currentGameSettings = createLabelSettings(currentHuntingGameLabel, "Game");
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
@@ -212,15 +215,28 @@ public class huntControlsController implements Initializable {
         VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Search Level/Total Encounters");
         VBox oddsFraction = createLabelSettings(oddFractionLabel, "Odds");
 
+        VBox background = new VBox();
+        Label backgroundGroup = new Label("Background");
+        backgroundGroup.setUnderline(true);
+        HBox backgroundColorSettings = new HBox();
+        backgroundColorSettings.setSpacing(5);
+        Label backgroundColorLabel = new Label("Color");
+        ColorPicker backgroundColorPicker = new ColorPicker();
+        background.setPadding(new Insets(10,10,10,10));
+        background.setSpacing(10);
+        backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+        background.getChildren().addAll(backgroundGroup, backgroundColorSettings);
+
         HBox saveClose = new HBox();
         saveClose.setPadding(new Insets(10,10,10,10));
         saveClose.setSpacing(5);
         Button Save = new Button("Save");
+        Button Load = new Button("Load");
         Button Close = new Button("Close");
-        saveClose.getChildren().addAll(Save,Close);
+        saveClose.getChildren().addAll(Save,Load,Close);
 
         VBox CustomizeHuntVBox = new VBox();
-        CustomizeHuntVBox.getChildren().addAll(imageSettings, currentGameSettings, currentMethodSettings, currentPokemonSettings, encountersSettings, previousEncountersSettings, oddsFraction, saveClose);
+        CustomizeHuntVBox.getChildren().addAll(imageSettings, currentGameSettings, currentMethodSettings, currentPokemonSettings, encountersSettings, previousEncountersSettings, oddsFraction, background, saveClose);
 
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
@@ -232,6 +248,21 @@ public class huntControlsController implements Initializable {
         Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 300, 300);
         CustomizeHuntStage.setScene(CustomizeHuntScene);
         CustomizeHuntStage.show();
+
+        backgroundColorPicker.setOnAction(e -> {
+            promptLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+
+        Save.setOnAction(e -> {
+
+        });
+
+        Load.setOnAction(e -> {
+
+        });
+        Close.setOnAction(e -> {
+            CustomizeHuntStage.close();
+        });
     }
 
     public VBox createImageSettings(){
@@ -352,8 +383,7 @@ public class huntControlsController implements Initializable {
         HBox color = new HBox();
         color.setSpacing(5);
         Label colorLabel = new Label("Color:");
-        TextField colorField = new TextField();
-        colorField.setPromptText(String.valueOf(label.getTextFill()).substring(2));
+        ColorPicker colorField = new ColorPicker();
         color.getChildren().addAll(colorLabel, colorField);
 
         HBox visablility = new HBox();
@@ -368,7 +398,6 @@ public class huntControlsController implements Initializable {
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
         Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, visablility);
-
 
         sizeField.setOnAction(e -> {
             double scale = 0;
@@ -412,13 +441,7 @@ public class huntControlsController implements Initializable {
         });
 
         colorField.setOnAction(e -> {
-            try {
-                label.setTextFill(Paint.valueOf(colorField.getText()));
-                colorField.setPromptText(String.valueOf(label.getTextFill()));
-                colorField.setText("");
-            }catch(IllegalArgumentException f){
-                colorField.setText("");
-            }
+            label.setTextFill(colorField.getValue());
         });
 
         visableCheck.setOnAction(e ->{
