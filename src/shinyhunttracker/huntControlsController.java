@@ -250,11 +250,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
@@ -294,11 +300,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
@@ -338,11 +350,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
@@ -382,11 +400,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
@@ -426,11 +450,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
@@ -470,11 +500,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
@@ -514,11 +550,17 @@ public class huntControlsController implements Initializable {
         TextField YField = new TextField();
         changeY.getChildren().addAll(YLabel, YField);
 
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable");
+        CheckBox visableCheck = new CheckBox();
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
         VBox Settings = new VBox();
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         sizeField.setOnAction(e -> {
             try{
