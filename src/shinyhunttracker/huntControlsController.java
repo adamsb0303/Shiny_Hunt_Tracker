@@ -110,7 +110,7 @@ public class huntControlsController implements Initializable {
                     }
                     break;
                 case 5:
-                    input = new FileInputStream("Images/Sprites/Generation 5/" + selectedPokemon.getName().toLowerCase() + ".png");
+                    input = new FileInputStream("Images/Sprites/Generation 5/" + selectedPokemon.getName().toLowerCase() + ".gif");
                     break;
                 default:
                     break;
@@ -312,29 +312,28 @@ public class huntControlsController implements Initializable {
             }
             sprite.setScaleX(scale);
             sprite.setScaleY(scale);
+            sizeField.setText("");
             sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         });
 
         XField.setOnAction(e ->{
-            double X = 0;
             try{
-                X = parseDouble(sizeField.getText());
+                sprite.setLayoutX(parseDouble(XField.getText()));
+                XField.setText("");
+                XField.setPromptText(String.valueOf(sprite.getLayoutX()));
             }catch(NumberFormatException f){
-                sizeField.setText("");
+                XField.setText("");
             }
-            sprite.setLayoutX(X);
-            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         });
 
         YField.setOnAction(e ->{
-            double Y = 0;
             try{
-                Y = parseDouble(sizeField.getText());
+                sprite.setLayoutY(parseDouble(YField.getText()));
+                YField.setText("");
+                YField.setPromptText(String.valueOf(sprite.getLayoutY()));
             }catch(NumberFormatException f){
-                sizeField.setText("");
+                YField.setText("");
             }
-            sprite.setLayoutY(Y);
-            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
         });
 
         visableCheck.setOnAction(e ->{
@@ -401,6 +400,7 @@ public class huntControlsController implements Initializable {
             double scale = 0;
             try{
                 scale = parseDouble(sizeField.getText());
+                sizeField.setText("");
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
@@ -412,23 +412,25 @@ public class huntControlsController implements Initializable {
         XField.setOnAction(e ->{
             double X = 0;
             try{
-                X = parseDouble(sizeField.getText());
+                X = parseDouble(XField.getText());
+                XField.setText("");
             }catch(NumberFormatException f){
-                sizeField.setText("");
+                XField.setText("");
             }
             label.setLayoutX(X);
-            sizeField.setPromptText(String.valueOf(label.getScaleX()));
+            XField.setPromptText(String.valueOf(label.getLayoutX()));
         });
 
         YField.setOnAction(e ->{
             double Y = 0;
             try{
-                Y = parseDouble(sizeField.getText());
+                Y = parseDouble(YField.getText());
+                YField.setText("");
             }catch(NumberFormatException f){
-                sizeField.setText("");
+                YField.setText("");
             }
             label.setLayoutY(Y);
-            sizeField.setPromptText(String.valueOf(label.getScaleX()));
+            YField.setPromptText(String.valueOf(label.getLayoutY()));
         });
 
         fontField.setOnAction(e -> {
