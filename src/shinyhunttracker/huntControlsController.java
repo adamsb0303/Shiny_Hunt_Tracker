@@ -381,6 +381,7 @@ public class huntControlsController implements Initializable {
         color.setSpacing(5);
         Label colorLabel = new Label("Color:");
         ColorPicker colorField = new ColorPicker();
+        colorField.setValue((Color) label.getTextFill());
         color.getChildren().addAll(colorLabel, colorField);
 
         HBox visablility = new HBox();
