@@ -39,7 +39,7 @@ public class SaveData {
                 bufferedWriter.write("\n");
             }
             else
-                replaceLine(sameDataLine, saveData);
+                replaceLine(sameDataLine, saveData, "PreviousHunts");
             bufferedWriter.close();
         }catch (IOException e){
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class SaveData {
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
 
-            for(int i = 0; i < getfileLength(); i++) {
+            for(int i = 0; i < getfileLength("PreviousHunts"); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber) {
                     int generation = parseInt(spiltString(line, 2));
@@ -80,7 +80,7 @@ public class SaveData {
 
             int sameDataLine = checkForPreviousData(saveData);
             if(sameDataLine != -1)
-                deleteLine(sameDataLine);
+                deleteLine(sameDataLine, "PreviousHunts");
             bufferedWriter.write(saveData);
             bufferedWriter.write("\n");
             bufferedWriter.close();
@@ -111,11 +111,11 @@ public class SaveData {
     }
 
     //returns the given line from the previous hunts file
-    public String getLinefromFile(int lineNumber){
+    public String getLinefromFile(int lineNumber, String file){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
 
-            for(int i = 0; i < getfileLength(); i++) {
+            for(int i = 0; i < getfileLength(file); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber)
                     return (i+1) + ") " + spiltString(line, 0) + " | " + spiltString(line, 1) + " | " + spiltString(line, 3) + " | " + spiltString(line, 5) + " encounters";
@@ -137,9 +137,9 @@ public class SaveData {
     }
 
     //returns how many lines are in the previous hunts file
-    public int getfileLength(){
+    public int getfileLength(String file){
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
             int lines = 0;
             while(reader.readLine() != null)
                 lines++;
@@ -170,11 +170,11 @@ public class SaveData {
     }
 
     //replaces the given line with the given string
-    public void replaceLine(int lineNumber, String saveData) throws IOException{
-        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+    public void replaceLine(int lineNumber, String saveData, String file) throws IOException{
+        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
         StringBuilder inputBuffer = new StringBuilder();
 
-        for(int i = 0; i < getfileLength(); i++){
+        for(int i = 0; i < getfileLength(file); i++){
             String line = fileReader.readLine();
             if(i == lineNumber){
                 line = saveData;
@@ -183,17 +183,17 @@ public class SaveData {
             inputBuffer.append('\n');
         }
 
-        FileOutputStream fileOut = new FileOutputStream("Save Data/PreviousHunts.txt");
+        FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
         fileOut.write(inputBuffer.toString().getBytes());
         fileOut.close();
     }
 
     //deletes the given line
-    public void deleteLine(int lineNumber) throws IOException{
-        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+    public void deleteLine(int lineNumber, String file) throws IOException{
+        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
         StringBuilder inputBuffer = new StringBuilder();
 
-        for(int i = 0; i < getfileLength(); i++){
+        for(int i = 0; i < getfileLength(file); i++){
             String line = fileReader.readLine();
             if(i == lineNumber){
                 continue;
@@ -202,7 +202,7 @@ public class SaveData {
             inputBuffer.append('\n');
         }
 
-        FileOutputStream fileOut = new FileOutputStream("Save Data/PreviousHunts.txt");
+        FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
         fileOut.write(inputBuffer.toString().getBytes());
         fileOut.close();
     }

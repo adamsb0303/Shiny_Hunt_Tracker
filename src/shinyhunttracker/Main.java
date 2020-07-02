@@ -32,7 +32,7 @@ public class Main extends Application {
         //check save data file for previous saves
         //if anything is found, ask the user if they would like to start a new hunt or a previous one
         SaveData checkForData = new SaveData();
-        if(checkForData.getLinefromFile(0) != null) {
+        if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
             Platform.runLater(() -> {
                 Stage loadStage = new Stage();
 
@@ -68,8 +68,8 @@ public class Main extends Application {
 
                     SaveData previousHuntData = new SaveData();
 
-                    for(int i = 0; i < previousHuntData.getfileLength(); i++){
-                        makeBranch(previousHuntData.getLinefromFile(i), previousHuntsRoot);
+                    for(int i = 0; i < previousHuntData.getfileLength("PreviousHunts"); i++){
+                        makeBranch(previousHuntData.getLinefromFile(i, "PreviousHunts"), previousHuntsRoot);
                     }
 
                     previousHuntsView.setRoot(previousHuntsRoot);
