@@ -3,6 +3,7 @@ package shinyhunttracker;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -310,6 +311,8 @@ public class huntControlsController implements Initializable {
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
+            sprite.setTranslateX(-(sprite.getImage().getWidth() * ((1 - scale)/2)));
+            sprite.setTranslateY(-(sprite.getImage().getHeight() * ((1 - scale)/2)));
             sprite.setScaleX(scale);
             sprite.setScaleY(scale);
             sizeField.setText("");
