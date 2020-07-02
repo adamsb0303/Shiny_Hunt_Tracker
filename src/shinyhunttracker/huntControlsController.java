@@ -123,7 +123,10 @@ public class huntControlsController implements Initializable {
             System.out.println("Sprite not found");
         }
 
-        promptLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
+        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
+            promptLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
+        else
+            promptLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, oddFractionLabel);
 
         currentHuntingPokemonLabel.setLayoutX(200);
         currentHuntingPokemonLabel.setLayoutY(65);
@@ -134,11 +137,11 @@ public class huntControlsController implements Initializable {
         currentHuntingMethodLabel.setLayoutX(200);
         currentHuntingMethodLabel.setLayoutY(95);
 
-        previousEncountersLabel.setLayoutX(200);
-        previousEncountersLabel.setLayoutY(110);
-
         oddFractionLabel.setLayoutX(200);
-        oddFractionLabel.setLayoutY(125);
+        oddFractionLabel.setLayoutY(110);
+
+        previousEncountersLabel.setLayoutX(300);
+        previousEncountersLabel.setLayoutY(110);
 
         Scene promptScene = new Scene(promptLayout, 750, 480);
         huntWindow.setScene(promptScene);
@@ -210,7 +213,6 @@ public class huntControlsController implements Initializable {
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonLabel, "Pokemon");
         VBox encountersSettings = createLabelSettings(encountersLabel, "Encounters");
-        VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Search Level/Total Encounters");
         VBox oddsFraction = createLabelSettings(oddFractionLabel, "Odds");
 
         VBox background = new VBox();
@@ -234,8 +236,15 @@ public class huntControlsController implements Initializable {
         saveClose.getChildren().addAll(Save,Load,Close);
 
         VBox CustomizeHuntVBox = new VBox();
-        CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, oddsFraction, currentMethodSettings, previousEncountersSettings, background, saveClose);
-
+        if(selectedMethod.getName().compareTo("DexNav") == 0) {
+            VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Search Level");
+            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, background, saveClose);
+        }else if(selectedMethod.getName().compareTo("Total Encounters") == 0){
+            VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Total Encounters");
+            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, background, saveClose);
+        }
+        else
+            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, background, saveClose);
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
         AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
