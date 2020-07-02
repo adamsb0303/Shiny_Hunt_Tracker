@@ -3,7 +3,6 @@ package shinyhunttracker;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -14,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,19 +25,23 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class huntControlsController implements Initializable {
+    //controller elements
     Stage huntControls = new Stage();
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
     public HBox huntControlsButtonHBox;
 
+    //hunt window elements
     Stage huntWindow = new Stage();
     AnchorPane promptLayout = new AnchorPane();
     Label currentHuntingMethodLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
     int encounters, previousEncounters= 0;
     int increment = 1;
 
+    //hunt window settings window elements
     Stage CustomizeHuntStage = new Stage();
     ImageView sprite;
 
+    //current objects
     Pokemon selectedPokemon = new Pokemon();
     Game selectedGame = new Game();
     Method selectedMethod = new Method();
@@ -47,10 +49,12 @@ public class huntControlsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        //moves HBox with all the buttons to the middle of the window
         huntControlsButtonHBox.setAlignment(Pos.CENTER);
         huntControlsButtonHBox.setSpacing(10);
     }
 
+    //sets huntControls window to the given stage
     public void importStage(Stage stage){
         huntControls = stage;
         huntControls.setOnCloseRequest(e -> {
@@ -59,6 +63,7 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //creates hunt window
     public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters){
         huntWindow.setTitle("Hunt Window");
         this.selectedPokemon = selectedPokemon;
@@ -108,6 +113,7 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //returns ImageView with the sprite of the given pokemon
     public ImageView createPokemonSprite(String name){
         try {
             FileInputStream input;
@@ -167,6 +173,7 @@ public class huntControlsController implements Initializable {
         }
     }
 
+    //creates window to prompt user for search level or previous encounters
     public void promptPreviousEncounters(){
         Stage promptWindow = new Stage();
         promptWindow.setResizable(false);
@@ -213,6 +220,7 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //creates window for the hunt window settings
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
         VBox imageSettings = createImageSettings();
@@ -279,6 +287,7 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //creates ImageView settings VBox
     public VBox createImageSettings(){
         HBox groupLabel = new HBox();
         Label Group = new Label("Pokemon Sprite:");
@@ -361,6 +370,7 @@ public class huntControlsController implements Initializable {
         return Settings;
     }
 
+    //creates Label settings VBox
     public VBox createLabelSettings(Label label, String labelName){
         HBox groupLabel = new HBox();
         Label Group = new Label(labelName + " Label");
@@ -470,12 +480,14 @@ public class huntControlsController implements Initializable {
         return Settings;
     }
 
+    //adds increment to the encounters
     public void incrementEncounters(){
         encounters += increment;
         encountersLabel.setText(String.valueOf(encounters));
         dynamicOddsMethods();
     }
 
+    //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
         data.pokemonCaught();
@@ -483,6 +495,7 @@ public class huntControlsController implements Initializable {
         huntWindow.close();
     }
 
+    //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
     public void phaseHunt(){
         Stage phaseStage = new Stage();
         phaseStage.initModality(Modality.APPLICATION_MODAL);
@@ -516,16 +529,19 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //resets encounters
     public void resetEncounters(){
         encounters = 0;
         encountersLabel.setText(String.valueOf(encounters));
     }
 
+    //writes objects to previous hunts file
     public void saveHunt(){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
         data.saveHunt();
     }
 
+    //changes increment
     public void changeIncrement(){
         Stage changeIncrementStage = new Stage();
         changeIncrementStage.setResizable(false);
@@ -550,6 +566,7 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //since some methods' odds change based on encounters
     private void dynamicOddsMethods(){
         switch(selectedMethod.getName()){
             case "Radar Chaining":

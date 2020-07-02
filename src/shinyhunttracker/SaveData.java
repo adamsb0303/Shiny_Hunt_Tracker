@@ -25,6 +25,7 @@ public class SaveData {
         this.encounters = encounters;
     }
 
+    //writes information to previous hunts file
     public void saveHunt(){
         try {
             String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
@@ -45,6 +46,7 @@ public class SaveData {
         }
     }
 
+    //pulls information from previous hunts file
     public void loadHunt(int lineNumber){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
@@ -68,6 +70,7 @@ public class SaveData {
         }
     }
 
+    //writes information to caught pokemon file
     public void pokemonCaught(){
         try{
             String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
@@ -86,6 +89,7 @@ public class SaveData {
         }
     }
 
+    //opens huntControls window
     public void beginHunt() throws IOException{
         FXMLLoader huntControlsLoader = new FXMLLoader();
         huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
@@ -106,6 +110,7 @@ public class SaveData {
         }
     }
 
+    //returns the given line from the previous hunts file
     public String getLinefromFile(int lineNumber){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
@@ -121,6 +126,7 @@ public class SaveData {
         return null;
     }
 
+    //splits the given string by the , and returns the number word that is given
     private String spiltString(String line, int word){
         int index;
         for(int i = 0; i < word; i++){
@@ -130,6 +136,7 @@ public class SaveData {
         return line.substring(0,line.indexOf(','));
     }
 
+    //returns how many lines are in the previous hunts file
     public int getfileLength(){
         try {
             BufferedReader reader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
@@ -143,6 +150,7 @@ public class SaveData {
         return 0;
     }
 
+    //checks to see if the given string is already in the preivous hunts file
     public int checkForPreviousData(String saveData) throws IOException{
         BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
 
@@ -161,6 +169,7 @@ public class SaveData {
         return -1;
     }
 
+    //replaces the given line with the given string
     public void replaceLine(int lineNumber, String saveData) throws IOException{
         BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
         StringBuilder inputBuffer = new StringBuilder();
@@ -179,6 +188,7 @@ public class SaveData {
         fileOut.close();
     }
 
+    //deletes the given line
     public void deleteLine(int lineNumber) throws IOException{
         BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
         StringBuilder inputBuffer = new StringBuilder();

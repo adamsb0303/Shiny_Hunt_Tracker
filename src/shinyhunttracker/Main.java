@@ -22,12 +22,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //creates selection page window
         Stage huntSelectionWindow = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
         huntSelectionWindow.setTitle("Shiny Hunt Tracker");
         huntSelectionWindow.setResizable(false);
         huntSelectionWindow.setScene(new Scene(root, 750, 480));
 
+        //check save data file for previous saves
+        //if anything is found, ask the user if they would like to start a new hunt or a previous one
         SaveData checkForData = new SaveData();
         if(checkForData.getLinefromFile(0) != null) {
             Platform.runLater(() -> {
@@ -49,11 +52,13 @@ public class Main extends Application {
                 loadStage.setScene(loadScene);
                 loadStage.show();
 
+                //show the previously created Selection Page Window
                 newHunt.setOnAction(e -> {
                     huntSelectionWindow.show();
                     loadStage.close();
                 });
 
+                //if they would like to continue, show a list of the previous hunts found on the file
                 continuePrevious.setOnAction(e -> {
                     Stage previousHuntsStage = new Stage();
 
@@ -78,6 +83,7 @@ public class Main extends Application {
                     previousHuntsStage.show();
                     loadStage.close();
 
+                    //skip selection window and go straight to hunt page
                     previousHuntsView.getSelectionModel().selectedItemProperty()
                             .addListener((v, oldValue, newValue) -> {
                                 String line = newValue.toString().substring(18);
@@ -90,6 +96,7 @@ public class Main extends Application {
             huntSelectionWindow.show();
     }
 
+    //method to create Tree Item branches
     public void makeBranch(String title, TreeItem<String> parent){
         TreeItem<String> item = new TreeItem<>(title);
         parent.getChildren().add(item);

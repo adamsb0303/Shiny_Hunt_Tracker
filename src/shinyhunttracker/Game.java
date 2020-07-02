@@ -15,6 +15,7 @@ public class Game {
         this.generation = generation;
     }
 
+    //add method names to the Method array based on the game
     public void generateMethods(Pokemon selectedPokemon){
         switch(generation){
             case 2:
@@ -85,6 +86,8 @@ public class Game {
             Methods[0] = "None";
     }
 
+    //for XY, DPP, ORAS, and SWSH
+    //checks to see if the pokemon is wild for shiny hunt methods that require the pokemon to be wild
     public boolean isWild(Pokemon selectedPokemon){
         String[] DPP = {"Starly", "Staravia", "Bidoof", "Bibarel", "Kricketot", "Kricketune", "Shinx", "Luxio", "Abra", "Kadabra", "Magikarp", "Gyarados", "Budew", "Roselia", "Zubat", "Goldbat", "Geodude", "Graveler", "Onix", "Steelix", "Machop", "Machoke", "Psyduck", "Golduck", "Burmy", "Wurmple", "Silcoon", "Beautifly", "Casoon", "Dustox", "Combee", "Pachirisu", "Buizel", "Floatzel", "Cherubi", "Shellos", "Gastrodon", "Heracross", "Aipom", "Drifloon", "Buneary", "Gastly", "Haunter", "Goldeen", "Seaking", "Barboach", "Whiscash", "Chingling", "Chimecho", "Meditite", "Medicham", "Bronzor", "Bronzong", "Ponyta", "Bonsly", "Sudowoodo", "Mime Jr.", "Mr. Mime", "Happiny", "Chansey", "Cleffa", "Clefairy", "Chatot", "Pichu", "Pikachu", "Hoothoot", "Noctowl", "Gible", "Unown", "Riolu", "Wooper", "Quagsire", "Wingull", "Pelipper", "Girafarig", "Hippopotas", "Hippowdon", "Azurill", "Marill", "Skorupi", "Drapion", "Croagunk", "Toxicroak", "Carnivine", "Remoraid", "Octillery", "Finneon", "Lumieon", "Tentacool", "Tentacruel", "Feebas", "Mantyke", "Snover", "Abomasnow", "Sneasel", "Nidoran♀", "Nidorina", "Nidoran♂", "Nidorino", "Venonat", "Venomoth", "Mankey", "Primape", "Grimer", "Tauros", "Ditto", "Sentret", "Togepi", "Mareep", "Flaaffy", "Hoppip", "Skiploom", "Sunkern", "Wobbuffet", "Smeargle", "Tyrogue", "Miltank", "Swellow", "Ralts", "Kirlia", "Nincada", "Loudred", "Torkoal", "Swablu", "Baltoy", "Duskull", "Dusclops", "Snorunt"};
         String[] Platinum = {"Slowpoke", "Larvitar", "Mightyena", "Aron", "Kecleon", "Bagon", "Stantler", "Houndour"};
@@ -214,6 +217,8 @@ public class Game {
         return false;
     }
 
+    //for gen 6 games
+    //checks to see if the pokemon can be fished for the chain fishing method
     public boolean isFish(Pokemon selectedPokemon){
         String[] fishXY = {"Barboach", "Whiscash", "Carvanha", "Sharpedo", "Chinchou", "Lanturn", "Clamperl", "Corphish", "Crawdaunt", "Dratini", "Dragonair", "Goldeen", "Seaking", "Horsea", "Seadra", "Magikarp", "Gyarados", "Poliwag", "Poliwhirl", "Poliwrath", "Politoad", "Remoraid", "Octillery", "Alomomola", "Basculin", "Luvdisc", "Qwilfish", "Relicanth", "Corsola"};
         String[] fishX = {"Huntail", "Clauncher", "Clawitzer", "Staryu", "Starmie"};
@@ -242,6 +247,8 @@ public class Game {
         return false;
     }
 
+    //for XY
+    //checks to see if the pokemon is in available in the friend safari
     public boolean isFriendSafari(Pokemon selectedPokemon){
         String[] FriendSafari = {"Teddiursa", "Aipom", "Dunsparce", "Lillipup", "Loudred", "Kecleon", "Audino", "Minccino", "Chansey", "Ditto", "Eevee", "Smeargle", "Growlithe", "Ponyta", "Magmar", "Pansear", "Charmeleon", "Slugma", "Larvesta", "Pyroar", "Ninetales", "Braixen", "Fletchinder", "Mankey", "Machoke", "Meditite", "Mienfoo", "Throh", "Sawk", "Pancham", "Tyrogue", "Breloom", "Hariyama", "Riolu", "Krabby", "Octillery", "Vivarel", "Panpour", "Wartortle", "Gyarados", "Quagsire", "Floatzel", "Poliwhirl", "Azumarill", "Frogadier", "Pidget", "Spearow", "Farfetch'd", "Doduo", "Hoothoot", "Tranquill", "Woodbat", "Swanna", "Tropuis", "Rufflet", "Fletchinder", "Hawlucha", "Oddish", "Tangela", "Sunkern", "Pansage", "Ivysaur", "Swadloon", "Petilil", "Sawsbuck", "Maractus", "Quilladin", "Gogoat", "Kakuna", "Gloom", "Cascoon", "Seviper", "Venomoth", "Ariados", "Swalot", "Garbodor", "Muk", "Drapion", "Toxicroak", "Whirlipede", "Electrode", "Pachirisu", "Emolga", "Dedenne", "Pikachu", "Electabuzz", "Stunfisk", "Helioptile", "Manectric", "Luxio", "Zebstrika", "Galvantula", "Sandshrew", "Wooper", "Phanpy", "Trapinch", "Dugrio", "Marowak", "Nincada", "Camerupt", "Gastrodon", "Papitoad", "Diggersby", "Abra", "Drowzee", "Grumpig", "Munna", "Wobbuffet", "Sigilyph", "Espurr", "Xatu", "Girafarig", "Gothorita", "Duosion", "Nosepass", "Boldore", "Dwebble", "Onix", "Magcargo", "Corsola", "Pupitar", "Rhydon", "Shuckle", "Barbaracle", "Delibird", "Snorunt", "Snover", "Sneasel", "Bearic", "Bergmite", "Dewgong", "Clowster", "Lapras", "Piloswine", "Butterfree", "Paras", "Ledyba", "Combee", "Beautifly", "Masquerain", "Volbeat", "Illumise", "Venomoth", "Pinsir", "Heracross", "Vivillion", "Gabite", "Fraxure", "Dragonair", "Shelgon", "Noibat", "Druddigon", "Sliggoo", "Shuppet", "Lampent", "Phantump", "Pumpkaboo", "Dusclops", "Drifblim", "Spiritomb", "Golurk", "Mightyena", "Nuzleaf", "Pawniard", "Vullaby", "Sneasel", "Cacturne", "Crawdaunt", "Sandile", "Sableye", "Absol", "Liepard", "Inkay", "Magneton", "Mawile", "Ferroseed", "Forretress", "Skamory", "Metang", "Klang", "Bronzong", "Excadrill", "Klefki", "Togepi", "Snubbull", "Kirlia", "Dedenne", "Jigglypuff", "Mawile", "Spirtzee", "Swirlix", "Clefairy", "Floette"};
         for(String i: FriendSafari)
@@ -250,6 +257,8 @@ public class Game {
         return false;
     }
 
+    //for SM and USUM
+    //checks to see if the pokemon can be called through SOS
     public boolean isSOS(Pokemon selectedPokemon){
         String[] SOS ={"Caterpie", "Metapod", "Butterfree", "Golbat", "Crobat", "Tentacruel", "Lumineon", "Slowpoke", "Slowbro", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Pichu", "Pikachu", "Happiny", "Igglybuff", "Jigglypuff", "Corsola", "Mareanie", "Elekid", "Electabuzz", "Chansey", "Magby", "Magmar", "Wailmer", "Wailord", "Barbaoch", "Whiscash", "Snorunt", "Bagon", "Shelgon", "Salamence", "Bonsly", "Sudowoodo", "Muchlax", "Snorlax", "Riolu", "Lucario", "Tubbish", "Pancham", "Carbink", "Sableye", "Trumbeak", "Oranguru", "Passimian", "Jangmo-o", "Hakamo-o", "Kommo-o"};
         String[] SOSUltra = {"Caterpie", "Metapod", "Butterfree", "Rattata", "Raticate", "Zubat", "Golbat", "Crobat", "Dugtrio", "Meowth", "Persian", "Psyduck", "Slowpoke", "Slowbro", "Slowking", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Chansey", "Blissey", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Hoothoot", "Noctowl", "Chinchou", "Lanturn", "Pichu", "Pikachu", "Cleffa", "Clefairy", "Happiny", "Natu", "Xatu", "Aipom", "Ambipom", "Corsola", "Mareanie", "Remoraid", "Octillery", "Smoochum", "Jynx", "Elekid", "Electabuzz", "Magby", "Magmar", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Trapinch", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Clamperl", "Huntail", "Gorebyss", "Bagon", "Shelgon", "Salamence", "Buneary", "Lopunny", "Bonsly", "Sudowoodo", "Mime Jr.", "Mr. Mime", "Munchlax", "Snorlax", "Riolu", "Lucario", "Finneon", "Lumineon", "Mantyke", "Krokorok", "Scraggy", "Fearow", "Druddigon", "Bisharp", "Pawniard", "Larvesta", "Volcarona", "Fletchling", "Fletchinder", "Pancham", "Pangoro", "Dedenne", "Togedemaru", "Carbink", "Sableye", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Charjabug", "Grubbin", "Vikavolt", "Mudbray", "Mudsdale", "Salandit", "Salazzle", "Stufful", "Oranguru", "Passimian", "Pyukumuku", "Wingull", "Togedemaru", "Janhmo-o", "Hakamo-o", "Kommo-o"};
@@ -267,6 +276,8 @@ public class Game {
         }
     }
 
+    //for USUM
+    //checks to see if the pokemon is available in the deep space wormholes
     public boolean isWormhole(Pokemon selectedPokemon){
         String[] Wormhole = {"Quagsire", "Lombre", "Floatzel", "Stunfisk", "Barbaracle", "Nuzleaf", "Grumpig", "Drapion", "Audino", "Heliolisk", "Swellow", "Altaria", "Yanmega", "Sigilyph", "Swanna", "Magcargo", "Medicham", "Hippowdon", "Abomasnow", "Crustle"};
         for(String i: Wormhole)
@@ -275,6 +286,7 @@ public class Game {
         return false;
     }
 
+    //adds shiny locked pokemon to ShinyLocked array based on the selected game
     public void setShinyLocked(){
         switch (generation){
             case 5:
@@ -353,6 +365,7 @@ public class Game {
         }
     }
 
+    //checks to see if the legendary pokemon is available in the selected Game
     public boolean legendaryIsAvaliable(Pokemon selectedPokemon){
         switch(this.generation) {
             case 1:

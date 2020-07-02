@@ -11,6 +11,7 @@ public class Method {
     }
 
     Method(String name, int generation){
+        //determines the initial base and modifier with the selected game and method
         if(generation >= 5)
             base = 4096;
         switch(name){
@@ -44,6 +45,8 @@ public class Method {
                 break;
         }
     }
+
+    //returns modifier to added to the base modifier by selected method with given encounters
 
     public int chainFishing(int encounters){
         if(encounters >= 20)
