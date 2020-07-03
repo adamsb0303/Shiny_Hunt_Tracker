@@ -232,23 +232,31 @@ public class huntControlsController implements Initializable {
     //creates window for the hunt window settings
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
+        CustomizeHuntStage.setResizable(false);
         VBox imageSettings = createImageSettings(sprite, selectedPokemon.getName());
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
         VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
         VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
-        VBox background = new VBox();
+        VBox backgroundVBox = new VBox();
         Label backgroundGroup = new Label("Background");
         backgroundGroup.setUnderline(true);
         HBox backgroundColorSettings = new HBox();
         backgroundColorSettings.setSpacing(5);
         Label backgroundColorLabel = new Label("Color");
         ColorPicker backgroundColorPicker = new ColorPicker();
-        background.setPadding(new Insets(10,10,10,10));
-        background.setSpacing(10);
+        backgroundVBox.setPadding(new Insets(10,10,10,10));
+        backgroundVBox.setSpacing(10);
         backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-        background.getChildren().addAll(backgroundGroup, backgroundColorSettings);
+        backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings);
+
+        Accordion accordion = new Accordion();
+        TitledPane backgroundTitledPane = new TitledPane("Background", backgroundVBox);
+        accordion.getPanes().add(backgroundTitledPane);
+
+        VBox backgroundSettings = new VBox();
+        backgroundSettings.getChildren().add(accordion);
 
         HBox saveClose = new HBox();
         saveClose.setPadding(new Insets(10,10,10,10));
@@ -261,13 +269,13 @@ public class huntControlsController implements Initializable {
         VBox CustomizeHuntVBox = new VBox();
         if(selectedMethod.getName().compareTo("DexNav") == 0) {
             VBox previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, background, saveClose);
+            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
         }else if(selectedMethod.getName().compareTo("Total Encounters") == 0){
             VBox previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, background, saveClose);
+            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
         }
         else
-            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, background, saveClose);
+            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, backgroundSettings, saveClose);
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
         AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
@@ -275,7 +283,7 @@ public class huntControlsController implements Initializable {
         ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
         CustomizeHuntScrollpane.setFitToHeight(true);
 
-        Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 300, 300);
+        Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 263, 500);
         CustomizeHuntStage.setScene(CustomizeHuntScene);
         CustomizeHuntStage.show();
 
@@ -299,6 +307,7 @@ public class huntControlsController implements Initializable {
     //window that displays settings for previously caught pokemon
     public void previouslyCaughtPokemonSettings(){
         previouslyCaughtStage.setTitle("Previously Caught Pokemon Settings");
+        previouslyCaughtStage.setResizable(false);
 
         Label numberCaught = new Label("Display Previously Caught: ");
 
@@ -307,6 +316,7 @@ public class huntControlsController implements Initializable {
 
         HBox numberPreviouslyCaught = new HBox();
         numberPreviouslyCaught.setAlignment(Pos.CENTER);
+        numberPreviouslyCaught.setPadding(new Insets(5,5,5,5));
         numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
 
         VBox caughtSettings = createPreviouslyCaught(displayPrevious);
@@ -316,7 +326,7 @@ public class huntControlsController implements Initializable {
         previouslyCaughtSettingsLayout.setSpacing(5);
         ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
         previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, caughtSettings);
-        previouslyCaughtScene = new Scene(scrollPane, 300, 300);
+        previouslyCaughtScene = new Scene(scrollPane, 317, 500);
         previouslyCaughtStage.setScene(previouslyCaughtScene);
         previouslyCaughtStage.show();
 
@@ -369,11 +379,16 @@ public class huntControlsController implements Initializable {
         visableCheck.setSelected(true);
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
+        VBox imageVBox = new VBox();
+        imageVBox.setSpacing(10);
+        imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
+
+        Accordion accordion = new Accordion();
+        TitledPane imageTitledPane = new TitledPane(pokemonName + " Sprite", imageVBox);
+        accordion.getPanes().add(imageTitledPane);
+
+        VBox imageSettings = new VBox();
+        imageSettings.getChildren().add(accordion);
 
         sizeField.setOnAction(e -> {
             double scale = 0;
@@ -414,7 +429,7 @@ public class huntControlsController implements Initializable {
             image.setVisible(visableCheck.isSelected());
         });
 
-        return Settings;
+        return imageSettings;
     }
 
     //creates Label settings VBox
@@ -426,7 +441,7 @@ public class huntControlsController implements Initializable {
 
         HBox changeSize = new HBox();
         changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
+        Label sizeLabel = new Label("Scale: ");
         TextField sizeField = new TextField();
         sizeField.setPromptText(String.valueOf(label.getScaleX()));
         changeSize.getChildren().addAll(sizeLabel, sizeField);
@@ -490,11 +505,16 @@ public class huntControlsController implements Initializable {
         visableCheck.setSelected(true);
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
-        VBox Settings = new VBox();
-        Settings.setSpacing(10);
-        Settings.setAlignment(Pos.CENTER);
-        Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, visablility);
+        VBox labelVBox = new VBox();
+        labelVBox.setSpacing(10);
+        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, visablility);
+
+        Accordion accordion = new Accordion();
+        TitledPane labelTitledPane = new TitledPane(labelName, labelVBox);
+        accordion.getPanes().add(labelTitledPane);
+
+        VBox labelSettings = new VBox();
+        labelSettings.getChildren().add(accordion);
 
         sizeField.setOnAction(e -> {
             double scale = 0;
@@ -576,7 +596,7 @@ public class huntControlsController implements Initializable {
             label.setVisible(visableCheck.isSelected());
         });
 
-        return Settings;
+        return labelSettings;
     }
 
     //create elements of the last x previously caught pokemon
