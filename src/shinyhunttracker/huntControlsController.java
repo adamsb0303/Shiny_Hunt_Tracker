@@ -657,8 +657,15 @@ public class huntControlsController implements Initializable {
     public void pokemonCaught() {
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
         data.pokemonCaught();
-        huntControls.close();
-        huntWindow.close();
+
+        sprite.setVisible(false);
+        currentHuntingPokemonText.setVisible(false);
+        currentHuntingMethodText.setVisible(false);
+        oddFractionText.setVisible(false);
+        encountersText.setVisible(false);
+        previousEncountersText.setVisible(false);
+
+        createPreviouslyCaught(displayPrevious);
     }
 
     //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
