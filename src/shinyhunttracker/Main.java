@@ -69,7 +69,12 @@ public class Main extends Application {
                     SaveData previousHuntData = new SaveData();
 
                     for(int i = 0; i < previousHuntData.getfileLength("PreviousHunts"); i++){
-                        makeBranch(previousHuntData.getLinefromFile(i, "PreviousHunts"), previousHuntsRoot);
+                        String line = previousHuntData.getLinefromFile(i, "PreviousHunts");
+                        String name = previousHuntData.splitString(line, 0);
+                        String game = previousHuntData.splitString(line, 1);
+                        String method = previousHuntData.splitString(line, 3);
+                        String encounters = previousHuntData.splitString(line, 5);
+                        makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
                     }
 
                     previousHuntsView.setRoot(previousHuntsRoot);

@@ -54,12 +54,12 @@ public class SaveData {
             for(int i = 0; i < getfileLength("PreviousHunts"); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber) {
-                    int generation = parseInt(spiltString(line, 2));
-                    selectedPokemon = new Pokemon(spiltString(line, 0), generation);
-                    selectedGame = new Game(spiltString(line, 1), generation);
-                    selectedMethod = new Method(spiltString(line, 3), generation);
-                    selectedMethod.setModifier(parseInt(spiltString(line, 4)));
-                    encounters = parseInt(spiltString(line, 5));
+                    int generation = parseInt(splitString(line, 2));
+                    selectedPokemon = new Pokemon(splitString(line, 0), generation);
+                    selectedGame = new Game(splitString(line, 1), generation);
+                    selectedMethod = new Method(splitString(line, 3), generation);
+                    selectedMethod.setModifier(parseInt(splitString(line, 4)));
+                    encounters = parseInt(splitString(line, 5));
                     break;
                 }
             }
@@ -118,7 +118,7 @@ public class SaveData {
             for(int i = 0; i < getfileLength(file); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber)
-                    return (i+1) + ") " + spiltString(line, 0) + " | " + spiltString(line, 1) + " | " + spiltString(line, 3) + " | " + spiltString(line, 5) + " encounters";
+                    return line;
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -127,7 +127,7 @@ public class SaveData {
     }
 
     //splits the given string by the , and returns the number word that is given
-    private String spiltString(String line, int word){
+    public String splitString(String line, int word){
         int index;
         for(int i = 0; i < word; i++){
             index = line.indexOf(',');
@@ -160,7 +160,7 @@ public class SaveData {
             for(int i = 0; i < 6; i++){
                 if(i == 5)
                     return lineNumber;
-                if(spiltString(saveData,i).compareTo(spiltString(line,i)) != 0) {
+                if(splitString(saveData,i).compareTo(splitString(line,i)) != 0) {
                     break;
                 }
             }

@@ -37,9 +37,14 @@ public class huntControlsController implements Initializable {
     int encounters, previousEncounters= 0;
     int increment = 1;
 
-    //hunt window settings window elements
+    //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
     ImageView sprite;
+
+    //previously caught pokemon settings elements
+    Stage previouslyCaughtStage = new Stage();
+    Scene previouslyCaughtScene;
+    int displayPrevious = 0;
 
     //current objects
     Pokemon selectedPokemon = new Pokemon();
@@ -60,6 +65,7 @@ public class huntControlsController implements Initializable {
         huntControls.setOnCloseRequest(e -> {
             huntWindow.close();
             CustomizeHuntStage.close();
+            previouslyCaughtStage.close();
         });
     }
 
@@ -79,7 +85,7 @@ public class huntControlsController implements Initializable {
         previousEncountersLabel = new Label();
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
 
-        sprite = createPokemonSprite(selectedPokemon.getName());
+        sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         promptLayout.getChildren().add(sprite);
 
         if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
@@ -109,12 +115,13 @@ public class huntControlsController implements Initializable {
 
         huntWindow.setOnCloseRequest(e -> {
             CustomizeHuntStage.close();
+            previouslyCaughtStage.close();
             huntControls.close();
         });
     }
 
     //returns ImageView with the sprite of the given pokemon
-    public ImageView createPokemonSprite(String name){
+    public ImageView createPokemonSprite(String name, Game selectedGame){
         try {
             FileInputStream input;
             if(selectedPokemon.getName().compareTo("Type: Null") == 0)
@@ -223,9 +230,9 @@ public class huntControlsController implements Initializable {
     //creates window for the hunt window settings
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
-        VBox imageSettings = createImageSettings();
-        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
+        VBox imageSettings = createImageSettings(sprite, selectedPokemon.getName());
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonLabel, "Pokemon");
+        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
         VBox encountersSettings = createLabelSettings(encountersLabel, "Encounters");
         VBox oddsFraction = createLabelSettings(oddFractionLabel, "Odds");
 
@@ -287,10 +294,80 @@ public class huntControlsController implements Initializable {
         });
     }
 
+    //window that displays settings for previously caught pokemon
+    public void previouslyCaughtPokemonSettings(){
+        previouslyCaughtStage.setTitle("Previously Caught Pokemon Settings");
+
+        Label numberCaught = new Label("Display Previously Caught: ");
+
+        TextField numberCaughtField = new TextField();
+        numberCaughtField.setPromptText(String.valueOf(displayPrevious));
+
+        HBox numberPreviouslyCaught = new HBox();
+        numberPreviouslyCaught.setAlignment(Pos.CENTER);
+        numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
+
+        VBox caughtSettings = createPreviouslyCaught(displayPrevious);
+
+        VBox previouslyCaughtSettingsLayout = new VBox();
+        previouslyCaughtSettingsLayout.setAlignment(Pos.CENTER);
+        previouslyCaughtSettingsLayout.setSpacing(5);
+        ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
+        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, caughtSettings);
+        previouslyCaughtScene = new Scene(scrollPane, 300, 300);
+        previouslyCaughtStage.setScene(previouslyCaughtScene);
+        previouslyCaughtStage.show();
+
+        numberCaughtField.setOnAction(e ->{
+            try{
+                displayPrevious = parseInt(numberCaughtField.getText());
+                VBox caughtPokemonSettings = createPreviouslyCaught(displayPrevious);
+                previouslyCaughtSettingsLayout.getChildren().remove(1);
+                previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings);
+                numberCaughtField.setText("");
+                numberCaughtField.setPromptText(String.valueOf(displayPrevious));
+            }catch(NumberFormatException f){
+                numberCaughtField.setText("");
+            }
+        });
+    }
+
+    //create elements of the last x previously caught pokemon
+    public VBox createPreviouslyCaught(int previouslyCaught){
+        VBox settings = new VBox();
+        SaveData data = new SaveData();
+        int numberCaught = data.getfileLength("CaughtPokemon");
+        if(numberCaught < previouslyCaught)
+            previouslyCaught = numberCaught;
+        System.out.println(numberCaught);
+        System.out.println((numberCaught - previouslyCaught));
+        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
+            String line = data.getLinefromFile(i, "CaughtPokemon");
+            System.out.println(line);
+            Label seperator = new Label("-------------------------------------------");
+            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
+            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
+            Label pokemon = new Label(data.splitString(line, 0));System.out.println(data.splitString(line, 0));
+            Label method = new Label(data.splitString(line, 3));System.out.println(data.splitString(line, 3));
+            Label encounters = new Label(data.splitString(line, 5));System.out.println(data.splitString(line, 5));
+
+            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
+            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
+            VBox currentMethodSettings = createLabelSettings(method, "Method");
+            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
+
+            VBox pokemonSettings = new VBox();
+            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
+
+            settings.getChildren().add(pokemonSettings);
+        }
+        return settings;
+    }
+
     //creates ImageView settings VBox
-    public VBox createImageSettings(){
+    public VBox createImageSettings(ImageView image, String pokemonName){
         HBox groupLabel = new HBox();
-        Label Group = new Label("Pokemon Sprite:");
+        Label Group = new Label(pokemonName + " Sprite:");
         Group.setUnderline(true);
         groupLabel.getChildren().add(Group);
 
@@ -298,21 +375,21 @@ public class huntControlsController implements Initializable {
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale:");
         TextField sizeField = new TextField();
-        sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+        sizeField.setPromptText(String.valueOf(image.getScaleX()));
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         Label XLabel = new Label("X Location:");
         TextField XField = new TextField();
-        XField.setPromptText(String.valueOf(sprite.getLayoutX()));
+        XField.setPromptText(String.valueOf(image.getLayoutX()));
         changeX.getChildren().addAll(XLabel, XField);
 
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         Label YLabel = new Label("Y Location:");
         TextField YField = new TextField();
-        YField.setPromptText(String.valueOf(sprite.getLayoutY()));
+        YField.setPromptText(String.valueOf(image.getLayoutY()));
         changeY.getChildren().addAll(YLabel, YField);
 
         HBox visablility = new HBox();
@@ -335,19 +412,19 @@ public class huntControlsController implements Initializable {
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
-            sprite.setTranslateX(-(sprite.getImage().getWidth() * ((1 - scale)/2)));
-            sprite.setTranslateY(-(sprite.getImage().getHeight() * ((1 - scale)/2)));
-            sprite.setScaleX(scale);
-            sprite.setScaleY(scale);
+            image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale)/2)));
+            image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale)/2)));
+            image.setScaleX(scale);
+            image.setScaleY(scale);
             sizeField.setText("");
-            sizeField.setPromptText(String.valueOf(sprite.getScaleX()));
+            sizeField.setPromptText(String.valueOf(image.getScaleX()));
         });
 
         XField.setOnAction(e ->{
             try{
-                sprite.setLayoutX(parseDouble(XField.getText()));
+                image.setLayoutX(parseDouble(XField.getText()));
                 XField.setText("");
-                XField.setPromptText(String.valueOf(sprite.getLayoutX()));
+                XField.setPromptText(String.valueOf(image.getLayoutX()));
             }catch(NumberFormatException f){
                 XField.setText("");
             }
@@ -355,16 +432,16 @@ public class huntControlsController implements Initializable {
 
         YField.setOnAction(e ->{
             try{
-                sprite.setLayoutY(parseDouble(YField.getText()));
+                image.setLayoutY(parseDouble(YField.getText()));
                 YField.setText("");
-                YField.setPromptText(String.valueOf(sprite.getLayoutY()));
+                YField.setPromptText(String.valueOf(image.getLayoutY()));
             }catch(NumberFormatException f){
                 YField.setText("");
             }
         });
 
         visableCheck.setOnAction(e ->{
-            sprite.setVisible(visableCheck.isSelected());
+            image.setVisible(visableCheck.isSelected());
         });
 
         return Settings;
