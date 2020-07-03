@@ -619,6 +619,18 @@ public class huntControlsController implements Initializable {
             Text method = new Text(data.splitString(line, 3));
             Text encounters = new Text(data.splitString(line, 5));
 
+            sprite.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            sprite.setLayoutY(50);
+
+            pokemon.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            pokemon.setLayoutY(100);
+
+            method.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            method.setLayoutY(125);
+
+            encounters.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            encounters.setLayoutY(150);
+
             VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
             VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
             VBox currentMethodSettings = createLabelSettings(method, "Method");
