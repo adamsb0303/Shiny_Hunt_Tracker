@@ -13,7 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
@@ -33,7 +35,7 @@ public class huntControlsController implements Initializable {
     //hunt window elements
     Stage huntWindow = new Stage();
     AnchorPane huntLayout = new AnchorPane();
-    Label currentHuntingMethodLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
+    Text currentHuntingMethodText, currentHuntingPokemonText, oddFractionText, encountersText, previousEncountersText;
     int encounters, previousEncounters= 0;
     int increment = 1;
 
@@ -78,36 +80,36 @@ public class huntControlsController implements Initializable {
         methodBase = selectedMethod.getBase();
         this.encounters = encounters;
 
-        currentHuntingPokemonLabel = new Label(selectedPokemon.getName());
-        currentHuntingMethodLabel= new Label(selectedMethod.getName());
-        oddFractionLabel= new Label("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
-        encountersLabel= new Label(String.valueOf(encounters));
-        previousEncountersLabel = new Label();
-        previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
+        currentHuntingPokemonText = new Text(selectedPokemon.getName());
+        currentHuntingMethodText= new Text(selectedMethod.getName());
+        oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
+        encountersText= new Text(String.valueOf(encounters));
+        previousEncountersText = new Text();
+        previousEncountersText.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         huntLayout.getChildren().add(sprite);
 
         if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
-            huntLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
+            huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, encountersText, previousEncountersText, oddFractionText);
         else
-            huntLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, oddFractionLabel);
+            huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, encountersText, oddFractionText);
 
 
-        currentHuntingPokemonLabel.setLayoutX(200);
-        currentHuntingPokemonLabel.setLayoutY(65);
+        currentHuntingPokemonText.setLayoutX(200);
+        currentHuntingPokemonText.setLayoutY(65);
 
-        encountersLabel.setLayoutX(200);
-        encountersLabel.setLayoutY(80);
+        encountersText.setLayoutX(200);
+        encountersText.setLayoutY(80);
 
-        currentHuntingMethodLabel.setLayoutX(200);
-        currentHuntingMethodLabel.setLayoutY(95);
+        currentHuntingMethodText.setLayoutX(200);
+        currentHuntingMethodText.setLayoutY(95);
 
-        oddFractionLabel.setLayoutX(200);
-        oddFractionLabel.setLayoutY(110);
+        oddFractionText.setLayoutX(200);
+        oddFractionText.setLayoutY(110);
 
-        previousEncountersLabel.setLayoutX(300);
-        previousEncountersLabel.setLayoutY(110);
+        previousEncountersText.setLayoutX(300);
+        previousEncountersText.setLayoutY(110);
 
         Scene huntScene = new Scene(huntLayout, 750, 480);
         huntWindow.setScene(huntScene);
@@ -201,11 +203,11 @@ public class huntControlsController implements Initializable {
         previousInput.setOnAction(e-> {
             try{
                 previousEncounters = parseInt(previousInput.getText());
-                previousEncountersLabel.setText(String.valueOf(previousEncounters));
+                previousEncountersText.setText(String.valueOf(previousEncounters));
                 if(selectedMethod.getName().compareTo("DexNav") == 0)
-                    oddFractionLabel.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
+                    oddFractionText.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
                 else
-                    oddFractionLabel.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
+                    oddFractionText.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
                 promptWindow.close();
             }catch (NumberFormatException f){
                 previousInput.setText("");
@@ -231,10 +233,10 @@ public class huntControlsController implements Initializable {
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
         VBox imageSettings = createImageSettings(sprite, selectedPokemon.getName());
-        VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonLabel, "Pokemon");
-        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodLabel, "Method");
-        VBox encountersSettings = createLabelSettings(encountersLabel, "Encounters");
-        VBox oddsFraction = createLabelSettings(oddFractionLabel, "Odds");
+        VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
+        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
+        VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
+        VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
         VBox background = new VBox();
         Label backgroundGroup = new Label("Background");
@@ -258,10 +260,10 @@ public class huntControlsController implements Initializable {
 
         VBox CustomizeHuntVBox = new VBox();
         if(selectedMethod.getName().compareTo("DexNav") == 0) {
-            VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Search Level");
+            VBox previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
             CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, background, saveClose);
         }else if(selectedMethod.getName().compareTo("Total Encounters") == 0){
-            VBox previousEncountersSettings = createLabelSettings(previousEncountersLabel, "Total Encounters");
+            VBox previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
             CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, background, saveClose);
         }
         else
@@ -416,7 +418,7 @@ public class huntControlsController implements Initializable {
     }
 
     //creates Label settings VBox
-    public VBox createLabelSettings(Label label, String labelName){
+    public VBox createLabelSettings(Text label, String labelName){
         HBox groupLabel = new HBox();
         Label Group = new Label(labelName + " Label");
         Group.setUnderline(true);
@@ -454,8 +456,32 @@ public class huntControlsController implements Initializable {
         color.setSpacing(5);
         Label colorLabel = new Label("Color:");
         ColorPicker colorField = new ColorPicker();
-        colorField.setValue((Color) label.getTextFill());
+        colorField.setValue((Color) label.getFill());
         color.getChildren().addAll(colorLabel, colorField);
+
+        HBox stroke = new HBox();
+        stroke.setSpacing(5);
+        Label strokeLabel = new Label("Stroke:");
+        CheckBox strokeCheckbox = new CheckBox();
+        stroke.getChildren().addAll(strokeLabel, strokeCheckbox);
+
+        HBox strokeWidth = new HBox();
+        strokeWidth.setSpacing(5);
+        Label strokeWidthLabel = new Label("Stroke Width:");
+        TextField strokeWidthField = new TextField();
+        strokeWidthField.setPromptText(String.valueOf(label.getStrokeWidth()));
+        strokeWidthLabel.setDisable(true);
+        strokeWidthField.setDisable(true);
+        strokeWidth.getChildren().addAll(strokeWidthLabel, strokeWidthField);
+
+        HBox strokeColor = new HBox();
+        strokeColor.setSpacing(5);
+        Label strokeColorLabel = new Label("Stroke Color:");
+        ColorPicker strokeColorPicker = new ColorPicker();
+        strokeColorPicker.setValue((Color) label.getStroke());
+        strokeColorLabel.setDisable(true);
+        strokeColorPicker.setDisable(true);
+        strokeColor.getChildren().addAll(strokeColorLabel, strokeColorPicker);
 
         HBox visablility = new HBox();
         visablility.setSpacing(5);
@@ -468,7 +494,7 @@ public class huntControlsController implements Initializable {
         Settings.setSpacing(10);
         Settings.setAlignment(Pos.CENTER);
         Settings.setPadding(new Insets(10,10,10,10));
-        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, visablility);
+        Settings.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, visablility);
 
         sizeField.setOnAction(e -> {
             double scale = 0;
@@ -515,7 +541,35 @@ public class huntControlsController implements Initializable {
         });
 
         colorField.setOnAction(e -> {
-            label.setTextFill(colorField.getValue());
+            label.setFill(colorField.getValue());
+        });
+
+        strokeCheckbox.setOnAction(e -> {
+            boolean selected = strokeCheckbox.isSelected();
+            if(selected) {
+                strokeWidthLabel.setDisable(false);
+                strokeWidthField.setDisable(false);
+                strokeColorLabel.setDisable(false);
+                strokeColorPicker.setDisable(false);
+                label.setStrokeWidth(parseDouble(strokeWidthField.getPromptText()));
+            }else {
+                label.setStrokeWidth(0);
+            }
+        });
+
+        strokeWidthField.setOnAction(e -> {
+            try{
+                double width = parseDouble(strokeWidthField.getText());
+                label.setStrokeWidth(width);
+                strokeWidthField.setPromptText(String.valueOf(label.getStrokeWidth()));
+                strokeWidthField.setText("");
+            }catch(NumberFormatException f){
+                strokeWidthField.setText("");
+            }
+        });
+
+        strokeColorPicker.setOnAction(e -> {
+            label.setStroke(strokeColorPicker.getValue());
         });
 
         visableCheck.setOnAction(e ->{
@@ -538,12 +592,12 @@ public class huntControlsController implements Initializable {
             previouslyCaught = numberCaught;
         for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
             String line = data.getLinefromFile(i, "CaughtPokemon");
-            Label seperator = new Label("-------------------------------------------");
+            Text seperator = new Text("-------------------------------------------");
             Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
             ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
-            Label pokemon = new Label(data.splitString(line, 0));
-            Label method = new Label(data.splitString(line, 3));
-            Label encounters = new Label(data.splitString(line, 5));
+            Text pokemon = new Text(data.splitString(line, 0));
+            Text method = new Text(data.splitString(line, 3));
+            Text encounters = new Text(data.splitString(line, 5));
 
             VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
             VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
@@ -563,7 +617,7 @@ public class huntControlsController implements Initializable {
     //adds increment to the encounters
     public void incrementEncounters(){
         encounters += increment;
-        encountersLabel.setText(String.valueOf(encounters));
+        encountersText.setText(String.valueOf(encounters));
         dynamicOddsMethods();
     }
 
@@ -612,7 +666,7 @@ public class huntControlsController implements Initializable {
     //resets encounters
     public void resetEncounters(){
         encounters = 0;
-        encountersLabel.setText(String.valueOf(encounters));
+        encountersText.setText(String.valueOf(encounters));
     }
 
     //writes objects to previous hunts file
@@ -655,28 +709,28 @@ public class huntControlsController implements Initializable {
                     tempEncounters = 39;
                 else
                     tempEncounters = encounters;
-                oddFractionLabel.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(methodBase - 8196) / 4096)))));
+                oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(methodBase - 8196) / 4096)))));
                 break;
             case "Chain Fishing":
-                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(encounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(encounters), methodBase));
                 break;
             case "DexNav":
                 if (previousEncounters < 999) {
                     previousEncounters++;
-                    previousEncountersLabel.setText(String.valueOf(previousEncounters));
+                    previousEncountersText.setText(String.valueOf(previousEncounters));
                 }else
-                    previousEncountersLabel.setText("999");
-                oddFractionLabel.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
+                    previousEncountersText.setText("999");
+                oddFractionText.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
                 break;
             case "SOS Chaining":
-                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(encounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(encounters), methodBase));
                 break;
             case "Catch Combo":
-                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(encounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(encounters), methodBase));
                 break;
             case "Total Encounters":
                 previousEncounters++;
-                oddFractionLabel.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), methodBase));
                 break;
             default:
                 break;
