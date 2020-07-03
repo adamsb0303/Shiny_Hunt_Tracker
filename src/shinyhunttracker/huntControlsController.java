@@ -1,8 +1,10 @@
 package shinyhunttracker;
 
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -20,6 +22,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -666,6 +669,17 @@ public class huntControlsController implements Initializable {
         previousEncountersText.setVisible(false);
 
         createPreviouslyCaught(displayPrevious);
+
+        try {
+            Stage huntSelectionWindow = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
+            huntSelectionWindow.setTitle("Shiny Hunt Tracker");
+            huntSelectionWindow.setResizable(false);
+            huntSelectionWindow.setScene(new Scene(root, 750, 480));
+            huntSelectionWindow.show();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
