@@ -13,7 +13,7 @@
               <Menu mnemonicParsing="false" text="Settings">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#saveHunt" text="Save Hunt" />
-                  <MenuItem mnemonicParsing="false" onAction="#CustomizeHuntWindow" text="Customize Hunt Window" />
+                  <MenuItem mnemonicParsing="false" onAction="#CustomizeHuntWindow" text="Customize Hunt Layout" />
                   <MenuItem mnemonicParsing="false" onAction="#previouslyCaughtPokemonSettings" text="Previously Caught Pokemon Settings" />
                   <MenuItem mnemonicParsing="false" onAction="#changeIncrement" text="Change Increment" />
                </items>

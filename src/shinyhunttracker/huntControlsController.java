@@ -32,7 +32,7 @@ public class huntControlsController implements Initializable {
 
     //hunt window elements
     Stage huntWindow = new Stage();
-    AnchorPane promptLayout = new AnchorPane();
+    AnchorPane huntLayout = new AnchorPane();
     Label currentHuntingMethodLabel, currentHuntingPokemonLabel, oddFractionLabel, encountersLabel, previousEncountersLabel;
     int encounters, previousEncounters= 0;
     int increment = 1;
@@ -86,12 +86,12 @@ public class huntControlsController implements Initializable {
         previousEncountersLabel.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
-        promptLayout.getChildren().add(sprite);
+        huntLayout.getChildren().add(sprite);
 
         if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
-            promptLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
+            huntLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, previousEncountersLabel, oddFractionLabel);
         else
-            promptLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, oddFractionLabel);
+            huntLayout.getChildren().addAll(currentHuntingPokemonLabel, currentHuntingMethodLabel, encountersLabel, oddFractionLabel);
 
 
         currentHuntingPokemonLabel.setLayoutX(200);
@@ -109,8 +109,8 @@ public class huntControlsController implements Initializable {
         previousEncountersLabel.setLayoutX(300);
         previousEncountersLabel.setLayoutY(110);
 
-        Scene promptScene = new Scene(promptLayout, 750, 480);
-        huntWindow.setScene(promptScene);
+        Scene huntScene = new Scene(huntLayout, 750, 480);
+        huntWindow.setScene(huntScene);
         huntWindow.show();
 
         huntWindow.setOnCloseRequest(e -> {
@@ -278,7 +278,7 @@ public class huntControlsController implements Initializable {
         CustomizeHuntStage.show();
 
         backgroundColorPicker.setOnAction(e -> {
-            promptLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY)));
+            huntLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY)));
         });
 
         Save.setOnAction(e -> {
@@ -330,38 +330,6 @@ public class huntControlsController implements Initializable {
                 numberCaughtField.setText("");
             }
         });
-    }
-
-    //create elements of the last x previously caught pokemon
-    public VBox createPreviouslyCaught(int previouslyCaught){
-        VBox settings = new VBox();
-        SaveData data = new SaveData();
-        int numberCaught = data.getfileLength("CaughtPokemon");
-        if(numberCaught < previouslyCaught)
-            previouslyCaught = numberCaught;
-        System.out.println(numberCaught);
-        System.out.println((numberCaught - previouslyCaught));
-        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
-            String line = data.getLinefromFile(i, "CaughtPokemon");
-            System.out.println(line);
-            Label seperator = new Label("-------------------------------------------");
-            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
-            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
-            Label pokemon = new Label(data.splitString(line, 0));System.out.println(data.splitString(line, 0));
-            Label method = new Label(data.splitString(line, 3));System.out.println(data.splitString(line, 3));
-            Label encounters = new Label(data.splitString(line, 5));System.out.println(data.splitString(line, 5));
-
-            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
-            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
-            VBox currentMethodSettings = createLabelSettings(method, "Method");
-            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
-
-            VBox pokemonSettings = new VBox();
-            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
-
-            settings.getChildren().add(pokemonSettings);
-        }
-        return settings;
     }
 
     //creates ImageView settings VBox
@@ -555,6 +523,41 @@ public class huntControlsController implements Initializable {
         });
 
         return Settings;
+    }
+
+    //create elements of the last x previously caught pokemon
+    public VBox createPreviouslyCaught(int previouslyCaught){
+        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
+            huntLayout.getChildren().remove(4);
+        else
+            huntLayout.getChildren().remove(3);
+        VBox settings = new VBox();
+        SaveData data = new SaveData();
+        int numberCaught = data.getfileLength("CaughtPokemon");
+        if(numberCaught < previouslyCaught)
+            previouslyCaught = numberCaught;
+        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
+            String line = data.getLinefromFile(i, "CaughtPokemon");
+            Label seperator = new Label("-------------------------------------------");
+            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
+            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
+            Label pokemon = new Label(data.splitString(line, 0));
+            Label method = new Label(data.splitString(line, 3));
+            Label encounters = new Label(data.splitString(line, 5));
+
+            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
+            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
+            VBox currentMethodSettings = createLabelSettings(method, "Method");
+            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
+
+            VBox pokemonSettings = new VBox();
+            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
+
+            huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
+
+            settings.getChildren().add(pokemonSettings);
+        }
+        return settings;
     }
 
     //adds increment to the encounters
