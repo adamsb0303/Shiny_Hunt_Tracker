@@ -602,9 +602,9 @@ public class huntControlsController implements Initializable {
     //create elements of the last x previously caught pokemon
     public VBox createPreviouslyCaught(int previouslyCaught){
         if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
-            huntLayout.getChildren().remove(4);
+            huntLayout.getChildren().remove(4,huntLayout.getChildren().size());
         else
-            huntLayout.getChildren().remove(3);
+            huntLayout.getChildren().remove(3, huntLayout.getChildren().size());
         VBox settings = new VBox();
         SaveData data = new SaveData();
         int numberCaught = data.getfileLength("CaughtPokemon");
