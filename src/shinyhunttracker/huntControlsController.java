@@ -34,12 +34,13 @@ public class huntControlsController implements Initializable {
     Stage huntControls = new Stage();
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
     public HBox huntControlsButtonHBox;
+    boolean selectingNewHunt = false;
 
     //hunt window elements
     Stage huntWindow = new Stage();
     AnchorPane huntLayout = new AnchorPane();
     Text currentHuntingMethodText, currentHuntingPokemonText, oddFractionText, encountersText, previousEncountersText;
-    int encounters, previousEncounters= 0;
+    int encounters, previousEncounters, combo = 0;
     int increment = 1;
 
     //hunt settings window elements
@@ -86,6 +87,7 @@ public class huntControlsController implements Initializable {
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
         oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
+        dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));
         previousEncountersText = new Text();
         previousEncountersText.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
@@ -652,6 +654,7 @@ public class huntControlsController implements Initializable {
     //adds increment to the encounters
     public void incrementEncounters(){
         encounters += increment;
+        combo += increment;
         encountersText.setText(String.valueOf(encounters));
         dynamicOddsMethods();
     }
@@ -676,6 +679,7 @@ public class huntControlsController implements Initializable {
             huntSelectionWindow.setTitle("Shiny Hunt Tracker");
             huntSelectionWindow.setResizable(false);
             huntSelectionWindow.setScene(new Scene(root, 750, 480));
+            selectingNewHunt = true;
             huntSelectionWindow.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -710,16 +714,17 @@ public class huntControlsController implements Initializable {
             else{
                 SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters);
                 data.pokemonCaught();
-                resetEncounters();
+                encounters = 0;
+                resetCombo();
                 phaseStage.close();
             }
         });
     }
 
     //resets encounters
-    public void resetEncounters(){
-        encounters = 0;
-        encountersText.setText(String.valueOf(encounters));
+    public void resetCombo(){
+        combo = 0;
+        dynamicOddsMethods();
     }
 
     //writes objects to previous hunts file
@@ -758,14 +763,14 @@ public class huntControlsController implements Initializable {
         switch(selectedMethod.getName()){
             case "Radar Chaining":
                 int tempEncounters;
-                if (encounters >= 40)
+                if (combo >= 40)
                     tempEncounters = 39;
                 else
-                    tempEncounters = encounters;
+                    tempEncounters = combo;
                 oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(methodBase - 8196) / 4096)))));
                 break;
             case "Chain Fishing":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(encounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo), methodBase));
                 break;
             case "DexNav":
                 if (previousEncounters < 999) {
@@ -773,13 +778,13 @@ public class huntControlsController implements Initializable {
                     previousEncountersText.setText(String.valueOf(previousEncounters));
                 }else
                     previousEncountersText.setText("999");
-                oddFractionText.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
+                oddFractionText.setText("1/" + selectedMethod.dexNav(combo, previousEncounters));
                 break;
             case "SOS Chaining":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(encounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo), methodBase));
                 break;
             case "Catch Combo":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(encounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo), methodBase));
                 break;
             case "Total Encounters":
                 previousEncounters++;

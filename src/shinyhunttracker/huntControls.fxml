@@ -27,7 +27,7 @@
               <Button fx:id="encountersButton" mnemonicParsing="false" onAction="#incrementEncounters" text="Increment" />
               <Button fx:id="pokemonCaughtButton" mnemonicParsing="false" onAction="#pokemonCaught" text="Caught" />
               <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#phaseHunt" text="Phase" />
-            <Button fx:id="resetEncountersButton" mnemonicParsing="false" onAction="#resetEncounters" text="Reset Counter" />
+            <Button fx:id="resetEncountersButton" mnemonicParsing="false" onAction="#resetCombo" text="Reset Combo" />
           </children>
        </HBox>
    </center>

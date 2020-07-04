@@ -110,11 +110,11 @@ public class Method {
     }
 
     public int catchCombo(int encounters){
-        if(encounters >= 0 && encounters < 10)
+        if(encounters >= 0 && encounters <= 10)
             return 0;
-        else if (encounters >= 10 && encounters < 20)
+        else if (encounters > 10 && encounters <= 20)
             return 3;
-        else if (encounters >= 20 && encounters < 30)
+        else if (encounters > 20 && encounters <= 30)
             return 7;
         else
             return 11;
