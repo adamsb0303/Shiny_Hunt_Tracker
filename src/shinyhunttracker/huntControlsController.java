@@ -715,7 +715,6 @@ public class huntControlsController implements Initializable {
             else{
                 SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo);
                 data.pokemonCaught();
-                encounters = 0;
                 resetCombo();
                 phaseStage.close();
             }
