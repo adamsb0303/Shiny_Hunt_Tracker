@@ -665,7 +665,7 @@ public class selectionPageController implements Initializable {
 
     //adds 1 to the selected method modifier
     public void setLure(){
-        if(shinyCharmCheckBox.isSelected())
+        if(lureCheckBox.isSelected())
             selectedMethod.setModifier(selectedMethod.getModifier() + 1);
         else
             selectedMethod.setModifier(selectedMethod.getModifier() - 1);
