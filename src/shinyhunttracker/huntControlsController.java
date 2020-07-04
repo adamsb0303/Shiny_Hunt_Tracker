@@ -76,13 +76,14 @@ public class huntControlsController implements Initializable {
     }
 
     //creates hunt window
-    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters){
+    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo){
         huntWindow.setTitle("Hunt Window");
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         methodBase = selectedMethod.getBase();
         this.encounters = encounters;
+        this.combo = combo;
 
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
@@ -661,7 +662,7 @@ public class huntControlsController implements Initializable {
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo);
         data.pokemonCaught();
 
         sprite.setVisible(false);
@@ -712,7 +713,7 @@ public class huntControlsController implements Initializable {
             if(temp.findGenerationPokemon(userInput) == 0)
                 phasePokemon.setText("");
             else{
-                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters);
+                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo);
                 data.pokemonCaught();
                 encounters = 0;
                 resetCombo();
@@ -729,7 +730,7 @@ public class huntControlsController implements Initializable {
 
     //writes objects to previous hunts file
     public void saveHunt(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo);
         data.saveHunt();
     }
 
