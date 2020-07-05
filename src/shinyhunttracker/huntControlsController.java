@@ -38,7 +38,8 @@ public class huntControlsController implements Initializable {
     //hunt window elements
     Stage huntWindow = new Stage();
     AnchorPane huntLayout = new AnchorPane();
-    Text currentHuntingMethodText, currentHuntingPokemonText, oddFractionText, encountersText, previousEncountersText;
+    int huntLayoutSize = 0;
+    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText;
     int encounters, previousEncounters, combo = 0;
     int increment = 1;
 
@@ -88,35 +89,43 @@ public class huntControlsController implements Initializable {
 
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
+        currentGameText = new Text(selectedGame.getName());
         oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));
-        previousEncountersText = new Text();
-        previousEncountersText.setVisible(selectedMethod.getName().compareTo("DexNav") == 0);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         huntLayout.getChildren().add(sprite);
 
-        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
-            huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, encountersText, previousEncountersText, oddFractionText);
-        else
-            huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, encountersText, oddFractionText);
+        Button resetEncountersButton = new Button("Reset Combo");
+        switch(selectedMethod.getName()){
+            case "Radar Chaining":
+            case "Chain Fishing":
+            case "SOS Chaining":
+            case "Catch Combo":
+                currentComboText = new Text(String.valueOf(combo));
+                huntControlsButtonHBox.getChildren().add(resetEncountersButton);
+                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, currentComboText, oddFractionText);
+                break;
+            case "DexNav":
+                currentComboText = new Text(String.valueOf(combo));
+                huntControlsButtonHBox.getChildren().add(resetEncountersButton);
+                previousEncountersText = new Text();
+                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
+                break;
+            case "Total Encounters":
+                previousEncountersText = new Text();
+                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, oddFractionText);
+            default:
+                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
+                break;
+        }
+        huntLayoutSize = huntLayout.getChildren().size();
 
-
-        currentHuntingPokemonText.setLayoutX(200);
-        currentHuntingPokemonText.setLayoutY(65);
-
-        encountersText.setLayoutX(200);
-        encountersText.setLayoutY(80);
-
-        currentHuntingMethodText.setLayoutX(200);
-        currentHuntingMethodText.setLayoutY(95);
-
-        oddFractionText.setLayoutX(200);
-        oddFractionText.setLayoutY(110);
-
-        previousEncountersText.setLayoutX(300);
-        previousEncountersText.setLayoutY(110);
+        for(int i = 1; i < huntLayout.getChildren().size(); i++){
+            huntLayout.getChildren().get(i).setLayoutX(200);
+            huntLayout.getChildren().get(i).setLayoutY(65 + (15 * i));
+        }
 
         Scene huntScene = new Scene(huntLayout, 750, 480);
         huntWindow.setScene(huntScene);
@@ -244,6 +253,7 @@ public class huntControlsController implements Initializable {
         VBox imageSettings = createImageSettings(sprite, selectedPokemon.getName());
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
+        VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
         VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
         VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
@@ -275,15 +285,31 @@ public class huntControlsController implements Initializable {
         saveClose.getChildren().addAll(Save,Load,Close);
 
         VBox CustomizeHuntVBox = new VBox();
-        if(selectedMethod.getName().compareTo("DexNav") == 0) {
-            VBox previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
-        }else if(selectedMethod.getName().compareTo("Total Encounters") == 0){
-            VBox previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
+        VBox comboSettings;
+        VBox previousEncountersSettings;
+
+        switch(selectedMethod.getName()){
+            case "Radar Chaining":
+            case "Chain Fishing":
+            case "SOS Chaining":
+            case "Catch Combo":
+                comboSettings = createLabelSettings(currentComboText, "Combo");
+                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
+                break;
+            case "DexNav":
+                comboSettings = createLabelSettings(currentComboText, "Combo");
+                previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
+                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
+                break;
+            case "Total Encounters":
+                previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
+                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
+                break;
+            default:
+                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+                break;
         }
-        else
-            CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, oddsFraction, backgroundSettings, saveClose);
+
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
         AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
@@ -350,6 +376,50 @@ public class huntControlsController implements Initializable {
                 numberCaughtField.setText("");
             }
         });
+    }
+
+    //create elements of the last x previously caught pokemon
+    public VBox createPreviouslyCaught(int previouslyCaught){
+        huntLayout.getChildren().remove(huntLayoutSize, huntLayout.getChildren().size());
+        VBox settings = new VBox();
+        SaveData data = new SaveData();
+        int numberCaught = data.getfileLength("CaughtPokemon");
+        if(numberCaught < previouslyCaught)
+            previouslyCaught = numberCaught;
+        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
+            String line = data.getLinefromFile(i, "CaughtPokemon");
+            Text seperator = new Text("-------------------------------------------");
+            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
+            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
+            Text pokemon = new Text(data.splitString(line, 0));
+            Text method = new Text(data.splitString(line, 3));
+            Text encounters = new Text(data.splitString(line, 5));
+
+            sprite.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            sprite.setLayoutY(50);
+
+            pokemon.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            pokemon.setLayoutY(75);
+
+            method.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            method.setLayoutY(90);
+
+            encounters.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
+            encounters.setLayoutY(105);
+
+            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
+            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
+            VBox currentMethodSettings = createLabelSettings(method, "Method");
+            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
+
+            VBox pokemonSettings = new VBox();
+            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
+
+            huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
+
+            settings.getChildren().add(pokemonSettings);
+        }
+        return settings;
     }
 
     //creates ImageView settings VBox
@@ -605,53 +675,6 @@ public class huntControlsController implements Initializable {
         });
 
         return labelSettings;
-    }
-
-    //create elements of the last x previously caught pokemon
-    public VBox createPreviouslyCaught(int previouslyCaught){
-        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0)
-            huntLayout.getChildren().remove(6,huntLayout.getChildren().size());
-        else
-            huntLayout.getChildren().remove(5, huntLayout.getChildren().size());
-        VBox settings = new VBox();
-        SaveData data = new SaveData();
-        int numberCaught = data.getfileLength("CaughtPokemon");
-        if(numberCaught < previouslyCaught)
-            previouslyCaught = numberCaught;
-        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
-            String line = data.getLinefromFile(i, "CaughtPokemon");
-            Text seperator = new Text("-------------------------------------------");
-            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
-            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
-            Text pokemon = new Text(data.splitString(line, 0));
-            Text method = new Text(data.splitString(line, 3));
-            Text encounters = new Text(data.splitString(line, 5));
-
-            sprite.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            sprite.setLayoutY(50);
-
-            pokemon.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            pokemon.setLayoutY(100);
-
-            method.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            method.setLayoutY(125);
-
-            encounters.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            encounters.setLayoutY(150);
-
-            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
-            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
-            VBox currentMethodSettings = createLabelSettings(method, "Method");
-            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
-
-            VBox pokemonSettings = new VBox();
-            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
-
-            huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
-
-            settings.getChildren().add(pokemonSettings);
-        }
-        return settings;
     }
 
     //adds increment to the encounters

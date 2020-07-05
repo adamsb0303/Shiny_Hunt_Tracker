@@ -3,6 +3,7 @@ package shinyhunttracker;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.*;
 
@@ -111,6 +112,29 @@ public class SaveData {
 
         if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
             huntControlsController.promptPreviousEncounters();
+        }
+    }
+
+    //saves layout
+    public void saveLayout(String layoutName, VBox currentPokemon, int previousCaught, VBox[] previousPokemon){
+        try {
+            File file = new File("Save Data/Layouts/Layouts.txt");
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(layoutName + '\n');
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            File file = new File("Save Data/Layouts/" + layoutName + ".txt");
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            currentPokemon.getChildren().get(0);
+
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
