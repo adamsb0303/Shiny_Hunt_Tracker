@@ -709,7 +709,7 @@ public class selectionPageController implements Initializable {
                 helpButton.setTooltip(methodToolTip);
                 break;
             case "Catch Combo":
-                methodToolTip.setText("When you catch the same pokemon back to back the shiny odds increase\n\nShiny odds cap at a chain of 30\nChain is broked when the pokemon flees or you catch a different pokemon");
+                methodToolTip.setText("When you catch the same pokemon back to back the shiny odds increase\n\nShiny odds cap at a chain of 31\nChain is broken when the pokemon flees or you catch a different pokemon");
                 helpButton.setTooltip(methodToolTip);
                 break;
             case "Ultra Wormholes":
