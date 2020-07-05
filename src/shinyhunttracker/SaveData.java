@@ -12,24 +12,25 @@ public class SaveData {
     Pokemon selectedPokemon;
     Game selectedGame;
     Method selectedMethod;
-    int encounters, combo;
+    int encounters, combo, increment;
 
     SaveData(){
 
     }
 
-    SaveData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo){
+    SaveData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo, int increment){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         this.encounters = encounters;
         this.combo = combo;
+        this.increment = increment;
     }
 
     //writes information to previous hunts file
     public void saveHunt(){
         try {
-            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + ",";
+            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + ",";
             File file = new File("Save Data/PreviousHunts.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -62,6 +63,7 @@ public class SaveData {
                     selectedMethod.setModifier(parseInt(splitString(line, 4)));
                     encounters = parseInt(splitString(line, 5));
                     combo = parseInt(splitString(line, 6));
+                    increment = parseInt(splitString(line, 7));
                     break;
                 }
             }
@@ -98,7 +100,7 @@ public class SaveData {
         Parent hunterControlsParent = huntControlsLoader.load();
 
         huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, encounters, combo);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");

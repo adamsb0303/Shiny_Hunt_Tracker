@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -77,7 +76,7 @@ public class huntControlsController implements Initializable {
     }
 
     //creates hunt window
-    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo){
+    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo, int increment){
         huntWindow.setTitle("Hunt Window");
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
@@ -85,6 +84,7 @@ public class huntControlsController implements Initializable {
         methodBase = selectedMethod.getBase();
         this.encounters = encounters;
         this.combo = combo;
+        this.increment = increment;
 
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
@@ -664,7 +664,7 @@ public class huntControlsController implements Initializable {
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
         data.pokemonCaught();
 
         sprite.setVisible(false);
@@ -715,7 +715,7 @@ public class huntControlsController implements Initializable {
             if(temp.findGenerationPokemon(userInput) == 0)
                 phasePokemon.setText("");
             else{
-                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo);
+                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment);
                 data.pokemonCaught();
                 resetCombo();
                 phaseStage.close();
@@ -731,7 +731,7 @@ public class huntControlsController implements Initializable {
 
     //writes objects to previous hunts file
     public void saveHunt(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
         data.saveHunt();
     }
 

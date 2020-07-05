@@ -742,7 +742,7 @@ public class selectionPageController implements Initializable {
         Parent hunterControlsParent = huntControlsLoader.load();
 
         huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, 0, 0);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, 0, 0, 1);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
