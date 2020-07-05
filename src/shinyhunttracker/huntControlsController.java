@@ -93,6 +93,8 @@ public class huntControlsController implements Initializable {
         oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));
+        currentComboText = new Text(String.valueOf(combo));
+        previousEncountersText = new Text();
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         huntLayout.getChildren().add(sprite);
@@ -103,18 +105,14 @@ public class huntControlsController implements Initializable {
             case "Chain Fishing":
             case "SOS Chaining":
             case "Catch Combo":
-                currentComboText = new Text(String.valueOf(combo));
                 huntControlsButtonHBox.getChildren().add(resetEncountersButton);
                 huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, currentComboText, oddFractionText);
                 break;
             case "DexNav":
-                currentComboText = new Text(String.valueOf(combo));
                 huntControlsButtonHBox.getChildren().add(resetEncountersButton);
-                previousEncountersText = new Text();
                 huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
                 break;
             case "Total Encounters":
-                previousEncountersText = new Text();
                 huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, oddFractionText);
             default:
                 huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
@@ -327,7 +325,10 @@ public class huntControlsController implements Initializable {
 
         Save.setOnAction(e -> {
             SaveData data = new SaveData();
-            data.saveLayout("test", huntLayout, 0);
+            AnchorPane saveLayout = new AnchorPane();
+
+            saveLayout.getChildren().addAll(sprite, currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
+            data.saveLayout("test", saveLayout, 0);
         });
 
         Load.setOnAction(e -> {
