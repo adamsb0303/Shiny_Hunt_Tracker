@@ -72,6 +72,7 @@ public class huntControlsController implements Initializable {
             huntWindow.close();
             CustomizeHuntStage.close();
             previouslyCaughtStage.close();
+            saveHunt();
         });
     }
 
@@ -125,6 +126,7 @@ public class huntControlsController implements Initializable {
             CustomizeHuntStage.close();
             previouslyCaughtStage.close();
             huntControls.close();
+            saveHunt();
         });
     }
 
