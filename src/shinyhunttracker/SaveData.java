@@ -1,9 +1,13 @@
 package shinyhunttracker;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.*;
 
@@ -116,23 +120,34 @@ public class SaveData {
     }
 
     //saves layout
-    public void saveLayout(String layoutName, VBox currentPokemon, int previousCaught, VBox[] previousPokemon){
+    public void saveLayout(String layoutName, AnchorPane huntLayout, int previousCaught){
         try {
             File file = new File("Save Data/Layouts/Layouts.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(layoutName + '\n');
+
+            bufferedWriter.write(layoutName);
+            bufferedWriter.close();
         }catch(IOException e){
             e.printStackTrace();
         }
 
         try{
             File file = new File("Save Data/Layouts/" + layoutName + ".txt");
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file, false);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            currentPokemon.getChildren().get(0);
+            for(Node i : huntLayout.getChildren()) {
+                if(i instanceof ImageView){
+                    ImageView image = (ImageView) i;
+                    bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getScaleX() + "," + image.isVisible() + '\n');
+                }else {
+                    Text text = (Text) i;
+                    bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + text.getFont() + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isVisible() +'\n');
+                }
+            }
 
+            bufferedWriter.close();
         }catch(IOException e){
             e.printStackTrace();
         }

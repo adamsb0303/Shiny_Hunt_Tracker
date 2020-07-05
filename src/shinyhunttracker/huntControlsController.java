@@ -326,7 +326,8 @@ public class huntControlsController implements Initializable {
         });
 
         Save.setOnAction(e -> {
-
+            SaveData data = new SaveData();
+            data.saveLayout("test", huntLayout, 0);
         });
 
         Load.setOnAction(e -> {
@@ -689,7 +690,6 @@ public class huntControlsController implements Initializable {
     public void pokemonCaught() {
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
         data.pokemonCaught();
-
         sprite.setVisible(false);
         currentHuntingPokemonText.setVisible(false);
         currentHuntingMethodText.setVisible(false);
@@ -698,7 +698,7 @@ public class huntControlsController implements Initializable {
         previousEncountersText.setVisible(false);
 
         createPreviouslyCaught(displayPrevious);
-
+/*
         try {
             Stage huntSelectionWindow = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
@@ -710,6 +710,7 @@ public class huntControlsController implements Initializable {
         }catch(IOException e){
             e.printStackTrace();
         }
+ */
     }
 
     //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
