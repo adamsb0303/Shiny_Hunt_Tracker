@@ -365,6 +365,10 @@ public class Game {
         }
     }
 
+    public void setGeneration(int generation){
+        this.generation = generation;
+    }
+
     //checks to see if the legendary pokemon is available in the selected Game
     public boolean legendaryIsAvaliable(Pokemon selectedPokemon){
         switch(this.generation) {

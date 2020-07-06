@@ -164,11 +164,11 @@ public class SaveData {
     }
 
     //load saved layout
-    public void loadLayout(String layoutName, AnchorPane huntLayout){
+    public void loadLayout(String layoutName, AnchorPane huntLayout, int displayPrevious){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/Layouts/" + layoutName + ".txt"));
 
-            for(int i = 0; i < 9; i++) {
+            for(int i = 0; i < getfileLength("Layouts/" + layoutName) - 2; i++) {
                 String line = fileReader.readLine();
                 if(i == 0){
                     ImageView image = (ImageView) huntLayout.getChildren().get(0);
@@ -177,7 +177,7 @@ public class SaveData {
                     image.setScaleX(parseDouble(splitString(line, 2)));
                     image.setScaleY(parseDouble(splitString(line, 2)));
                     image.setVisible(splitString(line, 3).compareTo("true") == 0);
-                }else if(i != 8){
+                }else if(i < 8){
                     Text text = (Text) huntLayout.getChildren().get(i);
                     text.setLayoutX(parseDouble(splitString(line, 0)));
                     text.setLayoutY(parseDouble(splitString(line, 1)));
@@ -188,36 +188,36 @@ public class SaveData {
                     text.setStrokeWidth(parseDouble(splitString(line, 5)));
                     text.setStroke(Color.web(splitString(line, 6)));
                     text.setVisible(splitString(line, 7).compareTo("true") == 0);
-                }
-            }
-
-            for(int i = 9; i < (huntLayout.getChildren().size() - 2) / 4; i++){
-                for(int j = 0; j <= 4; j++){
-                    String line = fileReader.readLine();
-                    if(j == 0){
+                }else if(displayPrevious > 0){
+                    if((i - 8) % 4 == 0){
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
                         image.setLayoutX(parseDouble(splitString(line, 0)));
                         image.setLayoutY(parseDouble(splitString(line, 1)));
                         image.setScaleX(parseDouble(splitString(line, 2)));
+                        image.setScaleY(parseDouble(splitString(line, 2)));
                         image.setVisible(splitString(line, 3).compareTo("true") == 0);
                     }else{
                         Text text = (Text) huntLayout.getChildren().get(i);
                         text.setLayoutX(parseDouble(splitString(line, 0)));
                         text.setLayoutY(parseDouble(splitString(line, 1)));
                         text.setScaleX(parseDouble(splitString(line, 2)));
+                        text.setScaleY(parseDouble(splitString(line, 2)));
                         text.setFont(new Font(splitString(line, 3), 12));
                         text.setFill(Color.web(splitString(line, 4)));
                         text.setStrokeWidth(parseDouble(splitString(line, 5)));
                         text.setStroke(Color.web(splitString(line, 6)));
+                        System.out.println(splitString(line, 7).compareTo("true") == 0);
                         text.setVisible(splitString(line, 7).compareTo("true") == 0);
+                        if((i - 8) % 4 == 3)
+                            displayPrevious--;
                     }
                 }
             }
-
             huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 2, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
         }catch(IOException e){
             e.printStackTrace();
         }
+        System.out.println();
     }
 
     //returns the given line from the previous hunts file

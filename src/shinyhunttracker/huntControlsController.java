@@ -47,6 +47,7 @@ public class huntControlsController implements Initializable {
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
     ImageView sprite;
+    String currentLayout;
 
     //previously caught pokemon settings elements
     Stage previouslyCaughtStage = new Stage();
@@ -400,12 +401,15 @@ public class huntControlsController implements Initializable {
 
             savedLayouts.getSelectionModel().selectedItemProperty()
                     .addListener((v, oldValue, newValue) -> {
-                        String line = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                        displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + line) - 1, "Layouts/" + line));
-                        createPreviouslyCaught(displayPrevious);
-                        data.loadLayout(line, huntLayout);
-
+                        currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
+                        displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
+                        if(displayPrevious > 0)
+                            createPreviouslyCaught(displayPrevious);
+                        else
+                            data.loadLayout(currentLayout, huntLayout, displayPrevious);
                         CustomizeHuntWindow();
+
+                        loadSavedLayoutStage.close();
                     });
         });
 
@@ -466,22 +470,36 @@ public class huntControlsController implements Initializable {
             String line = data.getLinefromFile(i, "CaughtPokemon");
             Text seperator = new Text("-------------------------------------------");
             Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
+            selectionPageController findGeneration = new selectionPageController();
+            int selectedPokemonGeneration = findGeneration.findGenerationPokemon(data.splitString(line, 0));
+            if(caughtGame.getGeneration() < findGeneration.findGenerationPokemon(data.splitString(line, 0)))
+                caughtGame.setGeneration(selectedPokemonGeneration);
             ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
             Text pokemon = new Text(data.splitString(line, 0));
             Text method = new Text(data.splitString(line, 3));
             Text encounters = new Text(data.splitString(line, 5));
 
-            sprite.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            sprite.setLayoutY(50);
+            pokemon.setStroke(Color.web("0x00000000"));
+            method.setStroke(Color.web("0x00000000"));
+            encounters.setStroke(Color.web("0x00000000"));
+            huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
 
-            pokemon.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            pokemon.setLayoutY(75);
+            if(currentLayout != null){
+                data = new SaveData();
+                data.loadLayout(currentLayout, huntLayout, numberCaught - i);
+            }else {
+                sprite.setLayoutX(50 * (numberCaught - i));
+                sprite.setLayoutY(50);
 
-            method.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            method.setLayoutY(90);
+                pokemon.setLayoutX(50 * (numberCaught - i));
+                pokemon.setLayoutY(75);
 
-            encounters.setLayoutX(50 * (i - (numberCaught - previouslyCaught)));
-            encounters.setLayoutY(105);
+                method.setLayoutX(50 * (numberCaught - i));
+                method.setLayoutY(90);
+
+                encounters.setLayoutX(50 * (numberCaught - i));
+                encounters.setLayoutY(105);
+            }
 
             VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
             VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
@@ -491,10 +509,9 @@ public class huntControlsController implements Initializable {
             VBox pokemonSettings = new VBox();
             pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
 
-            huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
-
             settings.getChildren().add(pokemonSettings);
         }
+
         return settings;
     }
 
@@ -530,7 +547,7 @@ public class huntControlsController implements Initializable {
         visablility.setSpacing(5);
         Label visableLabel = new Label("Visable:");
         CheckBox visableCheck = new CheckBox();
-        visableCheck.setSelected(true);
+        visableCheck.setSelected(image.isVisible());
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
         VBox imageVBox = new VBox();
@@ -656,7 +673,7 @@ public class huntControlsController implements Initializable {
         visablility.setSpacing(5);
         Label visableLabel = new Label("Visable:");
         CheckBox visableCheck = new CheckBox();
-        visableCheck.setSelected(true);
+        visableCheck.setSelected(label.isVisible());
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
         VBox labelVBox = new VBox();
@@ -817,6 +834,7 @@ public class huntControlsController implements Initializable {
                 SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment);
                 data.pokemonCaught();
                 resetCombo();
+                createPreviouslyCaught(displayPrevious);
                 phaseStage.close();
             }
         });
