@@ -94,7 +94,9 @@ public class huntControlsController implements Initializable {
         dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));
         currentComboText = new Text(String.valueOf(combo));
+        currentComboText.setVisible(false);
         previousEncountersText = new Text();
+        previousEncountersText.setVisible(false);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         huntLayout.getChildren().add(sprite);
@@ -106,23 +108,29 @@ public class huntControlsController implements Initializable {
             case "SOS Chaining":
             case "Catch Combo":
                 huntControlsButtonHBox.getChildren().add(resetEncountersButton);
-                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, currentComboText, oddFractionText);
+                currentComboText.setVisible(true);
                 break;
             case "DexNav":
                 huntControlsButtonHBox.getChildren().add(resetEncountersButton);
-                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
+                currentComboText.setVisible(true);
+                previousEncountersText.setVisible(true);
                 break;
             case "Total Encounters":
-                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, oddFractionText);
+                previousEncountersText.setVisible(true);
+                break;
             default:
-                huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
                 break;
         }
+        huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
         huntLayoutSize = huntLayout.getChildren().size();
 
+        int index = 1;
         for(int i = 1; i < huntLayout.getChildren().size(); i++){
-            huntLayout.getChildren().get(i).setLayoutX(200);
-            huntLayout.getChildren().get(i).setLayoutY(65 + (15 * i));
+            if(huntLayout.getChildren().get(i).isVisible()) {
+                huntLayout.getChildren().get(i).setLayoutX(200);
+                huntLayout.getChildren().get(i).setLayoutY(65 + (15 * index));
+                index++;
+            }
         }
 
         Scene huntScene = new Scene(huntLayout, 750, 480);
@@ -325,10 +333,8 @@ public class huntControlsController implements Initializable {
 
         Save.setOnAction(e -> {
             SaveData data = new SaveData();
-            AnchorPane saveLayout = new AnchorPane();
 
-            saveLayout.getChildren().addAll(sprite, currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
-            data.saveLayout("test", saveLayout, 0);
+            data.saveLayout("test", huntLayout);
         });
 
         Load.setOnAction(e -> {
