@@ -835,14 +835,14 @@ public class huntControlsController implements Initializable {
     public void pokemonCaught() {
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
         data.pokemonCaught();
+        createPreviouslyCaught(displayPrevious);
+
         sprite.setVisible(false);
         currentHuntingPokemonText.setVisible(false);
         currentHuntingMethodText.setVisible(false);
         oddFractionText.setVisible(false);
         encountersText.setVisible(false);
         previousEncountersText.setVisible(false);
-
-        createPreviouslyCaught(displayPrevious);
 /*
         try {
             Stage huntSelectionWindow = new Stage();
