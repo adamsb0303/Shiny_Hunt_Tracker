@@ -404,6 +404,8 @@ public class huntControlsController implements Initializable {
                         displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + line) - 1, "Layouts/" + line));
                         createPreviouslyCaught(displayPrevious);
                         data.loadLayout(line, huntLayout);
+
+                        CustomizeHuntWindow();
                     });
         });
 

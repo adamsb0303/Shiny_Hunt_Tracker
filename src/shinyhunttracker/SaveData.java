@@ -175,12 +175,14 @@ public class SaveData {
                     image.setLayoutX(parseDouble(splitString(line, 0)));
                     image.setLayoutY(parseDouble(splitString(line, 1)));
                     image.setScaleX(parseDouble(splitString(line, 2)));
+                    image.setScaleY(parseDouble(splitString(line, 2)));
                     image.setVisible(splitString(line, 3).compareTo("true") == 0);
                 }else if(i != 8){
                     Text text = (Text) huntLayout.getChildren().get(i);
                     text.setLayoutX(parseDouble(splitString(line, 0)));
                     text.setLayoutY(parseDouble(splitString(line, 1)));
                     text.setScaleX(parseDouble(splitString(line, 2)));
+                    text.setScaleY(parseDouble(splitString(line, 2)));
                     text.setFont(new Font(splitString(line, 3), 12));
                     text.setFill(Color.web(splitString(line, 4)));
                     text.setStrokeWidth(parseDouble(splitString(line, 5)));
