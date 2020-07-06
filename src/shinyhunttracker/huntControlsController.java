@@ -343,33 +343,86 @@ public class huntControlsController implements Initializable {
 
         Save.setOnAction(e -> {
             SaveData data = new SaveData();
-
             Stage promptLayoutSaveName = new Stage();
             promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
             promptLayoutSaveName.setResizable(false);
-            promptLayoutSaveName.setTitle("Select Layout Name");
 
-            VBox saveLayoutNameLayout = new VBox();
-            saveLayoutNameLayout.setSpacing(10);
-            saveLayoutNameLayout.setAlignment(Pos.CENTER);
+            if(currentLayout != null) {
+                promptLayoutSaveName.setTitle("Save Layout");
 
-            Label saveNameLabel = new Label("What would you like this layout to be called?");
-            TextField saveNameText = new TextField();
+                VBox selectNewSaveLayout = new VBox();
+                selectNewSaveLayout.setAlignment(Pos.CENTER);
+                selectNewSaveLayout.setSpacing(5);
+                Label newNameLabel = new Label("Would you like to save this layout to a new name?");
 
-            saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-            Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-            promptLayoutSaveName.setScene(saveLayoutNameScene);
-            promptLayoutSaveName.show();
+                HBox buttons = new HBox();
+                buttons.setSpacing(10);
+                buttons.setAlignment(Pos.CENTER);
+                Button newSaveButton = new Button("New");
+                Button oldSaveButton = new Button("Update");
+                buttons.getChildren().addAll(newSaveButton, oldSaveButton);
 
-            saveNameText.setOnAction(f -> {
-                String text = saveNameText.getText();
-                if(text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
-                    saveNameText.setText("");
-                }else {
-                    data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious);
+                selectNewSaveLayout.getChildren().addAll(newNameLabel, buttons);
+
+                Scene selectNewSaveScene = new Scene(selectNewSaveLayout, 275, 75);
+                promptLayoutSaveName.setScene(selectNewSaveScene);
+                promptLayoutSaveName.show();
+
+                newSaveButton.setOnAction(f -> {
+                    promptLayoutSaveName.setTitle("Select Layout Name");
+
+                    VBox saveLayoutNameLayout = new VBox();
+                    saveLayoutNameLayout.setSpacing(10);
+                    saveLayoutNameLayout.setAlignment(Pos.CENTER);
+
+                    Label saveNameLabel = new Label("What would you like this layout to be called?");
+                    TextField saveNameText = new TextField();
+
+                    saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
+                    Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
+                    promptLayoutSaveName.setScene(saveLayoutNameScene);
+                    promptLayoutSaveName.show();
+
+                    saveNameText.setOnAction(g -> {
+                        String text = saveNameText.getText();
+                        if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
+                            saveNameText.setText("");
+                        } else {
+                            data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious, true);
+                            promptLayoutSaveName.close();
+                        }
+                    });
+                });
+
+                oldSaveButton.setOnAction(f -> {
+                    data.saveLayout(currentLayout, huntLayout, displayPrevious, false);
                     promptLayoutSaveName.close();
-                }
-            });
+                });
+            }else{
+                promptLayoutSaveName.setTitle("Select Layout Name");
+
+                VBox saveLayoutNameLayout = new VBox();
+                saveLayoutNameLayout.setSpacing(10);
+                saveLayoutNameLayout.setAlignment(Pos.CENTER);
+
+                Label saveNameLabel = new Label("What would you like this layout to be called?");
+                TextField saveNameText = new TextField();
+
+                saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
+                Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
+                promptLayoutSaveName.setScene(saveLayoutNameScene);
+                promptLayoutSaveName.show();
+
+                saveNameText.setOnAction(g -> {
+                    String text = saveNameText.getText();
+                    if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
+                        saveNameText.setText("");
+                    } else {
+                        data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious, true);
+                        promptLayoutSaveName.close();
+                    }
+                });
+            }
         });
 
         Load.setOnAction(e -> {

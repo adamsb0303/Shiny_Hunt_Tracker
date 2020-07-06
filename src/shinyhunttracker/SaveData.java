@@ -128,16 +128,18 @@ public class SaveData {
     }
 
     //saves layout
-    public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious){
-        try {
-            File file = new File("Save Data/Layouts/~Layouts.txt");
-            FileWriter fileWriter = new FileWriter(file, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious, boolean newSave){
+        if(newSave) {
+            try {
+                File file = new File("Save Data/Layouts/~Layouts.txt");
+                FileWriter fileWriter = new FileWriter(file, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            bufferedWriter.write(layoutName + '\n');
-            bufferedWriter.close();
-        }catch(IOException e){
-            e.printStackTrace();
+                bufferedWriter.write(layoutName + '\n');
+                bufferedWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         try{
@@ -174,8 +176,11 @@ public class SaveData {
                     ImageView image = (ImageView) huntLayout.getChildren().get(0);
                     image.setLayoutX(parseDouble(splitString(line, 0)));
                     image.setLayoutY(parseDouble(splitString(line, 1)));
-                    image.setScaleX(parseDouble(splitString(line, 2)));
-                    image.setScaleY(parseDouble(splitString(line, 2)));
+                    double scale = parseDouble(splitString(line, 2));
+                    image.setScaleX(scale);
+                    image.setScaleY(scale);
+                    image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale)/2)));
+                    image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale)/2)));
                     image.setVisible(splitString(line, 3).compareTo("true") == 0);
                 }else if(i < 8){
                     Text text = (Text) huntLayout.getChildren().get(i);
@@ -193,8 +198,11 @@ public class SaveData {
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
                         image.setLayoutX(parseDouble(splitString(line, 0)));
                         image.setLayoutY(parseDouble(splitString(line, 1)));
-                        image.setScaleX(parseDouble(splitString(line, 2)));
-                        image.setScaleY(parseDouble(splitString(line, 2)));
+                        double scale = parseDouble(splitString(line, 2));
+                        image.setScaleX(scale);
+                        image.setScaleY(scale);
+                        image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale)/2)));
+                        image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale)/2)));
                         image.setVisible(splitString(line, 3).compareTo("true") == 0);
                     }else{
                         Text text = (Text) huntLayout.getChildren().get(i);
@@ -206,7 +214,6 @@ public class SaveData {
                         text.setFill(Color.web(splitString(line, 4)));
                         text.setStrokeWidth(parseDouble(splitString(line, 5)));
                         text.setStroke(Color.web(splitString(line, 6)));
-                        System.out.println(splitString(line, 7).compareTo("true") == 0);
                         text.setVisible(splitString(line, 7).compareTo("true") == 0);
                         if((i - 8) % 4 == 3)
                             displayPrevious--;
