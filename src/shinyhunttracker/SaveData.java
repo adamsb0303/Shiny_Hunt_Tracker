@@ -130,7 +130,7 @@ public class SaveData {
     //saves layout
     public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious){
         try {
-            File file = new File("Save Data/Layouts/Layouts.txt");
+            File file = new File("Save Data/Layouts/~Layouts.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
@@ -166,7 +166,6 @@ public class SaveData {
     //load saved layout
     public void loadLayout(String layoutName, AnchorPane huntLayout){
         try {
-            huntControlsController displayPokemon = new huntControlsController();
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/Layouts/" + layoutName + ".txt"));
 
             for(int i = 0; i < 9; i++) {

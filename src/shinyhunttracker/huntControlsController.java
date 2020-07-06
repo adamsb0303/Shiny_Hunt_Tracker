@@ -342,13 +342,38 @@ public class huntControlsController implements Initializable {
         Save.setOnAction(e -> {
             SaveData data = new SaveData();
 
-            data.saveLayout("test", huntLayout, displayPrevious);
+            Stage promptLayoutSaveName = new Stage();
+            promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
+            promptLayoutSaveName.setResizable(false);
+            promptLayoutSaveName.setTitle("Select Layout Name");
+
+            VBox saveLayoutNameLayout = new VBox();
+            saveLayoutNameLayout.setSpacing(10);
+            saveLayoutNameLayout.setAlignment(Pos.CENTER);
+
+            Label saveNameLabel = new Label("What would you like this layout to be called?");
+            TextField saveNameText = new TextField();
+
+            saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
+            Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
+            promptLayoutSaveName.setScene(saveLayoutNameScene);
+            promptLayoutSaveName.show();
+
+            saveNameText.setOnAction(f -> {
+                String text = saveNameText.getText();
+                if(text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
+                    saveNameText.setText("");
+                }else {
+                    data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious);
+                    promptLayoutSaveName.close();
+                }
+            });
         });
 
         Load.setOnAction(e -> {
             SaveData data = new SaveData();
 
-            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/test") - 1, "Layouts/test"));
+            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("~Layouts/test") - 1, "~Layouts/test"));
             createPreviouslyCaught(displayPrevious);
             data.loadLayout("test", huntLayout);
         });
