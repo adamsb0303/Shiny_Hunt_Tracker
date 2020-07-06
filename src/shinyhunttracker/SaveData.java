@@ -134,7 +134,7 @@ public class SaveData {
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            bufferedWriter.write(layoutName);
+            bufferedWriter.write(layoutName + '\n');
             bufferedWriter.close();
         }catch(IOException e){
             e.printStackTrace();

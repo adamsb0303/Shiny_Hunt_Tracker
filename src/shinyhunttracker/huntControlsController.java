@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.lang.Double.POSITIVE_INFINITY;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -373,9 +374,37 @@ public class huntControlsController implements Initializable {
         Load.setOnAction(e -> {
             SaveData data = new SaveData();
 
-            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("~Layouts/test") - 1, "~Layouts/test"));
-            createPreviouslyCaught(displayPrevious);
-            data.loadLayout("test", huntLayout);
+            Stage loadSavedLayoutStage = new Stage();
+            loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
+            loadSavedLayoutStage.setResizable(false);
+            loadSavedLayoutStage.setTitle("Select Layout Name");
+
+            TreeView<String> savedLayouts = new TreeView<>();
+            TreeItem<String> root = new TreeItem<>();
+            for(int i = 0; i < data.getfileLength("Layouts/~Layouts"); i++){
+                makeBranch(data.getLinefromFile(i, "Layouts/~Layouts"), root);
+            }
+            savedLayouts.setRoot(root);
+            savedLayouts.setShowRoot(false);
+            savedLayouts.setPrefWidth(300);
+            savedLayouts.setPrefWidth(500);
+
+            VBox savedLayoutsLayout = new VBox();
+            savedLayoutsLayout.setSpacing(10);
+            savedLayoutsLayout.setAlignment(Pos.CENTER);
+            savedLayoutsLayout.getChildren().add(savedLayouts);
+
+            Scene savedLayoutsScene = new Scene(savedLayoutsLayout, 300, 400);
+            loadSavedLayoutStage.setScene(savedLayoutsScene);
+            loadSavedLayoutStage.show();
+
+            savedLayouts.getSelectionModel().selectedItemProperty()
+                    .addListener((v, oldValue, newValue) -> {
+                        String line = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
+                        displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + line) - 1, "Layouts/" + line));
+                        createPreviouslyCaught(displayPrevious);
+                        data.loadLayout(line, huntLayout);
+                    });
         });
 
         Close.setOnAction(e -> {
@@ -867,5 +896,11 @@ public class huntControlsController implements Initializable {
 
     private int simplifyFraction(double num, int den){
         return (int)Math.round(den / num);
+    }
+
+    //method to create Tree Item branches
+    public void makeBranch(String title, TreeItem<String> parent){
+        TreeItem<String> item = new TreeItem<>(title);
+        parent.getChildren().add(item);
     }
 }
