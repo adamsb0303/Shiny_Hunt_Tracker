@@ -1,16 +1,24 @@
 package shinyhunttracker;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.awt.desktop.AboutHandler;
 import java.io.*;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class SaveData {
@@ -120,7 +128,7 @@ public class SaveData {
     }
 
     //saves layout
-    public void saveLayout(String layoutName, AnchorPane huntLayout, int previousCaught){
+    public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious){
         try {
             File file = new File("Save Data/Layouts/Layouts.txt");
             FileWriter fileWriter = new FileWriter(file, true);
@@ -140,14 +148,72 @@ public class SaveData {
             for(Node i : huntLayout.getChildren()) {
                 if(i instanceof ImageView){
                     ImageView image = (ImageView) i;
-                    bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getScaleX() + "," + image.isVisible() + '\n');
+                    bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getScaleX() + "," + image.isVisible() + ",\n");
                 }else {
                     Text text = (Text) i;
-                    bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + text.getFont() + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isVisible() +'\n');
+                    bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + String.valueOf(text.getFont()).substring(10, String.valueOf(text.getFont()).indexOf(',')) + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isVisible() + ",\n");
+                }
+            }
+            bufferedWriter.write(String.valueOf(huntLayout.getBackground().getFills().get(0).getFill()) + '\n');
+            bufferedWriter.write(String.valueOf(displayPrevious));
+
+            bufferedWriter.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //load saved layout
+    public void loadLayout(String layoutName, AnchorPane huntLayout){
+        try {
+            huntControlsController displayPokemon = new huntControlsController();
+            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/Layouts/" + layoutName + ".txt"));
+
+            for(int i = 0; i < 9; i++) {
+                String line = fileReader.readLine();
+                if(i == 0){
+                    ImageView image = (ImageView) huntLayout.getChildren().get(0);
+                    image.setLayoutX(parseDouble(splitString(line, 0)));
+                    image.setLayoutY(parseDouble(splitString(line, 1)));
+                    image.setScaleX(parseDouble(splitString(line, 2)));
+                    image.setVisible(splitString(line, 3).compareTo("true") == 0);
+                }else if(i != 8){
+                    Text text = (Text) huntLayout.getChildren().get(i);
+                    text.setLayoutX(parseDouble(splitString(line, 0)));
+                    text.setLayoutY(parseDouble(splitString(line, 1)));
+                    text.setScaleX(parseDouble(splitString(line, 2)));
+                    text.setFont(new Font(splitString(line, 3), 12));
+                    text.setFill(Color.web(splitString(line, 4)));
+                    text.setStrokeWidth(parseDouble(splitString(line, 5)));
+                    text.setStroke(Color.web(splitString(line, 6)));
+                    text.setVisible(splitString(line, 7).compareTo("true") == 0);
                 }
             }
 
-            bufferedWriter.close();
+            for(int i = 9; i < (huntLayout.getChildren().size() - 2) / 4; i++){
+                for(int j = 0; j <= 4; j++){
+                    String line = fileReader.readLine();
+                    if(j == 0){
+                        ImageView image = (ImageView) huntLayout.getChildren().get(i);
+                        image.setLayoutX(parseDouble(splitString(line, 0)));
+                        image.setLayoutY(parseDouble(splitString(line, 1)));
+                        image.setScaleX(parseDouble(splitString(line, 2)));
+                        image.setVisible(splitString(line, 3).compareTo("true") == 0);
+                    }else{
+                        Text text = (Text) huntLayout.getChildren().get(i);
+                        text.setLayoutX(parseDouble(splitString(line, 0)));
+                        text.setLayoutY(parseDouble(splitString(line, 1)));
+                        text.setScaleX(parseDouble(splitString(line, 2)));
+                        text.setFont(new Font(splitString(line, 3), 12));
+                        text.setFill(Color.web(splitString(line, 4)));
+                        text.setStrokeWidth(parseDouble(splitString(line, 5)));
+                        text.setStroke(Color.web(splitString(line, 6)));
+                        text.setVisible(splitString(line, 7).compareTo("true") == 0);
+                    }
+                }
+            }
+
+            huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 2, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
         }catch(IOException e){
             e.printStackTrace();
         }

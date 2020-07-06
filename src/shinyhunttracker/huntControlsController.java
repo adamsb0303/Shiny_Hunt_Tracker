@@ -98,6 +98,14 @@ public class huntControlsController implements Initializable {
         previousEncountersText = new Text();
         previousEncountersText.setVisible(false);
 
+        currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
+        currentHuntingMethodText.setStroke(Color.web("0x00000000"));
+        currentGameText.setStroke(Color.web("0x00000000"));
+        oddFractionText.setStroke(Color.web("0x00000000"));
+        encountersText.setStroke(Color.web("0x00000000"));
+        previousEncountersText.setStroke(Color.web("0x00000000"));
+        currentComboText.setStroke(Color.web("0x00000000"));
+
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         huntLayout.getChildren().add(sprite);
 
@@ -334,11 +342,15 @@ public class huntControlsController implements Initializable {
         Save.setOnAction(e -> {
             SaveData data = new SaveData();
 
-            data.saveLayout("test", huntLayout);
+            data.saveLayout("test", huntLayout, displayPrevious);
         });
 
         Load.setOnAction(e -> {
+            SaveData data = new SaveData();
 
+            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/test") - 1, "Layouts/test"));
+            createPreviouslyCaught(displayPrevious);
+            data.loadLayout("test", huntLayout);
         });
 
         Close.setOnAction(e -> {
