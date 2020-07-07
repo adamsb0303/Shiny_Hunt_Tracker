@@ -668,8 +668,6 @@ public class Game {
                             case "Nihilego":
                             case "Xurkitree":
                             case "Guzzlord":
-                            case "Poipole":
-                            case "Naganadel":
                                 return true;
                             default:
                                 break;
