@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -37,6 +38,12 @@ public class selectionPageController implements Initializable {
     Game selectedGame = new Game();
     Pokemon selectedPokemon, Stage0, Stage1 = new Pokemon();
     Method selectedMethod = new Method();
+
+    //hunt page after pokemon is caught variables
+    Stage newHuntSelection = new Stage();
+    AnchorPane newHuntLayout = new AnchorPane();
+    String currentLayout;
+    boolean selectingNewHunt = false;
 
     //misc variables
     int oldSelectionGeneration, oldSelectionGameGeneration = 0;
@@ -742,7 +749,7 @@ public class selectionPageController implements Initializable {
         Parent hunterControlsParent = huntControlsLoader.load();
 
         huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, 0, 0, 1);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, newHuntSelection, currentLayout, 0, 0, 1);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
@@ -752,8 +759,24 @@ public class selectionPageController implements Initializable {
         huntControls.show();
 
         //since the search level or total encounters can change between uses, this value needs to be captured after every startup
-        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
+        if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
             huntControlsController.promptPreviousEncounters();
         }
+    }
+
+    public void setSelectingNewHunt(boolean hunt){
+        selectingNewHunt = hunt;
+    }
+
+    public void setnewHuntSelection(Stage newStage){
+        newHuntSelection = newStage;
+    }
+
+    public void setnewHuntSelectionLayout(AnchorPane hunt){
+        newHuntLayout = hunt;
+    }
+
+    public void setcurrentLayout(String currentLayout){
+        this.currentLayout = currentLayout;
     }
 }

@@ -113,7 +113,8 @@ public class SaveData {
         Parent hunterControlsParent = huntControlsLoader.load();
 
         huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
+        Stage huntWindow = new Stage();
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, huntWindow, null, encounters, combo, increment);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
@@ -129,6 +130,7 @@ public class SaveData {
 
     //saves layout
     public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious, boolean newSave){
+        System.out.println(newSave);
         if(newSave) {
             try {
                 File file = new File("Save Data/Layouts/~Layouts.txt");

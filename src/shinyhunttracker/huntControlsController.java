@@ -24,8 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static java.lang.Double.POSITIVE_INFINITY;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -34,19 +32,18 @@ public class huntControlsController implements Initializable {
     Stage huntControls = new Stage();
     public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
     public HBox huntControlsButtonHBox;
-    boolean selectingNewHunt = false;
 
     //hunt window elements
     Stage huntWindow = new Stage();
     AnchorPane huntLayout = new AnchorPane();
     int huntLayoutSize = 0;
+    ImageView sprite;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText;
     int encounters, previousEncounters, combo = 0;
     int increment = 1;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
-    ImageView sprite;
     String currentLayout;
 
     //previously caught pokemon settings elements
@@ -79,8 +76,9 @@ public class huntControlsController implements Initializable {
     }
 
     //creates hunt window
-    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo, int increment){
+    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, Stage newHuntStage, String currentLayout, int encounters, int combo, int increment){
         huntWindow.setTitle("Hunt Window");
+        huntWindow = newHuntStage;
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
@@ -147,6 +145,16 @@ public class huntControlsController implements Initializable {
         huntWindow.setScene(huntScene);
         huntWindow.show();
 
+        SaveData data = new SaveData();
+        if(currentLayout != null) {
+            this.currentLayout = currentLayout;
+            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
+            if(displayPrevious > 0)
+                createPreviouslyCaught(displayPrevious);
+            else
+                data.loadLayout(currentLayout, huntLayout, displayPrevious);
+        }
+
         huntWindow.setOnCloseRequest(e -> {
             CustomizeHuntStage.close();
             previouslyCaughtStage.close();
@@ -159,13 +167,13 @@ public class huntControlsController implements Initializable {
     public ImageView createPokemonSprite(String name, Game selectedGame){
         try {
             FileInputStream input;
-            if(selectedPokemon.getName().compareTo("Type: Null") == 0)
+            if(name.compareTo("Type: Null") == 0)
                 input = new FileInputStream("Images/Sprites/3d Sprites/type null.gif");
             else
                 input = new FileInputStream("Images/Sprites/3d Sprites/" + name.toLowerCase() + ".gif");
             switch(selectedGame.getGeneration()) {
                 case 2:
-                    input = new FileInputStream("Images/Sprites/Generation 2/" + name.toLowerCase() + "/" + selectedPokemon.getName().toLowerCase() + ".png");
+                    input = new FileInputStream("Images/Sprites/Generation 2/" + selectedGame.getName().toLowerCase() + "/" + name.toLowerCase() + ".png");
                     break;
                 case 3:
                     switch(selectedGame.getName()){
@@ -837,25 +845,37 @@ public class huntControlsController implements Initializable {
         data.pokemonCaught();
         createPreviouslyCaught(displayPrevious);
 
+        huntControls.close();
+        CustomizeHuntStage.close();
+        previouslyCaughtStage.close();
+
         sprite.setVisible(false);
         currentHuntingPokemonText.setVisible(false);
         currentHuntingMethodText.setVisible(false);
+        currentGameText.setVisible(false);
         oddFractionText.setVisible(false);
         encountersText.setVisible(false);
         previousEncountersText.setVisible(false);
-/*
+
         try {
+            FXMLLoader selectionPageLoader = new FXMLLoader();
+            selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+            Parent root = selectionPageLoader.load();
+
             Stage huntSelectionWindow = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
             huntSelectionWindow.setTitle("Shiny Hunt Tracker");
             huntSelectionWindow.setResizable(false);
             huntSelectionWindow.setScene(new Scene(root, 750, 480));
-            selectingNewHunt = true;
+
+            selectionPageController selectionPageController = selectionPageLoader.getController();
+            selectionPageController.setSelectingNewHunt(true);
+            selectionPageController.setnewHuntSelection(huntWindow);
+            selectionPageController.setnewHuntSelectionLayout(huntLayout);
+            selectionPageController.setcurrentLayout(currentLayout);
             huntSelectionWindow.show();
         }catch(IOException e){
             e.printStackTrace();
         }
- */
     }
 
     //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
