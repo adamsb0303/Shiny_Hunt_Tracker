@@ -841,7 +841,7 @@ public class huntControlsController implements Initializable {
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
         data.pokemonCaught();
         createPreviouslyCaught(displayPrevious);
 
@@ -904,7 +904,7 @@ public class huntControlsController implements Initializable {
             if(temp.findGenerationPokemon(userInput) == 0)
                 phasePokemon.setText("");
             else{
-                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment);
+                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
                 data.pokemonCaught();
                 resetCombo();
                 createPreviouslyCaught(displayPrevious);
@@ -921,7 +921,7 @@ public class huntControlsController implements Initializable {
 
     //writes objects to previous hunts file
     public void saveHunt(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
         data.saveHunt();
     }
 

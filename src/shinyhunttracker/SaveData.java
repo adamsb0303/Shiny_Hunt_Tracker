@@ -14,8 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.awt.desktop.AboutHandler;
 import java.io.*;
 
 import static java.lang.Double.parseDouble;
@@ -25,25 +23,27 @@ public class SaveData {
     Pokemon selectedPokemon;
     Game selectedGame;
     Method selectedMethod;
+    String layout;
     int encounters, combo, increment;
 
     SaveData(){
 
     }
 
-    SaveData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo, int increment){
+    SaveData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo, int increment, String layout){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         this.encounters = encounters;
         this.combo = combo;
         this.increment = increment;
+        this.layout = layout;
     }
 
     //writes information to previous hunts file
     public void saveHunt(){
         try {
-            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + ",";
+            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
             File file = new File("Save Data/PreviousHunts.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -77,6 +77,9 @@ public class SaveData {
                     encounters = parseInt(splitString(line, 5));
                     combo = parseInt(splitString(line, 6));
                     increment = parseInt(splitString(line, 7));
+                    layout = splitString(line, 8);
+                    if(layout.compareTo("") == 0)
+                        layout = null;
                     break;
                 }
             }
@@ -114,7 +117,7 @@ public class SaveData {
 
         huntControlsController huntControlsController = huntControlsLoader.getController();
         Stage huntWindow = new Stage();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, huntWindow, null, encounters, combo, increment);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, huntWindow, layout, encounters, combo, increment);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
