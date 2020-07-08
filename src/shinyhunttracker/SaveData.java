@@ -133,7 +133,6 @@ public class SaveData {
 
     //saves layout
     public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious, boolean newSave){
-        System.out.println(newSave);
         if(newSave) {
             try {
                 File file = new File("Save Data/Layouts/~Layouts.txt");
@@ -158,7 +157,7 @@ public class SaveData {
                     bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getScaleX() + "," + image.isVisible() + ",\n");
                 }else {
                     Text text = (Text) i;
-                    bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + String.valueOf(text.getFont()).substring(10, String.valueOf(text.getFont()).indexOf(',')) + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isVisible() + ",\n");
+                    bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + text.getFont().getName() + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isUnderline() + "," + text.isVisible() + ",\n");
                 }
             }
             bufferedWriter.write(String.valueOf(huntLayout.getBackground().getFills().get(0).getFill()) + '\n');
@@ -197,7 +196,8 @@ public class SaveData {
                     text.setFill(Color.web(splitString(line, 4)));
                     text.setStrokeWidth(parseDouble(splitString(line, 5)));
                     text.setStroke(Color.web(splitString(line, 6)));
-                    text.setVisible(splitString(line, 7).compareTo("true") == 0);
+                    text.setUnderline(splitString(line,7).compareTo("true") == 0);
+                    text.setVisible(splitString(line, 8).compareTo("true") == 0);
                 }else if(displayPrevious > 0){
                     if((i - 8) % 4 == 0){
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
@@ -219,7 +219,8 @@ public class SaveData {
                         text.setFill(Color.web(splitString(line, 4)));
                         text.setStrokeWidth(parseDouble(splitString(line, 5)));
                         text.setStroke(Color.web(splitString(line, 6)));
-                        text.setVisible(splitString(line, 7).compareTo("true") == 0);
+                        text.setUnderline(splitString(line, 7).compareTo("true") == 0);
+                        text.setVisible(splitString(line, 8).compareTo("true") == 0);
                         if((i - 8) % 4 == 3)
                             displayPrevious--;
                     }
