@@ -21,8 +21,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import javax.swing.text.StyledEditorKit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -397,7 +395,7 @@ public class huntControlsController implements Initializable {
 
                     saveNameText.setOnAction(g -> {
                         String text = saveNameText.getText();
-                        if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
+                        if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
                             saveNameText.setText("");
                         } else {
                             data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious, true);
