@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -79,7 +77,7 @@ public class selectionPageController implements Initializable {
         PokemonList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
-                        String newSelectionPokemon, oldSelectionPokemon = "";
+                        String newSelectionPokemon, oldSelectionPokemon;
 
                         newSelectionPokemon = newValue.toString().substring(18, newValue.toString().length()-2);
                         if(findGenerationPokemon(newSelectionPokemon) != 0) {//throws away input if selection is Generation 1, Generation 2, etc.
@@ -393,7 +391,7 @@ public class selectionPageController implements Initializable {
         treeGamesGen8 = new TreeItem<>();
 
         //creates object to allow access to legendaryIsAvaliable method
-        Game testGame = new Game();
+        Game testGame;
 
         //goes through games array and checks if the legendary is avaliable in any given game
         //if they aren't the game isn't displayed
@@ -530,15 +528,15 @@ public class selectionPageController implements Initializable {
                 {"Chespin", "Quilladin", "Chesnaught"}, {"Fennekin", "Braixen", "Delphox"}, {"Froakie", "Frogadier", "Greninja"}, {"Bunnelby", "Diggersby", ""}, {"Fletchling", "Fletchinder", "Talonflame"}, {"Scatterbug", "Spewpa", "Vivillon"}, {"Litleo", "Pyroar", ""}, {"Flabébé", "Floette", "Florges"}, {"Skiddo", "Gogoat", ""}, {"Pancham", "Pangoro", ""}, {"Espurr", "Meowstic", ""}, {"Honedge", "Doublade", "Aegislash"}, {"Spritzee", "Aromatisse", ""}, {"Swirlix", "Slurpuff", ""}, {"Inkay", "Malamar", ""}, {"Binacle", "Barbaracle", ""}, {"Skrelp", "Dragalge", ""}, {"Clauncher", "Clawitzer", ""}, {"Helioptile", "Heliolisk", ""}, {"Tyrunt", "Tyrantrum", ""}, {"Amaura", "Aurorus", ""}, {"Eevee", "Sylveon", ""}, {"Goomy", "Sliggoo", "Goodra"}, {"Phantump", "Trevenant", ""}, {"Pumpkaboo", "Gourgeist", ""}, {"Bergmite", "Avalugg", ""}, {"Noibat", "Noivern", ""},
                 {"Rowlet", "Dartrix", "Decidueye"}, {"Litten", "Torracat", "Incineroar"}, {"Popplio", "Brionne", "Primarina"}, {"Pikipek", "Trumbeak", "Toucannon"}, {"Yungoos", "Gumshoos", ""}, {"Grubbin", "Charjabug", "Vikavolt"}, {"Crabrawler", "Crabominable", ""}, {"Cutiefly", "Ribombee", ""}, {"Rockruff", "Lycanroc", ""}, {"Mareanie", "Toxapex", ""}, {"Mudbray", "Mudsdale", ""}, {"Dewpider", "Araquanid", ""}, {"Fomantis", "Lurantis", ""}, {"Morelull", "Shiinotic", ""}, {"Salandit", "Salazzle", ""}, {"Stufful", "Bewear", ""}, {"Bounsweet", "Steenee", "Tsareena"}, {"Wimpod", "Golisopod", ""}, {"Sandygast", "Palossand", ""}, {"Type: Null", "Silvally", ""}, {"Jangmo-o", "Hakamo-o", "Kommo-o"}, {"Cosmog", "Cosmoem", "Solgaleo"}, {"Cosmog", "Cosmoem", "Lunala"}, {"Poipole", "Naganadel", ""},
                 {"Grookey", "Thwackey", "Rillaboom"}, {"Scorbunny", "Raboot", "Cinderace"}, {"Sobble", "Drizzile", "Inteleon"}, {"Skwovet", "Greedent", ""}, {"Rookidee", "Corvisquire", "Corviknight"}, {"Blipbug", "Dottler", "Orbeetle"}, {"Nickit", "Thievul", ""}, {"Gossifleur", "Eldegoss", ""}, {"Wooloo", "Dubwool", ""}, {"Chewtle", "Drednaw", ""}, {"Yamper", "Boltund", ""}, {"Rolycoly", "Carkol", "Coalossal"}, {"Applin", "Flapple", ""}, {"Applin", "Appletun", ""}, {"Silicobra", "Sandaconda", ""}, {"Arrokuda", "Barraskewda", ""}, {"Toxel", "Toxtricity", ""}, {"Sizzlipede", "Centiskorch", ""}, {"Clobbopus", "Grapploct", ""}, {"Sinistea", "Polteaseist", ""}, {"Hatenna", "Hattrem", "Hatterene"}, {"Impidimp", "Morgrem", "Grimmsnarl"}, {"Galarian Zigzagoon", "Galarian Linoone", "Obstagoon"}, {"Galarian Meowth", "Perrserker", ""}, {"Galarian Corsola", "Cursola", ""}, {"Galarian Farfetch'd", "Sirfetch'd", ""}, {"Mime Jr.", "Galarian Mr. Mime", "Mr. Rime"}, {"Galarian Yamask", "Runerigus", ""}, {"Milcery", "Alcremie", ""}, {"Snom", "Frosmoth", ""}, {"Cufant", "Copperajah", ""}, {"Dreepy", "Drakloak", "Dragapult"}, {"Kubfu", "Urshifu", ""}};
-        for (int i = 0; i < pokemonEvolutions.length; i++) {
+        for (String[] pokemonEvolution : pokemonEvolutions) {
             for (int j = 0; j < pokemonEvolutions[0].length; j++) {
-                if (pokemonEvolutions[i][j].compareTo(selectedPokemon.getName()) == 0) {
+                if (pokemonEvolution[j].compareTo(selectedPokemon.getName()) == 0) {
                     evolutionStage = j;
                     if (j >= 1) {
-                        Stage0 = new Pokemon(pokemonEvolutions[i][0], findGenerationPokemon(pokemonEvolutions[i][0]));
+                        Stage0 = new Pokemon(pokemonEvolution[0], findGenerationPokemon(pokemonEvolution[0]));
                     }
                     if (j == 2) {
-                        Stage1 = new Pokemon(pokemonEvolutions[i][1], findGenerationPokemon(pokemonEvolutions[i][1]));
+                        Stage1 = new Pokemon(pokemonEvolution[1], findGenerationPokemon(pokemonEvolution[1]));
                     }
                     return;
                 }
@@ -640,11 +638,11 @@ public class selectionPageController implements Initializable {
     public void setAlolan(){
         galarianCheckBox.setSelected(false);
         if(selectedPokemon.getName().length() > 9 && selectedPokemon.getName().substring(0, 9).compareTo("Galarian ") == 0)
-            selectedPokemon.setName(selectedPokemon.getName().substring(9, selectedPokemon.getName().length()));
+            selectedPokemon.setName(selectedPokemon.getName().substring(9));
         if(alolanCheckBox.isSelected())
             selectedPokemon.setName("Alolan " + selectedPokemon.getName());
         else
-            selectedPokemon.setName(selectedPokemon.getName().substring(7, selectedPokemon.getName().length()));
+            selectedPokemon.setName(selectedPokemon.getName().substring(7));
         pokemonLabel.setText(selectedPokemon.getName());
         InitializeGameList(selectedPokemon.getGeneration());
     }
@@ -653,11 +651,11 @@ public class selectionPageController implements Initializable {
     public void setGalarian(){
         alolanCheckBox.setSelected(false);
         if(selectedPokemon.getName().length() > 7 && selectedPokemon.getName().substring(0, 7).compareTo("Alolan ") == 0)
-            selectedPokemon.setName(selectedPokemon.getName().substring(7, selectedPokemon.getName().length()));
+            selectedPokemon.setName(selectedPokemon.getName().substring(7));
         if(galarianCheckBox.isSelected())
             selectedPokemon.setName("Galarian " + selectedPokemon.getName());
         else
-            selectedPokemon.setName(selectedPokemon.getName().substring(9, selectedPokemon.getName().length()));
+            selectedPokemon.setName(selectedPokemon.getName().substring(9));
         pokemonLabel.setText(selectedPokemon.getName());
         InitializeGameList(selectedPokemon.getGeneration());
     }
