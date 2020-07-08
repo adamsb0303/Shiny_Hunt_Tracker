@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -15,108 +13,101 @@
    <right>
       <VBox>
          <BorderPane.margin>
-            <Insets />
+            <Insets/>
          </BorderPane.margin>
-         <children>
-            <TreeView fx:id="MethodList" prefHeight="330.0" prefWidth="250.0" />
-            <HBox prefHeight="25.0" prefWidth="248.0">
-               <children>
-                  <Label text="Pokemon: ">
-                     <HBox.margin>
-                        <Insets left="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="pokemonLabel">
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox prefHeight="25.0" prefWidth="248.0">
-               <children>
-                  <Label text="Game: ">
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="gameLabel">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox prefHeight="25.0" prefWidth="248.0">
-               <children>
-                  <Label text="Method: ">
-                     <padding>
-                        <Insets left="5.0" top="5.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="methodLabel">
-                     <padding>
-                        <Insets left="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" text="?" visible="false">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin></Button>
-               </children>
-            </HBox>
-         </children>
+         <TreeView fx:id="MethodList" prefHeight="330.0" prefWidth="250.0"/>
+         <HBox prefHeight="25.0" prefWidth="248.0">
+            <Label text="Pokemon: ">
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0"/>
+               </HBox.margin>
+            </Label>
+            <Label fx:id="pokemonLabel">
+               <padding>
+                  <Insets top="5.0"/>
+               </padding>
+            </Label>
+         </HBox>
+         <HBox prefHeight="25.0" prefWidth="248.0">
+            <Label text="Game: ">
+               <padding>
+                  <Insets left="5.0"/>
+               </padding>
+               <HBox.margin>
+                  <Insets top="5.0"/>
+               </HBox.margin>
+            </Label>
+            <Label fx:id="gameLabel">
+               <HBox.margin>
+                  <Insets top="5.0"/>
+               </HBox.margin>
+            </Label>
+         </HBox>
+         <HBox prefHeight="25.0" prefWidth="248.0">
+            <Label text="Method: ">
+               <padding>
+                  <Insets left="5.0" top="5.0"/>
+               </padding>
+               <HBox.margin>
+                  <Insets/>
+               </HBox.margin>
+            </Label>
+            <Label fx:id="methodLabel">
+               <padding>
+                  <Insets left="5.0" top="5.0"/>
+               </padding>
+            </Label>
+            <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0"
+                    text="?" visible="false">
+               <HBox.margin>
+                  <Insets left="10.0"/>
+               </HBox.margin>
+            </Button>
+         </HBox>
       </VBox>
    </right>
    <bottom>
       <HBox prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="BOTTOM_CENTER">
-         <children>
-            <VBox layoutX="664.0" layoutY="15.0" prefHeight="50.0" prefWidth="100.0">
-               <HBox.margin>
-                  <Insets left="75.0" top="5.0" />
-               </HBox.margin>
-               <children>
-                  <CheckBox fx:id="alolanCheckBox" disable="true" mnemonicParsing="false" onAction="#setAlolan" prefHeight="20.0" prefWidth="60.0" text="Alolan">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                  </CheckBox>
-                  <CheckBox fx:id="galarianCheckBox" disable="true" mnemonicParsing="false" onAction="#setGalarian" prefHeight="20.0" prefWidth="70.0" text="Galarian">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                  </CheckBox>
-               </children>
-            </VBox>
-            <Button fx:id="beginHuntButton" disable="true" mnemonicParsing="false" onAction="#beginHunt" prefHeight="30.0" prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets left="155.0" top="10.0" />
-               </HBox.margin>
-            </Button>
-            <VBox prefHeight="50.0" prefWidth="100.0">
-               <HBox.margin>
-                  <Insets left="150.0" top="5.0" />
-               </HBox.margin>
-               <children>
-                  <CheckBox fx:id="shinyCharmCheckBox" disable="true" mnemonicParsing="false" onAction="#setShinyCharm" prefHeight="20.0" prefWidth="90.0" text="Shiny Charm">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin>
-                  </CheckBox>
-                  <CheckBox fx:id="lureCheckBox" disable="true" mnemonicParsing="false" onAction="#setLure" prefHeight="20.0" prefWidth="50.0" text="Lure">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin>
-                  </CheckBox>
-               </children>
-            </VBox>
-         </children>
+         <VBox layoutX="664.0" layoutY="15.0" prefHeight="50.0" prefWidth="100.0">
+            <HBox.margin>
+               <Insets left="75.0" top="5.0"/>
+            </HBox.margin>
+            <CheckBox fx:id="alolanCheckBox" disable="true" mnemonicParsing="false" onAction="#setAlolan"
+                      prefHeight="20.0" prefWidth="60.0" text="Alolan">
+               <VBox.margin>
+                  <Insets left="15.0"/>
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="galarianCheckBox" disable="true" mnemonicParsing="false" onAction="#setGalarian"
+                      prefHeight="20.0" prefWidth="70.0" text="Galarian">
+               <VBox.margin>
+                  <Insets left="15.0"/>
+               </VBox.margin>
+            </CheckBox>
+         </VBox>
+         <Button fx:id="beginHuntButton" disable="true" mnemonicParsing="false" onAction="#beginHunt" prefHeight="30.0"
+                 prefWidth="90.0" text="Begin Hunt" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets left="155.0" top="10.0"/>
+            </HBox.margin>
+         </Button>
+         <VBox prefHeight="50.0" prefWidth="100.0">
+            <HBox.margin>
+               <Insets left="150.0" top="5.0"/>
+            </HBox.margin>
+            <CheckBox fx:id="shinyCharmCheckBox" disable="true" mnemonicParsing="false" onAction="#setShinyCharm"
+                      prefHeight="20.0" prefWidth="90.0" text="Shiny Charm">
+               <VBox.margin>
+                  <Insets left="5.0"/>
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="lureCheckBox" disable="true" mnemonicParsing="false" onAction="#setLure"
+                      prefHeight="20.0" prefWidth="50.0" text="Lure">
+               <VBox.margin>
+                  <Insets left="5.0"/>
+               </VBox.margin>
+            </CheckBox>
+         </VBox>
       </HBox>
    </bottom>
 </BorderPane>
