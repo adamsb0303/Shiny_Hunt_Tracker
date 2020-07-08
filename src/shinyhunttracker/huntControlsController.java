@@ -48,9 +48,6 @@ public class huntControlsController implements Initializable {
     Stage CustomizeHuntStage = new Stage();
     String currentLayout;
 
-    //previously caught pokemon settings elements
-    Stage previouslyCaughtStage = new Stage();
-    Scene previouslyCaughtScene;
     int displayPrevious = 0;
 
     //current objects
@@ -72,7 +69,6 @@ public class huntControlsController implements Initializable {
         huntControls.setOnCloseRequest(e -> {
             huntWindow.close();
             CustomizeHuntStage.close();
-            previouslyCaughtStage.close();
             saveHunt();
         });
     }
@@ -159,7 +155,6 @@ public class huntControlsController implements Initializable {
 
         huntWindow.setOnCloseRequest(e -> {
             CustomizeHuntStage.close();
-            previouslyCaughtStage.close();
             huntControls.close();
             saveHunt();
         });
@@ -307,8 +302,7 @@ public class huntControlsController implements Initializable {
         saveClose.setSpacing(5);
         Button Save = new Button("Save");
         Button Load = new Button("Load");
-        Button Close = new Button("Close");
-        saveClose.getChildren().addAll(Save,Load,Close);
+        saveClose.getChildren().addAll(Save,Load);
 
         VBox CustomizeHuntVBox = new VBox();
         VBox comboSettings;
@@ -331,6 +325,7 @@ public class huntControlsController implements Initializable {
             default -> CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
         }
 
+        CustomizeHuntVBox.getChildren().add(previouslyCaughtPokemonSettings());
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
         AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
@@ -468,18 +463,14 @@ public class huntControlsController implements Initializable {
                         loadSavedLayoutStage.close();
                     });
         });
-
-        Close.setOnAction(e -> CustomizeHuntStage.close());
     }
 
     //window that displays settings for previously caught pokemon
-    public void previouslyCaughtPokemonSettings(){
-        previouslyCaughtStage.setTitle("Previously Caught Pokemon Settings");
-        previouslyCaughtStage.setResizable(false);
-
+    public VBox previouslyCaughtPokemonSettings(){
         Label numberCaught = new Label("Display Previously Caught: ");
 
         TextField numberCaughtField = new TextField();
+        numberCaughtField.setMaxWidth(50);
         numberCaughtField.setPromptText(String.valueOf(displayPrevious));
 
         HBox numberPreviouslyCaught = new HBox();
@@ -492,11 +483,7 @@ public class huntControlsController implements Initializable {
         VBox previouslyCaughtSettingsLayout = new VBox();
         previouslyCaughtSettingsLayout.setAlignment(Pos.CENTER);
         previouslyCaughtSettingsLayout.setSpacing(5);
-        ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
         previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, caughtSettings);
-        previouslyCaughtScene = new Scene(scrollPane, 317, 500);
-        previouslyCaughtStage.setScene(previouslyCaughtScene);
-        previouslyCaughtStage.show();
 
         numberCaughtField.setOnAction(e ->{
             try{
@@ -510,6 +497,8 @@ public class huntControlsController implements Initializable {
                 numberCaughtField.setText("");
             }
         });
+
+        return previouslyCaughtSettingsLayout;
     }
 
     //create elements of the last x previously caught pokemon
@@ -880,7 +869,6 @@ public class huntControlsController implements Initializable {
 
         huntControls.close();
         CustomizeHuntStage.close();
-        previouslyCaughtStage.close();
 
         sprite.setVisible(false);
         currentHuntingPokemonText.setVisible(false);
