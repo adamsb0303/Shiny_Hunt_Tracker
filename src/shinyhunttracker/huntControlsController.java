@@ -21,6 +21,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class huntControlsController implements Initializable {
     int huntLayoutSize = 0;
     ImageView sprite;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText;
+    String[] fonts;
     int encounters, previousEncounters, combo = 0;
     int increment = 1;
 
@@ -61,6 +64,23 @@ public class huntControlsController implements Initializable {
         //moves HBox with all the buttons to the middle of the window
         huntControlsButtonHBox.setAlignment(Pos.CENTER);
         huntControlsButtonHBox.setSpacing(10);
+
+        String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        int fontArraySize = 0;
+        for (String avaliableFont : avaliableFonts) {
+            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
+                fontArraySize++;
+            }
+        }
+
+        fonts = new String[fontArraySize];
+        int index = 0;
+        for (String avaliableFont : avaliableFonts) {
+            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
+                fonts[index] = avaliableFont;
+                index++;
+            }
+        }
     }
 
     //sets huntControls window to the given stage
@@ -465,7 +485,7 @@ public class huntControlsController implements Initializable {
         });
     }
 
-    //window that displays settings for previously caught pokemon
+    //creates elements for previously caught information
     public VBox previouslyCaughtPokemonSettings(){
         Label numberCaught = new Label("Display Previously Caught: ");
 
@@ -675,10 +695,15 @@ public class huntControlsController implements Initializable {
         HBox font = new HBox();
         font.setSpacing(5);
         Label fontLabel = new Label("Font:");
+        ComboBox<String> fontNameBox = new ComboBox<>();
+        fontNameBox.setEditable(false);
+        fontNameBox.getItems().addAll(fonts);
+        /*
         TextField fontField = new TextField();
         String fontname = label.getFont().getName();
         fontField.setPromptText(sanitizeFontName(fontname));
-        font.getChildren().addAll(fontLabel, fontField);
+        */
+        font.getChildren().addAll(fontLabel, fontNameBox);
 
         HBox color = new HBox();
         color.setSpacing(5);
@@ -779,12 +804,19 @@ public class huntControlsController implements Initializable {
             YField.setPromptText(String.valueOf(label.getLayoutY()));
         });
 
+        fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if(newValue != null){
+                label.setFont(new Font(newValue, 12));
+            }
+        });
+        /*
         fontField.setOnAction(e -> {
             String fontName = fontField.getText();
             label.setFont(new Font(fontName, 12));
             fontField.setPromptText(String.valueOf(label.getFont().getName()));
             fontField.setText("");
         });
+         */
 
         colorField.setOnAction(e -> label.setFill(colorField.getValue()));
 
@@ -1025,5 +1057,13 @@ public class huntControlsController implements Initializable {
         if(name.contains("Italic"))
             index += 7;
         return name.substring(0, name.length() - index);
+    }
+
+    public String sanitizeAvaliableFontStrings(String name){
+        Font test = new Font(name, 12);
+        if(test.getName().compareTo("System Regular") == 0){
+            return null;
+        }
+        return name;
     }
 }
