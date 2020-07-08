@@ -700,7 +700,8 @@ public class huntControlsController implements Initializable {
         font.setSpacing(5);
         Label fontLabel = new Label("Font:");
         TextField fontField = new TextField();
-        fontField.setPromptText(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
+        String fontname = label.getFont().getName();
+        fontField.setPromptText(sanitizeFontName(fontname));
         font.getChildren().addAll(fontLabel, fontField);
 
         HBox color = new HBox();
@@ -738,10 +739,13 @@ public class huntControlsController implements Initializable {
         textProperties.setSpacing(5);
         Label italics = new Label("Italics:");
         CheckBox italicsCheck = new CheckBox();
+        italicsCheck.setSelected(label.getFont().getName().contains("Italic"));
         Label bold = new Label("Bold:");
         CheckBox boldCheck = new CheckBox();
+        boldCheck.setSelected(label.getFont().getName().contains("Bold"));
         Label underlined = new Label("Underlined:");
         CheckBox underlinedCheck = new CheckBox();
+        underlinedCheck.setSelected(label.isUnderline());
         textProperties.getChildren().addAll(italics, italicsCheck, bold, boldCheck, underlined, underlinedCheck);
 
         HBox visablility = new HBox();
@@ -802,7 +806,7 @@ public class huntControlsController implements Initializable {
         fontField.setOnAction(e -> {
             String fontName = fontField.getText();
             label.setFont(new Font(fontName, 12));
-            fontField.setPromptText(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
+            fontField.setPromptText(String.valueOf(label.getFont().getName()));
             fontField.setText("");
         });
 
@@ -839,8 +843,7 @@ public class huntControlsController implements Initializable {
         });
 
         italicsCheck.setOnAction(e -> {
-            String fontName = sanitizeFontName(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
-            System.out.println(fontName);
+            String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
             if(italicsCheck.isSelected()) {
                 if(boldCheck.isSelected())
                     label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
@@ -856,8 +859,7 @@ public class huntControlsController implements Initializable {
         });
 
         boldCheck.setOnAction(e -> {
-            String fontName = sanitizeFontName(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
-            System.out.println(fontName);
+            String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
             if(boldCheck.isSelected()) {
                 if(italicsCheck.isSelected())
                     label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
