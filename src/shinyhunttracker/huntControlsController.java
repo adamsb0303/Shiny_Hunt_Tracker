@@ -801,7 +801,26 @@ public class huntControlsController implements Initializable {
 
         fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
-                label.setFont(new Font(newValue, 12));
+                if(!canBold(newValue)) {
+                    boldCheck.setSelected(false);
+                    boldCheck.setDisable(true);
+                }else
+                    boldCheck.setDisable(false);
+
+                if(!canItalic(newValue)){
+                    italicsCheck.setSelected(false);
+                    italicsCheck.setDisable(true);
+                }else
+                    italicsCheck.setDisable(false);
+
+                if(boldCheck.isSelected() && italicsCheck.isSelected())
+                    label.setFont(Font.font(newValue, FontWeight.BOLD, FontPosture.ITALIC, 12));
+                else if(boldCheck.isSelected())
+                    label.setFont(Font.font(newValue, FontWeight.BOLD, 12));
+                else if(italicsCheck.isSelected())
+                    label.setFont(Font.font(newValue, FontPosture.ITALIC, 12));
+                else
+                    label.setFont(new Font(newValue, 12));
             }
         });
 
@@ -835,34 +854,26 @@ public class huntControlsController implements Initializable {
 
         italicsCheck.setOnAction(e -> {
             String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
-            if(italicsCheck.isSelected()) {
-                if(boldCheck.isSelected())
-                    label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
-                else
-                    label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
-            }
-            else {
-                if(boldCheck.isSelected())
-                    label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.REGULAR, 12));
-                else
-                    label.setFont(Font.font(fontName, FontPosture.REGULAR, 12));
-            }
+            if(boldCheck.isSelected() && italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
+            else if(boldCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
+            else if(italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
+            else
+                label.setFont(new Font(fontName, 12));
         });
 
         boldCheck.setOnAction(e -> {
             String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
-            if(boldCheck.isSelected()) {
-                if(italicsCheck.isSelected())
-                    label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
-                else
-                    label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
-            }
-            else {
-                if(italicsCheck.isSelected())
-                    label.setFont(Font.font(fontName, FontWeight.NORMAL, FontPosture.ITALIC, 12));
-                else
-                    label.setFont(Font.font(fontName, FontWeight.NORMAL, 12));
-            }
+            if(boldCheck.isSelected() && italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
+            else if(boldCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
+            else if(italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
+            else
+                label.setFont(new Font(fontName, 12));
         });
 
         underlinedCheck.setOnAction(e -> label.setUnderline(underlinedCheck.isSelected()));
@@ -1043,15 +1054,36 @@ public class huntControlsController implements Initializable {
             index += 5;
         if(name.contains("Italic"))
             index += 7;
+        if(name.contains("Regular"))
+            index += 8;
         return name.substring(0, name.length() - index);
     }
 
     public String sanitizeAvaliableFontStrings(String name){
-        Font test = Font.font(name, FontWeight.BOLD, FontPosture.ITALIC,12);
-        test = new Font(sanitizeFontName(test.getName()), 12);
+        Font test = new Font(name, 12);
         if(test.getName().compareTo("System Regular") == 0){
             return null;
         }
         return name;
+    }
+
+    public boolean canBold(String name){
+        Font test;
+        test = Font.font(name,  FontWeight.BOLD, 12);
+        if(test.getName().compareTo(name) == 0)
+            return false;
+        test = new Font(sanitizeFontName(test.getName()), 12);
+
+        return test.getName().compareTo("System") != 0;
+    }
+
+    public boolean canItalic(String name){
+        Font test;
+        test = Font.font(name,  FontPosture.ITALIC, 12);
+        if(test.getName().compareTo(name) == 0)
+            return false;
+        test = new Font(sanitizeFontName(test.getName()), 12);
+
+        return test.getName().compareTo("System") != 0;
     }
 }
