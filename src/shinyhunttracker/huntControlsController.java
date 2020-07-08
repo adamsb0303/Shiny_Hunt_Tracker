@@ -698,11 +698,6 @@ public class huntControlsController implements Initializable {
         ComboBox<String> fontNameBox = new ComboBox<>();
         fontNameBox.setEditable(false);
         fontNameBox.getItems().addAll(fonts);
-        /*
-        TextField fontField = new TextField();
-        String fontname = label.getFont().getName();
-        fontField.setPromptText(sanitizeFontName(fontname));
-        */
         font.getChildren().addAll(fontLabel, fontNameBox);
 
         HBox color = new HBox();
@@ -809,14 +804,6 @@ public class huntControlsController implements Initializable {
                 label.setFont(new Font(newValue, 12));
             }
         });
-        /*
-        fontField.setOnAction(e -> {
-            String fontName = fontField.getText();
-            label.setFont(new Font(fontName, 12));
-            fontField.setPromptText(String.valueOf(label.getFont().getName()));
-            fontField.setText("");
-        });
-         */
 
         colorField.setOnAction(e -> label.setFill(colorField.getValue()));
 
@@ -1060,7 +1047,8 @@ public class huntControlsController implements Initializable {
     }
 
     public String sanitizeAvaliableFontStrings(String name){
-        Font test = new Font(name, 12);
+        Font test = Font.font(name, FontWeight.BOLD, FontPosture.ITALIC,12);
+        test = new Font(sanitizeFontName(test.getName()), 12);
         if(test.getName().compareTo("System Regular") == 0){
             return null;
         }
