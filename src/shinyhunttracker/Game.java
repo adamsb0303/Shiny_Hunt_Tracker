@@ -296,68 +296,25 @@ public class Game {
                 break;
             case 6:
                 if(name.compareTo("X") == 0 || name.compareTo("Y") == 0) {
-                    ShinyLocked[0] = "Articuno";
-                    ShinyLocked[1] = "Zapdos";
-                    ShinyLocked[2] = "Moltres";
-                    ShinyLocked[3] = "Mewtwo";
-                    ShinyLocked[4] = "Xerneas";
-                    ShinyLocked[5] = "Yveltal";
-                    ShinyLocked[6] = "Zygarde";
+                    ShinyLocked = new String[]{"Articuno", "Zapdos", "Moltres", "Mewtwo", "Xerneas", "Yveltal", "Zygarde"};
                 }else{
-                    ShinyLocked[0] = "Zyogre";
-                    ShinyLocked[1] = "Groudon";
-                    ShinyLocked[2] = "Rayquaza";
-                    ShinyLocked[3] = "Deoxys";
+                    ShinyLocked = new String[]{"Zyogre", "Groudon", "Rayquaza", "Deoxys"};
                 }
                 break;
             case 7:
                 if(name.substring(0,3).compareTo("Ult") == 0) {
-                    ShinyLocked[0] = "Tapu Koko";
-                    ShinyLocked[1] = "Tapu Lele";
-                    ShinyLocked[2] = "Tapu Bulu";
-                    ShinyLocked[3] = "Tapu Fini";
-                    ShinyLocked[4] = "Cosmog";
-                    ShinyLocked[5] = "Solgaleo";
-                    ShinyLocked[6] = "Lunala";
-                    ShinyLocked[7] = "Zygarde";
-                    ShinyLocked[8] = "Silvally";
-                    ShinyLocked[9] = "Naganadel";
+                    ShinyLocked = new String[]{"Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Solgaleo", "Lunala", "Zygarde", "Silvally", "Naganadel"};
+
                 }
                 else if(name.substring(0,3).compareTo("Let") == 0){
-                    ShinyLocked[0] = "Articuno";
-                    ShinyLocked[1] = "Zapdos";
-                    ShinyLocked[2] = "Moltres";
-                    ShinyLocked[3] = "Mewtwo";
+                    ShinyLocked = new String[]{"Articuno", "Zapdos", "Moltres", "Mewtwo"};
                 }
                 else{
-                    ShinyLocked[0] = "Tapu Koko";
-                    ShinyLocked[1] = "Tapu Lele";
-                    ShinyLocked[2] = "Tapu Bulu";
-                    ShinyLocked[3] = "Tapu Fini";
-                    ShinyLocked[4] = "Cosmog";
-                    ShinyLocked[5] = "Solgaleo";
-                    ShinyLocked[6] = "Lunala";
-                    ShinyLocked[7] = "Nihilego";
-                    ShinyLocked[8] = "Buzzwole";
-                    ShinyLocked[9] = "Pheromosa";
-                    ShinyLocked[10] = "Xurkitree";
-                    ShinyLocked[11] = "Celesteela";
-                    ShinyLocked[12] = "Kartana";
-                    ShinyLocked[13] = "Guzzlord";
-                    ShinyLocked[14] = "Necrozma";
-                    ShinyLocked[15] = "Zygarde";
-                    ShinyLocked[16] = "Silvally";
-                    ShinyLocked[17] = "Naganadel";
+                    ShinyLocked = new String[]{"Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Zygarde", "Silvally", "Naganadel"};
                 }
                 break;
             case 8:
-                ShinyLocked[0] = "Type: Null";
-                ShinyLocked[1] = "Silvally";
-                ShinyLocked[2] = "Zacian";
-                ShinyLocked[3] = "Zamazenta";
-                ShinyLocked[4] = "Eternatus";
-                ShinyLocked[5] = "Kubfu";
-                ShinyLocked[6] = "Urshifu";
+                ShinyLocked = new String[]{"Type: Null", "Silvally", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude"};
                 break;
             default:
                 break;
