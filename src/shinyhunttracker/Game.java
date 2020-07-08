@@ -334,15 +334,17 @@ public class Game {
                     default -> false;
                 };
             case 2:
-                return switch (selectedPokemon.getName()) {
-                    case "Raikou", "Lugia", "Entei", "Suicune", "Ho-Oh", "Unown" -> true;
-                    default -> false;
-                };
+                switch (selectedPokemon.getName()) {
+                    case "Raikou", "Lugia", "Entei", "Suicune", "Ho-Oh", "Unown" -> {
+                        return true;
+                    }
+                }
+                return this.name.compareTo("Crystal") == 0 && selectedPokemon.getName().compareTo("Celebi") == 0;
             case 3:
                 switch (this.name) {
                     case "Ruby", "Sapphire", "Emerald" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Regirock", "Regice", "Registeel", "Latias", "Latios", "Rayquaza" -> {
+                            case "Regirock", "Regice", "Registeel", "Latias", "Latios", "Rayquaza", "Jirachi" -> {
                                 return true;
                             }
                         }
@@ -352,13 +354,13 @@ public class Game {
                             return selectedPokemon.getName().compareTo("Kyogre") == 0;
                         else
                             return switch (selectedPokemon.getName()) {
-                                case "Lugia", "Ho-Oh", "Kyogre", "Groudon" -> true;
+                                case "Lugia", "Ho-Oh", "Kyogre", "Groudon", "Mew", "Deoxys" -> true;
                                 default -> false;
                             };
                     }
                     case "LeafGreen", "FireRed" -> {
                         return switch (selectedPokemon.getName()) {
-                            case "Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh", "Unown" -> true;
+                            case "Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh", "Deoxys", "Unown" -> true;
                             default -> false;
                         };
                     }
@@ -367,7 +369,7 @@ public class Game {
                 switch (this.name) {
                     case "Diamond", "Pearl", "Platinum" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Unown" -> {
+                            case "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Shaymin", "Darkrai", "Arceus", "Manaphy", "Unown" -> {
                                 return true;
                             }
                         }
@@ -398,7 +400,7 @@ public class Game {
                 switch (this.name) {
                     case "Black", "White" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Cobalion", "Terrakion", "Virizion", "Thundurus", "Landorus", "Kyurem" -> {
+                            case "Cobalion", "Terrakion", "Virizion", "Thundurus", "Landorus", "Kyurem", "Victini" -> {
                                 return true;
                             }
                         }
@@ -442,7 +444,7 @@ public class Game {
                     }
                     case "Omega Ruby", "Alpha Sapphire" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Raikou", "Entei", "Suicune", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Landorus", "Kyurem", "Unown" -> {
+                            case "Raikou", "Entei", "Suicune", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Landorus", "Kyurem", "Deoxys", "Unown" -> {
                                 return true;
                             }
                         }
