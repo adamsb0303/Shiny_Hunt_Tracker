@@ -21,6 +21,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import javax.swing.text.StyledEditorKit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -837,32 +839,36 @@ public class huntControlsController implements Initializable {
         });
 
         italicsCheck.setOnAction(e -> {
+            String fontName = sanitizeFontName(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
+            System.out.println(fontName);
             if(italicsCheck.isSelected()) {
                 if(boldCheck.isSelected())
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, FontPosture.ITALIC, 12));
+                    label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
                 else
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontPosture.ITALIC, 12));
+                    label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
             }
             else {
                 if(boldCheck.isSelected())
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, FontPosture.REGULAR, 12));
+                    label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.REGULAR, 12));
                 else
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontPosture.REGULAR, 12));
+                    label.setFont(Font.font(fontName, FontPosture.REGULAR, 12));
             }
         });
 
         boldCheck.setOnAction(e -> {
+            String fontName = sanitizeFontName(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')));
+            System.out.println(fontName);
             if(boldCheck.isSelected()) {
                 if(italicsCheck.isSelected())
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, FontPosture.ITALIC, 12));
+                    label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
                 else
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, 12));
+                    label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
             }
             else {
                 if(italicsCheck.isSelected())
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.NORMAL, FontPosture.ITALIC, 12));
+                    label.setFont(Font.font(fontName, FontWeight.NORMAL, FontPosture.ITALIC, 12));
                 else
-                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.NORMAL, 12));
+                    label.setFont(Font.font(fontName, FontWeight.NORMAL, 12));
             }
         });
 
@@ -1041,5 +1047,14 @@ public class huntControlsController implements Initializable {
     public void makeBranch(String title, TreeItem<String> parent){
         TreeItem<String> item = new TreeItem<>(title);
         parent.getChildren().add(item);
+    }
+
+    public String sanitizeFontName(String name){
+        int index = 0;
+        if(name.contains("Bold"))
+            index += 5;
+        if(name.contains("Italic"))
+            index += 7;
+        return name.substring(0, name.length() - index);
     }
 }
