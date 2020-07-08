@@ -16,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -730,6 +732,16 @@ public class huntControlsController implements Initializable {
         strokeColorPicker.setDisable(true);
         strokeColor.getChildren().addAll(strokeColorLabel, strokeColorPicker);
 
+        HBox textProperties = new HBox();
+        textProperties.setSpacing(5);
+        Label italics = new Label("Italics:");
+        CheckBox italicsCheck = new CheckBox();
+        Label bold = new Label("Bold:");
+        CheckBox boldCheck = new CheckBox();
+        Label underlined = new Label("Underlined:");
+        CheckBox underlinedCheck = new CheckBox();
+        textProperties.getChildren().addAll(italics, italicsCheck, bold, boldCheck, underlined, underlinedCheck);
+
         HBox visablility = new HBox();
         visablility.setSpacing(5);
         Label visableLabel = new Label("Visable:");
@@ -739,7 +751,7 @@ public class huntControlsController implements Initializable {
 
         VBox labelVBox = new VBox();
         labelVBox.setSpacing(10);
-        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, visablility);
+        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, textProperties, visablility);
 
         Accordion accordion = new Accordion();
         TitledPane labelTitledPane = new TitledPane(labelName, labelVBox);
@@ -822,6 +834,40 @@ public class huntControlsController implements Initializable {
 
         strokeColorPicker.setOnAction(e -> {
             label.setStroke(strokeColorPicker.getValue());
+        });
+
+        italicsCheck.setOnAction(e -> {
+            if(italicsCheck.isSelected()) {
+                if(boldCheck.isSelected())
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, FontPosture.ITALIC, 12));
+                else
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontPosture.ITALIC, 12));
+            }
+            else {
+                if(boldCheck.isSelected())
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, FontPosture.REGULAR, 12));
+                else
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontPosture.REGULAR, 12));
+            }
+        });
+
+        boldCheck.setOnAction(e -> {
+            if(boldCheck.isSelected()) {
+                if(italicsCheck.isSelected())
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, FontPosture.ITALIC, 12));
+                else
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.BOLD, 12));
+            }
+            else {
+                if(italicsCheck.isSelected())
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.NORMAL, FontPosture.ITALIC, 12));
+                else
+                    label.setFont(Font.font(String.valueOf(label.getFont()).substring(10, String.valueOf(label.getFont()).indexOf(',')), FontWeight.NORMAL, 12));
+            }
+        });
+
+        underlinedCheck.setOnAction(e -> {
+            label.setUnderline(underlinedCheck.isSelected());
         });
 
         visableCheck.setOnAction(e ->{
