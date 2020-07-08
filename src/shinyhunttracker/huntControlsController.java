@@ -32,7 +32,7 @@ import static java.lang.Integer.parseInt;
 public class huntControlsController implements Initializable {
     //controller elements
     Stage huntControls = new Stage();
-    public Button encountersButton, pokemonCaughtButton, phaseButton, resetEncountersButton;
+    public Button encountersButton, pokemonCaughtButton, phaseButton;
     public HBox huntControlsButtonHBox;
 
     //hunt window elements
@@ -314,26 +314,21 @@ public class huntControlsController implements Initializable {
         VBox comboSettings;
         VBox previousEncountersSettings;
 
-        switch(selectedMethod.getName()){
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "SOS Chaining":
-            case "Catch Combo":
+        switch (selectedMethod.getName()) {
+            case "Radar Chaining", "Chain Fishing", "SOS Chaining", "Catch Combo" -> {
                 comboSettings = createLabelSettings(currentComboText, "Combo");
                 CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
-                break;
-            case "DexNav":
+            }
+            case "DexNav" -> {
                 comboSettings = createLabelSettings(currentComboText, "Combo");
                 previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
                 CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
-                break;
-            case "Total Encounters":
+            }
+            case "Total Encounters" -> {
                 previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
                 CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
-                break;
-            default:
-                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
-                break;
+            }
+            default -> CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
         }
 
         AnchorPane CustomizeHuntLayout = new AnchorPane();
@@ -347,9 +342,7 @@ public class huntControlsController implements Initializable {
         CustomizeHuntStage.setScene(CustomizeHuntScene);
         CustomizeHuntStage.show();
 
-        backgroundColorPicker.setOnAction(e -> {
-            huntLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
+        backgroundColorPicker.setOnAction(e -> huntLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
 
         Save.setOnAction(e -> {
             SaveData data = new SaveData();
@@ -476,9 +469,7 @@ public class huntControlsController implements Initializable {
                     });
         });
 
-        Close.setOnAction(e -> {
-            CustomizeHuntStage.close();
-        });
+        Close.setOnAction(e -> CustomizeHuntStage.close());
     }
 
     //window that displays settings for previously caught pokemon
@@ -659,9 +650,7 @@ public class huntControlsController implements Initializable {
             }
         });
 
-        visableCheck.setOnAction(e ->{
-            image.setVisible(visableCheck.isSelected());
-        });
+        visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
 
         return imageSettings;
     }
@@ -808,9 +797,7 @@ public class huntControlsController implements Initializable {
             fontField.setText("");
         });
 
-        colorField.setOnAction(e -> {
-            label.setFill(colorField.getValue());
-        });
+        colorField.setOnAction(e -> label.setFill(colorField.getValue()));
 
         strokeCheckbox.setOnAction(e -> {
             boolean selected = strokeCheckbox.isSelected();
@@ -836,9 +823,7 @@ public class huntControlsController implements Initializable {
             }
         });
 
-        strokeColorPicker.setOnAction(e -> {
-            label.setStroke(strokeColorPicker.getValue());
-        });
+        strokeColorPicker.setOnAction(e -> label.setStroke(strokeColorPicker.getValue()));
 
         italicsCheck.setOnAction(e -> {
             String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
@@ -872,13 +857,9 @@ public class huntControlsController implements Initializable {
             }
         });
 
-        underlinedCheck.setOnAction(e -> {
-            label.setUnderline(underlinedCheck.isSelected());
-        });
+        underlinedCheck.setOnAction(e -> label.setUnderline(underlinedCheck.isSelected()));
 
-        visableCheck.setOnAction(e ->{
-            label.setVisible(visableCheck.isSelected());
-        });
+        visableCheck.setOnAction(e -> label.setVisible(visableCheck.isSelected()));
 
         return labelSettings;
     }
