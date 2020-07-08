@@ -109,6 +109,8 @@ public class selectionPageController implements Initializable {
         GameList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
+                        helpButton.setVisible(false);
+
                         //disables shiny charm and lure checkboxes
                         shinyCharmCheckBox.setDisable(true);
                         lureCheckBox.setDisable(true);
