@@ -266,14 +266,13 @@ public class Game {
             for (String i : SOSUltra)
                 if (i.compareTo(selectedPokemon.getName()) == 0)
                     return true;
-            return false;
         }
         else{
             for (String i : SOS)
                 if (i.compareTo(selectedPokemon.getName()) == 0)
                     return true;
-            return false;
         }
+        return false;
     }
 
     //for USUM
@@ -373,223 +372,110 @@ public class Game {
     public boolean legendaryIsAvaliable(Pokemon selectedPokemon){
         switch(this.generation) {
             case 1:
-                switch(selectedPokemon.getName()){
-                    case "Articuno":
-                    case "Zapdos":
-                    case "Moltres":
-                    case "Mewtwo":
-                        return true;
-                    default:
-                        break;
-                }
-                return false;
+                return switch(selectedPokemon.getName()) {
+                    case "Articuno", "Zapdos", "Moltres", "Mewtwo" -> true;
+                    default -> false;
+                };
             case 2:
-                switch (selectedPokemon.getName()) {
-                    case "Raikou":
-                    case "Lugia":
-                    case "Entei":
-                    case "Suicune":
-                    case "Ho-Oh":
-                    case "Unown":
-                        return true;
-                    default:
-                        break;
-                }
-                return false;
+                return switch (selectedPokemon.getName()) {
+                    case "Raikou", "Lugia", "Entei", "Suicune", "Ho-Oh", "Unown" -> true;
+                    default -> false;
+                };
             case 3:
                 switch (this.name) {
-                    case "Ruby":
-                    case "Sapphire":
-                    case "Emerald": {
+                    case "Ruby", "Sapphire", "Emerald" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Regirock":
-                            case "Regice":
-                            case "Registeel":
-                            case "Latias":
-                            case "Latios":
-                            case "Rayquaza":
+                            case "Regirock", "Regice", "Registeel", "Latias", "Latios", "Rayquaza" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("Ruby") == 0)
                             return selectedPokemon.getName().compareTo("Groudon") == 0;
                         else if (this.name.compareTo("Sapphire") == 0)
                             return selectedPokemon.getName().compareTo("Kyogre") == 0;
                         else
-                            switch (selectedPokemon.getName()) {
-                                case "Lugia":
-                                case "Ho-Oh":
-                                case "Kyogre":
-                                case "Groudon":
-                                    return true;
-                                default:
-                                    break;
-                            }
-                        return false;
+                            return switch (selectedPokemon.getName()) {
+                                case "Lugia", "Ho-Oh", "Kyogre", "Groudon" -> true;
+                                default -> false;
+                            };
                     }
-                    case "LeafGreen":
-                    case "FireRed": {
-                        switch (selectedPokemon.getName()) {
-                            case "Articuno":
-                            case "Zapdos":
-                            case "Moltres":
-                            case "Mewtwo":
-                            case "Raikou":
-                            case "Entei":
-                            case "Suicune":
-                            case "Lugia":
-                            case "Ho-Oh":
-                            case "Unown":
-                                return true;
-                            default:
-                                break;
-                        }
-                        return false;
+                    case "LeafGreen", "FireRed" -> {
+                        return switch (selectedPokemon.getName()) {
+                            case "Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh", "Unown" -> true;
+                            default -> false;
+                        };
                     }
-                    default:
-                        break;
                 }
             case 4:
                 switch (this.name) {
-                    case "Diamond":
-                    case "Pearl":
-                    case "Platinum": {
+                    case "Diamond", "Pearl", "Platinum" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Uxie":
-                            case "Mesprit":
-                            case "Azelf":
-                            case "Heatran":
-                            case "Regigigas":
-                            case "Giratina":
-                            case "Cresselia":
-                            case "Unown":
+                            case "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Unown" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("Diamond") == 0)
                             return selectedPokemon.getName().compareTo("Dialga") == 0;
                         else if (this.name.compareTo("Pearl") == 0)
                             return selectedPokemon.getName().compareTo("Palkia") == 0;
                         else
-                            switch (selectedPokemon.getName()) {
-                                case "Articuno":
-                                case "Zapdos":
-                                case "Moltres":
-                                case "Regirock":
-                                case "Regice":
-                                case "Registeel":
-                                case "Dialga":
-                                case "Palkia":
-                                    return true;
-                                default:
-                                    break;
-                            }
-                        return false;
+                            return switch (selectedPokemon.getName()) {
+                                case "Articuno", "Zapdos", "Moltres", "Regirock", "Regice", "Registeel", "Dialga", "Palkia" -> true;
+                                default -> false;
+                            };
                     }
-                    case "SoulSilver":
-                    case "HeartGold": {
+                    case "SoulSilver", "HeartGold" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Articuno":
-                            case "Zapdos":
-                            case "Moltres":
-                            case "Mewtwo":
-                            case "Raikou":
-                            case "Entei":
-                            case "Suicune":
-                            case "Lugia":
-                            case "Ho-Oh":
-                            case "Latias":
-                            case "Latios":
-                            case "Dialga":
-                            case "Palkia":
-                            case "Giratina":
-                            case "Unown":
+                            case "Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh", "Latias", "Latios", "Dialga", "Palkia", "Giratina", "Unown" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("SoulSilver") == 0)
                             return selectedPokemon.getName().compareTo("Groudon") == 0;
-                        else if(this.name.compareTo("HeartGold") == 0)
+                        else if (this.name.compareTo("HeartGold") == 0)
                             return selectedPokemon.getName().compareTo("Kyogre") == 0;
                         return false;
                     }
                 }
             case 5:
                 switch (this.name) {
-                    case "Black":
-                    case "White":{
+                    case "Black", "White" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Cobalion":
-                            case "Terrakion":
-                            case "Virizion":
-                            case "Thundurus":
-                            case "Landorus":
-                            case "Kyurem":
+                            case "Cobalion", "Terrakion", "Virizion", "Thundurus", "Landorus", "Kyurem" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("White") == 0) {
                             return selectedPokemon.getName().compareTo("Zekrom") == 0;
-                        } else if(this.name.compareTo("Black") == 0)
+                        } else if (this.name.compareTo("Black") == 0)
                             return selectedPokemon.getName().compareTo("Reshiram") == 0;
                         return false;
                     }
-                    case "Black 2":
-                    case "White 2": {
+                    case "Black 2", "White 2" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Regirock":
-                            case "Regice":
-                            case "Registeel":
-                            case "Uxie":
-                            case "Mesprit":
-                            case "Azelf":
-                            case "Heatran":
-                            case "Regigigas":
-                            case "Cresselia":
-                            case "Cobalion":
-                            case "Terrakion":
-                            case "Virizion":
-                            case "Kyurem":
+                            case "Regirock", "Regice", "Registeel", "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Kyurem" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("White 2") == 0) {
-                            switch (selectedPokemon.getName()) {
-                                case "Latias":
-                                case "Reshiram":
-                                    return true;
-                                default:
-                                    break;
-                            }
+                            return switch (selectedPokemon.getName()) {
+                                case "Latias", "Reshiram" -> true;
+                                default -> false;
+                            };
                         } else
-                            switch (selectedPokemon.getName()) {
-                                case "Latios":
-                                case "Zekrom":
-                                    return true;
-                                default:
-                                    break;
-                            }
-                        return false;
+                            return switch (selectedPokemon.getName()) {
+                                case "Latios", "Zekrom" -> true;
+                                default -> false;
+                            };
                     }
                 }
             case 6:
                 switch (this.name) {
-                    case "X":
-                    case "Y": {
+                    case "X", "Y" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Articuno":
-                            case "Zapdos":
-                            case "Moltres":
-                            case "Mewtwo":
-                            case "Zygarde":
+                            case "Articuno", "Zapdos", "Moltres", "Mewtwo", "Zygarde" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("X") == 0) {
                             return selectedPokemon.getName().compareTo("Xerneas") == 0;
@@ -597,212 +483,87 @@ public class Game {
                             return selectedPokemon.getName().compareTo("Yveltal") == 0;
                         return false;
                     }
-                    case "Omega Ruby":
-                    case "Alpha Sapphire": {
+                    case "Omega Ruby", "Alpha Sapphire" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Raikou":
-                            case "Entei":
-                            case "Suicune":
-                            case "Regirock":
-                            case "Regice":
-                            case "Registeel":
-                            case "Latias":
-                            case "Latios":
-                            case "Rayquaza":
-                            case "Uxie":
-                            case "Mesprit":
-                            case "Azelf":
-                            case "Heatran":
-                            case "Regigigas":
-                            case "Giratina":
-                            case "Cresselia":
-                            case "Cobalion":
-                            case "Terrakion":
-                            case "Virizion":
-                            case "Landorus":
-                            case "Kyurem":
-                            case "Unown":
+                            case "Raikou", "Entei", "Suicune", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Landorus", "Kyurem", "Unown" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("Omega Ruby") == 0) {
                             switch (selectedPokemon.getName()) {
-                                case "Ho-Oh":
-                                case "Groudon":
-                                case "Palkia":
-                                case "Tornadus":
-                                case "Reshiram":
+                                case "Ho-Oh", "Groudon", "Palkia", "Tornadus", "Reshiram" -> {
                                     return true;
-                                default:
-                                    break;
+                                }
                             }
                         } else
                             switch (selectedPokemon.getName()) {
-                                case "Lugia":
-                                case "Kyogre":
-                                case "Dialga":
-                                case "Thundurus":
-                                case "Zekrom":
+                                case "Lugia", "Kyogre", "Dialga", "Thundurus", "Zekrom" -> {
                                     return true;
-                                default:
-                                    break;
+                                }
                             }
                         return false;
                     }
                 }
             case 7:
                 switch (this.name) {
-                    case "Sun":
-                    case "Moon": {
+                    case "Sun", "Moon" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Zygarde":
-                            case "Type: Null":
-                            case "Silvally":
-                            case "Tapu Koko":
-                            case "Tapu Lele":
-                            case "Tapu Bulu":
-                            case "Tapu Fini":
-                            case "Cosmog":
-                            case "Necrozma":
-                            case "Nihilego":
-                            case "Xurkitree":
-                            case "Guzzlord":
+                            case "Zygarde", "Type: Null", "Silvally", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Necrozma", "Nihilego", "Xurkitree", "Guzzlord" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("Sun") == 0)
-                            switch (selectedPokemon.getName()){
-                                case "Solgaleo":
-                                case "Buzzwole":
-                                case "Kartana":
+                            switch (selectedPokemon.getName()) {
+                                case "Solgaleo", "Buzzwole", "Kartana" -> {
                                     return true;
-                                default:
-                                    break;
+                                }
                             }
                         else if (this.name.compareTo("Moon") == 0)
-                            switch (selectedPokemon.getName()){
-                                case "Lunala":
-                                case "Pheromosa":
-                                case "Celesteela":
+                            switch (selectedPokemon.getName()) {
+                                case "Lunala", "Pheromosa", "Celesteela" -> {
                                     return true;
-                                default:
-                                    break;
+                                }
                             }
                         return false;
                     }
-                    case "Ultra Sun":
-                    case "Ultra Moon": {
+                    case "Ultra Sun", "Ultra Moon" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Articuno":
-                            case "Zapdos":
-                            case "Moltres":
-                            case "Mewtwo":
-                            case "Suicune":
-                            case "Regirock":
-                            case "Regice":
-                            case "Registeel":
-                            case "Rayquaza":
-                            case "Uxie":
-                            case "Mesprit":
-                            case "Azelf":
-                            case "Giratina":
-                            case "Cresselia":
-                            case "Cobalion":
-                            case "Terrakion":
-                            case "Virizion":
-                            case "Landorus":
-                            case "Kyurem":
-                            case "Zygarde":
-                            case "Type: Null":
-                            case "Silvally":
-                            case "Tapu Koko":
-                            case "Tapu Lele":
-                            case "Tapu Bulu":
-                            case "Tapu Fini":
-                            case "Cosmog":
-                            case "Necrozma":
-                            case "Nihilego":
-                            case "Xurkitree":
-                            case "Guzzlord":
-                            case "Poipole":
-                            case "Naganadel":
-                            case "Magearna":
+                            case "Articuno", "Zapdos", "Moltres", "Mewtwo", "Suicune", "Regirock", "Regice", "Registeel", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Giratina", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Landorus", "Kyurem", "Zygarde", "Type: Null", "Silvally", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Necrozma", "Nihilego", "Xurkitree", "Guzzlord", "Poipole", "Naganadel", "Magearna" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("Ultra Sun") == 0) {
                             switch (selectedPokemon.getName()) {
-                                case "Raikou":
-                                case "Ho-Oh":
-                                case "Latios":
-                                case "Groudon":
-                                case "Dialga":
-                                case "Heatran":
-                                case "Tornadus":
-                                case "Reshiram":
-                                case "Xerneas":
-                                case "Solgaleo":
-                                case "Buzzwole":
-                                case "Kartana":
-                                case "Blacephalon":
+                                case "Raikou", "Ho-Oh", "Latios", "Groudon", "Dialga", "Heatran", "Tornadus", "Reshiram", "Xerneas", "Solgaleo", "Buzzwole", "Kartana", "Blacephalon" -> {
                                     return true;
-                                default:
-                                    break;
+                                }
                             }
                         } else
                             switch (selectedPokemon.getName()) {
-                                case "Entei":
-                                case "Lugia":
-                                case "Latias":
-                                case "Kyogre":
-                                case "Palkia":
-                                case "Regigigas":
-                                case "Thundurus":
-                                case "Zekrom":
-                                case "Yveltal":
-                                case "Lunala":
-                                case "Pheromosa":
-                                case "Celesteela":
-                                case "Stakataka":
+                                case "Entei", "Lugia", "Latias", "Kyogre", "Palkia", "Regigigas", "Thundurus", "Zekrom", "Yveltal", "Lunala", "Pheromosa", "Celesteela", "Stakataka" -> {
                                     return true;
-                                default:
-                                    break;
+                                }
                             }
                         return false;
                     }
-                    case "Let's Go Pikachu":
-                    case "Let's Go Eevee": {
-                        switch (selectedPokemon.getName()) {
-                            case "Articuno":
-                            case "Zapdos":
-                            case "Moltres":
-                            case "Mewtwo":
-                                return true;
-                            default:
-                                break;
-                        }
-                        return false;
+                    case "Let's Go Pikachu", "Let's Go Eevee" -> {
+                        return switch (selectedPokemon.getName()) {
+                            case "Articuno", "Zapdos", "Moltres", "Mewtwo" -> true;
+                            default -> false;
+                        };
                     }
                 }
             case 8:
                 switch (this.name) {
-                    case "Sword":
-                    case "Shield": {
+                    case "Sword", "Shield" -> {
                         switch (selectedPokemon.getName()) {
-                            case "Type: Null":
-                            case "Eternatus":
-                            case "Kubfu":
-                            case "Urshifu":
+                            case "Type: Null", "Eternatus", "Kubfu", "Urshifu" -> {
                                 return true;
-                            default:
-                                break;
+                            }
                         }
                         if (this.name.compareTo("Sword") == 0) {
                             return selectedPokemon.name.compareTo("Zacian") == 0;
-                        } else if(this.name.compareTo("Shield") == 0){
+                        } else if (this.name.compareTo("Shield") == 0) {
                             return selectedPokemon.name.compareTo("Zamazenta") == 0;
                         }
                         return false;
