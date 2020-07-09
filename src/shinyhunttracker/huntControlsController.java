@@ -87,8 +87,7 @@ public class huntControlsController implements Initializable {
     public void importStage(Stage stage){
         huntControls = stage;
         huntControls.setOnCloseRequest(e -> {
-            huntWindow.close();
-            CustomizeHuntStage.close();
+            e.consume();
             saveHunt();
         });
     }
@@ -174,8 +173,7 @@ public class huntControlsController implements Initializable {
         }
 
         huntWindow.setOnCloseRequest(e -> {
-            CustomizeHuntStage.close();
-            huntControls.close();
+            e.consume();
             saveHunt();
         });
     }
@@ -196,10 +194,8 @@ public class huntControlsController implements Initializable {
                     switch(selectedGame.getName()){
                         case "Ruby":
                         case "Sapphire":
-                            input = new FileInputStream("Images/Sprites/Generation 3/ruby-sapphire/" + name.toLowerCase() + ".png");
-                            break;
                         case "Emerald":
-                            input = new FileInputStream("Images/Sprites/Generation 3/emerald/" + name.toLowerCase() + ".png");
+                            input = new FileInputStream("Images/Sprites/Generation 3/ruby-sapphire-emerald/" + name.toLowerCase() + ".png");
                             break;
                         case "FireRed":
                         case "LeafGreen":
@@ -972,8 +968,40 @@ public class huntControlsController implements Initializable {
 
     //writes objects to previous hunts file
     public void saveHunt(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
-        data.saveHunt();
+        Stage save = new Stage();
+        save.setTitle("Save hunt");
+        save.initModality(Modality.APPLICATION_MODAL);
+        VBox saveLayout = new VBox();
+        saveLayout.setSpacing(10);
+        saveLayout.setAlignment(Pos.CENTER);
+        Label savePrompt = new Label("Would you like to save your hunt?");
+        HBox yn = new HBox();
+        yn.setSpacing(5);
+        yn.setAlignment(Pos.CENTER);
+        Button yes = new Button("Yes");
+        Button no = new Button("No");
+        yn.getChildren().addAll(yes, no);
+        saveLayout.getChildren().addAll(savePrompt, yn);
+
+        Scene saveScene = new Scene(saveLayout, 275, 75);
+        save.setScene(saveScene);
+        save.show();
+
+        yes.setOnAction(e -> {
+            huntControls.close();
+            huntWindow.close();
+            CustomizeHuntStage.close();
+            SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
+            data.saveHunt();
+            save.close();
+        });
+
+        no.setOnAction(e -> {
+            huntControls.close();
+            huntWindow.close();
+            CustomizeHuntStage.close();
+            save.close();
+        });
     }
 
     //changes increment
