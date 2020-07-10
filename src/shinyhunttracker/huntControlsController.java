@@ -152,7 +152,7 @@ public class huntControlsController implements Initializable {
         int index = 1;
         for(int i = 1; i < huntLayout.getChildren().size(); i++){
             if(huntLayout.getChildren().get(i).isVisible()) {
-                huntLayout.getChildren().get(i).setLayoutX(200);
+                huntLayout.getChildren().get(i).setLayoutX(400);
                 huntLayout.getChildren().get(i).setLayoutY(65 + (15 * index));
                 index++;
             }
@@ -163,7 +163,7 @@ public class huntControlsController implements Initializable {
         huntWindow.show();
 
         SaveData data = new SaveData();
-        if(currentLayout != null) {
+        if(currentLayout.compareTo("null") != 0) {
             this.currentLayout = currentLayout;
             displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
             if(displayPrevious > 0)
