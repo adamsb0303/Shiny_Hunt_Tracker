@@ -203,54 +203,96 @@ public class huntControlsController implements Initializable {
 
     //returns ImageView with the sprite of the given pokemon
     public ImageView createPokemonSprite(String name, Game selectedGame){
+        String filePath = "Images/Sprites/";
+        switch(selectedGame.getGeneration()) {
+            case 2:
+                filePath += "Generation 2/" + selectedGame.getName().toLowerCase();
+                break;
+            case 3:
+                switch(selectedGame.getName()){
+                    case "Ruby":
+                    case "Sapphire":
+                    case "Emerald":
+                        filePath += "Generation 3/ruby-sapphire-emerald/";
+                        break;
+                    case "FireRed":
+                    case "LeafGreen":
+                        filePath += "Generation 3/firered-leafgreen/";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 4:
+                switch(selectedGame.getName()){
+                    case "Diamond":
+                    case "Pearl":
+                        filePath += "Generation 4/diamond-pearl/";
+                        break;
+                    case "Platinum":
+                        filePath += "Generation 4/platinum/";
+                        break;
+                    case "HeartGold":
+                    case "SoulSilver":
+                        filePath += "Generation 4/heartgold-soulsilver/";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 5:
+                filePath += "Generation 5/";
+                break;
+            default:
+                filePath += "3d Sprites/";
+                break;
+        }
+
+        switch (name) {
+            case "Type: Null":
+                filePath += "type-null";
+                break;
+            case "Nidoran♀":
+                filePath += "nidoran-f";
+                break;
+            case "Nidoran♂":
+                filePath += "nidoran-m";
+                break;
+            case "Mr. Mime":
+                filePath += "mr-mime";
+                break;
+            case "Mr. Rime":
+                filePath += "mr-rime";
+                break;
+            case "Mime Jr.":
+                filePath += "mime-jr";
+                break;
+            case "Flabébé":
+                filePath += "flabebe";
+                break;
+            case "Tapu Koko":
+                filePath += "tapu-koko";
+                break;
+            case "Tapu Lele":
+                filePath += "tapu-lele";
+                break;
+            case "Tapu Bulu":
+                filePath += "tapu-bulu";
+                break;
+            case "Tapu Fini":
+                filePath += "tapu-fini";
+                break;
+            default:
+                filePath += name.toLowerCase();
+                break;
+        };
+        if(selectedGame.getGeneration() < 5)
+            filePath += ".png";
+        else
+            filePath += ".gif";
+
         try {
-            FileInputStream input;
-            if(name.compareTo("Type: Null") == 0)
-                input = new FileInputStream("Images/Sprites/3d Sprites/type null.gif");
-            else
-                input = new FileInputStream("Images/Sprites/3d Sprites/" + name.toLowerCase() + ".gif");
-            switch(selectedGame.getGeneration()) {
-                case 2:
-                    input = new FileInputStream("Images/Sprites/Generation 2/" + selectedGame.getName().toLowerCase() + "/" + name.toLowerCase() + ".png");
-                    break;
-                case 3:
-                    switch(selectedGame.getName()){
-                        case "Ruby":
-                        case "Sapphire":
-                        case "Emerald":
-                            input = new FileInputStream("Images/Sprites/Generation 3/ruby-sapphire-emerald/" + name.toLowerCase() + ".png");
-                            break;
-                        case "FireRed":
-                        case "LeafGreen":
-                            input = new FileInputStream("Images/Sprites/Generation 3/firered-leafgreen/" + name.toLowerCase() + ".png");
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case 4:
-                    switch(selectedGame.getName()){
-                        case "Diamond":
-                        case "Pearl":
-                            input = new FileInputStream("Images/Sprites/Generation 4/diamond-pearl/" + name.toLowerCase() + ".png");
-                            break;
-                        case "Platinum":
-                            input = new FileInputStream("Images/Sprites/Generation 4/platinum/" + name.toLowerCase() + ".png");
-                            break;
-                        case "HeartGold":
-                        case "SoulSilver":
-                            input = new FileInputStream("Images/Sprites/Generation 4/heartgold-soulsilver/" + name.toLowerCase() + ".png");
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case 5:
-                    input = new FileInputStream("Images/Sprites/Generation 5/" + name.toLowerCase() + ".gif");
-                    break;
-                default:
-                    break;
-            }
+            FileInputStream input = new FileInputStream(filePath);
             Image image = new Image(input);
             return new ImageView(image);
         }catch (FileNotFoundException e){
