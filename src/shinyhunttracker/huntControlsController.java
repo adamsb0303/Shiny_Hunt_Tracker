@@ -285,7 +285,7 @@ public class huntControlsController implements Initializable {
             default:
                 filePath += name.toLowerCase();
                 break;
-        };
+        }
         if(selectedGame.getGeneration() < 5)
             filePath += ".png";
         else
@@ -403,20 +403,25 @@ public class huntControlsController implements Initializable {
         VBox previousEncountersSettings;
 
         switch (selectedMethod.getName()) {
-            case "Radar Chaining", "Chain Fishing", "SOS Chaining", "Catch Combo" -> {
+            case "Radar Chaining":
+            case "Chain Fishing":
+            case "SOS Chaining":
+            case "Catch Combo":
                 comboSettings = createLabelSettings(currentComboText, "Combo");
                 CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
-            }
-            case "DexNav" -> {
+                break;
+            case "DexNav":
                 comboSettings = createLabelSettings(currentComboText, "Combo");
                 previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
                 CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
-            }
-            case "Total Encounters" -> {
+                break;
+            case "Total Encounters":
                 previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
                 CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
-            }
-            default -> CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+                break;
+            default:
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+                break;
         }
 
         CustomizeHuntVBox.getChildren().add(previouslyCaughtPokemonSettings());
