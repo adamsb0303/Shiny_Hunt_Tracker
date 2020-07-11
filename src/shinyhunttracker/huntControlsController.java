@@ -128,10 +128,16 @@ public class huntControlsController implements Initializable {
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         Evo0 = new ImageView();
         Evo1 = new ImageView();
-        if(evo0 != null)
+        if(evo0 != null) {
             Evo0 = createPokemonSprite(evo0, selectedGame);
-        if(evo1 != null)
+            if(Evo0 == null)
+                Evo0 = new ImageView();
+        }
+        if(evo1 != null) {
             Evo1 = createPokemonSprite(evo1, selectedGame);
+            if(Evo1 == null)
+                Evo1 = new ImageView();
+        }
         huntLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
         Button resetEncountersButton = new Button("Reset Combo");
@@ -171,11 +177,11 @@ public class huntControlsController implements Initializable {
             }
         }
 
-        if(evo1 != null) {
+        if(this.evo1 != null) {
             Evo0.setLayoutX(0);
             Evo1.setLayoutX(200);
             sprite.setLayoutX(400);
-        }else if(evo0 != null){
+        }else if(this.evo0 != null){
             Evo0.setLayoutX(0);
             sprite.setLayoutX(200);
         }else
@@ -206,7 +212,7 @@ public class huntControlsController implements Initializable {
         String filePath = "Images/Sprites/";
         switch(selectedGame.getGeneration()) {
             case 2:
-                filePath += "Generation 2/" + selectedGame.getName().toLowerCase();
+                filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
                 break;
             case 3:
                 switch(selectedGame.getName()){
@@ -296,7 +302,11 @@ public class huntControlsController implements Initializable {
             Image image = new Image(input);
             return new ImageView(image);
         }catch (FileNotFoundException e){
-            System.out.println("Sprite not found");
+            if(name.compareTo(evo0) == 0)
+                evo0 = null;
+            else if(name.compareTo(evo1) == 0)
+                evo1 = null;
+            System.out.println(name + " sprite not found");
             return null;
         }
     }
