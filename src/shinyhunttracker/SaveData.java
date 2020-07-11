@@ -115,9 +115,11 @@ public class SaveData {
         huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
         Parent hunterControlsParent = huntControlsLoader.load();
 
+        selectionPageController family = new selectionPageController();
+        family.createFamily(selectedPokemon.getName());
         huntControlsController huntControlsController = huntControlsLoader.getController();
         Stage huntWindow = new Stage();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, huntWindow, layout, encounters, combo, increment);
+        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, huntWindow, layout, family.getStage0().getName(), family.getStage1().getName(), encounters, combo, increment);
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
@@ -176,17 +178,21 @@ public class SaveData {
 
             for(int i = 0; i < getfileLength("Layouts/" + layoutName) - 2; i++) {
                 String line = fileReader.readLine();
-                if(i == 0){
-                    ImageView image = (ImageView) huntLayout.getChildren().get(0);
-                    image.setLayoutX(parseDouble(splitString(line, 0)));
-                    image.setLayoutY(parseDouble(splitString(line, 1)));
-                    double scale = parseDouble(splitString(line, 2));
-                    image.setScaleX(scale);
-                    image.setScaleY(scale);
-                    image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale)/2)));
-                    image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale)/2)));
-                    image.setVisible(splitString(line, 3).compareTo("true") == 0);
-                }else if(i < 8){
+                if(i < 3){
+                    try {
+                        ImageView image = (ImageView) huntLayout.getChildren().get(i);
+                        image.setLayoutX(parseDouble(splitString(line, 0)));
+                        image.setLayoutY(parseDouble(splitString(line, 1)));
+                        double scale = parseDouble(splitString(line, 2));
+                        image.setScaleX(scale);
+                        image.setScaleY(scale);
+                        image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale) / 2)));
+                        image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale) / 2)));
+                        image.setVisible(splitString(line, 3).compareTo("true") == 0);
+                    }catch(NullPointerException ignored){
+
+                    }
+                }else if(i < 10){
                     Text text = (Text) huntLayout.getChildren().get(i);
                     text.setLayoutX(parseDouble(splitString(line, 0)));
                     text.setLayoutY(parseDouble(splitString(line, 1)));
@@ -199,7 +205,7 @@ public class SaveData {
                     text.setUnderline(splitString(line,7).compareTo("true") == 0);
                     text.setVisible(splitString(line, 8).compareTo("true") == 0);
                 }else if(displayPrevious > 0){
-                    if((i - 8) % 4 == 0){
+                    if((i - 10) % 4 == 0){
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
                         image.setLayoutX(parseDouble(splitString(line, 0)));
                         image.setLayoutY(parseDouble(splitString(line, 1)));
