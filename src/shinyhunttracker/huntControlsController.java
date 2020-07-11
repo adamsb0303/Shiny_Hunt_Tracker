@@ -41,7 +41,8 @@ public class huntControlsController implements Initializable {
     Stage huntWindow = new Stage();
     AnchorPane huntLayout = new AnchorPane();
     int huntLayoutSize = 0;
-    ImageView sprite;
+    ImageView Evo0, Evo1, sprite;
+    String evo0, evo1;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText;
     String[] fonts;
     int encounters, previousEncounters, combo = 0;
@@ -50,7 +51,6 @@ public class huntControlsController implements Initializable {
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
     String currentLayout;
-
     int displayPrevious = 0;
 
     //current objects
@@ -93,13 +93,15 @@ public class huntControlsController implements Initializable {
     }
 
     //creates hunt window
-    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, Stage newHuntStage, String currentLayout, int encounters, int combo, int increment){
+    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, Stage newHuntStage, String currentLayout, String evo0, String evo1, int encounters, int combo, int increment){
         huntWindow.setTitle("Hunt Window");
         huntWindow = newHuntStage;
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         methodBase = selectedMethod.getBase();
+        this.evo0 = evo0;
+        this.evo1 = evo1;
         this.encounters = encounters;
         this.combo = combo;
         this.increment = increment;
@@ -124,7 +126,13 @@ public class huntControlsController implements Initializable {
         currentComboText.setStroke(Color.web("0x00000000"));
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
-        huntLayout.getChildren().add(sprite);
+        Evo0 = new ImageView();
+        Evo1 = new ImageView();
+        if(evo0 != null)
+            Evo0 = createPokemonSprite(evo0, selectedGame);
+        if(evo1 != null)
+            Evo1 = createPokemonSprite(evo1, selectedGame);
+        huntLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
         Button resetEncountersButton = new Button("Reset Combo");
         switch(selectedMethod.getName()){
@@ -149,21 +157,36 @@ public class huntControlsController implements Initializable {
         huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
         huntLayoutSize = huntLayout.getChildren().size();
 
-        int index = 1;
-        for(int i = 1; i < huntLayout.getChildren().size(); i++){
+        int index = 3;
+        for(int i = 3; i < huntLayout.getChildren().size(); i++){
             if(huntLayout.getChildren().get(i).isVisible()) {
-                huntLayout.getChildren().get(i).setLayoutX(400);
+                if(evo1 != null)
+                    huntLayout.getChildren().get(i).setLayoutX(600);
+                else if(evo0 != null)
+                    huntLayout.getChildren().get(i).setLayoutX(400);
+                else
+                    huntLayout.getChildren().get(i).setLayoutX(200);
                 huntLayout.getChildren().get(i).setLayoutY(65 + (15 * index));
                 index++;
             }
         }
+
+        if(evo1 != null) {
+            Evo0.setLayoutX(0);
+            Evo1.setLayoutX(200);
+            sprite.setLayoutX(400);
+        }else if(evo0 != null){
+            Evo0.setLayoutX(0);
+            sprite.setLayoutX(200);
+        }else
+            sprite.setLayoutX(0);
 
         Scene huntScene = new Scene(huntLayout, 750, 480);
         huntWindow.setScene(huntScene);
         huntWindow.show();
 
         SaveData data = new SaveData();
-        if(currentLayout.compareTo("null") != 0) {
+        if(currentLayout != null && currentLayout.compareTo("null") != 0) {
             this.currentLayout = currentLayout;
             displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
             if(displayPrevious > 0)
@@ -287,7 +310,7 @@ public class huntControlsController implements Initializable {
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
         CustomizeHuntStage.setResizable(false);
-        VBox imageSettings = createImageSettings(sprite, selectedPokemon.getName());
+        VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName());
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
         VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
@@ -321,24 +344,37 @@ public class huntControlsController implements Initializable {
         saveClose.getChildren().addAll(Save,Load);
 
         VBox CustomizeHuntVBox = new VBox();
+        VBox Evo0Settings;
+        VBox Evo1Settings;
+
+        if(evo0 != null){
+            Evo0Settings = createImageSettings(Evo0, evo0);
+            CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
+        }
+        if(evo1 != null){
+            Evo1Settings = createImageSettings(Evo1, evo1);
+            CustomizeHuntVBox.getChildren().add(Evo1Settings);
+        }
+        CustomizeHuntVBox.getChildren().add(spriteSettings);
+
         VBox comboSettings;
         VBox previousEncountersSettings;
 
         switch (selectedMethod.getName()) {
             case "Radar Chaining", "Chain Fishing", "SOS Chaining", "Catch Combo" -> {
                 comboSettings = createLabelSettings(currentComboText, "Combo");
-                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
             }
             case "DexNav" -> {
                 comboSettings = createLabelSettings(currentComboText, "Combo");
                 previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
             }
             case "Total Encounters" -> {
                 previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-                CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
             }
-            default -> CustomizeHuntVBox.getChildren().addAll(imageSettings, encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+            default -> CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
         }
 
         CustomizeHuntVBox.getChildren().add(previouslyCaughtPokemonSettings());
