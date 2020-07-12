@@ -622,7 +622,7 @@ public class huntControlsController implements Initializable {
 
         formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
-                createAlternateSprite(pokemonName, newValue, selectedGame);
+                createAlternateSprite(pokemonName, newValue, selectedGame, image);
             }
         });
 
@@ -1052,7 +1052,7 @@ public class huntControlsController implements Initializable {
         return null;
     }
 
-    public void createAlternateSprite(String name, String form, Game selectedGame){
+    public void createAlternateSprite(String name, String form, Game selectedGame, ImageView image){
         String filePath = createGameFilePath(selectedGame);
         switch(form) {
             case "Female":
@@ -1397,12 +1397,7 @@ public class huntControlsController implements Initializable {
             filePath += ".gif";
 
         try{
-            if(evo0 != null && name.compareTo(evo0) == 0)
-                Evo0.setImage(new Image(new FileInputStream(filePath)));
-            else if(evo1 != null && name.compareTo(evo1) == 0)
-                Evo1.setImage(new Image(new FileInputStream(filePath)));
-            else
-                sprite.setImage(new Image(new FileInputStream(filePath)));
+            image.setImage(new Image(new FileInputStream(filePath)));
         }catch(IOException ignored) {
 
         }
