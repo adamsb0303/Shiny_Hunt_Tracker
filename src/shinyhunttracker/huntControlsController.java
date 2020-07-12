@@ -209,125 +209,6 @@ public class huntControlsController implements Initializable {
         });
     }
 
-    //returns ImageView with the sprite of the given pokemon
-    public ImageView createPokemonSprite(String name, Game selectedGame){
-        String filePath = "Images/Sprites/";
-        switch(selectedGame.getGeneration()) {
-            case 2:
-                filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
-                break;
-            case 3:
-                switch(selectedGame.getName()){
-                    case "Ruby":
-                    case "Sapphire":
-                    case "Emerald":
-                        filePath += "Generation 3/ruby-sapphire-emerald/";
-                        break;
-                    case "FireRed":
-                    case "LeafGreen":
-                        filePath += "Generation 3/firered-leafgreen/";
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 4:
-                switch(selectedGame.getName()){
-                    case "Diamond":
-                    case "Pearl":
-                        filePath += "Generation 4/diamond-pearl/";
-                        break;
-                    case "Platinum":
-                        filePath += "Generation 4/platinum/";
-                        break;
-                    case "HeartGold":
-                    case "SoulSilver":
-                        filePath += "Generation 4/heartgold-soulsilver/";
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 5:
-                filePath += "Generation 5/";
-                break;
-            default:
-                filePath += "3d Sprites/";
-                break;
-        }
-
-        if(name.contains("Galarian")) {
-            filePath += "galarian/";
-            name = name.substring(9);
-        }
-        else if(name.contains("Alolan")) {
-            filePath += "alolan/";
-            name = name.substring(7);
-        }
-
-        switch (name) {
-            case "Type: Null":
-                filePath += "type-null";
-                break;
-            case "Nidoran♀":
-                filePath += "nidoran-f";
-                break;
-            case "Nidoran♂":
-                filePath += "nidoran-m";
-                break;
-            case "Mr. Mime":
-                filePath += "mr-mime";
-                break;
-            case "Mr. Rime":
-                filePath += "mr-rime";
-                break;
-            case "Mime Jr.":
-                filePath += "mime-jr";
-                break;
-            case "Flabébé":
-                filePath += "flabebe";
-                break;
-            case "Tapu Koko":
-                filePath += "tapu-koko";
-                break;
-            case "Tapu Lele":
-                filePath += "tapu-lele";
-                break;
-            case "Tapu Bulu":
-                filePath += "tapu-bulu";
-                break;
-            case "Tapu Fini":
-                filePath += "tapu-fini";
-                break;
-            default:
-                filePath += name.toLowerCase();
-                break;
-        }
-        if(selectedGame.getGeneration() < 5)
-            filePath += ".png";
-        else
-            filePath += ".gif";
-
-        try {
-            FileInputStream input = new FileInputStream(filePath);
-            Image image = new Image(input);
-            return new ImageView(image);
-        }catch (FileNotFoundException e){
-            if(evo0 != null && name.compareTo(evo0) == 0)
-                evo0 = null;
-            else if(evo1 != null && name.compareTo(evo1) == 0)
-                evo1 = null;
-            System.out.println(name + " sprite not found");
-
-            try {
-                return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
-            }catch(IOException f){
-                System.out.println("Placeholder not found");
-            }
-        }
-        return null;
-    }
-
     //creates window to prompt user for search level or previous encounters
     public void promptPreviousEncounters(){
         Stage promptWindow = new Stage();
@@ -739,6 +620,12 @@ public class huntControlsController implements Initializable {
         VBox imageSettings = new VBox();
         imageSettings.getChildren().add(accordion);
 
+        formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if(newValue != null){
+                createAlternateSprite(pokemonName, newValue, selectedGame);
+            }
+        });
+
         sizeField.setOnAction(e -> {
             double scale = 0;
             try{
@@ -780,34 +667,14 @@ public class huntControlsController implements Initializable {
     }
 
     public ComboBox<String> getPokemonForms(String name, int generation){
-        boolean female = false;
         ComboBox<String> comboBox = new ComboBox<>();
 
         String[] females = {"Abomasnow", "Aipom", "Alakazam", "Ambipom", "Beautifly", "Bibarel", "Bidoof", "Blaziken", "Buizel", "Butterfree", "Cacturne", "Camerupt", "Combee", "Combusken", "Croagunk", "Dodrio", "Doduo", "Donphan", "Dustox", "Finneon", "Floatzel", "Frillish", "Gabite", "Garchomp", "Gible", "Girafarig", "Gligar", "Gloom", "Golbat", "Goldeen", "Gulpin", "Gyarados", "Heracross", "Hippopotas", "Hippowdon", "Houndoom", "Hypno", "Indeedee", "Jellicent", "Kadabra", "Kricketot", "Kricketune", "Ledian", "Ledyba", "Ludicolo", "Lumineon", "Luxio", "Luxray", "Magikarp", "Mamoswine", "Medicham", "Meditite", "Meganium", "Meowstic", "Milotic", "Murkrow", "Numel", "Nuzleaf", "Octillery", "Pachirisu", "Pikachu", "Piloswine", "Politoed", "Pyroar", "Quagsire", "Raichu", "Raticate", "Rattata", "Relicanth", "Rhydon", "Rhyhorn", "Rhyperior", "Roselia", "Roserade", "Scizor", "Scyther", "Seaking", "Shiftry", "Shinx", "Sneasel", "Snover","Staraptor", "Staravia", "Starly", "Steelix", "Sudowoodo", "Swalot", "Tangrowth", "Torchic", "Toxicroak", "Unfeazant", "Ursaring", "Venusaur", "Vileplume", "Weavile", "Wobbuffet"};
         for(String i : females){
             if(i.compareTo(name) == 0) {
-                female = true;
                 comboBox.getItems().add("Male");
                 comboBox.getItems().add("Female");
             }
-        }
-
-        if (generation < 8 && generation > 5) {
-            String[] megas = {"Abomasnow", "Absol", "Alakazam", "Ampharos", "Banette", "Blasoise", "Blaziken", "Charizard", "Garchomp", "Gardevoir", "Gengar", "Gyarados", "Heracross", "Houndoom", "Kangaskhan", "Latias", "Latios", "Lucario", "Manectric", "Mawile", "Medicham", "Mewtwo", "Pinsir", "Scizor", "Tyranitar", "Venusaur"};
-            for (String i : megas) {
-                if (i.compareTo(name) == 0) {
-                    if (!female)
-                        comboBox.getItems().add("Base");
-                    comboBox.getItems().add("Mega");
-                }
-            }
-        }
-
-        if(generation == 8) {
-            String[] GMax = {"Alcremie", "Appletun", "Blastoise", "Butterfree", "Centiskorch", "Charizard", "Cinderace", "Coalossal", "Copperajah", "Corviknight", "Drednew", "Duraludon", "Eevee", "Flapple", "Garbodor", "Gengar", "Grimmsnarl", "Hatterene", "Inteleon", "Kingler", "Lapras", "Machamp", "Melmetal", "Meowth", "Orbeetle", "Pikachu", "Rillaboom", "Sandaconda", "Snorlax", "Toxtricity", "Venusaur"};
-            for(String i : GMax)
-                if(i.compareTo(name) == 0)
-                    comboBox.getItems().add("Gigantamax");
         }
 
         switch(name){
@@ -977,8 +844,10 @@ public class huntControlsController implements Initializable {
                 comboBox.getItems().add("X");
                 comboBox.getItems().add("Y");
                 comboBox.getItems().add("Z");
-                comboBox.getItems().add("?");
-                comboBox.getItems().add("!");
+                if(generation > 2) {
+                    comboBox.getItems().add("?");
+                    comboBox.getItems().add("!");
+                }
                 break;
             case "Urshifu":
                 comboBox.getItems().add("Single Strike");
@@ -999,7 +868,7 @@ public class huntControlsController implements Initializable {
                 comboBox.getItems().add("Sandstorm");
                 comboBox.getItems().add("River");
                 comboBox.getItems().add("Monsoon");
-                comboBox.getItems().add("Savanna");
+                comboBox.getItems().add("Savannah");
                 comboBox.getItems().add("Sun");
                 comboBox.getItems().add("Ocean");
                 comboBox.getItems().add("Jungle");
@@ -1032,7 +901,511 @@ public class huntControlsController implements Initializable {
                 break;
         }
 
+        if (generation < 8 && generation > 5) {
+            String[] megas = {"Abomasnow", "Absol", "Alakazam", "Ampharos", "Banette", "Blasoise", "Blaziken", "Charizard", "Garchomp", "Gardevoir", "Gengar", "Gyarados", "Heracross", "Houndoom", "Kangaskhan", "Latias", "Latios", "Lucario", "Manectric", "Mawile", "Medicham", "Mewtwo", "Pinsir", "Scizor", "Tyranitar", "Venusaur"};
+            for (String i : megas) {
+                if (i.compareTo(name) == 0) {
+                    if (comboBox.getItems().size() == 0)
+                        comboBox.getItems().add("Regular");
+                    comboBox.getItems().add("Mega");
+                }
+            }
+        }
+
+        if(generation == 8) {
+            String[] GMax = {"Alcremie", "Appletun", "Blastoise", "Butterfree", "Centiskorch", "Charizard", "Cinderace", "Coalossal", "Copperajah", "Corviknight", "Drednew", "Duraludon", "Eevee", "Flapple", "Garbodor", "Gengar", "Grimmsnarl", "Hatterene", "Inteleon", "Kingler", "Lapras", "Machamp", "Melmetal", "Meowth", "Orbeetle", "Pikachu", "Rillaboom", "Sandaconda", "Snorlax", "Toxtricity", "Venusaur"};
+            for(String i : GMax)
+                if(i.compareTo(name) == 0) {
+                    if (comboBox.getItems().size() == 0)
+                        comboBox.getItems().add("Regular");
+                    comboBox.getItems().add("Gigantamax");
+                }
+        }
+
         return comboBox;
+    }
+
+    public String createGameFilePath(Game selectedGame){
+        String filePath = "Images/Sprites/";
+        switch(selectedGame.getGeneration()) {
+            case 2:
+                filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
+                break;
+            case 3:
+                switch(selectedGame.getName()){
+                    case "Ruby":
+                    case "Sapphire":
+                    case "Emerald":
+                        filePath += "Generation 3/ruby-sapphire-emerald/";
+                        break;
+                    case "FireRed":
+                    case "LeafGreen":
+                        filePath += "Generation 3/firered-leafgreen/";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 4:
+                switch(selectedGame.getName()){
+                    case "Diamond":
+                    case "Pearl":
+                        filePath += "Generation 4/diamond-pearl/";
+                        break;
+                    case "Platinum":
+                        filePath += "Generation 4/platinum/";
+                        break;
+                    case "HeartGold":
+                    case "SoulSilver":
+                        filePath += "Generation 4/heartgold-soulsilver/";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 5:
+                filePath += "Generation 5/";
+                break;
+            default:
+                filePath += "3d Sprites/";
+                break;
+        }
+        return filePath;
+    }
+
+    //returns ImageView with the sprite of the given pokemon
+    public ImageView createPokemonSprite(String name, Game selectedGame){
+        String filePath = createGameFilePath(selectedGame);
+
+        if(name.contains("Galarian")) {
+            filePath += "galarian/";
+            name = name.substring(9);
+        }
+        else if(name.contains("Alolan")) {
+            filePath += "alolan/";
+            name = name.substring(7);
+        }
+
+        if(!filePath.contains("alternateforms")) {
+            switch (name) {
+                case "Type: Null":
+                    filePath += "type-null";
+                    break;
+                case "Nidoran♀":
+                    filePath += "nidoran-f";
+                    break;
+                case "Nidoran♂":
+                    filePath += "nidoran-m";
+                    break;
+                case "Mr. Mime":
+                    filePath += "mr-mime";
+                    break;
+                case "Mr. Rime":
+                    filePath += "mr-rime";
+                    break;
+                case "Mime Jr.":
+                    filePath += "mime-jr";
+                    break;
+                case "Flabébé":
+                    filePath += "flabebe";
+                    break;
+                case "Tapu Koko":
+                    filePath += "tapu-koko";
+                    break;
+                case "Tapu Lele":
+                    filePath += "tapu-lele";
+                    break;
+                case "Tapu Bulu":
+                    filePath += "tapu-bulu";
+                    break;
+                case "Tapu Fini":
+                    filePath += "tapu-fini";
+                    break;
+                default:
+                    filePath += name.toLowerCase();
+                    break;
+            }
+        }
+
+        if(selectedGame.getGeneration() < 5)
+            filePath += ".png";
+        else
+            filePath += ".gif";
+
+        try {
+            FileInputStream input = new FileInputStream(filePath);
+            Image image = new Image(input);
+            return new ImageView(image);
+        }catch (FileNotFoundException e){
+            if(evo0 != null && name.compareTo(evo0) == 0)
+                evo0 = null;
+            else if(evo1 != null && name.compareTo(evo1) == 0)
+                evo1 = null;
+            System.out.println(name + " sprite not found");
+
+            try {
+                return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
+            }catch(IOException f){
+                System.out.println("Placeholder not found");
+            }
+        }
+        return null;
+    }
+
+    public void createAlternateSprite(String name, String form, Game selectedGame){
+        String filePath = createGameFilePath(selectedGame);
+        switch(form) {
+            case "Female":
+                filePath += "alternateforms/female/" + name.toLowerCase() + "-f";
+                break;
+            case "Gigantamax":
+                filePath += "alternateforms/gmax/" + name.toLowerCase() + "-gigantamax";
+                break;
+            case "Mega":
+                filePath += "alternateforms/mega/" + name.toLowerCase() + "-mega";
+                break;
+            case "Sword":
+                filePath += "alternateforms/aegislash-blade";
+                break;
+            case "Berry Sweet":
+                filePath += "alternateforms/alcremie-berry";
+                break;
+            case "Love Sweet":
+                filePath += "alternateforms/alcremie-love";
+                break;
+            case "Clover Sweet":
+                filePath += "alternateforms/alcremie-clover";
+                break;
+            case "Flower Sweet":
+                filePath += "alternateforms/alcremie-flower";
+                break;
+            case "Star Sweet":
+                filePath += "alternateforms/alcremie-star";
+                break;
+            case "Ribbon Sweet":
+                filePath += "alternateforms/alcremie-ribbon";
+                break;
+            case "Blue Striped":
+                filePath += "alternateforms/basculin-blue";
+                break;
+            case "Sand":
+                filePath += "alternateforms/" + name.toLowerCase() + "-sandy";
+                break;
+            case "Trash":
+                filePath += "alternateforms/" + name.toLowerCase() + "-trash";
+                break;
+            case "Rainy":
+                filePath += "alternateforms/castform-rain";
+                break;
+            case "Snowy":
+                filePath += "alternateforms/castform-snow";
+                break;
+            case "Sunny":
+                filePath += "alternateforms/castform-sun";
+                break;
+            case "Sunshine":
+                filePath += "alternateforms/cherrim-sunshine";
+                break;
+            case "Zen":
+                if(name.compareTo("Galarian Darmanitan") == 0)
+                    filePath += "alternateforms/galarian-darmanitan-zen";
+                else filePath += "alternateforms/darmanitan-zen";
+                break;
+            case "Autumn":
+                filePath += "alternateforms/" + name.toLowerCase() + "-autumn";
+                break;
+            case "Summer":
+                filePath += "alternateforms/" + name.toLowerCase() + "-summer";
+                break;
+            case "Winter":
+                filePath += "alternateforms/" + name.toLowerCase() + "-winter";
+                break;
+            case "Attack":
+                filePath += "alternateforms/deoxys-attack";
+                break;
+            case "Defense":
+                filePath += "alternateforms/deoxys-defense";
+                break;
+            case "Speed":
+                filePath += "alternateforms/deoxys-speed";
+                break;
+            case "No Ice":
+                filePath += "alternateforms/eiscue-noice";
+                break;
+            case "Blue":
+                if(name.compareTo("Flabébé") == 0)
+                    filePath += "alternateforms/flabebe-blue";
+                else filePath += "alternateforms/" + name.toLowerCase() + "-blue";
+                break;
+            case "Orange":
+                if(name.compareTo("Flabébé") == 0)
+                    filePath += "alternateforms/flabebe-orange";
+                else filePath += "alternateforms/" + name.toLowerCase() + "-orange";
+                break;
+            case "White":
+                if(name.compareTo("Flabébé") == 0)
+                    filePath += "alternateforms/flabebe-white";
+                else filePath += "alternateforms/" + name.toLowerCase() + "-white";
+                break;
+            case "Yellow":
+                if(name.compareTo("Flabébé") == 0)
+                    filePath += "alternateforms/flabebe-yellow";
+                else filePath += "alternateforms/" + name.toLowerCase() + "-yellow";
+                break;
+            case "Eternal":
+                filePath += "alternateforms/floette-eternal";
+                break;
+            case "East":
+                filePath += "alternateforms/" + name.toLowerCase() + "-east";
+                break;
+            case "Origin":
+                filePath += "alternateforms/giratina-origin";
+                break;
+            case "Resolute":
+                filePath += "alternateforms/keldeo-resolute";
+                break;
+            case "Black Kyurem":
+                filePath += "alternateforms/kyurem-black";
+                break;
+            case "White Kyurem":
+                filePath += "alternateforms/kyurem-white";
+                break;
+            case "Therian":
+                filePath += "alternateforms/" + name.toLowerCase() + "-therian";
+                break;
+            case "Midnight":
+                filePath += "alternateforms/lycanroc-midnight";
+                break;
+            case "Dusk":
+                filePath += "alternateforms/lycanroc-dusk";
+                break;
+            case "Pirouette":
+                filePath += "alternateforms/meloetta-pirouette";
+                break;
+            case "Busted":
+                filePath += "alternateforms/mimikyu-broken";
+                break;
+            case "Hangry":
+                filePath += "alternateforms/morpeko-hangry";
+                break;
+            case "Dawn Mane":
+                filePath += "alternateforms/necrozma-dawnmane";
+                break;
+            case "Dusk Wing":
+                filePath += "alternateforms/necrozma-dawnwing";
+                break;
+            case "Pom-Pom":
+                filePath += "alternateforms/oricorio-pompom";
+                break;
+            case "Pa'u":
+                filePath += "alternateforms/oricorio-pau";
+                break;
+            case "Sensu":
+                filePath += "alternateforms/oricorio-sensu";
+                break;
+            case "Fan":
+                filePath += "alternateforms/rotom-fan";
+                break;
+            case "Frost":
+                filePath += "alternateforms/rotom-frost";
+                break;
+            case "Heat":
+                filePath += "alternateforms/rotom-heat";
+                break;
+            case "Mow":
+                filePath += "alternateforms/rotom-mow";
+                break;
+            case "Wash":
+                filePath += "alternateforms/rotom-wash";
+                break;
+            case "Sky":
+                filePath += "alternateforms/shaymin-sky";
+                break;
+            case "Low-Key":
+                filePath += "alternateforms/toxtricity-lowkey";
+                break;
+            case "B":
+                filePath += "alternateforms/unown-b";
+                break;
+            case "C":
+                filePath += "alternateforms/unown-c";
+                break;
+            case "D":
+                filePath += "alternateforms/unown-d";
+                break;
+            case "E":
+                filePath += "alternateforms/unown-e";
+                break;
+            case "F":
+                filePath += "alternateforms/unown-f";
+                break;
+            case "G":
+                filePath += "alternateforms/unown-g";
+                break;
+            case "H":
+                filePath += "alternateforms/unown-h";
+                break;
+            case "I":
+                filePath += "alternateforms/unown-i";
+                break;
+            case "J":
+                filePath += "alternateforms/unown-j";
+                break;
+            case "K":
+                filePath += "alternateforms/unown-k";
+                break;
+            case "L":
+                filePath += "alternateforms/unown-l";
+                break;
+            case "M":
+                filePath += "alternateforms/unown-m";
+                break;
+            case "N":
+                filePath += "alternateforms/unown-n";
+                break;
+            case "O":
+                filePath += "alternateforms/unown-o";
+                break;
+            case "P":
+                filePath += "alternateforms/unown-p";
+                break;
+            case "Q":
+                filePath += "alternateforms/unown-q";
+                break;
+            case "R":
+                filePath += "alternateforms/unown-r";
+                break;
+            case "S":
+                filePath += "alternateforms/unown-s";
+                break;
+            case "T":
+                filePath += "alternateforms/unown-t";
+                break;
+            case "U":
+                filePath += "alternateforms/unown-u";
+                break;
+            case "V":
+                filePath += "alternateforms/unown-v";
+                break;
+            case "W":
+                filePath += "alternateforms/unown-w";
+                break;
+            case "X":
+                filePath += "alternateforms/unown-x";
+                break;
+            case "Y":
+                filePath += "alternateforms/unown-y";
+                break;
+            case "Z":
+                filePath += "alternateforms/unown-z";
+                break;
+            case "?":
+                filePath += "alternateforms/unown-question";
+                break;
+            case "!":
+                filePath += "alternateforms/unown-!";
+                break;
+            case "Rapid Strike":
+                filePath += "alternateforms/urshifu-water";
+                break;
+            case "Polar":
+                filePath += "alternateforms/vivillon-polar";
+                break;
+            case "Tundra":
+                filePath += "alternateforms/vivillon-tundra";
+                break;
+            case "Continental":
+                filePath += "alternateforms/vivillon-continental";
+                break;
+            case "Garden":
+                filePath += "alternateforms/vivillon-garden";
+                break;
+            case "Elegant":
+                filePath += "alternateforms/vivillon-elegant";
+                break;
+            case "Icy Snow":
+                filePath += "alternateforms/vivillon-icy";
+                break;
+            case "Modern":
+                filePath += "alternateforms/vivillon-modern";
+                break;
+            case "Marine":
+                filePath += "alternateforms/vivillon-marine";
+                break;
+            case "Archipelago":
+                filePath += "alternateforms/vivillon-archipelago";
+                break;
+            case "High Plains":
+                filePath += "alternateforms/vivillon-highplains";
+                break;
+            case "Sandstorm":
+                filePath += "alternateforms/vivillon-sandstorm";
+                break;
+            case "River":
+                filePath += "alternateforms/vivillon-river";
+                break;
+            case "Monsoon":
+                filePath += "alternateforms/vivillon-monsoon";
+                break;
+            case "Savannah":
+                filePath += "alternateforms/vivillon-savannah";
+                break;
+            case "Sun":
+                filePath += "alternateforms/vivillon-sun";
+                break;
+            case "Ocean":
+                filePath += "alternateforms/vivillon-ocean";
+                break;
+            case "Jungle":
+                filePath += "alternateforms/vivillon-jungle";
+                break;
+            case "Fancy":
+                filePath += "alternateforms/vivillon-fancy";
+                break;
+            case "Poke Ball":
+                filePath += "alternateforms/vivillon-pokeball";
+                break;
+            case "School":
+                filePath += "alternateforms/wishiwashi-school";
+                break;
+            case "Active":
+                filePath += "alternateforms/xerneas-active";
+                break;
+            case "Crowned":
+                filePath += "alternateforms/" + name.toLowerCase() + "-crowned";
+                break;
+            case "Dada":
+                filePath += "alternateforms/zarude-dada";
+                break;
+            case "10%":
+                filePath += "alternateforms/zygarde-10";
+                break;
+            case "100%":
+                filePath += "alternateforms/zygarde-complete";
+                break;
+            default:
+                if(name.compareTo("Flabébé") == 0)
+                    filePath += "flabebe";
+                else
+                    filePath += name.toLowerCase();
+                break;
+        }
+
+        if(selectedGame.getGeneration() < 5)
+            filePath += ".png";
+        else
+            filePath += ".gif";
+
+        try{
+            if(evo0 != null && name.compareTo(evo0) == 0)
+                Evo0.setImage(new Image(new FileInputStream(filePath)));
+            else if(evo1 != null && name.compareTo(evo1) == 0)
+                Evo1.setImage(new Image(new FileInputStream(filePath)));
+            else
+                sprite.setImage(new Image(new FileInputStream(filePath)));
+        }catch(IOException ignored) {
+
+        }
     }
 
     //creates Label settings VBox
