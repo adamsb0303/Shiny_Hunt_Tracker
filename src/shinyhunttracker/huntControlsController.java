@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import com.sun.source.tree.Tree;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -22,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -377,7 +379,7 @@ public class huntControlsController implements Initializable {
     public void CustomizeHuntWindow(){
         CustomizeHuntStage.setTitle("Settings");
         CustomizeHuntStage.setResizable(false);
-        VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName());
+        VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName(), selectedGame.getGeneration());
         VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
         VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
         VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
@@ -415,11 +417,11 @@ public class huntControlsController implements Initializable {
         VBox Evo1Settings;
 
         if(evo0 != null){
-            Evo0Settings = createImageSettings(Evo0, evo0);
+            Evo0Settings = createImageSettings(Evo0, evo0, selectedGame.getGeneration());
             CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
         }
         if(evo1 != null){
-            Evo1Settings = createImageSettings(Evo1, evo1);
+            Evo1Settings = createImageSettings(Evo1, evo1, selectedGame.getGeneration());
             CustomizeHuntVBox.getChildren().add(Evo1Settings);
         }
         CustomizeHuntVBox.getChildren().add(spriteSettings);
@@ -668,7 +670,7 @@ public class huntControlsController implements Initializable {
                 encounters.setLayoutY(105);
             }
 
-            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0));
+            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame.getGeneration());
             VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
             VBox currentMethodSettings = createLabelSettings(method, "Method");
             VBox encountersSettings = createLabelSettings(encounters, "Encounters");
@@ -683,7 +685,7 @@ public class huntControlsController implements Initializable {
     }
 
     //creates ImageView settings VBox
-    public VBox createImageSettings(ImageView image, String pokemonName){
+    public VBox createImageSettings(ImageView image, String pokemonName, int generation){
         HBox groupLabel = new HBox();
         Label Group = new Label(pokemonName + " Sprite:");
         Group.setUnderline(true);
@@ -717,8 +719,17 @@ public class huntControlsController implements Initializable {
         visableCheck.setSelected(image.isVisible());
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
+        HBox form = new HBox();
+        form.setSpacing(5);
+        Label formLabel = new Label("Form");
+        ComboBox<String> formCombo = getPokemonForms(pokemonName, generation);
+        formCombo.getSelectionModel().select(0);
+        form.getChildren().addAll(formLabel, formCombo);
+
         VBox imageVBox = new VBox();
         imageVBox.setSpacing(10);
+        if(formCombo.getItems().size() != 0)
+            imageVBox.getChildren().add(form);
         imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         Accordion accordion = new Accordion();
@@ -766,6 +777,262 @@ public class huntControlsController implements Initializable {
         visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
 
         return imageSettings;
+    }
+
+    public ComboBox<String> getPokemonForms(String name, int generation){
+        boolean female = false;
+        ComboBox<String> comboBox = new ComboBox<>();
+
+        String[] females = {"Abomasnow", "Aipom", "Alakazam", "Ambipom", "Beautifly", "Bibarel", "Bidoof", "Blaziken", "Buizel", "Butterfree", "Cacturne", "Camerupt", "Combee", "Combusken", "Croagunk", "Dodrio", "Doduo", "Donphan", "Dustox", "Finneon", "Floatzel", "Frillish", "Gabite", "Garchomp", "Gible", "Girafarig", "Gligar", "Gloom", "Golbat", "Goldeen", "Gulpin", "Gyarados", "Heracross", "Hippopotas", "Hippowdon", "Houndoom", "Hypno", "Indeedee", "Jellicent", "Kadabra", "Kricketot", "Kricketune", "Ledian", "Ledyba", "Ludicolo", "Lumineon", "Luxio", "Luxray", "Magikarp", "Mamoswine", "Medicham", "Meditite", "Meganium", "Meowstic", "Milotic", "Murkrow", "Numel", "Nuzleaf", "Octillery", "Pachirisu", "Pikachu", "Piloswine", "Politoed", "Pyroar", "Quagsire", "Raichu", "Raticate", "Rattata", "Relicanth", "Rhydon", "Rhyhorn", "Rhyperior", "Roselia", "Roserade", "Scizor", "Scyther", "Seaking", "Shiftry", "Shinx", "Sneasel", "Snover","Staraptor", "Staravia", "Starly", "Steelix", "Sudowoodo", "Swalot", "Tangrowth", "Torchic", "Toxicroak", "Unfeazant", "Ursaring", "Venusaur", "Vileplume", "Weavile", "Wobbuffet"};
+        for(String i : females){
+            if(i.compareTo(name) == 0) {
+                female = true;
+                comboBox.getItems().add("Male");
+                comboBox.getItems().add("Female");
+            }
+        }
+
+        if (generation < 8 && generation > 5) {
+            String[] megas = {"Abomasnow", "Absol", "Alakazam", "Ampharos", "Banette", "Blasoise", "Blaziken", "Charizard", "Garchomp", "Gardevoir", "Gengar", "Gyarados", "Heracross", "Houndoom", "Kangaskhan", "Latias", "Latios", "Lucario", "Manectric", "Mawile", "Medicham", "Mewtwo", "Pinsir", "Scizor", "Tyranitar", "Venusaur"};
+            for (String i : megas) {
+                if (i.compareTo(name) == 0) {
+                    if (!female)
+                        comboBox.getItems().add("Base");
+                    comboBox.getItems().add("Mega");
+                }
+            }
+        }
+
+        if(generation == 8) {
+            String[] GMax = {"Alcremie", "Appletun", "Blastoise", "Butterfree", "Centiskorch", "Charizard", "Cinderace", "Coalossal", "Copperajah", "Corviknight", "Drednew", "Duraludon", "Eevee", "Flapple", "Garbodor", "Gengar", "Grimmsnarl", "Hatterene", "Inteleon", "Kingler", "Lapras", "Machamp", "Melmetal", "Meowth", "Orbeetle", "Pikachu", "Rillaboom", "Sandaconda", "Snorlax", "Toxtricity", "Venusaur"};
+            for(String i : GMax)
+                if(i.compareTo(name) == 0)
+                    comboBox.getItems().add("Gigantamax");
+        }
+
+        switch(name){
+            case "Aegislash":
+                comboBox.getItems().add("Shield");
+                comboBox.getItems().add("Sword");
+                break;
+            case "Alcremie":
+                comboBox.getItems().add("Strawberry Sweet");
+                comboBox.getItems().add("Berry Sweet");
+                comboBox.getItems().add("Love Sweet");
+                comboBox.getItems().add("Clover Sweet");
+                comboBox.getItems().add("Flower Sweet");
+                comboBox.getItems().add("Star Sweet");
+                comboBox.getItems().add("Ribbon Sweet");
+                break;
+            case "Basculin":
+                comboBox.getItems().add("Red Striped");
+                comboBox.getItems().add("Blue Striped");
+                break;
+            case "Burmy":
+            case "Wormadam":
+                comboBox.getItems().add("Plant");
+                comboBox.getItems().add("Sand");
+                comboBox.getItems().add("Trash");
+                break;
+            case "Castform":
+                comboBox.getItems().add("Normal");
+                comboBox.getItems().add("Rainy");
+                comboBox.getItems().add("Snowy");
+                comboBox.getItems().add("Sunny");
+                break;
+            case "Cherrim":
+                comboBox.getItems().add("Overcast");
+                comboBox.getItems().add("Sunshine");
+                break;
+            case "Darmanitan":
+            case "Galarian Darmanitan":
+                comboBox.getItems().add("Standard");
+                comboBox.getItems().add("Zen");
+                break;
+            case "Deerling":
+            case "Sawsbuck":
+                comboBox.getItems().add("Spring");
+                comboBox.getItems().add("Autumn");
+                comboBox.getItems().add("Summer");
+                comboBox.getItems().add("Winter");
+                break;
+            case "Deoxys":
+                comboBox.getItems().add("Normal");
+                comboBox.getItems().add("Attack");
+                comboBox.getItems().add("Defense");
+                comboBox.getItems().add("Speed");
+                break;
+            case "Eiscue":
+                comboBox.getItems().add("Ice");
+                comboBox.getItems().add("No Ice");
+                break;
+            case "Flabébé":
+            case "Florges":
+                comboBox.getItems().add("Red");
+                comboBox.getItems().add("Blue");
+                comboBox.getItems().add("Orange");
+                comboBox.getItems().add("White");
+                comboBox.getItems().add("Yellow");
+                break;
+            case "Floette":
+                comboBox.getItems().add("Red");
+                comboBox.getItems().add("Blue");
+                comboBox.getItems().add("Orange");
+                comboBox.getItems().add("White");
+                comboBox.getItems().add("Yellow");
+                comboBox.getItems().add("Eternal");
+                break;
+            case "Gastrodon":
+            case "Shellos":
+                comboBox.getItems().add("West");
+                comboBox.getItems().add("East");
+                break;
+            case "Giratina":
+                comboBox.getItems().add("Altered");
+                comboBox.getItems().add("Origin");
+                break;
+            case "Keldeo":
+                comboBox.getItems().add("Ordinary");
+                comboBox.getItems().add("Resolute");
+                break;
+            case "Kyurem":
+                comboBox.getItems().add("Kyurem");
+                comboBox.getItems().add("Black Kyurem");
+                comboBox.getItems().add("White Kyurem");
+                break;
+            case "Thundurus":
+            case "Tornadus":
+            case "Landorus":
+                comboBox.getItems().add("Incarnate");
+                comboBox.getItems().add("Therian");
+                break;
+            case "Lycanroc":
+                comboBox.getItems().add("Midday");
+                comboBox.getItems().add("Midnight");
+                comboBox.getItems().add("Dusk");
+                break;
+            case "Meloetta":
+                comboBox.getItems().add("Aria");
+                comboBox.getItems().add("Pirouette");
+                break;
+            case "Mimikyu":
+                comboBox.getItems().add("Disguised");
+                comboBox.getItems().add("Busted");
+                break;
+            case "Morpeko":
+                comboBox.getItems().add("Full Belly");
+                comboBox.getItems().add("Hangry");
+                break;
+            case "Necrozma":
+                comboBox.getItems().add("Necrozma");
+                comboBox.getItems().add("Dawn Mane");
+                comboBox.getItems().add("Dusk Wing");
+                break;
+            case "Oricorio":
+                comboBox.getItems().add("Baile");
+                comboBox.getItems().add("Pom-Pom");
+                comboBox.getItems().add("Pa'u");
+                comboBox.getItems().add("Sensu");
+                break;
+            case "Rotom":
+                comboBox.getItems().add("Rotom");
+                comboBox.getItems().add("Fan");
+                comboBox.getItems().add("Frost");
+                comboBox.getItems().add("Heat");
+                comboBox.getItems().add("Mow");
+                comboBox.getItems().add("Wash");
+                break;
+            case "Shaymin":
+                comboBox.getItems().add("Land");
+                comboBox.getItems().add("Sky");
+                break;
+            case "Toxtricity":
+                comboBox.getItems().add("High-Key");
+                comboBox.getItems().add("Low-Key");
+                break;
+            case "Unown":
+                comboBox.getItems().add("A");
+                comboBox.getItems().add("B");
+                comboBox.getItems().add("C");
+                comboBox.getItems().add("D");
+                comboBox.getItems().add("E");
+                comboBox.getItems().add("F");
+                comboBox.getItems().add("G");
+                comboBox.getItems().add("H");
+                comboBox.getItems().add("I");
+                comboBox.getItems().add("J");
+                comboBox.getItems().add("K");
+                comboBox.getItems().add("L");
+                comboBox.getItems().add("M");
+                comboBox.getItems().add("N");
+                comboBox.getItems().add("O");
+                comboBox.getItems().add("P");
+                comboBox.getItems().add("Q");
+                comboBox.getItems().add("R");
+                comboBox.getItems().add("S");
+                comboBox.getItems().add("T");
+                comboBox.getItems().add("U");
+                comboBox.getItems().add("V");
+                comboBox.getItems().add("W");
+                comboBox.getItems().add("X");
+                comboBox.getItems().add("Y");
+                comboBox.getItems().add("Z");
+                comboBox.getItems().add("?");
+                comboBox.getItems().add("!");
+                break;
+            case "Urshifu":
+                comboBox.getItems().add("Single Strike");
+                comboBox.getItems().add("Rapid Strike");
+                break;
+            case "Vivillon":
+                comboBox.getItems().add("Meadow");
+                comboBox.getItems().add("Polar");
+                comboBox.getItems().add("Tundra");
+                comboBox.getItems().add("Continental");
+                comboBox.getItems().add("Garden");
+                comboBox.getItems().add("Elegant");
+                comboBox.getItems().add("Icy Snow");
+                comboBox.getItems().add("Modern");
+                comboBox.getItems().add("Marine");
+                comboBox.getItems().add("Archipelago");
+                comboBox.getItems().add("High Plains");
+                comboBox.getItems().add("Sandstorm");
+                comboBox.getItems().add("River");
+                comboBox.getItems().add("Monsoon");
+                comboBox.getItems().add("Savanna");
+                comboBox.getItems().add("Sun");
+                comboBox.getItems().add("Ocean");
+                comboBox.getItems().add("Jungle");
+                comboBox.getItems().add("Fancy");
+                comboBox.getItems().add("Poke Ball");
+                break;
+            case "Wishiwashi":
+                comboBox.getItems().add("Solo");
+                comboBox.getItems().add("School");
+                break;
+            case "Xerneas":
+                comboBox.getItems().add("Neutral");
+                comboBox.getItems().add("Active");
+                break;
+            case "Zacian":
+            case "Zamazenta":
+                comboBox.getItems().add("Hero of Many Battles");
+                comboBox.getItems().add("Crowned");
+                break;
+            case "Zarude":
+                comboBox.getItems().add("Zarude");
+                comboBox.getItems().add("Dada");
+                break;
+            case "Zygarde":
+                comboBox.getItems().add("50%");
+                comboBox.getItems().add("10%");
+                comboBox.getItems().add("100%");
+                break;
+            default:
+                break;
+        }
+
+        return comboBox;
     }
 
     //creates Label settings VBox
