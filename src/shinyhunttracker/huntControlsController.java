@@ -254,6 +254,15 @@ public class huntControlsController implements Initializable {
                 break;
         }
 
+        if(name.contains("Galarian")) {
+            filePath += "galarian/";
+            name = name.substring(9);
+        }
+        else if(name.contains("Alolan")) {
+            filePath += "alolan/";
+            name = name.substring(7);
+        }
+
         switch (name) {
             case "Type: Null":
                 filePath += "type-null";
@@ -302,13 +311,19 @@ public class huntControlsController implements Initializable {
             Image image = new Image(input);
             return new ImageView(image);
         }catch (FileNotFoundException e){
-            if(name.compareTo(evo0) == 0)
+            if(evo0 != null && name.compareTo(evo0) == 0)
                 evo0 = null;
-            else if(name.compareTo(evo1) == 0)
+            else if(evo1 != null && name.compareTo(evo1) == 0)
                 evo1 = null;
             System.out.println(name + " sprite not found");
-            return null;
+
+            try {
+                return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
+            }catch(IOException f){
+                System.out.println("Placeholder not found");
+            }
         }
+        return null;
     }
 
     //creates window to prompt user for search level or previous encounters
