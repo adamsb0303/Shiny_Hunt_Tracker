@@ -1,6 +1,8 @@
 package shinyhunttracker;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -8,24 +10,71 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class huntController {
-    huntWindow[] windows;
+    MenuBar Menu = new MenuBar();
+    Menu Settings = new Menu("Settings");
+    VBox huntControlsButtonVBox;
+
+    huntWindow[] windows = new huntWindow[0];
 
     public huntController(){
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controller");
 
+        huntControlsButtonVBox = new VBox();
+        huntControlsButtonVBox.setAlignment(Pos.CENTER);
+        huntControlsButtonVBox.setSpacing(5);
+        Button addHunt = new Button("Add Hunt");
+        huntControlsButtonVBox.getChildren().add(addHunt);
+
+        Menu.getMenus().add(Settings);
+
+        BorderPane huntControlsLayout = new BorderPane();
+        huntControlsLayout.setTop(Menu);
+        huntControlsLayout.setCenter(huntControlsButtonVBox);
+
+        Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
+        huntControls.setScene(huntControlsScene);
+        huntControls.show();
+
+        addHunt.setOnAction(e -> {
+            try {
+                FXMLLoader selectionPageLoader = new FXMLLoader();
+                selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+                Parent root = selectionPageLoader.load();
+
+                Stage huntSelectionWindow = new Stage();
+                huntSelectionWindow.setTitle("Shiny Hunt Tracker");
+                huntSelectionWindow.setResizable(false);
+                huntSelectionWindow.setScene(new Scene(root, 750, 480));
+
+                selectionPageController selectionPageController = selectionPageLoader.getController();
+                selectionPageController.setSelectingNewHunt(true);
+                selectionPageController.setController(this);
+                huntSelectionWindow.show();
+            }catch(IOException f){
+                f.printStackTrace();
+            }
+        });
+
+        huntControls.setOnCloseRequest(e -> closeWindows());
+    }
+
+    public void addHuntWindowSettings(huntWindow window){
         HBox huntControlsButtonHBox = new HBox();
         huntControlsButtonHBox.setAlignment(Pos.CENTER);
         huntControlsButtonHBox.setSpacing(10);
 
-        Button encountersButton = new Button("Increment");
-        huntControlsButtonHBox.getChildren().add(encountersButton);
+        Button encountersButton = new Button("Increment " + window.getSelectedPokemon().getName());
+        huntControlsButtonHBox.getChildren().addAll(encountersButton);
+        huntControlsButtonVBox.getChildren().add(huntControlsButtonHBox);
 
-        MenuBar Menu = new MenuBar();
-        Menu Settings = new Menu("Settings");
+        Menu newHuntSettings = new Menu(window.getSelectedPokemon().getName() + " Hunt Settings");
 
         MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
 
@@ -38,36 +87,32 @@ public class huntController {
         MenuItem saveHunt = new MenuItem("Save Hunt");
         huntSettings.getItems().addAll(increment, resetEncounters, phaseHunt, pokemonCaught, resetCombo, saveHunt);
 
-        Settings.getItems().addAll(customizeHuntLayout, huntSettings);
-        Menu.getMenus().add(Settings);
+        newHuntSettings.getItems().addAll(customizeHuntLayout, huntSettings);
+        Settings.getItems().add(newHuntSettings);
 
-        BorderPane huntControlsLayout = new BorderPane();
-        huntControlsLayout.setTop(Menu);
-        huntControlsLayout.setCenter(huntControlsButtonHBox);
+        encountersButton.setOnAction(e -> window.incrementEncounters());
 
-        Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
-        huntControls.setScene(huntControlsScene);
-        huntControls.show();
-
-        customizeHuntLayout.setOnAction(e -> windows[0].CustomizeHuntWindow());
-
-        encountersButton.setOnAction(e -> windows[0].incrementEncounters());
-        increment.setOnAction(e -> windows[0].changeIncrement());
-        resetEncounters.setOnAction(e -> windows[0].resetEncounters());
-        phaseHunt.setOnAction(e -> windows[0].phaseHunt());
-        pokemonCaught.setOnAction(e -> windows[0].pokemonCaught());
-        resetCombo.setOnAction(e -> windows[0].resetCombo());
-        saveHunt.setOnAction(e -> windows[0].saveHunt());
-
-        huntControls.setOnCloseRequest(e -> closeWindows());
+        customizeHuntLayout.setOnAction(e -> window.CustomizeHuntWindow());
+        increment.setOnAction(e -> window.changeIncrement());
+        resetEncounters.setOnAction(e -> window.resetEncounters());
+        phaseHunt.setOnAction(e -> window.phaseHunt());
+        pokemonCaught.setOnAction(e -> window.pokemonCaught());
+        resetCombo.setOnAction(e -> window.resetCombo());
+        saveHunt.setOnAction(e -> window.saveHunt());
     }
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
-        windows = new huntWindow[]{new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment)};
+        huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment);
+        addHuntWindowSettings(newWindow);
+
+        huntWindow[] temp = new huntWindow[windows.length + 1];
+        System.arraycopy(windows, 0, temp, 0, windows.length);
+        temp[windows.length] = newWindow;
+        windows = temp;
 
         //since the search level or total encounters can change between uses, this value needs to be captured after every startup
         if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            windows[0].promptPreviousEncounters();
+            windows[windows.length - 1].promptPreviousEncounters();
         }
     }
 

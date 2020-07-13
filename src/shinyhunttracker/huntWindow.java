@@ -1839,4 +1839,9 @@ public class huntWindow {
 
         return test.getName().compareTo("System") != 0;
     }
+
+    public Pokemon getSelectedPokemon(){
+        return selectedPokemon;
+    }
+
 }

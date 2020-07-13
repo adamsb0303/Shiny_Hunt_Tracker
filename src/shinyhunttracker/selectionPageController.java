@@ -2,6 +2,7 @@ package shinyhunttracker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,12 +11,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static java.lang.Integer.parseInt;
 import static javafx.util.Duration.INDEFINITE;
 import static javafx.util.Duration.ZERO;
 
@@ -42,6 +46,7 @@ public class selectionPageController implements Initializable {
     AnchorPane newHuntLayout = new AnchorPane();
     String currentLayout;
     boolean selectingNewHunt = false;
+    huntController controller;
 
     //misc variables
     int oldSelectionGeneration, oldSelectionGameGeneration = 0;
@@ -735,6 +740,81 @@ public class selectionPageController implements Initializable {
         }
     }
 
+    public void newOrOldHunt(){
+        Stage loadStage = new Stage();
+
+        Label prompt1 = new Label("Would you like to continue a previous hunt or");
+        Label prompt2 = new Label("start a new one?");
+        Button continuePrevious = new Button("Continue Previous Hunt");
+        Button newHunt = new Button("Start New Hunt");
+
+        VBox loadLayout = new VBox();
+        loadLayout.getChildren().addAll(prompt1, prompt2, continuePrevious, newHunt);
+        loadLayout.setSpacing(10);
+        loadLayout.setAlignment(Pos.CENTER);
+
+        Scene loadScene = new Scene(loadLayout, 275, 150);
+        loadStage.setTitle("Load previous save");
+        loadStage.setResizable(false);
+        loadStage.setScene(loadScene);
+        loadStage.show();
+
+        //show the previously created Selection Page Window
+        newHunt.setOnAction(e -> {
+            //creates selection page window
+            try {
+                Stage huntSelectionWindow = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
+                huntSelectionWindow.setTitle("Shiny Hunt Tracker");
+                huntSelectionWindow.setResizable(false);
+                huntSelectionWindow.setScene(new Scene(root, 750, 480));
+                huntSelectionWindow.show();
+            }catch(IOException f){
+                f.printStackTrace();
+            }
+            loadStage.close();
+        });
+
+        //if they would like to continue, show a list of the previous hunts found on the file
+        continuePrevious.setOnAction(e -> {
+            Stage previousHuntsStage = new Stage();
+
+            previousHuntsStage.setTitle("Select a previous hunt");
+            TreeView<String> previousHuntsView = new TreeView<>();
+            TreeItem<String> previousHuntsRoot = new TreeItem<>();
+
+            SaveData previousHuntData = new SaveData();
+
+            for(int i = 0; i < previousHuntData.getfileLength("PreviousHunts"); i++){
+                String line = previousHuntData.getLinefromFile(i, "PreviousHunts");
+                String name = previousHuntData.splitString(line, 0);
+                String game = previousHuntData.splitString(line, 1);
+                String method = previousHuntData.splitString(line, 3);
+                String encounters = previousHuntData.splitString(line, 5);
+                makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
+            }
+
+            previousHuntsView.setRoot(previousHuntsRoot);
+            previousHuntsView.setShowRoot(false);
+
+            VBox previousHuntsLayout = new VBox();
+            previousHuntsLayout.getChildren().addAll(previousHuntsView);
+
+            Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
+            previousHuntsStage.setScene(previousHuntsScene);
+            previousHuntsStage.show();
+            loadStage.close();
+
+            //skip selection window and go straight to hunt page
+            previousHuntsView.getSelectionModel().selectedItemProperty()
+                    .addListener((v, oldValue, newValue) -> {
+                        String line = newValue.toString().substring(18);
+                        previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1);
+                        previousHuntsStage.close();
+                    });
+        });
+    }
+
     //method to create branch on given tree item
     public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
         TreeItem<String> item = new TreeItem<>(title);
@@ -747,7 +827,9 @@ public class selectionPageController implements Initializable {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
 
-        huntController controller = new huntController();
+        if(controller == null)
+            controller = new huntController();
+
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),null,0, 0, 1);
     }
 
@@ -765,6 +847,10 @@ public class selectionPageController implements Initializable {
 
     public void setcurrentLayout(String currentLayout){
         this.currentLayout = currentLayout;
+    }
+
+    public void setController(huntController controller){
+        this.controller = controller;
     }
 
     public Pokemon getStage0(){
