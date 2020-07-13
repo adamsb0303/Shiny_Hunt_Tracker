@@ -115,7 +115,7 @@ public class SaveData {
         family.createFamily(selectedPokemon.getName());
 
         huntController controller = new huntController();
-        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, family.getStage0().getName(), family.getStage1().getName(),0, 0, 1);
+        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, family.getStage0().getName(), family.getStage1().getName(), layout, 0, 0, 1);
     }
 
     //saves layout

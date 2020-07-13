@@ -31,7 +31,6 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class huntWindow {
-
     //hunt window elements
     Stage huntWindow = new Stage();
     AnchorPane huntLayout = new AnchorPane();
@@ -41,8 +40,8 @@ public class huntWindow {
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
     Text previousEncountersText = new Text();
     String[] fonts;
-    int encounters, previousEncounters, combo = 0;
-    int increment = 1;
+    int encounters, previousEncounters, combo;
+    int increment;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
@@ -55,13 +54,14 @@ public class huntWindow {
     Method selectedMethod;
     int methodBase;
 
-    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, int encounters, int combo, int increment){
+    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
         methodBase = selectedMethod.getBase();
         this.evo0 = evo0;
         this.evo1 = evo1;
+        this.currentLayout = layout;
         this.encounters = encounters;
         this.combo = combo;
         this.increment = increment;
@@ -173,7 +173,6 @@ public class huntWindow {
 
         SaveData data = new SaveData();
         if(currentLayout != null && currentLayout.compareTo("null") != 0) {
-            this.currentLayout = currentLayout;
             displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
             if(displayPrevious > 0)
                 createPreviouslyCaught(displayPrevious);
@@ -228,9 +227,7 @@ public class huntWindow {
         promptWindow.setScene(promptScene);
         promptWindow.show();
 
-        promptWindow.setOnCloseRequest(e -> {
-            huntWindow.close();
-        });
+        promptWindow.setOnCloseRequest(e -> huntWindow.close());
     }
 
     //creates window for the hunt window settings
@@ -1693,7 +1690,7 @@ public class huntWindow {
         VBox saveLayout = new VBox();
         saveLayout.setSpacing(10);
         saveLayout.setAlignment(Pos.CENTER);
-        Label savePrompt = new Label("Would you like to save your hunt?");
+        Label savePrompt = new Label("Would you like to save your " + selectedPokemon.getName() + " hunt?");
         HBox yn = new HBox();
         yn.setSpacing(5);
         yn.setAlignment(Pos.CENTER);
@@ -1715,6 +1712,12 @@ public class huntWindow {
         });
 
         no.setOnAction(e -> {
+            huntWindow.close();
+            CustomizeHuntStage.close();
+            save.close();
+        });
+
+        save.setOnCloseRequest(e -> {
             huntWindow.close();
             CustomizeHuntStage.close();
             save.close();
@@ -1835,9 +1838,5 @@ public class huntWindow {
         test = new Font(sanitizeFontName(test.getName()), 12);
 
         return test.getName().compareTo("System") != 0;
-    }
-
-    public Stage getStage(){
-        return huntWindow;
     }
 }

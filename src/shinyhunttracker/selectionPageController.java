@@ -748,7 +748,7 @@ public class selectionPageController implements Initializable {
         selectionWindow.close();
 
         huntController controller = new huntController();
-        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),0, 0, 1);
+        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),null,0, 0, 1);
     }
 
     public void setSelectingNewHunt(boolean hunt){
