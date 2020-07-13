@@ -45,7 +45,8 @@ public class huntControlsController implements Initializable {
     int huntLayoutSize = 0;
     ImageView Evo0, Evo1, sprite;
     String evo0, evo1;
-    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText;
+    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
+    Text previousEncountersText = new Text();
     String[] fonts;
     int encounters, previousEncounters, combo = 0;
     int increment = 1;
