@@ -101,6 +101,14 @@ public class huntController {
         saveHunt.setOnAction(e -> window.saveHunt());
     }
 
+    public void refreshHuntWindowSettings(){
+        Settings.getItems().remove(0, Settings.getItems().size());
+        huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
+        for(huntWindow i : windows)
+            if(i != null)
+                addHuntWindowSettings(i);
+    }
+
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
         huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment);
         addHuntWindowSettings(newWindow);
@@ -127,6 +135,7 @@ public class huntController {
             if(windows[i] == window)
                 windows[i] = null;
         }
+        refreshHuntWindowSettings();
     }
 
     public void closeWindows(){

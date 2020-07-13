@@ -179,11 +179,6 @@ public class huntWindow {
             else
                 data.loadLayout(currentLayout, huntLayout, displayPrevious);
         }
-
-        //huntWindow.setOnCloseRequest(e -> {
-        //    e.consume();
-        //    saveHunt();
-        //});
     }
 
     //creates window to prompt user for search level or previous encounters
