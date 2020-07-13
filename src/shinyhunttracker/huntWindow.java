@@ -65,7 +65,8 @@ public class huntWindow {
         this.encounters = encounters;
         this.combo = combo;
         this.increment = increment;
-        createHuntWindow();
+        if(selectedPokemon.getGeneration() > 0)
+            createHuntWindow();
     }
 
     //creates hunt window
@@ -301,7 +302,6 @@ public class huntWindow {
                 break;
         }
 
-        CustomizeHuntVBox.getChildren().add(previouslyCaughtPokemonSettings());
         AnchorPane CustomizeHuntLayout = new AnchorPane();
         CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
         AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
@@ -441,99 +441,6 @@ public class huntWindow {
         });
     }
 
-    //creates elements for previously caught information
-    public VBox previouslyCaughtPokemonSettings(){
-        Label numberCaught = new Label("Display Previously Caught: ");
-
-        TextField numberCaughtField = new TextField();
-        numberCaughtField.setMaxWidth(50);
-        numberCaughtField.setPromptText(String.valueOf(displayPrevious));
-
-        HBox numberPreviouslyCaught = new HBox();
-        numberPreviouslyCaught.setAlignment(Pos.CENTER);
-        numberPreviouslyCaught.setPadding(new Insets(5,5,5,5));
-        numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
-
-        VBox caughtSettings = createPreviouslyCaught(displayPrevious);
-
-        VBox previouslyCaughtSettingsLayout = new VBox();
-        previouslyCaughtSettingsLayout.setAlignment(Pos.CENTER);
-        previouslyCaughtSettingsLayout.setSpacing(5);
-        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, caughtSettings);
-
-        numberCaughtField.setOnAction(e ->{
-            try{
-                displayPrevious = parseInt(numberCaughtField.getText());
-                VBox caughtPokemonSettings = createPreviouslyCaught(displayPrevious);
-                previouslyCaughtSettingsLayout.getChildren().remove(1);
-                previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings);
-                numberCaughtField.setText("");
-                numberCaughtField.setPromptText(String.valueOf(displayPrevious));
-            }catch(NumberFormatException f){
-                numberCaughtField.setText("");
-            }
-        });
-
-        return previouslyCaughtSettingsLayout;
-    }
-
-    //create elements of the last x previously caught pokemon
-    public VBox createPreviouslyCaught(int previouslyCaught){
-        huntLayout.getChildren().remove(huntLayoutSize, huntLayout.getChildren().size());
-        VBox settings = new VBox();
-        SaveData data = new SaveData();
-        int numberCaught = data.getfileLength("CaughtPokemon");
-        if(numberCaught < previouslyCaught)
-            previouslyCaught = numberCaught;
-        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
-            String line = data.getLinefromFile(i, "CaughtPokemon");
-            Text seperator = new Text("-------------------------------------------");
-            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
-            selectionPageController findGeneration = new selectionPageController();
-            int selectedPokemonGeneration = findGeneration.findGenerationPokemon(data.splitString(line, 0));
-            if(caughtGame.getGeneration() < findGeneration.findGenerationPokemon(data.splitString(line, 0)))
-                caughtGame.setGeneration(selectedPokemonGeneration);
-            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
-            Text pokemon = new Text(data.splitString(line, 0));
-            Text method = new Text(data.splitString(line, 3));
-            Text encounters = new Text(data.splitString(line, 5));
-
-            pokemon.setStroke(Color.web("0x00000000"));
-            method.setStroke(Color.web("0x00000000"));
-            encounters.setStroke(Color.web("0x00000000"));
-            huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
-
-            if(currentLayout != null){
-                data = new SaveData();
-                data.loadLayout(currentLayout, huntLayout, numberCaught - i);
-            }else {
-                sprite.setLayoutX(50 * (numberCaught - i));
-                sprite.setLayoutY(50);
-
-                pokemon.setLayoutX(50 * (numberCaught - i));
-                pokemon.setLayoutY(75);
-
-                method.setLayoutX(50 * (numberCaught - i));
-                method.setLayoutY(90);
-
-                encounters.setLayoutX(50 * (numberCaught - i));
-                encounters.setLayoutY(105);
-            }
-
-            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame.getGeneration());
-            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
-            VBox currentMethodSettings = createLabelSettings(method, "Method");
-            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
-
-            VBox pokemonSettings = new VBox();
-            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
-
-            settings.getChildren().add(pokemonSettings);
-        }
-
-        return settings;
-    }
-
     //creates ImageView settings VBox
     public VBox createImageSettings(ImageView image, String pokemonName, int generation){
         HBox groupLabel = new HBox();
@@ -635,6 +542,7 @@ public class huntWindow {
         return imageSettings;
     }
 
+    //comboBox of all variants of given pokemon
     public ComboBox<String> getPokemonForms(String name, int generation){
         ComboBox<String> comboBox = new ComboBox<>();
 
@@ -894,6 +802,7 @@ public class huntWindow {
         return comboBox;
     }
 
+    //create a string of the file path of the game
     public String createGameFilePath(Game selectedGame){
         String filePath = "Images/Sprites/";
         switch(selectedGame.getGeneration()) {
@@ -1744,6 +1653,7 @@ public class huntWindow {
         });
     }
 
+    //reset encounters
     public void resetEncounters(){
         encounters = 0;
         encountersText.setText("0");
@@ -1784,6 +1694,104 @@ public class huntWindow {
             default:
                 break;
         }
+    }
+
+    //creates elements for previously caught element settings
+    public void previouslyCaughtPokemonSettings(){
+        Stage previouslyCaughtSettingsStage = new Stage();
+        previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon");
+
+        Label numberCaught = new Label("Display Previously Caught: ");
+        TextField numberCaughtField = new TextField();
+        numberCaughtField.setMaxWidth(50);
+        numberCaughtField.setPromptText(String.valueOf(displayPrevious));
+
+        HBox numberPreviouslyCaught = new HBox();
+        numberPreviouslyCaught.setAlignment(Pos.CENTER);
+        numberPreviouslyCaught.setSpacing(5);
+        numberPreviouslyCaught.setPadding(new Insets(5,5,5,5));
+        numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
+
+        VBox caughtSettings = createPreviouslyCaught(displayPrevious);
+
+        VBox previouslyCaughtSettingsLayout = new VBox();
+        previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
+        previouslyCaughtSettingsLayout.setSpacing(5);
+        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, caughtSettings);
+
+        Scene previouslyCaughtSettingsScene = new Scene(previouslyCaughtSettingsLayout, 263, 500);
+        previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
+        previouslyCaughtSettingsStage.show();
+
+        numberCaughtField.setOnAction(e ->{
+            try{
+                displayPrevious = parseInt(numberCaughtField.getText());
+                VBox caughtPokemonSettings = createPreviouslyCaught(displayPrevious);
+                previouslyCaughtSettingsLayout.getChildren().remove(1);
+                previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings);
+                numberCaughtField.setText("");
+                numberCaughtField.setPromptText(String.valueOf(displayPrevious));
+            }catch(NumberFormatException f){
+                numberCaughtField.setText("");
+            }
+        });
+    }
+
+    //create elements of the last x previously caught pokemon
+    public VBox createPreviouslyCaught(int previouslyCaught){
+        huntLayout.getChildren().remove(huntLayoutSize, huntLayout.getChildren().size());
+        VBox settings = new VBox();
+        SaveData data = new SaveData();
+        int numberCaught = data.getfileLength("CaughtPokemon");
+        if(numberCaught < previouslyCaught)
+            previouslyCaught = numberCaught;
+        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
+            String line = data.getLinefromFile(i, "CaughtPokemon");
+            Text seperator = new Text("-------------------------------------------");
+            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
+            selectionPageController findGeneration = new selectionPageController();
+            int selectedPokemonGeneration = findGeneration.findGenerationPokemon(data.splitString(line, 0));
+            if(caughtGame.getGeneration() < findGeneration.findGenerationPokemon(data.splitString(line, 0)))
+                caughtGame.setGeneration(selectedPokemonGeneration);
+            ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
+            Text pokemon = new Text(data.splitString(line, 0));
+            Text method = new Text(data.splitString(line, 3));
+            Text encounters = new Text(data.splitString(line, 5));
+
+            pokemon.setStroke(Color.web("0x00000000"));
+            method.setStroke(Color.web("0x00000000"));
+            encounters.setStroke(Color.web("0x00000000"));
+            //huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
+
+            if(currentLayout != null){
+                data = new SaveData();
+                data.loadLayout(currentLayout, huntLayout, numberCaught - i);
+            }else {
+                sprite.setLayoutX(50 * (numberCaught - i));
+                sprite.setLayoutY(50);
+
+                pokemon.setLayoutX(50 * (numberCaught - i));
+                pokemon.setLayoutY(75);
+
+                method.setLayoutX(50 * (numberCaught - i));
+                method.setLayoutY(90);
+
+                encounters.setLayoutX(50 * (numberCaught - i));
+                encounters.setLayoutY(105);
+            }
+
+            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame.getGeneration());
+            VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
+            VBox currentMethodSettings = createLabelSettings(method, "Method");
+            VBox encountersSettings = createLabelSettings(encounters, "Encounters");
+
+            VBox pokemonSettings = new VBox();
+            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
+
+            settings.getChildren().add(pokemonSettings);
+        }
+
+        return settings;
     }
 
     private int simplifyFraction(double num, int den){

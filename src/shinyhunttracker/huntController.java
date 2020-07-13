@@ -19,6 +19,7 @@ public class huntController {
     MenuBar Menu = new MenuBar();
     Menu Settings = new Menu("Settings");
     VBox huntControlsButtonVBox;
+    huntWindow previousCatches = new huntWindow(new Pokemon("Bulbasaur",0), new Game("Gold",0), new Method("None",0),null,null,null,0,0, 0);
 
     huntWindow[] windows = new huntWindow[0];
 
@@ -34,6 +35,9 @@ public class huntController {
 
         Menu.getMenus().add(Settings);
 
+        MenuItem previouslyCaught = new MenuItem("Previously Caught Settings");
+        Settings.getItems().add(previouslyCaught);
+
         BorderPane huntControlsLayout = new BorderPane();
         huntControlsLayout.setTop(Menu);
         huntControlsLayout.setCenter(huntControlsButtonVBox);
@@ -41,6 +45,8 @@ public class huntController {
         Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
         huntControls.setScene(huntControlsScene);
         huntControls.show();
+
+        previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
         addHunt.setOnAction(e -> {
             try {
@@ -102,7 +108,7 @@ public class huntController {
     }
 
     public void refreshHuntWindowSettings(){
-        Settings.getItems().remove(0, Settings.getItems().size());
+        Settings.getItems().remove(1, Settings.getItems().size());
         huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
         for(huntWindow i : windows)
             if(i != null)
