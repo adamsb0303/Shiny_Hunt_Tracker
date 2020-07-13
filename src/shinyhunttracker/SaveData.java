@@ -110,26 +110,15 @@ public class SaveData {
     }
 
     //opens huntControls window
-    public void beginHunt() throws IOException{
-        FXMLLoader huntControlsLoader = new FXMLLoader();
-        huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
-        Parent hunterControlsParent = huntControlsLoader.load();
-
+    public void beginHunt(){
         selectionPageController family = new selectionPageController();
         family.createFamily(selectedPokemon.getName());
-        huntControlsController huntControlsController = huntControlsLoader.getController();
-        Stage huntWindow = new Stage();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, huntWindow, layout, family.getStage0().getName(), family.getStage1().getName(), encounters, combo, increment);
 
-        Stage huntControls = new Stage();
-        huntControls.setTitle("Hunt Controls");
-        huntControls.setResizable(false);
-        huntControls.setScene(new Scene(hunterControlsParent, 350, 100));
-        huntControlsController.importStage(huntControls);
-        huntControls.show();
+        huntController controller = new huntController();
+        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, family.getStage0().getName(), family.getStage1().getName(),0, 0, 1);
 
         if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            huntControlsController.promptPreviousEncounters();
+            //huntControlsController.promptPreviousEncounters();
         }
     }
 

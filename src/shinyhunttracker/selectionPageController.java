@@ -743,16 +743,18 @@ public class selectionPageController implements Initializable {
     }
 
     //closes selection window and opens huntControls window
-    public void beginHunt(ActionEvent event) throws IOException {
+    public void beginHunt(ActionEvent event) {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
 
+        huntController controller = new huntController();
+        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),0, 0, 1);
+        /*
         FXMLLoader huntControlsLoader = new FXMLLoader();
-        huntControlsLoader.setLocation(getClass().getResource("huntControls.fxml"));
+
         Parent hunterControlsParent = huntControlsLoader.load();
 
-        huntControlsController huntControlsController = huntControlsLoader.getController();
-        huntControlsController.createHuntWindow(selectedPokemon, selectedGame, selectedMethod, newHuntSelection, currentLayout, Stage0.getName(), Stage1.getName(),0, 0, 1);
+        huntWindow huntControlsController = huntControlsLoader.getController();
 
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controls");
@@ -765,6 +767,7 @@ public class selectionPageController implements Initializable {
         if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
             huntControlsController.promptPreviousEncounters();
         }
+         */
     }
 
     public void setSelectingNewHunt(boolean hunt){

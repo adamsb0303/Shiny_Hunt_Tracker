@@ -1,6 +1,5 @@
 package shinyhunttracker;
 
-import com.sun.source.tree.Tree;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -22,8 +21,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,7 +30,7 @@ import java.util.ResourceBundle;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-public class huntControlsController implements Initializable {
+public class huntWindow {
     //controller elements
     Stage huntControls = new Stage();
     public Button encountersButton, pokemonCaughtButton, phaseButton;
@@ -57,17 +54,35 @@ public class huntControlsController implements Initializable {
     int displayPrevious = 0;
 
     //current objects
-    Pokemon selectedPokemon = new Pokemon();
-    Game selectedGame = new Game();
-    Method selectedMethod = new Method();
+    Pokemon selectedPokemon;
+    Game selectedGame;
+    Method selectedMethod;
     int methodBase;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
-        //moves HBox with all the buttons to the middle of the window
-        huntControlsButtonHBox.setAlignment(Pos.CENTER);
-        huntControlsButtonHBox.setSpacing(10);
+    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, int encounters, int combo, int increment){
+        this.selectedPokemon = selectedPokemon;
+        this.selectedGame = selectedGame;
+        this.selectedMethod = selectedMethod;
+        methodBase = selectedMethod.getBase();
+        this.evo0 = evo0;
+        this.evo1 = evo1;
+        this.encounters = encounters;
+        this.combo = combo;
+        this.increment = increment;
+        createHuntWindow();
+    }
 
+    //sets huntControls window to the given stage
+    public void importStage(Stage stage){
+        huntControls = stage;
+        huntControls.setOnCloseRequest(e -> {
+            e.consume();
+            saveHunt();
+        });
+    }
+
+    //creates hunt window
+    public void createHuntWindow(){
         String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         int fontArraySize = 0;
         for (String avaliableFont : avaliableFonts) {
@@ -84,30 +99,8 @@ public class huntControlsController implements Initializable {
                 index++;
             }
         }
-    }
 
-    //sets huntControls window to the given stage
-    public void importStage(Stage stage){
-        huntControls = stage;
-        huntControls.setOnCloseRequest(e -> {
-            e.consume();
-            saveHunt();
-        });
-    }
-
-    //creates hunt window
-    public void createHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, Stage newHuntStage, String currentLayout, String evo0, String evo1, int encounters, int combo, int increment){
         huntWindow.setTitle("Hunt Window");
-        huntWindow = newHuntStage;
-        this.selectedPokemon = selectedPokemon;
-        this.selectedGame = selectedGame;
-        this.selectedMethod = selectedMethod;
-        methodBase = selectedMethod.getBase();
-        this.evo0 = evo0;
-        this.evo1 = evo1;
-        this.encounters = encounters;
-        this.combo = combo;
-        this.increment = increment;
 
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
@@ -166,7 +159,7 @@ public class huntControlsController implements Initializable {
         huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
         huntLayoutSize = huntLayout.getChildren().size();
 
-        int index = 3;
+        index = 3;
         for(int i = 3; i < huntLayout.getChildren().size(); i++){
             if(huntLayout.getChildren().get(i).isVisible()) {
                 if(evo1 != null)
@@ -1771,6 +1764,11 @@ public class huntControlsController implements Initializable {
                 changeIncrementsText.setText("");
             }
         });
+    }
+
+    public void resetEncounters(){
+        encounters = 0;
+        encountersText.setText("0");
     }
 
     //since some methods' odds change based on encounters
