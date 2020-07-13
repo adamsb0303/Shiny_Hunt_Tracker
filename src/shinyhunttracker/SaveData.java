@@ -116,10 +116,6 @@ public class SaveData {
 
         huntController controller = new huntController();
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, family.getStage0().getName(), family.getStage1().getName(),0, 0, 1);
-
-        if(selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            //huntControlsController.promptPreviousEncounters();
-        }
     }
 
     //saves layout

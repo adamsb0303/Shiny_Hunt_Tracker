@@ -49,6 +49,8 @@ public class huntController {
         huntControls.setScene(huntControlsScene);
         huntControls.show();
 
+        customizeHuntLayout.setOnAction(e -> windows[0].CustomizeHuntWindow());
+
         encountersButton.setOnAction(e -> windows[0].incrementEncounters());
         increment.setOnAction(e -> windows[0].changeIncrement());
         resetEncounters.setOnAction(e -> windows[0].resetEncounters());
@@ -56,9 +58,25 @@ public class huntController {
         pokemonCaught.setOnAction(e -> windows[0].pokemonCaught());
         resetCombo.setOnAction(e -> windows[0].resetCombo());
         saveHunt.setOnAction(e -> windows[0].saveHunt());
+
+        huntControls.setOnCloseRequest(e -> {
+            closeWindows();
+        });
     }
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, int encounters, int combo, int increment){
         windows = new huntWindow[]{new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, encounters, combo, increment)};
+
+        //since the search level or total encounters can change between uses, this value needs to be captured after every startup
+        if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
+            windows[0].promptPreviousEncounters();
+        }
+    }
+
+    public void closeWindows(){
+        for(int i = 0; i < windows.length; i++) {
+            windows[i].saveHunt();
+            windows[i] = null;
+        }
     }
 }

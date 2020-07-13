@@ -31,10 +31,6 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class huntWindow {
-    //controller elements
-    Stage huntControls = new Stage();
-    public Button encountersButton, pokemonCaughtButton, phaseButton;
-    public HBox huntControlsButtonHBox;
 
     //hunt window elements
     Stage huntWindow = new Stage();
@@ -70,15 +66,6 @@ public class huntWindow {
         this.combo = combo;
         this.increment = increment;
         createHuntWindow();
-    }
-
-    //sets huntControls window to the given stage
-    public void importStage(Stage stage){
-        huntControls = stage;
-        huntControls.setOnCloseRequest(e -> {
-            e.consume();
-            saveHunt();
-        });
     }
 
     //creates hunt window
@@ -136,17 +123,14 @@ public class huntWindow {
         }
         huntLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
-        Button resetEncountersButton = new Button("Reset Combo");
         switch(selectedMethod.getName()){
             case "Radar Chaining":
             case "Chain Fishing":
             case "SOS Chaining":
             case "Catch Combo":
-                huntControlsButtonHBox.getChildren().add(resetEncountersButton);
                 currentComboText.setVisible(true);
                 break;
             case "DexNav":
-                huntControlsButtonHBox.getChildren().add(resetEncountersButton);
                 currentComboText.setVisible(true);
                 previousEncountersText.setVisible(true);
                 break;
@@ -245,7 +229,6 @@ public class huntWindow {
         promptWindow.show();
 
         promptWindow.setOnCloseRequest(e -> {
-            huntControls.close();
             huntWindow.close();
         });
     }
@@ -1630,7 +1613,6 @@ public class huntWindow {
         data.pokemonCaught();
         createPreviouslyCaught(displayPrevious);
 
-        huntControls.close();
         CustomizeHuntStage.close();
 
         sprite.setVisible(false);
@@ -1725,7 +1707,6 @@ public class huntWindow {
         save.show();
 
         yes.setOnAction(e -> {
-            huntControls.close();
             huntWindow.close();
             CustomizeHuntStage.close();
             SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
@@ -1734,7 +1715,6 @@ public class huntWindow {
         });
 
         no.setOnAction(e -> {
-            huntControls.close();
             huntWindow.close();
             CustomizeHuntStage.close();
             save.close();
@@ -1855,5 +1835,9 @@ public class huntWindow {
         test = new Font(sanitizeFontName(test.getName()), 12);
 
         return test.getName().compareTo("System") != 0;
+    }
+
+    public Stage getStage(){
+        return huntWindow;
     }
 }

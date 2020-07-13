@@ -749,25 +749,6 @@ public class selectionPageController implements Initializable {
 
         huntController controller = new huntController();
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),0, 0, 1);
-        /*
-        FXMLLoader huntControlsLoader = new FXMLLoader();
-
-        Parent hunterControlsParent = huntControlsLoader.load();
-
-        huntWindow huntControlsController = huntControlsLoader.getController();
-
-        Stage huntControls = new Stage();
-        huntControls.setTitle("Hunt Controls");
-        huntControls.setResizable(false);
-        huntControls.setScene(new Scene(hunterControlsParent, 350, 100));
-        huntControlsController.importStage(huntControls);
-        huntControls.show();
-
-        //since the search level or total encounters can change between uses, this value needs to be captured after every startup
-        if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            huntControlsController.promptPreviousEncounters();
-        }
-         */
     }
 
     public void setSelectingNewHunt(boolean hunt){
