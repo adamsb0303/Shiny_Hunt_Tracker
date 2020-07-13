@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -516,6 +517,7 @@ public class window{
         return null;
     }
 
+    //changes given image to given pokemon variant
     public void createAlternateSprite(String name, String form, Game selectedGame, ImageView image){
         String filePath = createGameFilePath(selectedGame);
         switch(form) {
@@ -1086,6 +1088,7 @@ public class window{
         return labelSettings;
     }
 
+    //creates string array of avaliable fonts
     private String[] generateFonts(){
         String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         int fontArraySize = 0;
@@ -1107,6 +1110,7 @@ public class window{
         return temp;
     }
 
+    //removes "Bold", "Italics", and "Regular" from given string
     public String sanitizeFontName(String name){
         int index = 0;
         if(name.contains("Bold"))
@@ -1118,6 +1122,7 @@ public class window{
         return name.substring(0, name.length() - index);
     }
 
+    //checks to see if using a given font returns the system default font
     public String sanitizeAvaliableFontStrings(String name){
         Font test = new Font(name, 12);
         if(test.getName().compareTo("System Regular") == 0){
@@ -1126,6 +1131,7 @@ public class window{
         return name;
     }
 
+    //checks to see if bolding and unbolding a font returns system default
     public boolean canBold(String name){
         Font test;
         test = Font.font(name,  FontWeight.BOLD, 12);
@@ -1136,6 +1142,7 @@ public class window{
         return test.getName().compareTo("System") != 0;
     }
 
+    //checks to see if italicizing and unitalicizing a font returns system default
     public boolean canItalic(String name){
         Font test;
         test = Font.font(name,  FontPosture.ITALIC, 12);
@@ -1628,6 +1635,7 @@ class huntWindow extends window{
     public void saveHunt(){
         Stage save = new Stage();
         save.setTitle("Save hunt");
+        save.setResizable(false);
         save.initModality(Modality.APPLICATION_MODAL);
         VBox saveLayout = new VBox();
         saveLayout.setSpacing(10);
@@ -1659,11 +1667,7 @@ class huntWindow extends window{
             save.close();
         });
 
-        save.setOnCloseRequest(e -> {
-            windowStage.close();
-            CustomizeHuntStage.close();
-            save.close();
-        });
+        save.setOnCloseRequest(Event::consume);
     }
 
     //changes increment
@@ -1849,5 +1853,4 @@ class huntWindow extends window{
     public Pokemon getSelectedPokemon(){
         return selectedPokemon;
     }
-
 }
