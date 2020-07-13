@@ -114,12 +114,27 @@ public class huntController {
         if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
             windows[windows.length - 1].promptPreviousEncounters();
         }
+
+        newWindow.getStage().setOnCloseRequest(e -> {
+            e.consume();
+            newWindow.saveHunt();
+            removeWindow(newWindow);
+        });
+    }
+
+    public void removeWindow(huntWindow window){
+        for(int i = 0; i < windows.length; i++){
+            if(windows[i] == window)
+                windows[i] = null;
+        }
     }
 
     public void closeWindows(){
         for(int i = 0; i < windows.length; i++) {
-            windows[i].saveHunt();
-            windows[i] = null;
+            if(windows[i] != null) {
+                windows[i].saveHunt();
+                windows[i] = null;
+            }
         }
     }
 }

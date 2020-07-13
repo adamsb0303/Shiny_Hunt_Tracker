@@ -87,7 +87,7 @@ public class huntWindow {
             }
         }
 
-        huntWindow.setTitle("Hunt Window");
+        huntWindow.setTitle(selectedPokemon.getName() + " Hunt Window");
 
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
@@ -180,10 +180,10 @@ public class huntWindow {
                 data.loadLayout(currentLayout, huntLayout, displayPrevious);
         }
 
-        huntWindow.setOnCloseRequest(e -> {
-            e.consume();
-            saveHunt();
-        });
+        //huntWindow.setOnCloseRequest(e -> {
+        //    e.consume();
+        //    saveHunt();
+        //});
     }
 
     //creates window to prompt user for search level or previous encounters
@@ -1838,6 +1838,10 @@ public class huntWindow {
         test = new Font(sanitizeFontName(test.getName()), 12);
 
         return test.getName().compareTo("System") != 0;
+    }
+
+    public Stage getStage(){
+        return huntWindow;
     }
 
     public Pokemon getSelectedPokemon(){
