@@ -19,7 +19,7 @@ public class huntController {
     MenuBar Menu = new MenuBar();
     Menu Settings = new Menu("Settings");
     VBox huntControlsButtonVBox;
-    huntWindow previousCatches = new huntWindow(new Pokemon("Bulbasaur",0), new Game("Gold",0), new Method("None",0),null,null,null,0,0, 0);
+    previouslyCaught previousCatches = new previouslyCaught(0);
 
     huntWindow[] windows = new huntWindow[0];
 
@@ -145,6 +145,7 @@ public class huntController {
     }
 
     public void closeWindows(){
+        previousCatches.getStage().close();
         for(int i = 0; i < windows.length; i++) {
             if(windows[i] != null) {
                 windows[i].saveHunt();
