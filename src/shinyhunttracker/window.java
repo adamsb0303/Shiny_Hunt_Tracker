@@ -1152,6 +1152,16 @@ public class window{
 
         return test.getName().compareTo("System") != 0;
     }
+
+    //method to create Tree Item branches
+    public void makeBranch(String title, TreeItem<String> parent){
+        TreeItem<String> item = new TreeItem<>(title);
+        parent.getChildren().add(item);
+    }
+
+    public Stage getStage(){
+        return windowStage;
+    }
 }
 
 class huntWindow extends window{
@@ -1278,11 +1288,7 @@ class huntWindow extends window{
 
         SaveData data = new SaveData();
         if(currentLayout != null && currentLayout.compareTo("null") != 0) {
-            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
-            if(displayPrevious > 0)
-                createPreviouslyCaught(displayPrevious);
-            else
-                data.loadLayout(currentLayout, windowLayout, displayPrevious);
+            data.loadLayout(currentLayout, windowLayout, displayPrevious);
         }
     }
 
@@ -1533,11 +1539,7 @@ class huntWindow extends window{
             savedLayouts.getSelectionModel().selectedItemProperty()
                     .addListener((v, oldValue, newValue) -> {
                         currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                        displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
-                        if(displayPrevious > 0)
-                            createPreviouslyCaught(displayPrevious);
-                        else
-                            data.loadLayout(currentLayout, windowLayout, displayPrevious);
+                        data.loadLayout(currentLayout, windowLayout, displayPrevious);
                         CustomizeHuntWindow();
 
                         loadSavedLayoutStage.close();
@@ -1557,7 +1559,6 @@ class huntWindow extends window{
     public void pokemonCaught() {
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
         data.pokemonCaught();
-        createPreviouslyCaught(displayPrevious);
 
         CustomizeHuntStage.close();
 
@@ -1619,7 +1620,6 @@ class huntWindow extends window{
                 SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
                 data.pokemonCaught();
                 resetCombo();
-                createPreviouslyCaught(displayPrevious);
                 phaseStage.close();
             }
         });
@@ -1738,6 +1738,31 @@ class huntWindow extends window{
         }
     }
 
+    //simplifies odds fraction for easier reading
+    private int simplifyFraction(double num, int den){
+        return (int)Math.round(den / num);
+    }
+
+    public Pokemon getSelectedPokemon(){
+        return selectedPokemon;
+    }
+}
+
+class previouslyCaught extends window{
+    int displayPrevious;
+
+    previouslyCaught(int displayPrevious){
+        this.displayPrevious = displayPrevious;
+        windowStage.setTitle("Previously Caught Pokemon");
+    }
+
+    public void createPreviouslyCaughtPokemonWindow(){
+        windowLayout = new AnchorPane();
+        Scene previousHuntScene = new Scene(windowLayout, 750, 480);
+        windowStage.setScene(previousHuntScene);
+        windowStage.show();
+    }
+
     //creates elements for previously caught element settings
     public void previouslyCaughtPokemonSettings(){
         Stage previouslyCaughtSettingsStage = new Stage();
@@ -1754,22 +1779,31 @@ class huntWindow extends window{
         numberPreviouslyCaught.setPadding(new Insets(5,5,5,5));
         numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
 
-        VBox caughtSettings = createPreviouslyCaught(displayPrevious);
+        VBox caughtSettings = createPreviouslyCaughtPokemon(displayPrevious);
 
         VBox previouslyCaughtSettingsLayout = new VBox();
         previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
         previouslyCaughtSettingsLayout.setSpacing(5);
         previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, caughtSettings);
 
-        Scene previouslyCaughtSettingsScene = new Scene(previouslyCaughtSettingsLayout, 263, 500);
+        ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
+
+        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
         previouslyCaughtSettingsStage.show();
 
         numberCaughtField.setOnAction(e ->{
             try{
+                if(displayPrevious == 0) {
+                    createPreviouslyCaughtPokemonWindow();
+                }
                 displayPrevious = parseInt(numberCaughtField.getText());
-                VBox caughtPokemonSettings = createPreviouslyCaught(displayPrevious);
-                previouslyCaughtSettingsLayout.getChildren().remove(1);
+                if(displayPrevious == 0)
+                    windowStage.close();
+                else
+                    windowStage.show();
+                VBox caughtPokemonSettings = createPreviouslyCaughtPokemon(displayPrevious);
+                previouslyCaughtSettingsLayout.getChildren().remove(1, previouslyCaughtSettingsLayout.getChildren().size());
                 previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings);
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayPrevious));
@@ -1780,8 +1814,8 @@ class huntWindow extends window{
     }
 
     //create elements of the last x previously caught pokemon
-    public VBox createPreviouslyCaught(int previouslyCaught){
-        windowLayout.getChildren().remove(huntLayoutSize, windowLayout.getChildren().size());
+    public VBox createPreviouslyCaughtPokemon(int previouslyCaught){
+        windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
         VBox settings = new VBox();
         SaveData data = new SaveData();
         int numberCaught = data.getfileLength("CaughtPokemon");
@@ -1789,7 +1823,6 @@ class huntWindow extends window{
             previouslyCaught = numberCaught;
         for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
             String line = data.getLinefromFile(i, "CaughtPokemon");
-            Text seperator = new Text("-------------------------------------------");
             Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
             selectionPageController findGeneration = new selectionPageController();
             int selectedPokemonGeneration = findGeneration.findGenerationPokemon(data.splitString(line, 0));
@@ -1800,27 +1833,23 @@ class huntWindow extends window{
             Text method = new Text(data.splitString(line, 3));
             Text encounters = new Text(data.splitString(line, 5));
 
+            windowLayout.getChildren().addAll(sprite, pokemon, method, encounters);
+
             pokemon.setStroke(Color.web("0x00000000"));
             method.setStroke(Color.web("0x00000000"));
             encounters.setStroke(Color.web("0x00000000"));
-            //huntLayout.getChildren().addAll(sprite, pokemon, method, encounters);
 
-            if(currentLayout != null){
-                data = new SaveData();
-                data.loadLayout(currentLayout, windowLayout, numberCaught - i);
-            }else {
-                sprite.setLayoutX(50 * (numberCaught - i));
-                sprite.setLayoutY(50);
+            sprite.setLayoutX(50 * (numberCaught - i));
+            sprite.setLayoutY(50);
 
-                pokemon.setLayoutX(50 * (numberCaught - i));
-                pokemon.setLayoutY(75);
+            pokemon.setLayoutX(50 * (numberCaught - i));
+            pokemon.setLayoutY(75);
 
-                method.setLayoutX(50 * (numberCaught - i));
-                method.setLayoutY(90);
+            method.setLayoutX(50 * (numberCaught - i));
+            method.setLayoutY(90);
 
-                encounters.setLayoutX(50 * (numberCaught - i));
-                encounters.setLayoutY(105);
-            }
+            encounters.setLayoutX(50 * (numberCaught - i));
+            encounters.setLayoutY(105);
 
             VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame);
             VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
@@ -1828,29 +1857,11 @@ class huntWindow extends window{
             VBox encountersSettings = createLabelSettings(encounters, "Encounters");
 
             VBox pokemonSettings = new VBox();
-            pokemonSettings.getChildren().addAll(seperator, imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
+            pokemonSettings.getChildren().addAll(new Text("-------------------------------------------"), imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
 
             settings.getChildren().add(pokemonSettings);
         }
 
         return settings;
-    }
-
-    private int simplifyFraction(double num, int den){
-        return (int)Math.round(den / num);
-    }
-
-    //method to create Tree Item branches
-    public void makeBranch(String title, TreeItem<String> parent){
-        TreeItem<String> item = new TreeItem<>(title);
-        parent.getChildren().add(item);
-    }
-
-    public Stage getStage(){
-        return windowStage;
-    }
-
-    public Pokemon getSelectedPokemon(){
-        return selectedPokemon;
     }
 }
