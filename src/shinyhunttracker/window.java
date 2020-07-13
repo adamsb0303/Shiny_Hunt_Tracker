@@ -1,7 +1,6 @@
 package shinyhunttracker;
 
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -25,424 +24,16 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-public class huntWindow {
-    //hunt window elements
-    Stage huntWindow = new Stage();
-    AnchorPane huntLayout = new AnchorPane();
-    int huntLayoutSize = 0;
-    ImageView Evo0, Evo1, sprite;
-    String evo0, evo1;
-    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
-    Text previousEncountersText = new Text();
-    String[] fonts;
-    int encounters, previousEncounters, combo;
-    int increment;
-
-    //hunt settings window elements
-    Stage CustomizeHuntStage = new Stage();
-    String currentLayout;
-    int displayPrevious = 0;
-
-    //current objects
-    Pokemon selectedPokemon;
-    Game selectedGame;
-    Method selectedMethod;
-    int methodBase;
-
-    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
-        this.selectedPokemon = selectedPokemon;
-        this.selectedGame = selectedGame;
-        this.selectedMethod = selectedMethod;
-        methodBase = selectedMethod.getBase();
-        this.evo0 = evo0;
-        this.evo1 = evo1;
-        this.currentLayout = layout;
-        this.encounters = encounters;
-        this.combo = combo;
-        this.increment = increment;
-        if(selectedPokemon.getGeneration() > 0)
-            createHuntWindow();
-    }
-
-    //creates hunt window
-    public void createHuntWindow(){
-        String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        int fontArraySize = 0;
-        for (String avaliableFont : avaliableFonts) {
-            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
-                fontArraySize++;
-            }
-        }
-
-        fonts = new String[fontArraySize];
-        int index = 0;
-        for (String avaliableFont : avaliableFonts) {
-            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
-                fonts[index] = avaliableFont;
-                index++;
-            }
-        }
-
-        huntWindow.setTitle(selectedPokemon.getName() + " Hunt Window");
-
-        currentHuntingPokemonText = new Text(selectedPokemon.getName());
-        currentHuntingMethodText= new Text(selectedMethod.getName());
-        currentGameText = new Text(selectedGame.getName());
-        oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
-        dynamicOddsMethods();
-        encountersText= new Text(String.valueOf(encounters));
-        currentComboText = new Text(String.valueOf(combo));
-        currentComboText.setVisible(false);
-        previousEncountersText = new Text();
-        previousEncountersText.setVisible(false);
-
-        currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
-        currentHuntingMethodText.setStroke(Color.web("0x00000000"));
-        currentGameText.setStroke(Color.web("0x00000000"));
-        oddFractionText.setStroke(Color.web("0x00000000"));
-        encountersText.setStroke(Color.web("0x00000000"));
-        previousEncountersText.setStroke(Color.web("0x00000000"));
-        currentComboText.setStroke(Color.web("0x00000000"));
-
-        sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
-        Evo0 = new ImageView();
-        Evo1 = new ImageView();
-        if(evo0 != null) {
-            Evo0 = createPokemonSprite(evo0, selectedGame);
-            if(Evo0 == null)
-                Evo0 = new ImageView();
-        }
-        if(evo1 != null) {
-            Evo1 = createPokemonSprite(evo1, selectedGame);
-            if(Evo1 == null)
-                Evo1 = new ImageView();
-        }
-        huntLayout.getChildren().addAll(sprite, Evo0, Evo1);
-
-        switch(selectedMethod.getName()){
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "SOS Chaining":
-            case "Catch Combo":
-                currentComboText.setVisible(true);
-                break;
-            case "DexNav":
-                currentComboText.setVisible(true);
-                previousEncountersText.setVisible(true);
-                break;
-            case "Total Encounters":
-                previousEncountersText.setVisible(true);
-                break;
-            default:
-                break;
-        }
-        huntLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
-        huntLayoutSize = huntLayout.getChildren().size();
-
-        index = 3;
-        for(int i = 3; i < huntLayout.getChildren().size(); i++){
-            if(huntLayout.getChildren().get(i).isVisible()) {
-                if(evo1 != null)
-                    huntLayout.getChildren().get(i).setLayoutX(600);
-                else if(evo0 != null)
-                    huntLayout.getChildren().get(i).setLayoutX(400);
-                else
-                    huntLayout.getChildren().get(i).setLayoutX(200);
-                huntLayout.getChildren().get(i).setLayoutY(65 + (15 * index));
-                index++;
-            }
-        }
-
-        if(this.evo1 != null) {
-            Evo0.setLayoutX(0);
-            Evo1.setLayoutX(200);
-            sprite.setLayoutX(400);
-        }else if(this.evo0 != null){
-            Evo0.setLayoutX(0);
-            sprite.setLayoutX(200);
-        }else
-            sprite.setLayoutX(0);
-
-        Scene huntScene = new Scene(huntLayout, 750, 480);
-        huntWindow.setScene(huntScene);
-        huntWindow.show();
-
-        SaveData data = new SaveData();
-        if(currentLayout != null && currentLayout.compareTo("null") != 0) {
-            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
-            if(displayPrevious > 0)
-                createPreviouslyCaught(displayPrevious);
-            else
-                data.loadLayout(currentLayout, huntLayout, displayPrevious);
-        }
-    }
-
-    //creates window to prompt user for search level or previous encounters
-    public void promptPreviousEncounters(){
-        Stage promptWindow = new Stage();
-        promptWindow.setResizable(false);
-        promptWindow.initModality(Modality.APPLICATION_MODAL);
-
-        Label promptLabel = new Label();
-        if(selectedMethod.getName().compareTo("DexNav") == 0) {
-            promptWindow.setTitle("Enter Search Level");
-            promptLabel.setText("Please enter the current Search Level for " + selectedPokemon.getName());
-        }
-        else if(selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            promptWindow.setTitle("Enter Number Battled");
-            promptLabel.setText("Please enter the current Number Battled for " + selectedPokemon.getName());
-        }
-
-        TextField previousInput = new TextField();
-
-        previousInput.setOnAction(e-> {
-            try{
-                previousEncounters = parseInt(previousInput.getText());
-                previousEncountersText.setText(String.valueOf(previousEncounters));
-                if(selectedMethod.getName().compareTo("DexNav") == 0)
-                    oddFractionText.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
-                else
-                    oddFractionText.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
-                promptWindow.close();
-            }catch (NumberFormatException f){
-                previousInput.setText("");
-            }
-        });
-
-        VBox promptLayout = new VBox();
-        promptLayout.setSpacing(10);
-        promptLayout.setAlignment(Pos.CENTER);
-        promptLayout.getChildren().addAll(promptLabel, previousInput);
-
-        Scene promptScene = new Scene(promptLayout, 275, 75);
-        promptWindow.setScene(promptScene);
-        promptWindow.show();
-
-        promptWindow.setOnCloseRequest(e -> huntWindow.close());
-    }
-
-    //creates window for the hunt window settings
-    public void CustomizeHuntWindow(){
-        CustomizeHuntStage.setTitle("Settings");
-        CustomizeHuntStage.setResizable(false);
-        VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName(), selectedGame.getGeneration());
-        VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
-        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
-        VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
-        VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
-        VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
-
-        VBox backgroundVBox = new VBox();
-        Label backgroundGroup = new Label("Background");
-        backgroundGroup.setUnderline(true);
-        HBox backgroundColorSettings = new HBox();
-        backgroundColorSettings.setSpacing(5);
-        Label backgroundColorLabel = new Label("Color");
-        ColorPicker backgroundColorPicker = new ColorPicker();
-        backgroundVBox.setPadding(new Insets(10,10,10,10));
-        backgroundVBox.setSpacing(10);
-        backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-        backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings);
-
-        Accordion accordion = new Accordion();
-        TitledPane backgroundTitledPane = new TitledPane("Background", backgroundVBox);
-        accordion.getPanes().add(backgroundTitledPane);
-
-        VBox backgroundSettings = new VBox();
-        backgroundSettings.getChildren().add(accordion);
-
-        HBox saveClose = new HBox();
-        saveClose.setPadding(new Insets(10,10,10,10));
-        saveClose.setSpacing(5);
-        Button Save = new Button("Save");
-        Button Load = new Button("Load");
-        saveClose.getChildren().addAll(Save,Load);
-
-        VBox CustomizeHuntVBox = new VBox();
-        VBox Evo0Settings;
-        VBox Evo1Settings;
-
-        if(evo0 != null){
-            Evo0Settings = createImageSettings(Evo0, evo0, selectedGame.getGeneration());
-            CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
-        }
-        if(evo1 != null){
-            Evo1Settings = createImageSettings(Evo1, evo1, selectedGame.getGeneration());
-            CustomizeHuntVBox.getChildren().add(Evo1Settings);
-        }
-        CustomizeHuntVBox.getChildren().add(spriteSettings);
-
-        VBox comboSettings;
-        VBox previousEncountersSettings;
-
-        switch (selectedMethod.getName()) {
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "SOS Chaining":
-            case "Catch Combo":
-                comboSettings = createLabelSettings(currentComboText, "Combo");
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
-                break;
-            case "DexNav":
-                comboSettings = createLabelSettings(currentComboText, "Combo");
-                previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
-                break;
-            case "Total Encounters":
-                previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
-                break;
-            default:
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
-                break;
-        }
-
-        AnchorPane CustomizeHuntLayout = new AnchorPane();
-        CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
-        AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
-
-        ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
-        CustomizeHuntScrollpane.setFitToHeight(true);
-
-        Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 263, 500);
-        CustomizeHuntStage.setScene(CustomizeHuntScene);
-        CustomizeHuntStage.show();
-
-        backgroundColorPicker.setOnAction(e -> huntLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
-
-        Save.setOnAction(e -> {
-            SaveData data = new SaveData();
-            Stage promptLayoutSaveName = new Stage();
-            promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
-            promptLayoutSaveName.setResizable(false);
-
-            if(currentLayout != null) {
-                promptLayoutSaveName.setTitle("Save Layout");
-
-                VBox selectNewSaveLayout = new VBox();
-                selectNewSaveLayout.setAlignment(Pos.CENTER);
-                selectNewSaveLayout.setSpacing(5);
-                Label newNameLabel = new Label("Would you like to save this layout to a new name?");
-
-                HBox buttons = new HBox();
-                buttons.setSpacing(10);
-                buttons.setAlignment(Pos.CENTER);
-                Button newSaveButton = new Button("New");
-                Button oldSaveButton = new Button("Update");
-                buttons.getChildren().addAll(newSaveButton, oldSaveButton);
-
-                selectNewSaveLayout.getChildren().addAll(newNameLabel, buttons);
-
-                Scene selectNewSaveScene = new Scene(selectNewSaveLayout, 275, 75);
-                promptLayoutSaveName.setScene(selectNewSaveScene);
-                promptLayoutSaveName.show();
-
-                newSaveButton.setOnAction(f -> {
-                    promptLayoutSaveName.setTitle("Select Layout Name");
-
-                    VBox saveLayoutNameLayout = new VBox();
-                    saveLayoutNameLayout.setSpacing(10);
-                    saveLayoutNameLayout.setAlignment(Pos.CENTER);
-
-                    Label saveNameLabel = new Label("What would you like this layout to be called?");
-                    TextField saveNameText = new TextField();
-
-                    saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-                    Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-                    promptLayoutSaveName.setScene(saveLayoutNameScene);
-                    promptLayoutSaveName.show();
-
-                    saveNameText.setOnAction(g -> {
-                        String text = saveNameText.getText();
-                        if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
-                            saveNameText.setText("");
-                        } else {
-                            data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious, true);
-                            promptLayoutSaveName.close();
-                        }
-                    });
-                });
-
-                oldSaveButton.setOnAction(f -> {
-                    data.saveLayout(currentLayout, huntLayout, displayPrevious, false);
-                    promptLayoutSaveName.close();
-                });
-            }else{
-                promptLayoutSaveName.setTitle("Select Layout Name");
-
-                VBox saveLayoutNameLayout = new VBox();
-                saveLayoutNameLayout.setSpacing(10);
-                saveLayoutNameLayout.setAlignment(Pos.CENTER);
-
-                Label saveNameLabel = new Label("What would you like this layout to be called?");
-                TextField saveNameText = new TextField();
-
-                saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-                Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-                promptLayoutSaveName.setScene(saveLayoutNameScene);
-                promptLayoutSaveName.show();
-
-                saveNameText.setOnAction(g -> {
-                    String text = saveNameText.getText();
-                    if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
-                        saveNameText.setText("");
-                    } else {
-                        data.saveLayout(saveNameText.getText(), huntLayout, displayPrevious, true);
-                        promptLayoutSaveName.close();
-                    }
-                });
-            }
-        });
-
-        Load.setOnAction(e -> {
-            SaveData data = new SaveData();
-
-            Stage loadSavedLayoutStage = new Stage();
-            loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
-            loadSavedLayoutStage.setResizable(false);
-            loadSavedLayoutStage.setTitle("Select Layout Name");
-
-            TreeView<String> savedLayouts = new TreeView<>();
-            TreeItem<String> root = new TreeItem<>();
-            for(int i = 0; i < data.getfileLength("Layouts/~Layouts"); i++){
-                makeBranch(data.getLinefromFile(i, "Layouts/~Layouts"), root);
-            }
-            savedLayouts.setRoot(root);
-            savedLayouts.setShowRoot(false);
-            savedLayouts.setPrefWidth(300);
-            savedLayouts.setPrefWidth(500);
-
-            VBox savedLayoutsLayout = new VBox();
-            savedLayoutsLayout.setSpacing(10);
-            savedLayoutsLayout.setAlignment(Pos.CENTER);
-            savedLayoutsLayout.getChildren().add(savedLayouts);
-
-            Scene savedLayoutsScene = new Scene(savedLayoutsLayout, 300, 400);
-            loadSavedLayoutStage.setScene(savedLayoutsScene);
-            loadSavedLayoutStage.show();
-
-            savedLayouts.getSelectionModel().selectedItemProperty()
-                    .addListener((v, oldValue, newValue) -> {
-                        currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                        displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
-                        if(displayPrevious > 0)
-                            createPreviouslyCaught(displayPrevious);
-                        else
-                            data.loadLayout(currentLayout, huntLayout, displayPrevious);
-                        CustomizeHuntWindow();
-
-                        loadSavedLayoutStage.close();
-                    });
-        });
-    }
+public class window{
+    Stage windowStage = new Stage();
+    AnchorPane windowLayout = new AnchorPane();
+    String[] fonts = generateFonts();
 
     //creates ImageView settings VBox
-    public VBox createImageSettings(ImageView image, String pokemonName, int generation){
+    public VBox createImageSettings(ImageView image, String pokemonName, Game selectedGame){
         HBox groupLabel = new HBox();
         Label Group = new Label(pokemonName + " Sprite:");
         Group.setUnderline(true);
@@ -479,7 +70,7 @@ public class huntWindow {
         HBox form = new HBox();
         form.setSpacing(5);
         Label formLabel = new Label("Form");
-        ComboBox<String> formCombo = getPokemonForms(pokemonName, generation);
+        ComboBox<String> formCombo = getPokemonForms(pokemonName, selectedGame.getGeneration());
         formCombo.getSelectionModel().select(0);
         form.getChildren().addAll(formLabel, formCombo);
 
@@ -915,12 +506,7 @@ public class huntWindow {
             Image image = new Image(input);
             return new ImageView(image);
         }catch (FileNotFoundException e){
-            if(evo0 != null && name.compareTo(evo0) == 0)
-                evo0 = null;
-            else if(evo1 != null && name.compareTo(evo1) == 0)
-                evo1 = null;
             System.out.println(name + " sprite not found");
-
             try {
                 return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
             }catch(IOException f){
@@ -1500,6 +1086,458 @@ public class huntWindow {
         return labelSettings;
     }
 
+    private String[] generateFonts(){
+        String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        int fontArraySize = 0;
+        for (String avaliableFont : avaliableFonts) {
+            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
+                fontArraySize++;
+            }
+        }
+
+        String[] temp = new String[fontArraySize];
+        int index = 0;
+        for (String avaliableFont : avaliableFonts) {
+            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
+                temp[index] = avaliableFont;
+                index++;
+            }
+        }
+
+        return temp;
+    }
+
+    public String sanitizeFontName(String name){
+        int index = 0;
+        if(name.contains("Bold"))
+            index += 5;
+        if(name.contains("Italic"))
+            index += 7;
+        if(name.contains("Regular"))
+            index += 8;
+        return name.substring(0, name.length() - index);
+    }
+
+    public String sanitizeAvaliableFontStrings(String name){
+        Font test = new Font(name, 12);
+        if(test.getName().compareTo("System Regular") == 0){
+            return null;
+        }
+        return name;
+    }
+
+    public boolean canBold(String name){
+        Font test;
+        test = Font.font(name,  FontWeight.BOLD, 12);
+        if(test.getName().compareTo(name) == 0)
+            return false;
+        test = new Font(sanitizeFontName(test.getName()), 12);
+
+        return test.getName().compareTo("System") != 0;
+    }
+
+    public boolean canItalic(String name){
+        Font test;
+        test = Font.font(name,  FontPosture.ITALIC, 12);
+        if(test.getName().compareTo(name) == 0)
+            return false;
+        test = new Font(sanitizeFontName(test.getName()), 12);
+
+        return test.getName().compareTo("System") != 0;
+    }
+}
+
+class huntWindow extends window{
+    //hunt window elements
+    int huntLayoutSize = 0;
+    ImageView Evo0, Evo1, sprite;
+    String evo0, evo1;
+    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
+    Text previousEncountersText = new Text();
+    int encounters, previousEncounters, combo;
+    int increment;
+
+    //hunt settings window elements
+    Stage CustomizeHuntStage = new Stage();
+    String currentLayout;
+    int displayPrevious = 0;
+
+    //current objects
+    Pokemon selectedPokemon;
+    Game selectedGame;
+    Method selectedMethod;
+    int methodBase;
+
+    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+        this.selectedPokemon = selectedPokemon;
+        this.selectedGame = selectedGame;
+        this.selectedMethod = selectedMethod;
+        methodBase = selectedMethod.getBase();
+        this.evo0 = evo0;
+        this.evo1 = evo1;
+        this.currentLayout = layout;
+        this.encounters = encounters;
+        this.combo = combo;
+        this.increment = increment;
+        if(selectedPokemon.getGeneration() > 0)
+            createHuntWindow();
+    }
+
+    //creates hunt window
+    public void createHuntWindow(){
+        windowStage.setTitle(selectedPokemon.getName() + " Hunt Window");
+
+        currentHuntingPokemonText = new Text(selectedPokemon.getName());
+        currentHuntingMethodText= new Text(selectedMethod.getName());
+        currentGameText = new Text(selectedGame.getName());
+        oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
+        dynamicOddsMethods();
+        encountersText= new Text(String.valueOf(encounters));
+        currentComboText = new Text(String.valueOf(combo));
+        currentComboText.setVisible(false);
+        previousEncountersText = new Text();
+        previousEncountersText.setVisible(false);
+
+        currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
+        currentHuntingMethodText.setStroke(Color.web("0x00000000"));
+        currentGameText.setStroke(Color.web("0x00000000"));
+        oddFractionText.setStroke(Color.web("0x00000000"));
+        encountersText.setStroke(Color.web("0x00000000"));
+        previousEncountersText.setStroke(Color.web("0x00000000"));
+        currentComboText.setStroke(Color.web("0x00000000"));
+
+        sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
+        Evo0 = new ImageView();
+        Evo1 = new ImageView();
+        if(evo0 != null) {
+            Evo0 = createPokemonSprite(evo0, selectedGame);
+            if(Evo0 == null)
+                Evo0 = new ImageView();
+        }
+        if(evo1 != null) {
+            Evo1 = createPokemonSprite(evo1, selectedGame);
+            if(Evo1 == null)
+                Evo1 = new ImageView();
+        }
+        windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
+
+        switch(selectedMethod.getName()){
+            case "Radar Chaining":
+            case "Chain Fishing":
+            case "SOS Chaining":
+            case "Catch Combo":
+                currentComboText.setVisible(true);
+                break;
+            case "DexNav":
+                currentComboText.setVisible(true);
+                previousEncountersText.setVisible(true);
+                break;
+            case "Total Encounters":
+                previousEncountersText.setVisible(true);
+                break;
+            default:
+                break;
+        }
+        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
+        huntLayoutSize = windowLayout.getChildren().size();
+
+        int index = 3;
+        for(int i = 3; i < windowLayout.getChildren().size(); i++){
+            if(windowLayout.getChildren().get(i).isVisible()) {
+                if(evo1 != null)
+                    windowLayout.getChildren().get(i).setLayoutX(600);
+                else if(evo0 != null)
+                    windowLayout.getChildren().get(i).setLayoutX(400);
+                else
+                    windowLayout.getChildren().get(i).setLayoutX(200);
+                windowLayout.getChildren().get(i).setLayoutY(65 + (15 * index));
+                index++;
+            }
+        }
+
+        if(this.evo1 != null) {
+            Evo0.setLayoutX(0);
+            Evo1.setLayoutX(200);
+            sprite.setLayoutX(400);
+        }else if(this.evo0 != null){
+            Evo0.setLayoutX(0);
+            sprite.setLayoutX(200);
+        }else
+            sprite.setLayoutX(0);
+
+        Scene huntScene = new Scene(windowLayout, 750, 480);
+        windowStage.setScene(huntScene);
+        windowStage.show();
+
+        SaveData data = new SaveData();
+        if(currentLayout != null && currentLayout.compareTo("null") != 0) {
+            displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
+            if(displayPrevious > 0)
+                createPreviouslyCaught(displayPrevious);
+            else
+                data.loadLayout(currentLayout, windowLayout, displayPrevious);
+        }
+    }
+
+    //creates window to prompt user for search level or previous encounters
+    public void promptPreviousEncounters(){
+        Stage promptWindow = new Stage();
+        promptWindow.setResizable(false);
+        promptWindow.initModality(Modality.APPLICATION_MODAL);
+
+        Label promptLabel = new Label();
+        if(selectedMethod.getName().compareTo("DexNav") == 0) {
+            promptWindow.setTitle("Enter Search Level");
+            promptLabel.setText("Please enter the current Search Level for " + selectedPokemon.getName());
+        }
+        else if(selectedMethod.getName().compareTo("Total Encounters") == 0) {
+            promptWindow.setTitle("Enter Number Battled");
+            promptLabel.setText("Please enter the current Number Battled for " + selectedPokemon.getName());
+        }
+
+        TextField previousInput = new TextField();
+
+        previousInput.setOnAction(e-> {
+            try{
+                previousEncounters = parseInt(previousInput.getText());
+                previousEncountersText.setText(String.valueOf(previousEncounters));
+                if(selectedMethod.getName().compareTo("DexNav") == 0)
+                    oddFractionText.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
+                else
+                    oddFractionText.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
+                promptWindow.close();
+            }catch (NumberFormatException f){
+                previousInput.setText("");
+            }
+        });
+
+        VBox promptLayout = new VBox();
+        promptLayout.setSpacing(10);
+        promptLayout.setAlignment(Pos.CENTER);
+        promptLayout.getChildren().addAll(promptLabel, previousInput);
+
+        Scene promptScene = new Scene(promptLayout, 275, 75);
+        promptWindow.setScene(promptScene);
+        promptWindow.show();
+
+        promptWindow.setOnCloseRequest(e -> windowStage.close());
+    }
+
+    //creates window for the hunt window settings
+    public void CustomizeHuntWindow(){
+        CustomizeHuntStage.setTitle("Settings");
+        CustomizeHuntStage.setResizable(false);
+        VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName(), selectedGame);
+        VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
+        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
+        VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
+        VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
+        VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
+
+        VBox backgroundVBox = new VBox();
+        Label backgroundGroup = new Label("Background");
+        backgroundGroup.setUnderline(true);
+        HBox backgroundColorSettings = new HBox();
+        backgroundColorSettings.setSpacing(5);
+        Label backgroundColorLabel = new Label("Color");
+        ColorPicker backgroundColorPicker = new ColorPicker();
+        backgroundVBox.setPadding(new Insets(10,10,10,10));
+        backgroundVBox.setSpacing(10);
+        backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+        backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings);
+
+        Accordion accordion = new Accordion();
+        TitledPane backgroundTitledPane = new TitledPane("Background", backgroundVBox);
+        accordion.getPanes().add(backgroundTitledPane);
+
+        VBox backgroundSettings = new VBox();
+        backgroundSettings.getChildren().add(accordion);
+
+        HBox saveClose = new HBox();
+        saveClose.setPadding(new Insets(10,10,10,10));
+        saveClose.setSpacing(5);
+        Button Save = new Button("Save");
+        Button Load = new Button("Load");
+        saveClose.getChildren().addAll(Save,Load);
+
+        VBox CustomizeHuntVBox = new VBox();
+        VBox Evo0Settings;
+        VBox Evo1Settings;
+
+        if(evo0 != null){
+            Evo0Settings = createImageSettings(Evo0, evo0, selectedGame);
+            CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
+        }
+        if(evo1 != null){
+            Evo1Settings = createImageSettings(Evo1, evo1, selectedGame);
+            CustomizeHuntVBox.getChildren().add(Evo1Settings);
+        }
+        CustomizeHuntVBox.getChildren().add(spriteSettings);
+
+        VBox comboSettings;
+        VBox previousEncountersSettings;
+
+        switch (selectedMethod.getName()) {
+            case "Radar Chaining":
+            case "Chain Fishing":
+            case "SOS Chaining":
+            case "Catch Combo":
+                comboSettings = createLabelSettings(currentComboText, "Combo");
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
+                break;
+            case "DexNav":
+                comboSettings = createLabelSettings(currentComboText, "Combo");
+                previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
+                break;
+            case "Total Encounters":
+                previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
+                break;
+            default:
+                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+                break;
+        }
+
+        AnchorPane CustomizeHuntLayout = new AnchorPane();
+        CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
+        AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
+
+        ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
+        CustomizeHuntScrollpane.setFitToHeight(true);
+
+        Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 263, 500);
+        CustomizeHuntStage.setScene(CustomizeHuntScene);
+        CustomizeHuntStage.show();
+
+        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+
+        Save.setOnAction(e -> {
+            SaveData data = new SaveData();
+            Stage promptLayoutSaveName = new Stage();
+            promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
+            promptLayoutSaveName.setResizable(false);
+
+            if(currentLayout != null) {
+                promptLayoutSaveName.setTitle("Save Layout");
+
+                VBox selectNewSaveLayout = new VBox();
+                selectNewSaveLayout.setAlignment(Pos.CENTER);
+                selectNewSaveLayout.setSpacing(5);
+                Label newNameLabel = new Label("Would you like to save this layout to a new name?");
+
+                HBox buttons = new HBox();
+                buttons.setSpacing(10);
+                buttons.setAlignment(Pos.CENTER);
+                Button newSaveButton = new Button("New");
+                Button oldSaveButton = new Button("Update");
+                buttons.getChildren().addAll(newSaveButton, oldSaveButton);
+
+                selectNewSaveLayout.getChildren().addAll(newNameLabel, buttons);
+
+                Scene selectNewSaveScene = new Scene(selectNewSaveLayout, 275, 75);
+                promptLayoutSaveName.setScene(selectNewSaveScene);
+                promptLayoutSaveName.show();
+
+                newSaveButton.setOnAction(f -> {
+                    promptLayoutSaveName.setTitle("Select Layout Name");
+
+                    VBox saveLayoutNameLayout = new VBox();
+                    saveLayoutNameLayout.setSpacing(10);
+                    saveLayoutNameLayout.setAlignment(Pos.CENTER);
+
+                    Label saveNameLabel = new Label("What would you like this layout to be called?");
+                    TextField saveNameText = new TextField();
+
+                    saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
+                    Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
+                    promptLayoutSaveName.setScene(saveLayoutNameScene);
+                    promptLayoutSaveName.show();
+
+                    saveNameText.setOnAction(g -> {
+                        String text = saveNameText.getText();
+                        if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
+                            saveNameText.setText("");
+                        } else {
+                            data.saveLayout(saveNameText.getText(), windowLayout, displayPrevious, true);
+                            promptLayoutSaveName.close();
+                        }
+                    });
+                });
+
+                oldSaveButton.setOnAction(f -> {
+                    data.saveLayout(currentLayout, windowLayout, displayPrevious, false);
+                    promptLayoutSaveName.close();
+                });
+            }else{
+                promptLayoutSaveName.setTitle("Select Layout Name");
+
+                VBox saveLayoutNameLayout = new VBox();
+                saveLayoutNameLayout.setSpacing(10);
+                saveLayoutNameLayout.setAlignment(Pos.CENTER);
+
+                Label saveNameLabel = new Label("What would you like this layout to be called?");
+                TextField saveNameText = new TextField();
+
+                saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
+                Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
+                promptLayoutSaveName.setScene(saveLayoutNameScene);
+                promptLayoutSaveName.show();
+
+                saveNameText.setOnAction(g -> {
+                    String text = saveNameText.getText();
+                    if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
+                        saveNameText.setText("");
+                    } else {
+                        data.saveLayout(saveNameText.getText(), windowLayout, displayPrevious, true);
+                        promptLayoutSaveName.close();
+                    }
+                });
+            }
+        });
+
+        Load.setOnAction(e -> {
+            SaveData data = new SaveData();
+
+            Stage loadSavedLayoutStage = new Stage();
+            loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
+            loadSavedLayoutStage.setResizable(false);
+            loadSavedLayoutStage.setTitle("Select Layout Name");
+
+            TreeView<String> savedLayouts = new TreeView<>();
+            TreeItem<String> root = new TreeItem<>();
+            for(int i = 0; i < data.getfileLength("Layouts/~Layouts"); i++){
+                makeBranch(data.getLinefromFile(i, "Layouts/~Layouts"), root);
+            }
+            savedLayouts.setRoot(root);
+            savedLayouts.setShowRoot(false);
+            savedLayouts.setPrefWidth(300);
+            savedLayouts.setPrefWidth(500);
+
+            VBox savedLayoutsLayout = new VBox();
+            savedLayoutsLayout.setSpacing(10);
+            savedLayoutsLayout.setAlignment(Pos.CENTER);
+            savedLayoutsLayout.getChildren().add(savedLayouts);
+
+            Scene savedLayoutsScene = new Scene(savedLayoutsLayout, 300, 400);
+            loadSavedLayoutStage.setScene(savedLayoutsScene);
+            loadSavedLayoutStage.show();
+
+            savedLayouts.getSelectionModel().selectedItemProperty()
+                    .addListener((v, oldValue, newValue) -> {
+                        currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
+                        displayPrevious = parseInt(data.getLinefromFile(data.getfileLength("Layouts/" + currentLayout) - 1, "Layouts/" + currentLayout));
+                        if(displayPrevious > 0)
+                            createPreviouslyCaught(displayPrevious);
+                        else
+                            data.loadLayout(currentLayout, windowLayout, displayPrevious);
+                        CustomizeHuntWindow();
+
+                        loadSavedLayoutStage.close();
+                    });
+        });
+    }
+
     //adds increment to the encounters
     public void incrementEncounters(){
         encounters += increment;
@@ -1536,8 +1574,8 @@ public class huntWindow {
 
             selectionPageController selectionPageController = selectionPageLoader.getController();
             selectionPageController.setSelectingNewHunt(true);
-            selectionPageController.setnewHuntSelection(huntWindow);
-            selectionPageController.setnewHuntSelectionLayout(huntLayout);
+            selectionPageController.setnewHuntSelection(windowStage);
+            selectionPageController.setnewHuntSelectionLayout(windowLayout);
             selectionPageController.setcurrentLayout(currentLayout);
             huntSelectionWindow.show();
         }catch(IOException e){
@@ -1608,7 +1646,7 @@ public class huntWindow {
         save.show();
 
         yes.setOnAction(e -> {
-            huntWindow.close();
+            windowStage.close();
             CustomizeHuntStage.close();
             SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
             data.saveHunt();
@@ -1616,13 +1654,13 @@ public class huntWindow {
         });
 
         no.setOnAction(e -> {
-            huntWindow.close();
+            windowStage.close();
             CustomizeHuntStage.close();
             save.close();
         });
 
         save.setOnCloseRequest(e -> {
-            huntWindow.close();
+            windowStage.close();
             CustomizeHuntStage.close();
             save.close();
         });
@@ -1739,7 +1777,7 @@ public class huntWindow {
 
     //create elements of the last x previously caught pokemon
     public VBox createPreviouslyCaught(int previouslyCaught){
-        huntLayout.getChildren().remove(huntLayoutSize, huntLayout.getChildren().size());
+        windowLayout.getChildren().remove(huntLayoutSize, windowLayout.getChildren().size());
         VBox settings = new VBox();
         SaveData data = new SaveData();
         int numberCaught = data.getfileLength("CaughtPokemon");
@@ -1765,7 +1803,7 @@ public class huntWindow {
 
             if(currentLayout != null){
                 data = new SaveData();
-                data.loadLayout(currentLayout, huntLayout, numberCaught - i);
+                data.loadLayout(currentLayout, windowLayout, numberCaught - i);
             }else {
                 sprite.setLayoutX(50 * (numberCaught - i));
                 sprite.setLayoutY(50);
@@ -1780,7 +1818,7 @@ public class huntWindow {
                 encounters.setLayoutY(105);
             }
 
-            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame.getGeneration());
+            VBox imageSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame);
             VBox currentPokemonSettings = createLabelSettings(pokemon, "Pokemon");
             VBox currentMethodSettings = createLabelSettings(method, "Method");
             VBox encountersSettings = createLabelSettings(encounters, "Encounters");
@@ -1804,47 +1842,8 @@ public class huntWindow {
         parent.getChildren().add(item);
     }
 
-    public String sanitizeFontName(String name){
-        int index = 0;
-        if(name.contains("Bold"))
-            index += 5;
-        if(name.contains("Italic"))
-            index += 7;
-        if(name.contains("Regular"))
-            index += 8;
-        return name.substring(0, name.length() - index);
-    }
-
-    public String sanitizeAvaliableFontStrings(String name){
-        Font test = new Font(name, 12);
-        if(test.getName().compareTo("System Regular") == 0){
-            return null;
-        }
-        return name;
-    }
-
-    public boolean canBold(String name){
-        Font test;
-        test = Font.font(name,  FontWeight.BOLD, 12);
-        if(test.getName().compareTo(name) == 0)
-            return false;
-        test = new Font(sanitizeFontName(test.getName()), 12);
-
-        return test.getName().compareTo("System") != 0;
-    }
-
-    public boolean canItalic(String name){
-        Font test;
-        test = Font.font(name,  FontPosture.ITALIC, 12);
-        if(test.getName().compareTo(name) == 0)
-            return false;
-        test = new Font(sanitizeFontName(test.getName()), 12);
-
-        return test.getName().compareTo("System") != 0;
-    }
-
     public Stage getStage(){
-        return huntWindow;
+        return windowStage;
     }
 
     public Pokemon getSelectedPokemon(){
