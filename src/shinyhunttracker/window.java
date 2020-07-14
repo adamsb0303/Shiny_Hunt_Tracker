@@ -1762,10 +1762,19 @@ class previouslyCaught extends window{
         numberPreviouslyCaught.setPadding(new Insets(5,5,5,5));
         numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
 
+        Label layoutLabel = new Label("Layout: ");
+        Button loadLayout = new Button("Load");
+        Button saveLayout = new Button("Save");
+
+        HBox layoutSettings = new HBox();
+        layoutSettings.setAlignment(Pos.CENTER);
+        layoutSettings.setSpacing(5);
+        layoutSettings.getChildren().addAll(layoutLabel, saveLayout, loadLayout);
+
         previouslyCaughtSettingsLayout = new VBox();
         previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
         previouslyCaughtSettingsLayout.setSpacing(5);
-        previouslyCaughtSettingsLayout.getChildren().add(numberPreviouslyCaught);
+        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, layoutSettings);
 
         VBox caughtSettings;
         if(displayCaught != 0) {
@@ -1787,7 +1796,7 @@ class previouslyCaught extends window{
                 displayCaught = parseInt(numberCaughtField.getText());
                 if(displayCaught == 0) {
                     windowStage.close();
-                    previouslyCaughtSettingsLayout.getChildren().remove(1, previouslyCaughtSettingsLayout.getChildren().size());
+                    previouslyCaughtSettingsLayout.getChildren().remove(2, previouslyCaughtSettingsLayout.getChildren().size());
                 }
                 else {
                     windowStage.show();
@@ -1801,6 +1810,9 @@ class previouslyCaught extends window{
                 numberCaughtField.setText("");
             }
         });
+
+        saveLayout.setOnAction(e -> saveLayout());
+        loadLayout.setOnAction(e -> loadLayout());
     }
 
     //create elements of the last x previously caught pokemon
@@ -1809,7 +1821,7 @@ class previouslyCaught extends window{
         System.out.println(previouslyCaughtSettingsLayout.getChildren().size());
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
-            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 1, previouslyCaughtSettingsLayout.getChildren().size());
+            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 2, previouslyCaughtSettingsLayout.getChildren().size());
         }
         VBox settings = new VBox();
         SaveData data = new SaveData();
