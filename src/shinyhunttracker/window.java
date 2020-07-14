@@ -4,7 +4,6 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -1787,6 +1786,16 @@ class previouslyCaught extends window{
         numberPreviouslyCaught.setPadding(new Insets(5,5,5,5));
         numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
 
+        Label backgroundColorLabel = new Label("Background: ");
+        ColorPicker backgroundColorPicker = new ColorPicker();
+
+        HBox backgroundColor = new HBox();
+        backgroundColor.setAlignment(Pos.CENTER);
+        backgroundColor.setSpacing(5);
+        backgroundColor.setPadding(new Insets(5,5,5,5));
+
+        backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+
         Label layoutLabel = new Label("Layout: ");
         Button loadLayout = new Button("Load");
         Button saveLayout = new Button("Save");
@@ -1799,7 +1808,7 @@ class previouslyCaught extends window{
         previouslyCaughtSettingsLayout = new VBox();
         previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
         previouslyCaughtSettingsLayout.setSpacing(5);
-        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, layoutSettings);
+        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
 
         VBox caughtSettings;
         if(displayCaught != 0) {
@@ -1823,7 +1832,7 @@ class previouslyCaught extends window{
                 displayCaught = parseInt(numberCaughtField.getText());
                 if(displayCaught == 0) {
                     windowStage.close();
-                    previouslyCaughtSettingsLayout.getChildren().remove(2, previouslyCaughtSettingsLayout.getChildren().size());
+                    previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
                 }
                 else {
                     windowStage.show();
@@ -1838,6 +1847,8 @@ class previouslyCaught extends window{
             }
         });
 
+        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+
         saveLayout.setOnAction(e -> saveLayout());
         loadLayout.setOnAction(e -> loadLayout());
     }
@@ -1846,7 +1857,7 @@ class previouslyCaught extends window{
     public VBox createPreviouslyCaughtPokemon(int previouslyCaught){
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
-            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 2, previouslyCaughtSettingsLayout.getChildren().size());
+            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 3, previouslyCaughtSettingsLayout.getChildren().size());
         }
         VBox settings = new VBox();
         SaveData data = new SaveData();
