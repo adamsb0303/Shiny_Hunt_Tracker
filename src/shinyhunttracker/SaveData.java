@@ -156,7 +156,7 @@ public class SaveData {
     }
 
     //load saved layout
-    public void loadLayout(String layoutName, AnchorPane huntLayout, int displayPrevious){
+    public void loadLayout(String layoutName, AnchorPane huntLayout){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/Layouts/" + layoutName + ".txt"));
 
@@ -176,7 +176,7 @@ public class SaveData {
                     }catch(NullPointerException ignored){
 
                     }
-                }else if(i < 10){
+                }else if(i < 10) {
                     Text text = (Text) huntLayout.getChildren().get(i);
                     text.setLayoutX(parseDouble(splitString(line, 0)));
                     text.setLayoutY(parseDouble(splitString(line, 1)));
@@ -186,37 +186,11 @@ public class SaveData {
                     text.setFill(Color.web(splitString(line, 4)));
                     text.setStrokeWidth(parseDouble(splitString(line, 5)));
                     text.setStroke(Color.web(splitString(line, 6)));
-                    text.setUnderline(splitString(line,7).compareTo("true") == 0);
+                    text.setUnderline(splitString(line, 7).compareTo("true") == 0);
                     text.setVisible(splitString(line, 8).compareTo("true") == 0);
-                }else if(displayPrevious > 0){
-                    if((i - 10) % 4 == 0){
-                        ImageView image = (ImageView) huntLayout.getChildren().get(i);
-                        image.setLayoutX(parseDouble(splitString(line, 0)));
-                        image.setLayoutY(parseDouble(splitString(line, 1)));
-                        double scale = parseDouble(splitString(line, 2));
-                        image.setScaleX(scale);
-                        image.setScaleY(scale);
-                        image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale)/2)));
-                        image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale)/2)));
-                        image.setVisible(splitString(line, 3).compareTo("true") == 0);
-                    }else{
-                        Text text = (Text) huntLayout.getChildren().get(i);
-                        text.setLayoutX(parseDouble(splitString(line, 0)));
-                        text.setLayoutY(parseDouble(splitString(line, 1)));
-                        text.setScaleX(parseDouble(splitString(line, 2)));
-                        text.setScaleY(parseDouble(splitString(line, 2)));
-                        text.setFont(new Font(splitString(line, 3), 12));
-                        text.setFill(Color.web(splitString(line, 4)));
-                        text.setStrokeWidth(parseDouble(splitString(line, 5)));
-                        text.setStroke(Color.web(splitString(line, 6)));
-                        text.setUnderline(splitString(line, 7).compareTo("true") == 0);
-                        text.setVisible(splitString(line, 8).compareTo("true") == 0);
-                        if((i - 8) % 4 == 3)
-                            displayPrevious--;
-                    }
                 }
             }
-            huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 2, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
+            huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 1, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
         }catch(IOException e){
             e.printStackTrace();
         }

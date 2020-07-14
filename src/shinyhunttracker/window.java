@@ -1218,6 +1218,30 @@ public class window{
                 data.saveLayout(currentLayout, windowLayout, false);
                 promptLayoutSaveName.close();
             });
+        }else{
+            promptLayoutSaveName.setTitle("Select Layout Name");
+
+            VBox saveLayoutNameLayout = new VBox();
+            saveLayoutNameLayout.setSpacing(10);
+            saveLayoutNameLayout.setAlignment(Pos.CENTER);
+
+            Label saveNameLabel = new Label("What would you like this layout to be called?");
+            TextField saveNameText = new TextField();
+
+            saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
+            Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
+            promptLayoutSaveName.setScene(saveLayoutNameScene);
+            promptLayoutSaveName.show();
+
+            saveNameText.setOnAction(g -> {
+                String text = saveNameText.getText();
+                if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
+                    saveNameText.setText("");
+                } else {
+                    data.saveLayout(saveNameText.getText(), windowLayout, true);
+                    promptLayoutSaveName.close();
+                }
+            });
         }
     }
 
@@ -1252,6 +1276,7 @@ public class window{
         savedLayouts.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
+                    data.loadLayout(currentLayout, windowLayout);
                     loadSavedLayoutStage.close();
                 });
     }
@@ -1274,7 +1299,6 @@ class huntWindow extends window{
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
     String currentLayout;
-    int displayPrevious = 0;
 
     //current objects
     Pokemon selectedPokemon;
@@ -1385,7 +1409,7 @@ class huntWindow extends window{
 
         SaveData data = new SaveData();
         if(currentLayout != null && currentLayout.compareTo("null") != 0) {
-            data.loadLayout(currentLayout, windowLayout, displayPrevious);
+            data.loadLayout(currentLayout, windowLayout);
         }
     }
 
@@ -1474,15 +1498,15 @@ class huntWindow extends window{
         VBox Evo0Settings;
         VBox Evo1Settings;
 
-        if(evo0 != null){
-            Evo0Settings = createImageSettings(Evo0, evo0, selectedGame);
-            CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
-        }
+        CustomizeHuntVBox.getChildren().add(spriteSettings);
         if(evo1 != null){
             Evo1Settings = createImageSettings(Evo1, evo1, selectedGame);
             CustomizeHuntVBox.getChildren().add(Evo1Settings);
         }
-        CustomizeHuntVBox.getChildren().add(spriteSettings);
+        if(evo0 != null){
+            Evo0Settings = createImageSettings(Evo0, evo0, selectedGame);
+            CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
+        }
 
         VBox comboSettings;
         VBox previousEncountersSettings;
