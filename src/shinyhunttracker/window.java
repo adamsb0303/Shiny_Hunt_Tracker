@@ -1758,6 +1758,7 @@ class previouslyCaught extends window{
 
     Stage previouslyCaughtSettingsStage = new Stage();
     VBox previouslyCaughtSettingsLayout;
+    ColorPicker backgroundColorPicker = new ColorPicker();
 
     previouslyCaught(int displayCaught){
         this.displayCaught = displayCaught;
@@ -1768,6 +1769,7 @@ class previouslyCaught extends window{
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(previousHuntScene);
+        backgroundColorPicker.setDisable(false);
         windowStage.show();
     }
 
@@ -1787,13 +1789,11 @@ class previouslyCaught extends window{
         numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
 
         Label backgroundColorLabel = new Label("Background: ");
-        ColorPicker backgroundColorPicker = new ColorPicker();
+        backgroundColorPicker.setDisable(!windowStage.isShowing());
 
         HBox backgroundColor = new HBox();
         backgroundColor.setAlignment(Pos.CENTER);
         backgroundColor.setSpacing(5);
-        backgroundColor.setPadding(new Insets(5,5,5,5));
-
         backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
 
         Label layoutLabel = new Label("Layout: ");
@@ -1832,6 +1832,7 @@ class previouslyCaught extends window{
                 displayCaught = parseInt(numberCaughtField.getText());
                 if(displayCaught == 0) {
                     windowStage.close();
+                    backgroundColorPicker.setDisable(true);
                     previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
                 }
                 else {
