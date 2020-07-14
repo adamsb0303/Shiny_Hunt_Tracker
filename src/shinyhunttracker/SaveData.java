@@ -119,7 +119,7 @@ public class SaveData {
     }
 
     //saves layout
-    public void saveLayout(String layoutName, AnchorPane huntLayout, int displayPrevious, boolean newSave){
+    public void saveLayout(String layoutName, AnchorPane huntLayout, boolean newSave){
         if(newSave) {
             try {
                 File file = new File("Save Data/Layouts/~Layouts.txt");
@@ -148,7 +148,6 @@ public class SaveData {
                 }
             }
             bufferedWriter.write(String.valueOf(huntLayout.getBackground().getFills().get(0).getFill()) + '\n');
-            bufferedWriter.write(String.valueOf(displayPrevious));
 
             bufferedWriter.close();
         }catch(IOException e){
