@@ -48,9 +48,6 @@ public class selectionPageController implements Initializable {
     Method selectedMethod = new Method();
 
     //hunt page after pokemon is caught variables
-    Stage newHuntSelection = new Stage();
-    AnchorPane newHuntLayout = new AnchorPane();
-    String currentLayout;
     boolean selectingNewHunt = false;
     huntController controller;
 
@@ -932,18 +929,6 @@ public class selectionPageController implements Initializable {
 
     public void setSelectingNewHunt(boolean hunt){
         selectingNewHunt = hunt;
-    }
-
-    public void setnewHuntSelection(Stage newStage){
-        newHuntSelection = newStage;
-    }
-
-    public void setnewHuntSelectionLayout(AnchorPane hunt){
-        newHuntLayout = hunt;
-    }
-
-    public void setcurrentLayout(String currentLayout){
-        this.currentLayout = currentLayout;
     }
 
     public void setController(huntController controller){
