@@ -1444,34 +1444,7 @@ class huntWindow extends window{
         data.pokemonCaught();
 
         CustomizeHuntStage.close();
-
-        sprite.setVisible(false);
-        currentHuntingPokemonText.setVisible(false);
-        currentHuntingMethodText.setVisible(false);
-        currentGameText.setVisible(false);
-        oddFractionText.setVisible(false);
-        encountersText.setVisible(false);
-        previousEncountersText.setVisible(false);
-
-        try {
-            FXMLLoader selectionPageLoader = new FXMLLoader();
-            selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
-            Parent root = selectionPageLoader.load();
-
-            Stage huntSelectionWindow = new Stage();
-            huntSelectionWindow.setTitle("Shiny Hunt Tracker");
-            huntSelectionWindow.setResizable(false);
-            huntSelectionWindow.setScene(new Scene(root, 750, 480));
-
-            selectionPageController selectionPageController = selectionPageLoader.getController();
-            selectionPageController.setSelectingNewHunt(true);
-            selectionPageController.setnewHuntSelection(windowStage);
-            selectionPageController.setnewHuntSelectionLayout(windowLayout);
-            selectionPageController.setcurrentLayout(currentLayout);
-            huntSelectionWindow.show();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        windowStage.close();
     }
 
     //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
@@ -1765,6 +1738,7 @@ class previouslyCaught extends window{
         windowStage.setTitle("Previously Caught Pokemon");
     }
 
+    //creates window with previously caught pokemon
     public void createPreviouslyCaughtPokemonWindow(){
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
@@ -1775,6 +1749,7 @@ class previouslyCaught extends window{
 
     //creates elements for previously caught element settings
     public void previouslyCaughtPokemonSettings(){
+        windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
         previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon");
 
         Label numberCaught = new Label("Display Previously Caught: ");
@@ -1839,7 +1814,8 @@ class previouslyCaught extends window{
                     windowStage.show();
                     VBox caughtPokemonSettings = createPreviouslyCaughtPokemon(displayCaught);
                     if(caughtPokemonSettings != null)
-                        previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings);
+                        for(int i = 0; i < caughtPokemonSettings.getChildren().size(); i++)
+                            previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings.getChildren().get(i));
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
@@ -1856,6 +1832,7 @@ class previouslyCaught extends window{
 
     //create elements of the last x previously caught pokemon
     public VBox createPreviouslyCaughtPokemon(int previouslyCaught){
+        System.out.println(previouslyCaughtSettingsLayout.getChildren().size() - 3);
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
             previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 3, previouslyCaughtSettingsLayout.getChildren().size());
@@ -1911,6 +1888,10 @@ class previouslyCaught extends window{
             return settings;
         else
             return null;
+    }
+
+    public void refreshPreviouslyCaughtSettings(){
+
     }
 
     //save layout

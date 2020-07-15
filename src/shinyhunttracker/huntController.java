@@ -102,7 +102,11 @@ public class huntController {
         increment.setOnAction(e -> window.changeIncrement());
         resetEncounters.setOnAction(e -> window.resetEncounters());
         phaseHunt.setOnAction(e -> window.phaseHunt());
-        pokemonCaught.setOnAction(e -> window.pokemonCaught());
+        pokemonCaught.setOnAction(e -> {
+            window.pokemonCaught();
+            removeWindow(window);
+            previousCatches.previouslyCaughtPokemonSettings();
+        });
         resetCombo.setOnAction(e -> window.resetCombo());
         saveHunt.setOnAction(e -> window.saveHunt());
     }
