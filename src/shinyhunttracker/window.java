@@ -1790,7 +1790,6 @@ class previouslyCaught extends window{
             caughtSettings = createPreviouslyCaughtPokemon(displayCaught);
             while(caughtSettings.getChildren().size() > 0)
                 previouslyCaughtSettingsLayout.getChildren().add(caughtSettings.getChildren().get(0));
-            displayPrevious = displayCaught;
         }
 
         ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
@@ -1798,6 +1797,11 @@ class previouslyCaught extends window{
         Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
         previouslyCaughtSettingsStage.show();
+
+        if(currentLayout != null) {
+            SaveData data = new SaveData();
+            data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
+        }
 
         numberCaughtField.setOnAction(e ->{
             try{
@@ -1883,14 +1887,11 @@ class previouslyCaught extends window{
                 settings.getChildren().add(pokemonSettings);
             }
         }
+        System.out.println(settings.getChildren().size() + '\n');
         if(settings.getChildren().size() > 0)
             return settings;
         else
             return null;
-    }
-
-    public void refreshPreviouslyCaughtSettings(){
-
     }
 
     //save layout
