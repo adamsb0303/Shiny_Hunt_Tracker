@@ -76,11 +76,11 @@ public class huntController {
         huntControlsButtonHBox.setAlignment(Pos.CENTER);
         huntControlsButtonHBox.setSpacing(10);
 
-        Button encountersButton = new Button("Increment " + window.getSelectedPokemon().getName());
+        Button encountersButton = new Button("Increment " + (windows.length + 1));
         huntControlsButtonHBox.getChildren().addAll(encountersButton);
         huntControlsButtonVBox.getChildren().add(huntControlsButtonHBox);
 
-        Menu newHuntSettings = new Menu(window.getSelectedPokemon().getName() + " Hunt Settings");
+        Menu newHuntSettings = new Menu("Hunt " + (windows.length + 1) + " Settings");
 
         MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
 
@@ -121,6 +121,7 @@ public class huntController {
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
         huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment);
+        newWindow.getStage().setTitle("Hunt " + (windows.length + 1));
         addHuntWindowSettings(newWindow);
 
         huntWindow[] temp = new huntWindow[windows.length + 1];
@@ -141,10 +142,15 @@ public class huntController {
     }
 
     public void removeWindow(huntWindow window){
-        for(int i = 0; i < windows.length; i++){
-            if(windows[i] == window)
-                windows[i] = null;
+        huntWindow[] temp = new huntWindow[windows.length - 1];
+        int index = 0;
+        for (huntWindow i : windows) {
+            if (i != window) {
+                temp[index] = i;
+                index++;
+            }
         }
+        windows = temp;
         refreshHuntWindowSettings();
     }
 

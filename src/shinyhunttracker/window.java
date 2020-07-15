@@ -1202,8 +1202,6 @@ class huntWindow extends window{
 
     //creates hunt window
     public void createHuntWindow(){
-        windowStage.setTitle(selectedPokemon.getName() + " Hunt Window");
-
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
         currentGameText = new Text(selectedGame.getName());
@@ -1750,7 +1748,7 @@ class previouslyCaught extends window{
     //creates elements for previously caught element settings
     public void previouslyCaughtPokemonSettings(){
         windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
-        previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon");
+        previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
 
         Label numberCaught = new Label("Display Previously Caught: ");
         TextField numberCaughtField = new TextField();
