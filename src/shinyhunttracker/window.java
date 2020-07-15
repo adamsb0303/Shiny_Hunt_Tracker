@@ -1788,8 +1788,8 @@ class previouslyCaught extends window{
         VBox caughtSettings;
         if(displayCaught != 0) {
             caughtSettings = createPreviouslyCaughtPokemon(displayCaught);
-            for(int i = 0; i < caughtSettings.getChildren().size(); i++)
-                previouslyCaughtSettingsLayout.getChildren().add(caughtSettings.getChildren().get(i));
+            while(caughtSettings.getChildren().size() > 0)
+                previouslyCaughtSettingsLayout.getChildren().add(caughtSettings.getChildren().get(0));
             displayPrevious = displayCaught;
         }
 
@@ -1814,8 +1814,8 @@ class previouslyCaught extends window{
                     windowStage.show();
                     VBox caughtPokemonSettings = createPreviouslyCaughtPokemon(displayCaught);
                     if(caughtPokemonSettings != null)
-                        for(int i = 0; i < caughtPokemonSettings.getChildren().size(); i++)
-                            previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings.getChildren().get(i));
+                        while(caughtPokemonSettings.getChildren().size() > 0)
+                            previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings.getChildren().get(0));
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
@@ -1832,7 +1832,6 @@ class previouslyCaught extends window{
 
     //create elements of the last x previously caught pokemon
     public VBox createPreviouslyCaughtPokemon(int previouslyCaught){
-        System.out.println(previouslyCaughtSettingsLayout.getChildren().size() - 3);
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
             previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 3, previouslyCaughtSettingsLayout.getChildren().size());
