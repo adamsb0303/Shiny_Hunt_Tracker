@@ -9,10 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,8 +35,12 @@ public class selectionPageController implements Initializable {
     Tooltip methodToolTip = new Tooltip();
 
     //tree view elements
+    public TreeItem<String> pokemonRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
     public TreeItem<String> gameRoot, treeGamesGen1, treeGamesGen2, treeGamesGen3, treeGamesGen4, treeGamesGen5, treeGamesGen6, treeGamesGen7, treeGamesGen8;
     public TreeItem<String> methodRoot, evolution0, evolution1, evolution2;
+    int index = 0;
+    Tooltip searchField = new Tooltip();
+    String pokemonSearch = "";
 
     //selected objects
     Game selectedGame = new Game();
@@ -59,7 +65,7 @@ public class selectionPageController implements Initializable {
                         {"Turtwig", "Grotle", "Torterra", "Chimchar", "Monferno", "Infernape", "Piplup", "Prinplup", "Empoleon", "Starly", "Staravia", "Staraptor", "Bidoof", "Bibarel", "Kricketot", "Kricketune", "Shinx", "Luxio", "Luxray", "Budew", "Roserade", "Cranidos", "Rampardos", "Shieldon", "Bastiodon", "Burmy", "Wormadam", "Mothim", "Combee", "Vespiquen", "Pachirisu", "Buizel", "Floatzel", "Cherubi", "Cherrim", "Shellos", "Gastrodon", "Ambipom", "Drifloon", "Drifblim", "Buneary", "Lopunny", "Mismagius", "Honchkrow", "Glameow", "Purugly", "Chingling", "Stunky", "Skuntank", "Bronzor", "Bronzong", "Bonsly", "Mime Jr.", "Happiny", "Chatot", "Spiritomb", "Gible", "Gabite", "Garchomp", "Munchlax", "Riolu", "Lucario", "Hippopotas", "Hippowdon", "Skorupi", "Drapion", "Croagunk", "Toxicroak", "Carnivine", "Finneon", "Lumineon", "Mantyke", "Snover", "Abomasnow", "Weavile", "Magnezone", "Lickilicky", "Rhyperior", "Tangrowth", "Electivire", "Magmortar", "Togekiss", "Yanmega", "Leafeon", "Glaceon", "Gliscor", "Mamoswine", "Porygon-Z", "Gallade", "Probopass", "Dusknoir", "Froslass", "Rotom", "Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Heatran", "Regigigas", "Giratina", "Cresselia", "Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus"},
                         {"Victini", "Snivy", "Servine", "Serperior", "Tepig", "Pignite", "Emboar", "Oshawott", "Dewott", "Samurott", "Patrat", "Watchog", "Lillipup", "Herdier", "Stoutland", "Purrloin", "Liepard", "Pansage", "Simisage", "Pansear", "Simisear", "Panpour", "Simipour", "Munna", "Musharna", "Pidove", "Tranquill", "Unfezant", "Blitzle", "Zebstrika", "Roggenrola", "Boldore", "Gigalith", "Woobat", "Swoobat", "Drilbur", "Excadrill", "Audino", "Timburr", "Gurdurr", "Conkeldurr", "Tympole", "Palpitoad", "Seismitoad", "Throh", "Sawk", "Sewaddle", "Swadloon", "Leavanny", "Venipede", "Whirlipede", "Scolipede", "Cottonee", "Whimsicott", "Petilil", "Lilligant", "Basculin", "Sandile", "Krokorok", "Krookodile", "Darumaka", "Darmanitan", "Maractus", "Dwebble", "Crustle", "Scraggy", "Scrafty", "Sigilyph", "Yamask", "Cofagrigus", "Tirtouga", "Carracosta", "Archen", "Archeops", "Trubbish", "Garbodor", "Zorua", "Zoroark", "Minccino", "Cinccino", "Gothita", "Gothorita", "Gothitelle", "Solosis", "Duosion", "Reuniclus", "Ducklett", "Swanna", "Vanillite", "Vanillish", "Vanilluxe", "Deerling", "Sawsbuck", "Emolga", "Karrablast", "Escavalier", "Foongus", "Amoonguss", "Frillish", "Jellicent", "Alomomola", "Joltik", "Galvantula", "Ferroseed", "Ferrothorn", "Klink", "Klang", "Klinklang", "Tynamo", "Eelektrik", "Eelektross", "Elgyem", "Beheeyem", "Litwick", "Lampent", "Chandelure", "Axew", "Fraxure", "Haxorus", "Cubchoo", "Beartic", "Cryogonal", "Shelmet", "Accelgor", "Stunfisk", "Mienfoo", "Mienshao", "Druddigon", "Golett", "Golurk", "Pawniard", "Bisharp", "Bouffalant", "Rufflet", "Braviary", "Vullaby", "Mandibuzz", "Heatmor", "Durant", "Deino", "Zweilous", "Hydreigon", "Larvesta", "Volcarona", "Cobalion", "Terrakion", "Virizion", "Tornadus", "Thundurus", "Reshiram", "Zekrom", "Landorus", "Kyurem", "Keldeo", "Meloetta", "Genesect"},
                         {"Chespin", "Quilladin", "Chesnaught", "Fennekin", "Braixen", "Delphox", "Froakie", "Frogadier", "Greninja", "Bunnelby", "Diggersby", "Fletchling", "Fletchinder", "Talonflame", "Scatterbug", "Spewpa", "Vivillon", "Litleo", "Pyroar", "Flabébé", "Floette", "Florges", "Skiddo", "Gogoat", "Pancham", "Pangoro", "Furfrou", "Espurr", "Meowstic", "Honedge", "Doublade", "Aegislash", "Spritzee", "Aromatisse", "Swirlix", "Slurpuff", "Inkay", "Malamar", "Binacle", "Barbaracle", "Skrelp", "Dragalge", "Clauncher", "Clawitzer", "Helioptile", "Heliolisk", "Tyrunt", "Tyrantrum", "Amaura", "Aurorus", "Sylveon", "Hawlucha", "Dedenne", "Carbink", "Goomy", "Sliggoo", "Goodra", "Klefki", "Phantump", "Trevenant", "Pumpkaboo", "Gourgeist", "Bergmite", "Avalugg", "Noibat", "Noivern", "Xerneas", "Yveltal", "Zygarde", "Diancie", "Hoopa", "Volcanion"},
-                        {"Rowlet", "Dartrix", "Decidueye", "Litten", "Torracat", "Incineroar", "Popplio", "Brionne", "Primarina", "Pikipek", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Grubbin", "Charjabug", "Vikavolt", "Crabrawler", "Crabominable", "Oricorio", "Cutiefly", "Ribombee", "Rockruff", "Lycanroc", "Wishiwashi", "Mareanie", "Toxapex", "Mudbray", "Mudsdale", "Dewpider", "Araquanid", "Fomantis", "Lurantis", "Morelull", "Shiinotic", "Salandit", "Salazzle", "Stufful", "Bewear", "Bounsweet", "Steenee", "Tsareena", "Comfey", "Oranguru", "Passimian", "Wimpod", "Golisopod", "Sandygast", "Palossand", "Pyukumuku", "Type: Null", "Silvally", "Minior", "Komala", "Turtonator", "Togedemaru", "Mimikyu", "Bruxish", "Drampa", "Dhelmise", "Jangmo-o", "Hakamo-o", "Kommo-o", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Cosmoem", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Magearna", "Marshadow", "Poipole", "Naganadel", "Stakataka", "Blacephalon", "Zeraora"},
+                        {"Rowlet", "Dartrix", "Decidueye", "Litten", "Torracat", "Incineroar", "Popplio", "Brionne", "Primarina", "Pikipek", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Grubbin", "Charjabug", "Vikavolt", "Crabrawler", "Crabominable", "Oricorio", "Cutiefly", "Ribombee", "Rockruff", "Lycanroc", "Wishiwashi", "Mareanie", "Toxapex", "Mudbray", "Mudsdale", "Dewpider", "Araquanid", "Fomantis", "Lurantis", "Morelull", "Shiinotic", "Salandit", "Salazzle", "Stufful", "Bewear", "Bounsweet", "Steenee", "Tsareena", "Comfey", "Oranguru", "Passimian", "Wimpod", "Golisopod", "Sandygast", "Palossand", "Pyukumuku", "Type: Null", "Silvally", "Minior", "Komala", "Turtonator", "Togedemaru", "Mimikyu", "Bruxish", "Drampa", "Dhelmise", "Jangmo-o", "Hakamo-o", "Kommo-o", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Cosmoem", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Magearna", "Marshadow", "Poipole", "Naganadel", "Stakataka", "Blacephalon", "Zeraora", "Meltan", "Melmetal"},
                         {"Grookey", "Thwackey", "Rillaboom", "Scorbunny", "Raboot", "Cinderace", "Sobble", "Drizzile", "Inteleon", "Skwovet", "Greedent", "Rookidee", "Corvisquire", "Corviknight", "Blipbug", "Dottler", "Orbeetle", "Nickit", "Thievul", "Gossifleur", "Eldegoss", "Wooloo", "Dubwool", "Chewtle", "Drednaw", "Yamper", "Boltund", "Rolycoly", "Carkol", "Coalossal", "Applin", "Flapple", "Appletun", "Silicobra", "Sandaconda", "Cramorant", "Arrokuda", "Barraskewda", "Toxel", "Toxtricity", "Sizzlipede", "Centiskorch", "Clobbopus", "Grapploct", "Sinistea", "Polteaseist", "Hatenna", "Hattrem", "Hatterene", "Impidimp", "Morgrem", "Grimmsnarl", "Obstagoon", "Perrserker", "Cursola", "Sirfetch'd", "Mr. Rime", "Runerigus", "Milcery", "Alcremie", "Falinks", "Pincurchin", "Snom", "Frosmoth", "Stonjourner", "Eiscue", "Indeedee", "Morpeko", "Cufant", "Copperajah", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish", "Duraludon", "Dreepy", "Drakloak", "Dragapult", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude"}};
 
     //array with pokemon avaliable in SWSH
@@ -78,6 +84,9 @@ public class selectionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
+        searchField.setShowDuration(INDEFINITE);
+        searchField.setShowDelay(ZERO);
+        PokemonList.setTooltip(searchField);
 
         PokemonList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
@@ -165,7 +174,6 @@ public class selectionPageController implements Initializable {
 
     //creates pokemon list
     public void InitializePokemonList(){
-        TreeItem<String> pokemonRoot, Gen1, Gen2, Gen3, Gen4, Gen5, Gen6, Gen7, Gen8;
         pokemonLabel.setText("");//clear selected pokemon label
         pokemonRoot = new TreeItem<>();
 
@@ -831,6 +839,95 @@ public class selectionPageController implements Initializable {
             controller = new huntController();
 
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),null,0, 0, 1);
+    }
+
+    public void pokemonQuickSelect(KeyEvent e){
+        int PokedexSize = 0;
+        for(String[] i : Pokedex)
+            PokedexSize += i.length;
+
+        pokemonSearch += e.getCharacter().toLowerCase();
+
+        while(index < PokedexSize){
+            if(index < 151){
+                String selectedPokemon = Gen1.getChildren().get(index).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen1.getChildren().get(index).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen1.getChildren().get(index));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen1);
+                    return;
+                }
+            }else if(index < 251){
+                String selectedPokemon = Gen2.getChildren().get(index - 151).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen2.getChildren().get(index - 151).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen2.getChildren().get(index - 151));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen2);
+                    return;
+                }
+            }else if(index < 386){
+                String selectedPokemon = Gen3.getChildren().get(index - 251).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen3.getChildren().get(index - 251).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen3.getChildren().get(index - 251));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen3);
+                    return;
+                }
+            }else if(index < 493){
+                String selectedPokemon = Gen4.getChildren().get(index - 386).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen4.getChildren().get(index - 386).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen4.getChildren().get(index - 386));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen4);
+                    return;
+                }
+            }else if(index < 649){
+                String selectedPokemon = Gen5.getChildren().get(index - 493).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen5.getChildren().get(index - 493).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen5.getChildren().get(index - 493));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen5);
+                    return;
+                }
+            }else if(index < 721){
+                String selectedPokemon = Gen6.getChildren().get(index - 649).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen6.getChildren().get(index - 649).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen6.getChildren().get(index - 649));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen6);
+                    return;
+                }
+            }else if(index < 809){
+                String selectedPokemon = Gen7.getChildren().get(index - 721).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && Gen7.getChildren().get(index - 721).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen7.getChildren().get(index - 721));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen7);
+                    return;
+                }
+            }else{
+                String selectedPokemon = Gen8.getChildren().get(index - 809).getValue().toLowerCase();
+                if(selectedPokemon.length() >= pokemonSearch.length() && selectedPokemon.substring(0,pokemonSearch.length()).contains(pokemonSearch)){
+                    PokemonList.getSelectionModel().select(Gen8.getChildren().get(index - 809));
+                    searchField.setText(pokemonSearch);
+                    collapsePokemonTrees(Gen8);
+                    return;
+                }
+            }
+            index++;
+        }
+        collapsePokemonTrees(new TreeItem<>());
+        index = 0;
+        searchField.setText("");
+        pokemonSearch = "";
+    }
+
+    //method to collapse all but the given treeitem
+    public void collapsePokemonTrees(TreeItem<String> currentGeneration){
+        for(int i = 0; i < pokemonRoot.getChildren().size(); i++){
+            if(!PokemonList.getTreeItem(i).equals(currentGeneration))
+                PokemonList.getTreeItem(i).setExpanded(false);
+        }
     }
 
     public void setSelectingNewHunt(boolean hunt){
