@@ -154,9 +154,7 @@ public class huntController {
 
         encountersButton.setOnAction(e -> window.incrementEncounters());
 
-        customizeHuntLayout.setOnAction(e -> {
-            window.CustomizeHuntWindow();
-        });
+        customizeHuntLayout.setOnAction(e -> window.CustomizeHuntWindow());
         increment.setOnAction(e -> window.changeIncrement());
         resetEncounters.setOnAction(e -> window.resetEncounters());
         phaseHunt.setOnAction(e -> window.phaseHunt());
@@ -191,10 +189,8 @@ public class huntController {
         if(numFound)
             huntNum = windows.length + 1;
 
-        System.out.println(currentLayouts.length + ", " + windows.length);
         if(currentLayouts.length > windows.length) {
             layout = currentLayouts[huntNum - 1];
-            System.out.println(huntNum + " Layout: " + layout);
         }
         else {
             String[] temp = new String[currentLayouts.length + 1];
@@ -212,7 +208,7 @@ public class huntController {
         temp[windows.length] = newWindow;
         windows = temp;
 
-        if(!numFound) {
+        if(!numFound && windows.length != 1) {
             orderWindowsArray();
             refreshHuntWindowSettings();
         }
@@ -264,10 +260,15 @@ public class huntController {
     }
 
     public void orderWindowsArray(){
-        huntWindow[] temp = new huntWindow[windows.length];
-        for(huntWindow i: windows){
-            temp[i.getHuntNumber() - 1] = i;
+        huntWindow temp;
+        for(int i = 0; i < windows.length; i++){
+            for (int j = i; j > 0; j--) {
+                if(windows[j].getHuntNumber() < windows[j-1].getHuntNumber()) {
+                    temp = windows[j];
+                    windows[j] = windows[j - 1];
+                    windows[j - 1] = temp;
+                }
+            }
         }
-        windows = temp;
     }
 }
