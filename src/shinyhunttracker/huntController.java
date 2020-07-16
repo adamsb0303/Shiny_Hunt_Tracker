@@ -63,7 +63,8 @@ public class huntController {
                 selectionPageController selectionPageController = selectionPageLoader.getController();
                 selectionPageController.setSelectingNewHunt(true);
                 selectionPageController.setController(this);
-                selectionPageController.setCurrentLayout(windows[windows.length- 1].getCurrentLayout());
+                if(windows.length > 0)
+                    selectionPageController.setCurrentLayout(windows[windows.length- 1].getCurrentLayout());
                 huntSelectionWindow.show();
             }catch(IOException f){
                 f.printStackTrace();

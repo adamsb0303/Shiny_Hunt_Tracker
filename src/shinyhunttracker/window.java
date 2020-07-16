@@ -1262,11 +1262,11 @@ class huntWindow extends window{
         for(int i = 3; i < windowLayout.getChildren().size(); i++){
             if(windowLayout.getChildren().get(i).isVisible()) {
                 if(evo1 != null)
-                    windowLayout.getChildren().get(i).setLayoutX(Evo0.getImage().getWidth() + Evo1.getImage().getWidth() + sprite.getImage().getWidth());
+                    windowLayout.getChildren().get(i).setLayoutX(Evo0.getImage().getWidth() + Evo1.getImage().getWidth() + sprite.getImage().getWidth() + 5);
                 else if(evo0 != null)
-                    windowLayout.getChildren().get(i).setLayoutX(Evo0.getImage().getWidth() + sprite.getImage().getWidth());
+                    windowLayout.getChildren().get(i).setLayoutX(Evo0.getImage().getWidth() + sprite.getImage().getWidth() + 5);
                 else
-                    windowLayout.getChildren().get(i).setLayoutX(sprite.getImage().getWidth());
+                    windowLayout.getChildren().get(i).setLayoutX(sprite.getImage().getWidth() + 5);
                 windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
                 index++;
             }
@@ -1282,10 +1282,14 @@ class huntWindow extends window{
             sprite.setLayoutY(sprite.getImage().getHeight()/2);
             sprite.setLayoutX(Evo0.getImage().getWidth() + Evo1.getImage().getWidth() + (sprite.getImage().getWidth()/2));
         }else if(this.evo0 != null){
-            Evo0.setLayoutX(0);
-            sprite.setLayoutX(200);
-        }else
-            sprite.setLayoutX(0);
+            Evo0.setLayoutY(Evo0.getImage().getHeight()/2);
+            Evo0.setLayoutX(Evo0.getImage().getWidth()/2);
+            sprite.setLayoutY(sprite.getImage().getHeight()/2);
+            sprite.setLayoutX(Evo0.getImage().getWidth() + (sprite.getImage().getWidth()/2));
+        }else {
+            sprite.setLayoutY(sprite.getImage().getHeight()/2);
+            sprite.setLayoutX(sprite.getImage().getWidth()/2);
+        }
 
         Scene huntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(huntScene);
