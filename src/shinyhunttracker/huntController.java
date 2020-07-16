@@ -183,11 +183,15 @@ public class huntController {
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
         addHuntWindowSettings(newWindow);
 
-
         huntWindow[] temp = new huntWindow[windows.length + 1];
         System.arraycopy(windows, 0, temp, 0, windows.length);
         temp[windows.length] = newWindow;
         windows = temp;
+
+        if(!numFound) {
+            orderWindowsArray();
+            refreshHuntWindowSettings();
+        }
 
         //since the search level or total encounters can change between uses, this value needs to be captured after every startup
         if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
@@ -232,5 +236,13 @@ public class huntController {
                 windows[i] = null;
             }
         }
+    }
+
+    public void orderWindowsArray(){
+        huntWindow[] temp = new huntWindow[windows.length];
+        for(huntWindow i: windows){
+            temp[i.getHuntNumber() - 1] = i;
+        }
+        windows = temp;
     }
 }
