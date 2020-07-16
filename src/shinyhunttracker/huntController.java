@@ -22,6 +22,7 @@ public class huntController {
     previouslyCaught previousCatches = new previouslyCaught(0);
 
     huntWindow[] windows = new huntWindow[0];
+    String currentLayout;
 
     public huntController(){
         Stage huntControls = new Stage();
@@ -62,6 +63,7 @@ public class huntController {
                 selectionPageController selectionPageController = selectionPageLoader.getController();
                 selectionPageController.setSelectingNewHunt(true);
                 selectionPageController.setController(this);
+                selectionPageController.setCurrentLayout(windows[windows.length- 1].getCurrentLayout());
                 huntSelectionWindow.show();
             }catch(IOException f){
                 f.printStackTrace();
@@ -121,9 +123,14 @@ public class huntController {
     }
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+        if(layout != null)
+            currentLayout = layout;
+        else
+            layout = currentLayout;
         huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment);
         newWindow.getStage().setTitle("Hunt " + (windows.length + 1));
         addHuntWindowSettings(newWindow);
+
 
         huntWindow[] temp = new huntWindow[windows.length + 1];
         System.arraycopy(windows, 0, temp, 0, windows.length);

@@ -1162,6 +1162,10 @@ public class window{
     public Stage getStage(){
         return windowStage;
     }
+
+    public String getCurrentLayout(){
+        return currentLayout;
+    }
 }
 
 class huntWindow extends window{
@@ -1176,7 +1180,6 @@ class huntWindow extends window{
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
-    String currentLayout;
 
     //current objects
     Pokemon selectedPokemon;
@@ -1290,7 +1293,7 @@ class huntWindow extends window{
 
         SaveData data = new SaveData();
         if(currentLayout != null && currentLayout.compareTo("null") != 0) {
-            data.loadLayout(currentLayout, windowLayout);
+            data.loadLayout("Hunts/" + currentLayout, windowLayout);
         }
     }
 
@@ -1885,7 +1888,6 @@ class previouslyCaught extends window{
                 settings.getChildren().add(pokemonSettings);
             }
         }
-        System.out.println(settings.getChildren().size() + '\n');
         if(settings.getChildren().size() > 0)
             return settings;
         else

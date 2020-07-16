@@ -50,6 +50,7 @@ public class selectionPageController implements Initializable {
     //hunt page after pokemon is caught variables
     boolean selectingNewHunt = false;
     huntController controller;
+    String currentLayout;
 
     //misc variables
     int oldSelectionGeneration, oldSelectionGameGeneration = 0;
@@ -835,7 +836,7 @@ public class selectionPageController implements Initializable {
         if(controller == null)
             controller = new huntController();
 
-        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),null,0, 0, 1);
+        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),currentLayout,0, 0, 1);
     }
 
     public void pokemonQuickSelect(KeyEvent e){
@@ -933,6 +934,10 @@ public class selectionPageController implements Initializable {
 
     public void setController(huntController controller){
         this.controller = controller;
+    }
+
+    public void setCurrentLayout(String currentLayout){
+        this.currentLayout = currentLayout;
     }
 
     public Pokemon getStage0(){
