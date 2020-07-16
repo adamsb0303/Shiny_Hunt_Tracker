@@ -1,10 +1,8 @@
 package shinyhunttracker;
 
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -102,8 +100,6 @@ public class window{
             }catch(NumberFormatException f){
                 sizeField.setText("");
             }
-            image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale)/2)));
-            image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale)/2)));
             image.setScaleX(scale);
             image.setScaleY(scale);
             sizeField.setText("");
@@ -506,7 +502,10 @@ public class window{
         try {
             FileInputStream input = new FileInputStream(filePath);
             Image image = new Image(input);
-            return new ImageView(image);
+            ImageView sprite = new ImageView(image);
+            sprite.setTranslateX(-(sprite.getImage().getWidth()/2));
+            sprite.setTranslateY(-(sprite.getImage().getHeight()/2));
+            return sprite;
         }catch (FileNotFoundException e){
             System.out.println(name + " sprite not found");
             try {
@@ -1260,20 +1259,25 @@ class huntWindow extends window{
         for(int i = 3; i < windowLayout.getChildren().size(); i++){
             if(windowLayout.getChildren().get(i).isVisible()) {
                 if(evo1 != null)
-                    windowLayout.getChildren().get(i).setLayoutX(600);
+                    windowLayout.getChildren().get(i).setLayoutX(Evo0.getImage().getWidth() + Evo1.getImage().getWidth() + sprite.getImage().getWidth());
                 else if(evo0 != null)
-                    windowLayout.getChildren().get(i).setLayoutX(400);
+                    windowLayout.getChildren().get(i).setLayoutX(Evo0.getImage().getWidth() + sprite.getImage().getWidth());
                 else
-                    windowLayout.getChildren().get(i).setLayoutX(200);
-                windowLayout.getChildren().get(i).setLayoutY(65 + (15 * index));
+                    windowLayout.getChildren().get(i).setLayoutX(sprite.getImage().getWidth());
+                windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
                 index++;
             }
         }
 
         if(this.evo1 != null) {
-            Evo0.setLayoutX(0);
-            Evo1.setLayoutX(200);
-            sprite.setLayoutX(400);
+            Evo0.setLayoutY(Evo0.getImage().getHeight()/2);
+            Evo0.setLayoutX(Evo0.getImage().getWidth()/2);
+
+            Evo1.setLayoutY(Evo1.getImage().getHeight()/2);
+            Evo1.setLayoutX(Evo0.getImage().getWidth() + (Evo1.getImage().getWidth()/2));
+
+            sprite.setLayoutY(sprite.getImage().getHeight()/2);
+            sprite.setLayoutX(Evo0.getImage().getWidth() + Evo1.getImage().getWidth() + (sprite.getImage().getWidth()/2));
         }else if(this.evo0 != null){
             Evo0.setLayoutX(0);
             sprite.setLayoutX(200);
