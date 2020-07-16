@@ -106,6 +106,7 @@ public class huntController {
             window.pokemonCaught();
             removeWindow(window);
             previousCatches.previouslyCaughtPokemonSettings();
+            previousCatches.getSettingsStage().close();
         });
         resetCombo.setOnAction(e -> window.resetCombo());
         saveHunt.setOnAction(e -> window.saveHunt());
@@ -156,6 +157,7 @@ public class huntController {
 
     public void closeWindows(){
         previousCatches.getStage().close();
+        previousCatches.getSettingsStage().close();
         for(int i = 0; i < windows.length; i++) {
             if(windows[i] != null) {
                 windows[i].saveHunt();

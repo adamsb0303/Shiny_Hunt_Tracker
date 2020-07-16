@@ -1721,10 +1721,6 @@ class huntWindow extends window{
     private int simplifyFraction(double num, int den){
         return (int)Math.round(den / num);
     }
-
-    public Pokemon getSelectedPokemon(){
-        return selectedPokemon;
-    }
 }
 
 class previouslyCaught extends window{
@@ -2018,5 +2014,9 @@ class previouslyCaught extends window{
                     data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
                     loadSavedLayoutStage.close();
                 });
+    }
+
+    public Stage getSettingsStage(){
+        return previouslyCaughtSettingsStage;
     }
 }
