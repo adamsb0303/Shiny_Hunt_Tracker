@@ -181,7 +181,7 @@ public class huntController {
 
         newWindow.getStage().setOnCloseRequest(e -> {
             e.consume();
-            newWindow.saveHunt();
+            newWindow.saveandCloseHunt();
             removeWindow(newWindow);
         });
     }
@@ -213,7 +213,7 @@ public class huntController {
         previousCatches.getSettingsStage().close();
         for(int i = 0; i < windows.length; i++) {
             if(windows[i] != null) {
-                windows[i].saveHunt();
+                windows[i].saveandCloseHunt();
                 windows[i] = null;
             }
         }

@@ -1501,6 +1501,12 @@ class huntWindow extends window{
 
     //writes objects to previous hunts file
     public void saveHunt(){
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
+        data.saveHunt();
+    }
+
+    //save hunt, but it asks if the user would like to save, and it closes the window
+    public void saveandCloseHunt(){
         Stage save = new Stage();
         save.setTitle("Save hunt");
         save.setResizable(false);
