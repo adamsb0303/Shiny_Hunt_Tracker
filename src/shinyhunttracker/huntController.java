@@ -21,7 +21,7 @@ public class huntController {
     previouslyCaught previousCatches = new previouslyCaught(0);
 
     huntWindow[] windows = new huntWindow[0];
-    String currentLayout;
+    String[] currentLayouts = new String[0];
     int huntNum = 1;
 
     Stage keyBindingSettingsStage = new Stage();
@@ -154,7 +154,9 @@ public class huntController {
 
         encountersButton.setOnAction(e -> window.incrementEncounters());
 
-        customizeHuntLayout.setOnAction(e -> window.CustomizeHuntWindow());
+        customizeHuntLayout.setOnAction(e -> {
+            window.CustomizeHuntWindow();
+        });
         increment.setOnAction(e -> window.changeIncrement());
         resetEncounters.setOnAction(e -> window.resetEncounters());
         phaseHunt.setOnAction(e -> window.phaseHunt());
@@ -172,10 +174,6 @@ public class huntController {
     }
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
-        if(layout != null)
-            currentLayout = layout;
-        else
-            layout = currentLayout;
         boolean numFound = false;
         for(int i = 0; i < windows.length; i++){
             numFound = false;
@@ -192,6 +190,19 @@ public class huntController {
         }
         if(numFound)
             huntNum = windows.length + 1;
+
+        System.out.println(currentLayouts.length + ", " + windows.length);
+        if(currentLayouts.length > windows.length) {
+            layout = currentLayouts[huntNum - 1];
+            System.out.println(huntNum + " Layout: " + layout);
+        }
+        else {
+            String[] temp = new String[currentLayouts.length + 1];
+            System.arraycopy(currentLayouts, 0, temp, 0, currentLayouts.length);
+            currentLayouts = temp;
+            currentLayouts[huntNum - 1] = layout;
+        }
+
         huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
         addHuntWindowSettings(newWindow);
@@ -213,6 +224,7 @@ public class huntController {
 
         newWindow.getStage().setOnCloseRequest(e -> {
             e.consume();
+            currentLayouts[newWindow.getHuntNumber()-1] = newWindow.getCurrentLayout();
             newWindow.saveandCloseHunt();
             removeWindow(newWindow);
         });
