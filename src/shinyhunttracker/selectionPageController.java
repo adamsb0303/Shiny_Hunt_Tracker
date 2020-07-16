@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,7 +82,7 @@ public class selectionPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
         searchField.setShowDuration(INDEFINITE);
-        searchField.setShowDelay(ZERO);
+        searchField.setShowDelay(new Duration(30));
         PokemonList.setTooltip(searchField);
 
         PokemonList.getSelectionModel().selectedItemProperty()
