@@ -21,21 +21,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        //check save data file for previous saves
-        //if anything is found, ask the user if they would like to start a new hunt or a previous one
-        SaveData checkForData = new SaveData();
-        if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
-            selectionPageController selectionPageController = new selectionPageController();
-            selectionPageController.newOrOldHunt();
-        }else{
-            //creates selection page window
-            Stage huntSelectionWindow = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
-            huntSelectionWindow.setTitle("Shiny Hunt Tracker");
-            huntSelectionWindow.setResizable(false);
-            huntSelectionWindow.setScene(new Scene(root, 750, 480));
-            huntSelectionWindow.show();
-        }
+    public void start(Stage primaryStage){
+        huntController controller = new huntController();
     }
 }

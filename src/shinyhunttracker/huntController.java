@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class huntController {
+    Stage huntControls = new Stage();
     MenuBar Menu = new MenuBar();
     Menu Settings = new Menu("Settings");
     VBox huntControlsButtonVBox;
@@ -26,7 +27,6 @@ public class huntController {
     Stage keyBindingSettingsStage = new Stage();
 
     public huntController(){
-        Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controller");
 
         huntControlsButtonVBox = new VBox();
@@ -93,22 +93,33 @@ public class huntController {
         previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
         addHunt.setOnAction(e -> {
+            //check save data file for previous saves
+            //if anything is found, ask the user if they would like to start a new hunt or a previous one
             try {
-                FXMLLoader selectionPageLoader = new FXMLLoader();
-                selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
-                Parent root = selectionPageLoader.load();
+                SaveData checkForData = new SaveData();
+                if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
+                    selectionPageController selectionPageController = new selectionPageController();
+                    selectionPageController.setController(this);
+                    if(windows.length > 0)
+                        selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    selectionPageController.newOrOldHunt();
+                }else{
+                    //creates selection page window
+                    FXMLLoader selectionPageLoader = new FXMLLoader();
+                    selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+                    Parent root = selectionPageLoader.load();
 
-                Stage huntSelectionWindow = new Stage();
-                huntSelectionWindow.setTitle("Shiny Hunt Tracker");
-                huntSelectionWindow.setResizable(false);
-                huntSelectionWindow.setScene(new Scene(root, 750, 480));
+                    Stage huntSelectionWindow = new Stage();
+                    huntSelectionWindow.setTitle("Shiny Hunt Tracker");
+                    huntSelectionWindow.setResizable(false);
+                    huntSelectionWindow.setScene(new Scene(root, 750, 480));
 
-                selectionPageController selectionPageController = selectionPageLoader.getController();
-                selectionPageController.setSelectingNewHunt(true);
-                selectionPageController.setController(this);
-                if(windows.length > 0)
-                    selectionPageController.setCurrentLayout(windows[windows.length- 1].getCurrentLayout());
-                huntSelectionWindow.show();
+                    selectionPageController selectionPageController = selectionPageLoader.getController();
+                    selectionPageController.setController(this);
+                    if(windows.length > 0)
+                        selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    huntSelectionWindow.show();
+                }
             }catch(IOException f){
                 f.printStackTrace();
             }
@@ -244,5 +255,9 @@ public class huntController {
             temp[i.getHuntNumber() - 1] = i;
         }
         windows = temp;
+    }
+
+    public Stage getStage(){
+        return huntControls;
     }
 }

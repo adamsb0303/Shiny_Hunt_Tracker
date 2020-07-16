@@ -48,7 +48,6 @@ public class selectionPageController implements Initializable {
     Method selectedMethod = new Method();
 
     //hunt page after pokemon is caught variables
-    boolean selectingNewHunt = false;
     huntController controller;
     String currentLayout;
 
@@ -769,11 +768,19 @@ public class selectionPageController implements Initializable {
         newHunt.setOnAction(e -> {
             //creates selection page window
             try {
+                //creates selection page window
+                FXMLLoader selectionPageLoader = new FXMLLoader();
+                selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+                Parent root = selectionPageLoader.load();
+
                 Stage huntSelectionWindow = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("selectionPage.fxml"));
                 huntSelectionWindow.setTitle("Shiny Hunt Tracker");
                 huntSelectionWindow.setResizable(false);
                 huntSelectionWindow.setScene(new Scene(root, 750, 480));
+
+                selectionPageController selectionPageController = selectionPageLoader.getController();
+                selectionPageController.setController(controller);
+                selectionPageController.setCurrentLayout(currentLayout);
                 huntSelectionWindow.show();
             }catch(IOException f){
                 f.printStackTrace();
@@ -832,9 +839,6 @@ public class selectionPageController implements Initializable {
     public void beginHunt(ActionEvent event) {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
-
-        if(controller == null)
-            controller = new huntController();
 
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),currentLayout,0, 0, 1);
     }
@@ -928,8 +932,12 @@ public class selectionPageController implements Initializable {
         }
     }
 
-    public void setSelectingNewHunt(boolean hunt){
-        selectingNewHunt = hunt;
+    public Pokemon getStage0(){
+        return Stage0;
+    }
+
+    public Pokemon getStage1(){
+        return Stage1;
     }
 
     public void setController(huntController controller){
@@ -938,13 +946,5 @@ public class selectionPageController implements Initializable {
 
     public void setCurrentLayout(String currentLayout){
         this.currentLayout = currentLayout;
-    }
-
-    public Pokemon getStage0(){
-        return Stage0;
-    }
-
-    public Pokemon getStage1(){
-        return Stage1;
     }
 }
