@@ -21,7 +21,7 @@ public class huntController {
 
     huntWindow[] windows = new huntWindow[0];
     String currentLayout;
-    int huntNum = 0;
+    int huntNum = 1;
 
     Stage keyBindingSettingsStage = new Stage();
 
@@ -163,7 +163,22 @@ public class huntController {
             currentLayout = layout;
         else
             layout = currentLayout;
-        huntNum++;
+        boolean numFound = false;
+        for(int i = 0; i < windows.length; i++){
+            numFound = false;
+            for(huntWindow j : windows){
+                if (j.getHuntNumber() == (i + 1)) {
+                    numFound = true;
+                    break;
+                }
+            }
+            if(!numFound) {
+                huntNum = i + 1;
+                break;
+            }
+        }
+        if(numFound)
+            huntNum = windows.length + 1;
         huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
         addHuntWindowSettings(newWindow);
