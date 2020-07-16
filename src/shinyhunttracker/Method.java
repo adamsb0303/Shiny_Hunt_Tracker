@@ -14,6 +14,8 @@ public class Method {
         //determines the initial base and modifier with the selected game and method
         if(generation >= 5)
             base = 4096;
+        else
+            base = 8192;
         switch(name){
             case "None":
             case "Radar Chaining":
