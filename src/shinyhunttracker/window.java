@@ -1178,6 +1178,7 @@ class huntWindow extends window{
     int encounters, previousEncounters, combo;
     int increment;
     int huntNumber;
+    char keybind;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
@@ -1731,8 +1732,16 @@ class huntWindow extends window{
         return (int)Math.round(den / num);
     }
 
+    public void setKeybind(char keybind){
+        this.keybind = keybind;
+    }
+
     public int getHuntNumber(){
         return huntNumber;
+    }
+
+    public char getKeyBinding(){
+        return keybind;
     }
 }
 

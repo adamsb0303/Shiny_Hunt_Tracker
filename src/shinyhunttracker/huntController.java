@@ -1,13 +1,11 @@
 package shinyhunttracker;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,6 +23,8 @@ public class huntController {
     String currentLayout;
     int huntNum = 0;
 
+    Stage keyBindingSettingsStage = new Stage();
+
     public huntController(){
         Stage huntControls = new Stage();
         huntControls.setTitle("Hunt Controller");
@@ -37,6 +37,9 @@ public class huntController {
 
         Menu.getMenus().add(Settings);
 
+        MenuItem keyBinding = new MenuItem("Key Binding");
+        Settings.getItems().add(keyBinding);
+
         MenuItem previouslyCaught = new MenuItem("Previously Caught Settings");
         Settings.getItems().add(previouslyCaught);
 
@@ -47,6 +50,45 @@ public class huntController {
         Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
         huntControls.setScene(huntControlsScene);
         huntControls.show();
+
+        huntControlsButtonVBox.setOnKeyTyped(e -> {
+            for(huntWindow i: windows) {
+                System.out.println(i.getKeyBinding());
+                if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
+                    i.incrementEncounters();
+            }
+        });
+
+        keyBinding.setOnAction(e -> {
+            keyBindingSettingsStage.setTitle("Key Bindings");
+
+            VBox keyBindingsLayout = new VBox();
+            keyBindingsLayout.setAlignment(Pos.CENTER);
+            keyBindingsLayout.setSpacing(10);
+            keyBindingsLayout.setPadding(new Insets(10,0,50,75));
+            for (huntWindow i : windows) {
+                HBox windowSettings = new HBox();
+                windowSettings.setAlignment(Pos.CENTER);
+                windowSettings.setSpacing(10);
+                Label huntWindowLabel = new Label("Hunt " + i.getHuntNumber());
+                TextField keyField = new TextField();
+                keyField.setMaxWidth(50);
+                windowSettings.getChildren().addAll(huntWindowLabel, keyField);
+                keyBindingsLayout.getChildren().add(windowSettings);
+
+                keyField.setOnAction(f -> {
+                    if(keyField.getText().length() == 1)
+                        for(huntWindow j: windows)
+                            if(j.getHuntNumber() == i.getHuntNumber())
+                                j.setKeybind(keyField.getText().charAt(0));
+                    keyField.setText("");
+                });
+            }
+            ScrollPane scrollPane = new ScrollPane(keyBindingsLayout);
+            Scene keyBindingScene = new Scene(scrollPane, 250, 500);
+            keyBindingSettingsStage.setScene(keyBindingScene);
+            keyBindingSettingsStage.show();
+        });
 
         previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
@@ -158,7 +200,7 @@ public class huntController {
     }
 
     public void refreshHuntWindowSettings(){
-        Settings.getItems().remove(1, Settings.getItems().size());
+        Settings.getItems().remove(2, Settings.getItems().size());
         huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
         for(huntWindow i : windows)
             if(i != null)
@@ -166,6 +208,7 @@ public class huntController {
     }
 
     public void closeWindows(){
+        keyBindingSettingsStage.close();
         previousCatches.getStage().close();
         previousCatches.getSettingsStage().close();
         for(int i = 0; i < windows.length; i++) {
