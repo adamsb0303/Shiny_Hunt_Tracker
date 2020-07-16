@@ -1177,6 +1177,7 @@ class huntWindow extends window{
     Text previousEncountersText = new Text();
     int encounters, previousEncounters, combo;
     int increment;
+    int huntNumber;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
@@ -1187,7 +1188,7 @@ class huntWindow extends window{
     Method selectedMethod;
     int methodBase;
 
-    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+    public huntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntNumber){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
@@ -1198,6 +1199,7 @@ class huntWindow extends window{
         this.encounters = encounters;
         this.combo = combo;
         this.increment = increment;
+        this.huntNumber = huntNumber;
         if(selectedPokemon.getGeneration() > 0)
             createHuntWindow();
     }
@@ -1727,6 +1729,10 @@ class huntWindow extends window{
     //simplifies odds fraction for easier reading
     private int simplifyFraction(double num, int den){
         return (int)Math.round(den / num);
+    }
+
+    public int getHuntNumber(){
+        return huntNumber;
     }
 }
 

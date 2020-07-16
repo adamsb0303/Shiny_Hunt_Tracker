@@ -23,6 +23,7 @@ public class huntController {
 
     huntWindow[] windows = new huntWindow[0];
     String currentLayout;
+    int huntNum = 0;
 
     public huntController(){
         Stage huntControls = new Stage();
@@ -79,11 +80,11 @@ public class huntController {
         huntControlsButtonHBox.setAlignment(Pos.CENTER);
         huntControlsButtonHBox.setSpacing(10);
 
-        Button encountersButton = new Button("Increment " + (windows.length + 1));
+        Button encountersButton = new Button("Increment " + window.getHuntNumber());
         huntControlsButtonHBox.getChildren().addAll(encountersButton);
         huntControlsButtonVBox.getChildren().add(huntControlsButtonHBox);
 
-        Menu newHuntSettings = new Menu("Hunt " + (windows.length + 1) + " Settings");
+        Menu newHuntSettings = new Menu("Hunt " + window.getHuntNumber() + " Settings");
 
         MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
 
@@ -115,21 +116,14 @@ public class huntController {
         saveHunt.setOnAction(e -> window.saveHunt());
     }
 
-    public void refreshHuntWindowSettings(){
-        Settings.getItems().remove(1, Settings.getItems().size());
-        huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
-        for(huntWindow i : windows)
-            if(i != null)
-                addHuntWindowSettings(i);
-    }
-
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
         if(layout != null)
             currentLayout = layout;
         else
             layout = currentLayout;
-        huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment);
-        newWindow.getStage().setTitle("Hunt " + (windows.length + 1));
+        huntNum++;
+        huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
+        newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
         addHuntWindowSettings(newWindow);
 
 
@@ -161,6 +155,14 @@ public class huntController {
         }
         windows = temp;
         refreshHuntWindowSettings();
+    }
+
+    public void refreshHuntWindowSettings(){
+        Settings.getItems().remove(1, Settings.getItems().size());
+        huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
+        for(huntWindow i : windows)
+            if(i != null)
+                addHuntWindowSettings(i);
     }
 
     public void closeWindows(){
