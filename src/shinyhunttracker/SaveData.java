@@ -62,7 +62,7 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public void loadHunt(int lineNumber){
+    public void loadHunt(int lineNumber, huntController controller){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
 
@@ -84,7 +84,7 @@ public class SaveData {
                 }
             }
 
-            beginHunt();
+            beginHunt(controller);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -110,11 +110,10 @@ public class SaveData {
     }
 
     //opens huntControls window
-    public void beginHunt(){
+    public void beginHunt(huntController controller){
         selectionPageController family = new selectionPageController();
         family.createFamily(selectedPokemon.getName());
 
-        huntController controller = new huntController();
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, family.getStage0().getName(), family.getStage1().getName(), layout, 0, 0, 1);
     }
 

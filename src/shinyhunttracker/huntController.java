@@ -98,11 +98,11 @@ public class huntController {
             try {
                 SaveData checkForData = new SaveData();
                 if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
-                    selectionPageController selectionPageController = new selectionPageController();
-                    selectionPageController.setController(this);
+                    newOrOld newOrOld = new newOrOld();
+                    newOrOld.setController(this);
                     if(windows.length > 0)
-                        selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
-                    selectionPageController.newOrOldHunt();
+                        newOrOld.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    newOrOld.newOrOldHunt();
                 }else{
                     //creates selection page window
                     FXMLLoader selectionPageLoader = new FXMLLoader();
