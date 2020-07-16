@@ -53,7 +53,6 @@ public class huntController {
 
         huntControlsButtonVBox.setOnKeyTyped(e -> {
             for(huntWindow i: windows) {
-                System.out.println(i.getKeyBinding());
                 if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
                     i.incrementEncounters();
             }
@@ -162,7 +161,10 @@ public class huntController {
         pokemonCaught.setOnAction(e -> {
             window.pokemonCaught();
             removeWindow(window);
+            SaveData temp = new SaveData();
+            temp.saveLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout(), false);
             previousCatches.previouslyCaughtPokemonSettings();
+            temp.loadLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout());
             previousCatches.getSettingsStage().close();
         });
         resetCombo.setOnAction(e -> window.resetCombo());
@@ -255,9 +257,5 @@ public class huntController {
             temp[i.getHuntNumber() - 1] = i;
         }
         windows = temp;
-    }
-
-    public Stage getStage(){
-        return huntControls;
     }
 }

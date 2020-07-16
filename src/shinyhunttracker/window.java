@@ -1165,6 +1165,10 @@ public class window{
         return windowStage;
     }
 
+    public AnchorPane getWindowLayout(){
+        return windowLayout;
+    }
+
     public String getCurrentLayout(){
         return currentLayout;
     }
