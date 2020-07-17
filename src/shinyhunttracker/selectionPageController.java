@@ -186,7 +186,7 @@ public class selectionPageController implements Initializable {
                 else if(i.compareTo("Mr. Mime") == 0)
                     input = new FileInputStream("Images/PC Sprites/Generation 1/mr-mime.png");
                 else if(i.compareTo("Farfetch'd") == 0)
-                    input = new FileInputStream("Images/PC Sprites/Generation 2/farfetchd.png");
+                    input = new FileInputStream("Images/PC Sprites/Generation 1/farfetchd.png");
                 else
                     input = new FileInputStream("Images/PC Sprites/Generation 1/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
