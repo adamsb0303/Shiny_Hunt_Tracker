@@ -267,59 +267,71 @@ public class SaveData {
     }
 
     //checks to see if the given string is already in the preivous hunts file
-    public int checkForPreviousData(String saveData) throws IOException{
-        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+    public int checkForPreviousData(String saveData){
+        try {
+            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
 
-        int lineNumber = 0;
-        String line;
-        while((line = fileReader.readLine()) != null){
-            for(int i = 0; i < 6; i++){
-                if(i == 5)
-                    return lineNumber;
-                if(splitString(saveData,i).compareTo(splitString(line,i)) != 0) {
-                    break;
+            int lineNumber = 0;
+            String line;
+            while ((line = fileReader.readLine()) != null) {
+                for (int i = 0; i < 6; i++) {
+                    if (i == 5)
+                        return lineNumber;
+                    if (splitString(saveData, i).compareTo(splitString(line, i)) != 0) {
+                        break;
+                    }
                 }
+                lineNumber++;
             }
-            lineNumber++;
+        }catch(IOException e){
+            e.printStackTrace();
         }
         return -1;
     }
 
     //replaces the given line with the given string
-    public void replaceLine(int lineNumber, String saveData, String file) throws IOException{
-        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
-        StringBuilder inputBuffer = new StringBuilder();
+    public void replaceLine(int lineNumber, String saveData, String file){
+        try{
+            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
+            StringBuilder inputBuffer = new StringBuilder();
 
-        for(int i = 0; i < getfileLength(file); i++){
-            String line = fileReader.readLine();
-            if(i == lineNumber){
-                line = saveData;
+            for (int i = 0; i < getfileLength(file); i++) {
+                String line = fileReader.readLine();
+                if (i == lineNumber) {
+                    line = saveData;
+                }
+                inputBuffer.append(line);
+                inputBuffer.append('\n');
             }
-            inputBuffer.append(line);
-            inputBuffer.append('\n');
-        }
 
-        FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
-        fileOut.write(inputBuffer.toString().getBytes());
-        fileOut.close();
+            FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     //deletes the given line
-    public void deleteLine(int lineNumber, String file) throws IOException{
-        BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
-        StringBuilder inputBuffer = new StringBuilder();
+    public void deleteLine(int lineNumber, String file){
+        try {
+            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
+            StringBuilder inputBuffer = new StringBuilder();
 
-        for(int i = 0; i < getfileLength(file); i++){
-            String line = fileReader.readLine();
-            if(i == lineNumber){
-                continue;
+            for (int i = 0; i < getfileLength(file); i++) {
+                String line = fileReader.readLine();
+                if (i == lineNumber) {
+                    continue;
+                }
+                inputBuffer.append(line);
+                inputBuffer.append('\n');
             }
-            inputBuffer.append(line);
-            inputBuffer.append('\n');
-        }
 
-        FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
-        fileOut.write(inputBuffer.toString().getBytes());
-        fileOut.close();
+            FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }
