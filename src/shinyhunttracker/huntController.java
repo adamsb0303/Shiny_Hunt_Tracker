@@ -58,36 +58,7 @@ public class huntController {
             }
         });
 
-        keyBinding.setOnAction(e -> {
-            keyBindingSettingsStage.setTitle("Key Bindings");
-
-            VBox keyBindingsLayout = new VBox();
-            keyBindingsLayout.setAlignment(Pos.CENTER);
-            keyBindingsLayout.setSpacing(10);
-            keyBindingsLayout.setPadding(new Insets(10,0,50,75));
-            for (huntWindow i : windows) {
-                HBox windowSettings = new HBox();
-                windowSettings.setAlignment(Pos.CENTER);
-                windowSettings.setSpacing(10);
-                Label huntWindowLabel = new Label("Hunt " + i.getHuntNumber());
-                TextField keyField = new TextField();
-                keyField.setMaxWidth(50);
-                windowSettings.getChildren().addAll(huntWindowLabel, keyField);
-                keyBindingsLayout.getChildren().add(windowSettings);
-
-                keyField.setOnAction(f -> {
-                    if(keyField.getText().length() == 1)
-                        for(huntWindow j: windows)
-                            if(j.getHuntNumber() == i.getHuntNumber())
-                                j.setKeybind(keyField.getText().charAt(0));
-                    keyField.setText("");
-                });
-            }
-            ScrollPane scrollPane = new ScrollPane(keyBindingsLayout);
-            Scene keyBindingScene = new Scene(scrollPane, 250, 500);
-            keyBindingSettingsStage.setScene(keyBindingScene);
-            keyBindingSettingsStage.show();
-        });
+        keyBinding.setOnAction(e -> keyBindingSettings());
 
         previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
@@ -201,6 +172,10 @@ public class huntController {
 
         huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
+
+        SaveData data = new SaveData();
+        newWindow.setKeybind(data.getLinefromFile(newWindow.getHuntNumber() - 1, "keyBinds").charAt(0));
+
         addHuntWindowSettings(newWindow);
 
         huntWindow[] temp = new huntWindow[windows.length + 1];
@@ -211,6 +186,10 @@ public class huntController {
         if(!numFound && windows.length != 1) {
             orderWindowsArray();
             refreshHuntWindowSettings();
+        }
+
+        if(keyBindingSettingsStage.isShowing()){
+            keyBindingSettings();
         }
 
         //since the search level or total encounters can change between uses, this value needs to be captured after every startup
@@ -270,5 +249,42 @@ public class huntController {
                 }
             }
         }
+    }
+
+    public void keyBindingSettings(){
+        keyBindingSettingsStage.setTitle("Key Bindings");
+
+        VBox keyBindingsLayout = new VBox();
+        keyBindingsLayout.setAlignment(Pos.CENTER);
+        keyBindingsLayout.setSpacing(10);
+        keyBindingsLayout.setPadding(new Insets(10,0,50,75));
+        for (huntWindow i : windows) {
+            HBox windowSettings = new HBox();
+            windowSettings.setAlignment(Pos.CENTER);
+            windowSettings.setSpacing(10);
+            Label huntWindowLabel = new Label("Hunt " + i.getHuntNumber());
+            TextField keyField = new TextField();
+            keyField.setPromptText(String.valueOf(i.getKeyBinding()));
+            keyField.setMaxWidth(50);
+            windowSettings.getChildren().addAll(huntWindowLabel, keyField);
+            keyBindingsLayout.getChildren().add(windowSettings);
+
+            keyField.setOnAction(f -> {
+                if(keyField.getText().length() == 1)
+                    for(huntWindow j: windows)
+                        if(j.getHuntNumber() == i.getHuntNumber()) {
+                            j.setKeybind(keyField.getText().charAt(0));
+                            SaveData data = new SaveData();
+                            data.replaceLine(j.getHuntNumber() - 1, keyField.getText().substring(0,1), "keyBinds");
+                            keyField.setPromptText(String.valueOf(j.getKeyBinding()));
+                            break;
+                        }
+                keyField.setText("");
+            });
+        }
+        ScrollPane scrollPane = new ScrollPane(keyBindingsLayout);
+        Scene keyBindingScene = new Scene(scrollPane, 250, 500);
+        keyBindingSettingsStage.setScene(keyBindingScene);
+        keyBindingSettingsStage.show();
     }
 }
