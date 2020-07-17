@@ -1680,6 +1680,7 @@ class huntWindow extends window{
                         saveNameText.setText("");
                     } else {
                         data.saveLayout("Hunts/" + saveNameText.getText(), windowLayout, true);
+                        currentLayout = saveNameText.getText();
                         promptLayoutSaveName.close();
                     }
                 });
@@ -1710,6 +1711,7 @@ class huntWindow extends window{
                     saveNameText.setText("");
                 } else {
                     data.saveLayout("Hunts/" + saveNameText.getText(), windowLayout, true);
+                    currentLayout = saveNameText.getText();
                     promptLayoutSaveName.close();
                 }
             });
