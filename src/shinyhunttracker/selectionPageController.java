@@ -178,7 +178,17 @@ public class selectionPageController implements Initializable {
         //adds pokemon to generation their respective generation branch and sets the sprite to be displayed
         for(String i: Pokedex[0]) {
             try {
-                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 1/" + i.toLowerCase() + ".png");
+                FileInputStream input;
+                if(i.compareTo("Nidoran♀") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 1/nidoran-f.png");
+                else if(i.compareTo("Nidoran♂") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 1/nidoran-m.png");
+                else if(i.compareTo("Mr. Mime") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 1/mr-mime.png");
+                else if(i.compareTo("Farfetch'd") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 2/farfetchd.png");
+                else
+                    input = new FileInputStream("Images/PC Sprites/Generation 1/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen1).setGraphic(sprite);
@@ -211,7 +221,11 @@ public class selectionPageController implements Initializable {
         }
         for(String i: Pokedex[3]) {
             try {
-                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 4/" + i.toLowerCase() + ".png");
+                FileInputStream input;
+                if(i.compareTo("Mime Jr.") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 4/mime-jr.png");
+                else
+                    input = new FileInputStream("Images/PC Sprites/Generation 4/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen4).setGraphic(sprite);
@@ -233,7 +247,11 @@ public class selectionPageController implements Initializable {
         }
         for(String i: Pokedex[5]) {
             try {
-                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 6/" + i.toLowerCase() + ".png");
+                FileInputStream input;
+                if(i.compareTo("Flabébé") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 6/flabebe.png");
+                else
+                    input = new FileInputStream("Images/PC Sprites/Generation 6/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen6).setGraphic(sprite);
@@ -245,8 +263,16 @@ public class selectionPageController implements Initializable {
         for(String i: Pokedex[6]) {
             try {
                 FileInputStream input;
-                if(i.compareTo("Type: Null") == 0)//since type null has a : in their name, an exception had to be created
-                    input = new FileInputStream("Images/PC Sprites/Generation 7/type null.png");
+                if(i.compareTo("Type: Null") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/type-null.png");
+                else if(i.compareTo("Tapu Koko") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/tapu-koko.png");
+                else if(i.compareTo("Tapu Lele") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/tapu-lele.png");
+                else if(i.compareTo("Tapu Bulu") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/tapu-bulu.png");
+                else if(i.compareTo("Tapu Fini") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 7/tapu-fini.png");
                 else
                     input = new FileInputStream("Images/PC Sprites/Generation 7/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
@@ -259,7 +285,13 @@ public class selectionPageController implements Initializable {
         }
         for(String i: Pokedex[7]) {
             try {
-                FileInputStream input = new FileInputStream("Images/PC Sprites/Generation 8/" + i.toLowerCase() + ".png");
+                FileInputStream input;
+                if(i.compareTo("Mr. Rime") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 8/mr-rime.png");
+                else if(i.compareTo("Sirfetch'd") == 0)
+                    input = new FileInputStream("Images/PC Sprites/Generation 8/mr-rime.png");
+                else
+                    input = new FileInputStream("Images/PC Sprites/Generation 8/" + i.toLowerCase() + ".png");
                 Image image = new Image(input);
                 ImageView sprite = new ImageView(image);
                 makeBranch(i, Gen8).setGraphic(sprite);
