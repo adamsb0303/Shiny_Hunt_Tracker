@@ -35,7 +35,9 @@ public class selectionPageController implements Initializable {
 
     //selected objects
     Game selectedGame = new Game();
-    Pokemon selectedPokemon, Stage0, Stage1 = new Pokemon();
+    Pokemon selectedPokemon;
+    Pokemon Stage0 = new Pokemon();
+    Pokemon Stage1 = new Pokemon();
     Method selectedMethod = new Method();
 
     //hunt page after pokemon is caught variables
