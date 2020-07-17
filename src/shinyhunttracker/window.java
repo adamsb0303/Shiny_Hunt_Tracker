@@ -34,103 +34,130 @@ public class window{
     String[] fonts = generateFonts();
     String currentLayout;
 
-    //creates ImageView settings VBox
-    public VBox createImageSettings(ImageView image, String pokemonName, Game selectedGame){
-        HBox groupLabel = new HBox();
-        Label Group = new Label(pokemonName + " Sprite:");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
+    //create a string of the file path of the game
+    public String createGameFilePath(Game selectedGame){
+        String filePath = "Images/Sprites/";
+        switch(selectedGame.getGeneration()) {
+            case 2:
+                filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
+                break;
+            case 3:
+                switch(selectedGame.getName()){
+                    case "Ruby":
+                    case "Sapphire":
+                    case "Emerald":
+                        filePath += "Generation 3/ruby-sapphire-emerald/";
+                        break;
+                    case "FireRed":
+                    case "LeafGreen":
+                        filePath += "Generation 3/firered-leafgreen/";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 4:
+                switch(selectedGame.getName()){
+                    case "Diamond":
+                    case "Pearl":
+                        filePath += "Generation 4/diamond-pearl/";
+                        break;
+                    case "Platinum":
+                        filePath += "Generation 4/platinum/";
+                        break;
+                    case "HeartGold":
+                    case "SoulSilver":
+                        filePath += "Generation 4/heartgold-soulsilver/";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 5:
+                filePath += "Generation 5/";
+                break;
+            default:
+                filePath += "3d Sprites/";
+                break;
+        }
+        return filePath;
+    }
 
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        sizeField.setPromptText(String.valueOf(image.getScaleX()));
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
+    //returns ImageView with the sprite of the given pokemon
+    public ImageView createPokemonSprite(String name, Game selectedGame){
+        String filePath = createGameFilePath(selectedGame);
 
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        XField.setPromptText(String.valueOf(image.getLayoutX()));
-        changeX.getChildren().addAll(XLabel, XField);
+        if(name.contains("Galarian")) {
+            filePath += "galarian/";
+            name = name.substring(9);
+        }
+        else if(name.contains("Alolan")) {
+            filePath += "alolan/";
+            name = name.substring(7);
+        }
 
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        YField.setPromptText(String.valueOf(image.getLayoutY()));
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable:");
-        CheckBox visableCheck = new CheckBox();
-        visableCheck.setSelected(image.isVisible());
-        visablility.getChildren().addAll(visableLabel, visableCheck);
-
-        HBox form = new HBox();
-        form.setSpacing(5);
-        Label formLabel = new Label("Form");
-        ComboBox<String> formCombo = getPokemonForms(pokemonName, selectedGame.getGeneration());
-        formCombo.getSelectionModel().select(0);
-        form.getChildren().addAll(formLabel, formCombo);
-
-        VBox imageVBox = new VBox();
-        imageVBox.setSpacing(10);
-        if(formCombo.getItems().size() != 0)
-            imageVBox.getChildren().add(form);
-        imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
-
-        Accordion accordion = new Accordion();
-        TitledPane imageTitledPane = new TitledPane(pokemonName + " Sprite", imageVBox);
-        accordion.getPanes().add(imageTitledPane);
-
-        VBox imageSettings = new VBox();
-        imageSettings.getChildren().add(accordion);
-
-        formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-            if(newValue != null){
-                createAlternateSprite(pokemonName, newValue, selectedGame, image);
+        if(!filePath.contains("alternateforms")) {
+            switch (name) {
+                case "Type: Null":
+                    filePath += "type-null";
+                    break;
+                case "Nidoran♀":
+                    filePath += "nidoran-f";
+                    break;
+                case "Nidoran♂":
+                    filePath += "nidoran-m";
+                    break;
+                case "Mr. Mime":
+                    filePath += "mr-mime";
+                    break;
+                case "Mr. Rime":
+                    filePath += "mr-rime";
+                    break;
+                case "Mime Jr.":
+                    filePath += "mime-jr";
+                    break;
+                case "Flabébé":
+                    filePath += "flabebe";
+                    break;
+                case "Tapu Koko":
+                    filePath += "tapu-koko";
+                    break;
+                case "Tapu Lele":
+                    filePath += "tapu-lele";
+                    break;
+                case "Tapu Bulu":
+                    filePath += "tapu-bulu";
+                    break;
+                case "Tapu Fini":
+                    filePath += "tapu-fini";
+                    break;
+                default:
+                    filePath += name.toLowerCase();
+                    break;
             }
-        });
+        }
 
-        sizeField.setOnAction(e -> {
-            double scale = 0;
-            try{
-                scale = parseDouble(sizeField.getText());
-            }catch(NumberFormatException f){
-                sizeField.setText("");
+        if(selectedGame.getGeneration() < 5)
+            filePath += ".png";
+        else
+            filePath += ".gif";
+
+        try {
+            FileInputStream input = new FileInputStream(filePath);
+            Image image = new Image(input);
+            ImageView sprite = new ImageView(image);
+            sprite.setTranslateX(-(sprite.getImage().getWidth()/2));
+            sprite.setTranslateY(-(sprite.getImage().getHeight()/2));
+            return sprite;
+        }catch (FileNotFoundException e){
+            System.out.println(name + " sprite not found");
+            try {
+                return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
+            }catch(IOException f){
+                System.out.println("Placeholder not found");
             }
-            image.setScaleX(scale);
-            image.setScaleY(scale);
-            sizeField.setText("");
-            sizeField.setPromptText(String.valueOf(image.getScaleX()));
-        });
-
-        XField.setOnAction(e ->{
-            try{
-                image.setLayoutX(parseDouble(XField.getText()));
-                XField.setText("");
-                XField.setPromptText(String.valueOf(image.getLayoutX()));
-            }catch(NumberFormatException f){
-                XField.setText("");
-            }
-        });
-
-        YField.setOnAction(e ->{
-            try{
-                image.setLayoutY(parseDouble(YField.getText()));
-                YField.setText("");
-                YField.setPromptText(String.valueOf(image.getLayoutY()));
-            }catch(NumberFormatException f){
-                YField.setText("");
-            }
-        });
-
-        visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
-
-        return imageSettings;
+        }
+        return null;
     }
 
     //comboBox of all variants of given pokemon
@@ -391,132 +418,6 @@ public class window{
         }
 
         return comboBox;
-    }
-
-    //create a string of the file path of the game
-    public String createGameFilePath(Game selectedGame){
-        String filePath = "Images/Sprites/";
-        switch(selectedGame.getGeneration()) {
-            case 2:
-                filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
-                break;
-            case 3:
-                switch(selectedGame.getName()){
-                    case "Ruby":
-                    case "Sapphire":
-                    case "Emerald":
-                        filePath += "Generation 3/ruby-sapphire-emerald/";
-                        break;
-                    case "FireRed":
-                    case "LeafGreen":
-                        filePath += "Generation 3/firered-leafgreen/";
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 4:
-                switch(selectedGame.getName()){
-                    case "Diamond":
-                    case "Pearl":
-                        filePath += "Generation 4/diamond-pearl/";
-                        break;
-                    case "Platinum":
-                        filePath += "Generation 4/platinum/";
-                        break;
-                    case "HeartGold":
-                    case "SoulSilver":
-                        filePath += "Generation 4/heartgold-soulsilver/";
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 5:
-                filePath += "Generation 5/";
-                break;
-            default:
-                filePath += "3d Sprites/";
-                break;
-        }
-        return filePath;
-    }
-
-    //returns ImageView with the sprite of the given pokemon
-    public ImageView createPokemonSprite(String name, Game selectedGame){
-        String filePath = createGameFilePath(selectedGame);
-
-        if(name.contains("Galarian")) {
-            filePath += "galarian/";
-            name = name.substring(9);
-        }
-        else if(name.contains("Alolan")) {
-            filePath += "alolan/";
-            name = name.substring(7);
-        }
-
-        if(!filePath.contains("alternateforms")) {
-            switch (name) {
-                case "Type: Null":
-                    filePath += "type-null";
-                    break;
-                case "Nidoran♀":
-                    filePath += "nidoran-f";
-                    break;
-                case "Nidoran♂":
-                    filePath += "nidoran-m";
-                    break;
-                case "Mr. Mime":
-                    filePath += "mr-mime";
-                    break;
-                case "Mr. Rime":
-                    filePath += "mr-rime";
-                    break;
-                case "Mime Jr.":
-                    filePath += "mime-jr";
-                    break;
-                case "Flabébé":
-                    filePath += "flabebe";
-                    break;
-                case "Tapu Koko":
-                    filePath += "tapu-koko";
-                    break;
-                case "Tapu Lele":
-                    filePath += "tapu-lele";
-                    break;
-                case "Tapu Bulu":
-                    filePath += "tapu-bulu";
-                    break;
-                case "Tapu Fini":
-                    filePath += "tapu-fini";
-                    break;
-                default:
-                    filePath += name.toLowerCase();
-                    break;
-            }
-        }
-
-        if(selectedGame.getGeneration() < 5)
-            filePath += ".png";
-        else
-            filePath += ".gif";
-
-        try {
-            FileInputStream input = new FileInputStream(filePath);
-            Image image = new Image(input);
-            ImageView sprite = new ImageView(image);
-            sprite.setTranslateX(-(sprite.getImage().getWidth()/2));
-            sprite.setTranslateY(-(sprite.getImage().getHeight()/2));
-            return sprite;
-        }catch (FileNotFoundException e){
-            System.out.println(name + " sprite not found");
-            try {
-                return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
-            }catch(IOException f){
-                System.out.println("Placeholder not found");
-            }
-        }
-        return null;
     }
 
     //changes given image to given pokemon variant
@@ -869,6 +770,105 @@ public class window{
         }catch(IOException ignored) {
 
         }
+    }
+
+    //creates ImageView settings VBox
+    public VBox createImageSettings(ImageView image, String pokemonName, Game selectedGame){
+        HBox groupLabel = new HBox();
+        Label Group = new Label(pokemonName + " Sprite:");
+        Group.setUnderline(true);
+        groupLabel.getChildren().add(Group);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale:");
+        TextField sizeField = new TextField();
+        sizeField.setPromptText(String.valueOf(image.getScaleX()));
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        Label XLabel = new Label("X Location:");
+        TextField XField = new TextField();
+        XField.setPromptText(String.valueOf(image.getLayoutX()));
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        Label YLabel = new Label("Y Location:");
+        TextField YField = new TextField();
+        YField.setPromptText(String.valueOf(image.getLayoutY()));
+        changeY.getChildren().addAll(YLabel, YField);
+
+        HBox visablility = new HBox();
+        visablility.setSpacing(5);
+        Label visableLabel = new Label("Visable:");
+        CheckBox visableCheck = new CheckBox();
+        visableCheck.setSelected(image.isVisible());
+        visablility.getChildren().addAll(visableLabel, visableCheck);
+
+        HBox form = new HBox();
+        form.setSpacing(5);
+        Label formLabel = new Label("Form");
+        ComboBox<String> formCombo = getPokemonForms(pokemonName, selectedGame.getGeneration());
+        formCombo.getSelectionModel().select(0);
+        form.getChildren().addAll(formLabel, formCombo);
+
+        VBox imageVBox = new VBox();
+        imageVBox.setSpacing(10);
+        if(formCombo.getItems().size() != 0)
+            imageVBox.getChildren().add(form);
+        imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
+
+        Accordion accordion = new Accordion();
+        TitledPane imageTitledPane = new TitledPane(pokemonName + " Sprite", imageVBox);
+        accordion.getPanes().add(imageTitledPane);
+
+        VBox imageSettings = new VBox();
+        imageSettings.getChildren().add(accordion);
+
+        formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if(newValue != null){
+                createAlternateSprite(pokemonName, newValue, selectedGame, image);
+            }
+        });
+
+        sizeField.setOnAction(e -> {
+            double scale = 0;
+            try{
+                scale = parseDouble(sizeField.getText());
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+            image.setScaleX(scale);
+            image.setScaleY(scale);
+            sizeField.setText("");
+            sizeField.setPromptText(String.valueOf(image.getScaleX()));
+        });
+
+        XField.setOnAction(e ->{
+            try{
+                image.setLayoutX(parseDouble(XField.getText()));
+                XField.setText("");
+                XField.setPromptText(String.valueOf(image.getLayoutX()));
+            }catch(NumberFormatException f){
+                XField.setText("");
+            }
+        });
+
+        YField.setOnAction(e ->{
+            try{
+                image.setLayoutY(parseDouble(YField.getText()));
+                YField.setText("");
+                YField.setPromptText(String.valueOf(image.getLayoutY()));
+            }catch(NumberFormatException f){
+                YField.setText("");
+            }
+        });
+
+        visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
+
+        return imageSettings;
     }
 
     //creates Label settings VBox
@@ -1828,12 +1828,9 @@ class previouslyCaught extends window{
         previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
         previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
 
-        VBox caughtSettings;
         if(displayCaught != 0) {
             addPreviouslyCaughtPokemon(displayCaught);
             refreshPreviouslyCaughtSettings();
-            //while(caughtSettings.getChildren().size() > 0)
-               // previouslyCaughtSettingsLayout.getChildren().add(caughtSettings.getChildren().get(0));
         }
 
         ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
@@ -1862,9 +1859,6 @@ class previouslyCaught extends window{
                     windowStage.show();
                     addPreviouslyCaughtPokemon(displayCaught);
                     refreshPreviouslyCaughtSettings();
-                    //if(caughtPokemonSettings != null)
-                        //while(caughtPokemonSettings.getChildren().size() > 0)
-                            //previouslyCaughtSettingsLayout.getChildren().add(caughtPokemonSettings.getChildren().get(0));
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
