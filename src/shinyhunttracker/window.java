@@ -131,6 +131,12 @@ public class window{
                 case "Tapu Fini":
                     filePath += "tapu-fini";
                     break;
+                case "Farfetch'd":
+                    filePath += "farfetchd";
+                    break;
+                case "Sirfetch'd":
+                    filePath += "sirfetchd";
+                    break;
                 default:
                     filePath += name.toLowerCase();
                     break;
