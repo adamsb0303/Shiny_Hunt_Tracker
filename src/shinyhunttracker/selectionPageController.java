@@ -1,27 +1,18 @@
 package shinyhunttracker;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static java.lang.Integer.parseInt;
 import static javafx.util.Duration.INDEFINITE;
 import static javafx.util.Duration.ZERO;
 
@@ -39,7 +30,7 @@ public class selectionPageController implements Initializable {
     public TreeItem<String> gameRoot, treeGamesGen1, treeGamesGen2, treeGamesGen3, treeGamesGen4, treeGamesGen5, treeGamesGen6, treeGamesGen7, treeGamesGen8;
     public TreeItem<String> methodRoot, evolution0, evolution1, evolution2;
     int index = 0;
-    Tooltip searchField = new Tooltip();
+    Tooltip searchField = new Tooltip("Type to search for Pokemon");
     String pokemonSearch = "";
 
     //selected objects
@@ -82,7 +73,7 @@ public class selectionPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
         searchField.setShowDuration(INDEFINITE);
-        searchField.setShowDelay(new Duration(30));
+        searchField.setShowDelay(new Duration(500));
         PokemonList.setTooltip(searchField);
 
         PokemonList.getSelectionModel().selectedItemProperty()
