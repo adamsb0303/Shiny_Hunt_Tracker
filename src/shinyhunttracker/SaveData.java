@@ -171,8 +171,6 @@ public class SaveData {
                             double scale = parseDouble(splitString(line, 2));
                             image.setScaleX(scale);
                             image.setScaleY(scale);
-                            image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale) / 2)));
-                            image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale) / 2)));
                             image.setVisible(splitString(line, 3).compareTo("true") == 0);
                         } catch (NullPointerException ignored) {
 
@@ -202,8 +200,6 @@ public class SaveData {
                         double scale = parseDouble(splitString(line, 2));
                         image.setScaleX(scale);
                         image.setScaleY(scale);
-                        image.setTranslateX(-(image.getImage().getWidth() * ((1 - scale) / 2)));
-                        image.setTranslateY(-(image.getImage().getHeight() * ((1 - scale) / 2)));
                         image.setVisible(splitString(line, 3).compareTo("true") == 0);
                     }else{
                         Text text = (Text) huntLayout.getChildren().get(i);
