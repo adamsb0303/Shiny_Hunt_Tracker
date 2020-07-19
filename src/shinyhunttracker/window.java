@@ -1466,6 +1466,7 @@ class huntWindow extends window{
         encounters += increment;
         combo += increment;
         encountersText.setText(String.valueOf(encounters));
+        currentComboText.setText(String.valueOf(combo));
         dynamicOddsMethods();
     }
 
@@ -1515,6 +1516,7 @@ class huntWindow extends window{
     //resets encounters
     public void resetCombo(){
         combo = 0;
+        currentComboText.setText(String.valueOf(combo));
         dynamicOddsMethods();
     }
 
