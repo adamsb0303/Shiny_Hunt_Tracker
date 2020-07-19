@@ -1,5 +1,6 @@
 I created this application to help keep track of my shiny hunts, but it also has a main function of a streaming tool<br/>
 <h1>How to use:</h1>
+https://www.youtube.com/watch?v=4eYv-shSb1E
 <h2>Starting</h2>
     The launcher is located at Shiny Hunt Tracker/bin/launcher.sh<br/>
     use Shiny Hunt Tracker/bin/launcher.sh.bat if the previous didn't work<br/><br/>
