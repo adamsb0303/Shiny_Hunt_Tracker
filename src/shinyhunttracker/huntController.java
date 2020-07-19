@@ -143,6 +143,12 @@ public class huntController {
     }
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+        if(windows.length == 0){
+            MenuItem saveAll = new MenuItem("Save All");
+            Settings.getItems().add(saveAll);
+
+            saveAll.setOnAction(e -> saveAll());
+        }
         boolean numFound = false;
         for(int i = 0; i < windows.length; i++){
             numFound = false;
@@ -219,7 +225,10 @@ public class huntController {
     }
 
     public void refreshHuntWindowSettings(){
-        Settings.getItems().remove(2, Settings.getItems().size());
+        if(windows.length == 0)
+            Settings.getItems().remove(2, Settings.getItems().size());
+        else
+            Settings.getItems().remove(3, Settings.getItems().size());
         huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
         for(huntWindow i : windows)
             if(i != null)
@@ -236,6 +245,11 @@ public class huntController {
                 windows[i] = null;
             }
         }
+    }
+
+    public void saveAll(){
+        for(huntWindow i: windows)
+            i.saveHunt();
     }
 
     public void orderWindowsArray(){
