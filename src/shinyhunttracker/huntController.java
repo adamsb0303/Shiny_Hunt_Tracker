@@ -212,6 +212,9 @@ public class huntController {
     }
 
     public void removeWindow(huntWindow window){
+        if(window.getHuntNumber() == huntNum - 1)
+            huntNum--;
+        
         huntWindow[] temp = new huntWindow[windows.length - 1];
         int index = 0;
         for (huntWindow i : windows) {
