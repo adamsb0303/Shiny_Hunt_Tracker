@@ -1935,7 +1935,7 @@ class previouslyCaught extends window{
         ColorPicker picker = (ColorPicker) background.getChildren().get(1);
         if(windowLayout.getBackground() != null)
             picker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
-        for(int i = 0; i < windowLayout.getChildren().size() / 4; i++) {
+        for(int i = 0; i < windowLayout.getChildren().size(); i += 4) {
             VBox imageSettings = new VBox();
             VBox currentPokemonSettings = new VBox();
             VBox currentMethodSettings = new VBox();
@@ -1947,16 +1947,16 @@ class previouslyCaught extends window{
                 switch(j){
                     case 0:
                         Text temp = (Text) windowLayout.getChildren().get(i + 1);
-                        imageSettings = createImageSettings((ImageView) windowLayout.getChildren().get(j), temp.getText(), caughtGame);
+                        imageSettings = createImageSettings((ImageView) windowLayout.getChildren().get(i), temp.getText(), caughtGame);
                         break;
                     case 1:
-                        currentPokemonSettings = createLabelSettings((Text) windowLayout.getChildren().get(j), "Pokemon");
+                        currentPokemonSettings = createLabelSettings((Text) windowLayout.getChildren().get(i + j), "Pokemon");
                         break;
                     case 2:
-                        currentMethodSettings = createLabelSettings((Text) windowLayout.getChildren().get(j), "Method");
+                        currentMethodSettings = createLabelSettings((Text) windowLayout.getChildren().get(i + j), "Method");
                         break;
                     case 3:
-                        encountersSettings = createLabelSettings((Text) windowLayout.getChildren().get(j), "Encounters");
+                        encountersSettings = createLabelSettings((Text) windowLayout.getChildren().get(i + j), "Encounters");
                         break;
                     default:
                         break;
