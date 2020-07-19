@@ -1626,6 +1626,7 @@ class huntWindow extends window{
                 break;
             case "Total Encounters":
                 previousEncounters++;
+                previousEncountersText.setText(String.valueOf(previousEncounters));
                 oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), methodBase));
                 break;
             default:
