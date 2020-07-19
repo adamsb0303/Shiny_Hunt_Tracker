@@ -132,11 +132,15 @@ public class huntController {
         pokemonCaught.setOnAction(e -> {
             window.pokemonCaught();
             removeWindow(window);
-            SaveData temp = new SaveData();
-            temp.saveLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout(), false);
-            previousCatches.previouslyCaughtPokemonSettings();
-            temp.loadLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout());
-            previousCatches.getSettingsStage().close();
+            if(previousCatches.getStage().isShowing()) {
+                SaveData temp = new SaveData();
+                temp.saveLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout(), false);
+                boolean settingsIsOpen = previousCatches.getSettingsStage().isShowing();
+                previousCatches.previouslyCaughtPokemonSettings();
+                temp.loadLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout());
+                if(!settingsIsOpen)
+                    previousCatches.getSettingsStage().close();
+            }
         });
         resetCombo.setOnAction(e -> window.resetCombo());
         saveHunt.setOnAction(e -> window.saveHunt());
@@ -214,7 +218,7 @@ public class huntController {
     public void removeWindow(huntWindow window){
         if(window.getHuntNumber() == huntNum - 1)
             huntNum--;
-        
+
         huntWindow[] temp = new huntWindow[windows.length - 1];
         int index = 0;
         for (huntWindow i : windows) {
