@@ -153,9 +153,9 @@ public class huntController {
 
             saveAll.setOnAction(e -> saveAll());
         }
+
         boolean numFound = false;
         for(int i = 0; i < windows.length; i++){
-            numFound = false;
             for(huntWindow j : windows){
                 if (j.getHuntNumber() == (i + 1)) {
                     numFound = true;
@@ -168,7 +168,7 @@ public class huntController {
             }
         }
         if(numFound)
-            huntNum = windows.length + 1;
+            huntNum++;
 
         if(currentLayouts.length > windows.length) {
             layout = currentLayouts[huntNum - 1];
@@ -216,8 +216,11 @@ public class huntController {
     }
 
     public void removeWindow(huntWindow window){
-        if(window.getHuntNumber() == huntNum - 1)
-            huntNum--;
+        if(window.getHuntNumber() == huntNum)
+            if(windows.length == 1)
+                huntNum = 1;
+            else
+                huntNum = windows[windows.length - 2].getHuntNumber();
 
         huntWindow[] temp = new huntWindow[windows.length - 1];
         int index = 0;
