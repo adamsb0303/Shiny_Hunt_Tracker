@@ -1864,7 +1864,6 @@ class previouslyCaught extends window{
 
         if(displayCaught != 0) {
             addPreviouslyCaughtPokemon(displayCaught);
-            refreshPreviouslyCaughtSettings();
         }
 
         ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
@@ -1892,7 +1891,6 @@ class previouslyCaught extends window{
                 else {
                     windowStage.show();
                     addPreviouslyCaughtPokemon(displayCaught);
-                    refreshPreviouslyCaughtSettings();
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
@@ -1911,7 +1909,7 @@ class previouslyCaught extends window{
     public void addPreviouslyCaughtPokemon(int previouslyCaught){
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
-            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught + 3, previouslyCaughtSettingsLayout.getChildren().size());
+            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
         }
         SaveData data = new SaveData();
         int numberCaught = data.getfileLength("CaughtPokemon");
@@ -1952,44 +1950,13 @@ class previouslyCaught extends window{
                 quickEdit(pokemon);
                 quickEdit(method);
                 quickEdit(encounters);
-            }
-        }
-    }
 
-    public void refreshPreviouslyCaughtSettings(){
-        previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-        HBox background = (HBox) previouslyCaughtSettingsLayout.getChildren().get(1);
-        ColorPicker picker = (ColorPicker) background.getChildren().get(1);
-        if(windowLayout.getBackground() != null)
-            picker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
-        for(int i = 0; i < windowLayout.getChildren().size(); i += 4) {
-            VBox imageSettings = new VBox();
-            VBox currentPokemonSettings = new VBox();
-            VBox currentMethodSettings = new VBox();
-            VBox encountersSettings = new VBox();
-            SaveData data = new SaveData();
-            String line = data.getLinefromFile(i, "CaughtPokemon");
-            Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
-            for(int j = 0; j < 4; j++){
-                switch(j){
-                    case 0:
-                        Text temp = (Text) windowLayout.getChildren().get(i + 1);
-                        imageSettings = createImageSettings((ImageView) windowLayout.getChildren().get(i), temp.getText(), caughtGame);
-                        break;
-                    case 1:
-                        currentPokemonSettings = createLabelSettings((Text) windowLayout.getChildren().get(i + j), "Pokemon");
-                        break;
-                    case 2:
-                        currentMethodSettings = createLabelSettings((Text) windowLayout.getChildren().get(i + j), "Method");
-                        break;
-                    case 3:
-                        encountersSettings = createLabelSettings((Text) windowLayout.getChildren().get(i + j), "Encounters");
-                        break;
-                    default:
-                        break;
-                }
+                VBox spriteSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame);
+                VBox pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
+                VBox methodLabelSettings = createLabelSettings(method, "Method");
+                VBox encountersLabelSettings = createLabelSettings(encounters, "Encounters");
+                previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
             }
-            previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), imageSettings, currentPokemonSettings, currentMethodSettings, encountersSettings);
         }
     }
 
@@ -2113,7 +2080,6 @@ class previouslyCaught extends window{
                     createPreviouslyCaughtPokemonWindow();
                     previouslyCaughtPokemonSettings();
                     data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
-                    refreshPreviouslyCaughtSettings();
                     loadSavedLayoutStage.close();
                 });
     }
