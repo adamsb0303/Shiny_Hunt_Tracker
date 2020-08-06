@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -1096,6 +1097,19 @@ public class window{
         return labelSettings;
     }
 
+    //change location of element when dragged
+    public void dragElement(Node element){
+        element.setOnMousePressed(e -> {
+            element.toFront();
+            double diffX = element.getLayoutX() - e.getSceneX();
+            double diffY = element.getLayoutY() - e.getSceneY();
+            element.setOnMouseDragged(f -> {
+                element.setLayoutX(f.getSceneX() + diffX);
+                element.setLayoutY(f.getSceneY() + diffY);
+            });
+        });
+    }
+
     //creates string array of avaliable fonts
     private String[] generateFonts(){
         String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
@@ -1239,8 +1253,16 @@ class huntWindow extends window{
         currentGameText.setStroke(Color.web("0x00000000"));
         oddFractionText.setStroke(Color.web("0x00000000"));
         encountersText.setStroke(Color.web("0x00000000"));
-        previousEncountersText.setStroke(Color.web("0x00000000"));
         currentComboText.setStroke(Color.web("0x00000000"));
+        previousEncountersText.setStroke(Color.web("0x00000000"));
+
+        dragElement(currentHuntingPokemonText);
+        dragElement(currentHuntingMethodText);
+        dragElement(currentGameText);
+        dragElement(oddFractionText);
+        dragElement(encountersText);
+        dragElement(currentComboText);
+        dragElement(previousEncountersText);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         Evo0 = new ImageView();
@@ -1255,6 +1277,11 @@ class huntWindow extends window{
             if(Evo1 == null)
                 Evo1 = new ImageView();
         }
+
+        dragElement(sprite);
+        dragElement(Evo0);
+        dragElement(Evo1);
+
         windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
         switch(selectedMethod.getName()){
