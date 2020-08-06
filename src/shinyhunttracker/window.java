@@ -1,7 +1,5 @@
 package shinyhunttracker;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -16,6 +14,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -28,7 +27,6 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.PreparedStatement;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -1096,7 +1094,7 @@ public class window{
     }
 
     //change location of element when dragged
-    public void dragElement(Node element){
+    public void quickEdit(Node element){
         element.setOnMousePressed(e -> {
             element.toFront();
             double diffX = element.getLayoutX() - e.getSceneX();
@@ -1254,13 +1252,13 @@ class huntWindow extends window{
         currentComboText.setStroke(Color.web("0x00000000"));
         previousEncountersText.setStroke(Color.web("0x00000000"));
 
-        dragElement(currentHuntingPokemonText);
-        dragElement(currentHuntingMethodText);
-        dragElement(currentGameText);
-        dragElement(oddFractionText);
-        dragElement(encountersText);
-        dragElement(currentComboText);
-        dragElement(previousEncountersText);
+        quickEdit(currentHuntingPokemonText);
+        quickEdit(currentHuntingMethodText);
+        quickEdit(currentGameText);
+        quickEdit(oddFractionText);
+        quickEdit(encountersText);
+        quickEdit(currentComboText);
+        quickEdit(previousEncountersText);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
         Evo0 = new ImageView();
@@ -1276,9 +1274,9 @@ class huntWindow extends window{
                 Evo1 = new ImageView();
         }
 
-        dragElement(sprite);
-        dragElement(Evo0);
-        dragElement(Evo1);
+        quickEdit(sprite);
+        quickEdit(Evo0);
+        quickEdit(Evo1);
 
         windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
@@ -1950,6 +1948,10 @@ class previouslyCaught extends window{
                 encounters.setLayoutX(50 * (numberCaught - i));
                 encounters.setLayoutY(105);
 
+                quickEdit(sprite);
+                quickEdit(pokemon);
+                quickEdit(method);
+                quickEdit(encounters);
             }
         }
     }
