@@ -1,5 +1,7 @@
 package shinyhunttracker;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,6 +28,8 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -790,21 +794,21 @@ public class window{
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale:");
         TextField sizeField = new TextField();
-        sizeField.setPromptText(String.valueOf(image.getScaleX()));
+        sizeField.promptTextProperty().bind(image.scaleXProperty().asString());
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         Label XLabel = new Label("X Location:");
         TextField XField = new TextField();
-        XField.setPromptText(String.valueOf(image.getLayoutX()));
+        XField.promptTextProperty().bind(image.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         Label YLabel = new Label("Y Location:");
         TextField YField = new TextField();
-        YField.setPromptText(String.valueOf(image.getLayoutY()));
+        YField.promptTextProperty().bind(image.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
         HBox visablility = new HBox();
@@ -850,14 +854,12 @@ public class window{
             image.setScaleX(scale);
             image.setScaleY(scale);
             sizeField.setText("");
-            sizeField.setPromptText(String.valueOf(image.getScaleX()));
         });
 
         XField.setOnAction(e ->{
             try{
                 image.setLayoutX(parseDouble(XField.getText()));
                 XField.setText("");
-                XField.setPromptText(String.valueOf(image.getLayoutX()));
             }catch(NumberFormatException f){
                 XField.setText("");
             }
@@ -867,7 +869,6 @@ public class window{
             try{
                 image.setLayoutY(parseDouble(YField.getText()));
                 YField.setText("");
-                YField.setPromptText(String.valueOf(image.getLayoutY()));
             }catch(NumberFormatException f){
                 YField.setText("");
             }
@@ -889,21 +890,21 @@ public class window{
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale: ");
         TextField sizeField = new TextField();
-        sizeField.setPromptText(String.valueOf(label.getScaleX()));
+        sizeField.promptTextProperty().bind(label.scaleXProperty().asString());
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         Label XLabel = new Label("X Location:");
         TextField XField = new TextField();
-        XField.setPromptText(String.valueOf(label.getLayoutX()));
+        XField.promptTextProperty().bind(label.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         Label YLabel = new Label("Y Location:");
         TextField YField = new TextField();
-        YField.setPromptText(String.valueOf(label.getLayoutY()));
+        YField.promptTextProperty().bind(label.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
         HBox font = new HBox();
@@ -986,7 +987,6 @@ public class window{
             }
             label.setScaleX(scale);
             label.setScaleY(scale);
-            sizeField.setPromptText(String.valueOf(label.getScaleX()));
         });
 
         XField.setOnAction(e ->{
@@ -998,7 +998,6 @@ public class window{
                 XField.setText("");
             }
             label.setLayoutX(X);
-            XField.setPromptText(String.valueOf(label.getLayoutX()));
         });
 
         YField.setOnAction(e ->{
@@ -1010,7 +1009,6 @@ public class window{
                 YField.setText("");
             }
             label.setLayoutY(Y);
-            YField.setPromptText(String.valueOf(label.getLayoutY()));
         });
 
         fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
