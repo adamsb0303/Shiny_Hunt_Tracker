@@ -1786,6 +1786,8 @@ class huntWindow extends window{
         return (int)Math.round(den / num);
     }
 
+    public Pokemon getSelectedPokemon(){ return selectedPokemon; }
+
     public void setKeybind(char keybind){
         this.keybind = keybind;
     }
@@ -1797,6 +1799,8 @@ class huntWindow extends window{
     public char getKeyBinding(){
         return keybind;
     }
+
+    public int getGameGeneration(){ return selectedGame.getGeneration(); }
 }
 
 class previouslyCaught extends window{

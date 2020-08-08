@@ -507,8 +507,6 @@ public class selectionPageController implements Initializable {
     public void InitializeMethodList(){
         selectedMethod = new Method();
         methodLabel.setText(selectedMethod.getName());
-        if(selectedGame.getGeneration() == 1)
-            return;
         methodRoot = new TreeItem<>();
         createFamily(selectedPokemon.getName());
         selectedGame.generateMethods(selectedPokemon);

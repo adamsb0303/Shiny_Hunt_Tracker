@@ -118,7 +118,11 @@ public class huntController {
         MenuItem pokemonCaught = new MenuItem("Pokemon Caught");
         MenuItem resetCombo = new MenuItem("Reset Combo");
         MenuItem saveHunt = new MenuItem("Save Hunt");
+        MenuItem DVTable = new MenuItem("DV Table");
         huntSettings.getItems().addAll(increment, resetEncounters, phaseHunt, pokemonCaught, resetCombo, saveHunt);
+
+        if(window.getGameGeneration() == 1)
+            huntSettings.getItems().add(DVTable);
 
         newHuntSettings.getItems().addAll(customizeHuntLayout, huntSettings);
         Settings.getItems().add(newHuntSettings);
@@ -144,6 +148,7 @@ public class huntController {
         });
         resetCombo.setOnAction(e -> window.resetCombo());
         saveHunt.setOnAction(e -> window.saveHunt());
+        DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
     public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
@@ -310,5 +315,90 @@ public class huntController {
         Scene keyBindingScene = new Scene(scrollPane, 250, 500);
         keyBindingSettingsStage.setScene(keyBindingScene);
         keyBindingSettingsStage.show();
+    }
+
+    public void generateDVTable(Pokemon selectedPokemon){
+        ComboBox<Integer> levelSelect = new ComboBox<>();
+        for(int i = 1; i <= 100; i++)
+            levelSelect.getItems().add(i);
+        levelSelect.getSelectionModel().select(0);
+
+        VBox health = new VBox();
+        health.setAlignment(Pos.TOP_CENTER);
+        Label healthLabel = new Label("Health");
+        Label healthifShiny = new Label();
+        health.getChildren().addAll(healthLabel, healthifShiny);
+
+        VBox attack = new VBox();
+        attack.setAlignment(Pos.TOP_CENTER);
+        Label attackLabel = new Label("Attack");
+        Label attackifShiny = new Label();
+        attack.getChildren().addAll(attackLabel, attackifShiny);
+
+        VBox defense = new VBox();
+        defense.setAlignment(Pos.TOP_CENTER);
+        Label defenseLabel = new Label("Defense");
+        Label defenseifShiny = new Label();
+        defense.getChildren().addAll(defenseLabel, defenseifShiny);
+
+        VBox speed = new VBox();
+        speed.setAlignment(Pos.TOP_CENTER);
+        Label speedLabel = new Label("Speed");
+        Label speedifShiny = new Label();
+        speed.getChildren().addAll(speedLabel, speedifShiny);
+
+        VBox special = new VBox();
+        special.setAlignment(Pos.TOP_CENTER);
+        Label specialLabel = new Label("Special");
+        Label specialifShiny = new Label();
+        special.getChildren().addAll(specialLabel, specialifShiny);
+
+        updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, 1, selectedPokemon);
+
+        HBox statTable = new HBox();
+        statTable.setAlignment(Pos.TOP_CENTER);
+        statTable.setSpacing(10);
+        statTable.getChildren().addAll(health, attack, defense, speed, special);
+
+        VBox DVTableLayout = new VBox();
+        DVTableLayout.setAlignment(Pos.CENTER);
+        DVTableLayout.getChildren().addAll(levelSelect, statTable);
+
+        Stage DVTableStage = new Stage();
+        Scene DVTableScene = new Scene(DVTableLayout, 500, 100);
+        DVTableStage.setScene(DVTableScene);
+        DVTableStage.setTitle(selectedPokemon.getName() + " Shiny DV Table");
+
+        DVTableStage.show();
+
+        levelSelect.setOnAction(e -> {
+            int level = levelSelect.getSelectionModel().getSelectedItem();
+            updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, level, selectedPokemon);
+        });
+    }
+
+    public void updateStatLabels(Label health, Label attack, Label defense, Label speed, Label special, int level, Pokemon selectedPokemon){
+        health.setText(calculateShinyStat(selectedPokemon.getStats("health"), 0,level, true) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("health"), 8,level, true));
+
+        attack.setText(calculateShinyStat(selectedPokemon.getStats("attack"), 2, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 3, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 6, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 7, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 10, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 11, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 14, level, false) + "\n"
+                     + calculateShinyStat(selectedPokemon.getStats("attack"), 15, level, false));
+
+        defense.setText(calculateShinyStat(selectedPokemon.getStats("defense"), 10, level, false) + "");
+
+        speed.setText(calculateShinyStat(selectedPokemon.getStats("speed"), 10, level, false) + "");
+
+        special.setText(calculateShinyStat(selectedPokemon.getStats("special"), 10, level, false) + "");
+    }
+
+    public int calculateShinyStat(int base, int iv, int level, boolean isHealth){
+        int health = isHealth ? 1 : 0;
+        return (((base + iv) * 2 * level) / 100) + (level * health) + 5 + (2 * health);
     }
 }
