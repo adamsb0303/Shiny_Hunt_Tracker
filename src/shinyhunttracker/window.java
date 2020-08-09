@@ -41,6 +41,9 @@ public class window{
     public String createGameFilePath(Game selectedGame){
         String filePath = "Images/Sprites/";
         switch(selectedGame.getGeneration()) {
+            case 1:
+                filePath += "Generation 2/crystal/";
+                break;
             case 2:
                 filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
                 break;
