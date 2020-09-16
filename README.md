@@ -1,4 +1,7 @@
 I created this application to help keep track of my shiny hunts, but it also has a main function of a streaming tool<br/>
+<h1>Download</h1>
+Sprites(498.9MB): https://www.mediafire.com/file/krol69d21yaryst/ShinyHuntTracker.zip/file <br/>
+No Sprites(39.56MB): https://www.mediafire.com/file/fnt7h4geb9flsjy/ShinyHuntTracker-NoImages.zip/file
 <h1>How to use:</h1>
 https://www.youtube.com/watch?v=4eYv-shSb1E
 <h2>Starting</h2>
