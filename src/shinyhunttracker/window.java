@@ -1099,7 +1099,6 @@ public class window{
     //change location of element when dragged
     public void quickEdit(Node element){
         element.setOnMousePressed(e -> {
-            element.toFront();
             double diffX = element.getLayoutX() - e.getSceneX();
             double diffY = element.getLayoutY() - e.getSceneY();
             element.setOnMouseDragged(f -> {
