@@ -2,6 +2,7 @@ package shinyhunttracker;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -140,7 +141,7 @@ public class SaveData {
             for(Node i : huntLayout.getChildren()) {
                 if(i instanceof ImageView){
                     ImageView image = (ImageView) i;
-                    bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getScaleX() + "," + image.isVisible() + ",\n");
+                    bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getFitWidth() + "," + image.getFitHeight() + "," + image.isVisible() + ",\n");
                 }else {
                     Text text = (Text) i;
                     bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + text.getFont().getName() + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isUnderline() + "," + text.isVisible() + ",\n");
@@ -164,17 +165,23 @@ public class SaveData {
                 for (int i = 0; i < getfileLength("Layouts/" + layoutName) - 1; i++) {
                     String line = fileReader.readLine();
                     if (i < 3) {
-                        try {
-                            ImageView image = (ImageView) huntLayout.getChildren().get(i);
-                            image.setLayoutX(parseDouble(splitString(line, 0)));
-                            image.setLayoutY(parseDouble(splitString(line, 1)));
-                            double scale = parseDouble(splitString(line, 2));
-                            image.setScaleX(scale);
-                            image.setScaleY(scale);
-                            image.setVisible(splitString(line, 3).compareTo("true") == 0);
-                        } catch (NullPointerException ignored) {
-
+                        ImageView image = (ImageView) huntLayout.getChildren().get(i);
+                        image.setLayoutX(parseDouble(splitString(line, 0)));
+                        image.setLayoutY(parseDouble(splitString(line, 1)));
+                        double imageWidth = -parseDouble(splitString(line, 2));
+                        double imageHeight = -parseDouble(splitString(line, 3));
+                        if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight){
+                            double width = -image.getFitWidth();
+                            double height = -image.getFitHeight();
+                            double scale;
+                            if(width > height)
+                                scale = imageWidth / width;
+                            else
+                                scale = imageHeight / height;
+                            image.setScaleX(image.getScaleX() * scale);
+                            image.setScaleY(image.getScaleY() * scale);
                         }
+                        image.setVisible(splitString(line, 4).compareTo("true") == 0);
                     } else if (i < 10) {
                         Text text = (Text) huntLayout.getChildren().get(i);
                         text.setLayoutX(parseDouble(splitString(line, 0)));
@@ -197,10 +204,20 @@ public class SaveData {
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
                         image.setLayoutX(parseDouble(splitString(line, 0)));
                         image.setLayoutY(parseDouble(splitString(line, 1)));
-                        double scale = parseDouble(splitString(line, 2));
-                        image.setScaleX(scale);
-                        image.setScaleY(scale);
-                        image.setVisible(splitString(line, 3).compareTo("true") == 0);
+                        double imageWidth = -parseDouble(splitString(line, 2));
+                        double imageHeight = -parseDouble(splitString(line, 3));
+                        if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight){
+                            double width = -image.getFitWidth();
+                            double height = -image.getFitHeight();
+                            double scale;
+                            if(width > height)
+                                scale = imageWidth / width;
+                            else
+                                scale = imageHeight / height;
+                            image.setScaleX(image.getScaleX() * scale);
+                            image.setScaleY(image.getScaleY() * scale);
+                        }
+                        image.setVisible(splitString(line, 4).compareTo("true") == 0);
                     }else{
                         Text text = (Text) huntLayout.getChildren().get(i);
                         text.setLayoutX(parseDouble(splitString(line, 0)));

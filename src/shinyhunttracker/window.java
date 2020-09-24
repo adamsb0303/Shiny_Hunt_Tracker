@@ -171,8 +171,9 @@ public class window{
                 sprite.setTranslateX((image.getWidth() * scale - image.getWidth()) / 2);
                 sprite.setTranslateY((image.getHeight() * scale - image.getHeight()) / 2);
             }
-            sprite.setTranslateX(sprite.getTranslateX() - ((sprite.getImage().getWidth() * sprite.getScaleX()) / 2));
+            sprite.setTranslateX(sprite.getTranslateX() - sprite.getImage().getWidth() * sprite.getScaleX() / 2);
             sprite.setTranslateY(sprite.getTranslateY() - sprite.getImage().getHeight() * sprite.getScaleY());
+            imageViewFitAdjust(sprite);
             return sprite;
         }catch (FileNotFoundException e){
             System.out.println(name + " sprite not found");
@@ -443,6 +444,12 @@ public class window{
         }
 
         return comboBox;
+    }
+
+    //adjust ImageView fit
+    public void imageViewFitAdjust(ImageView image){
+        image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
+        image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
     }
 
     //changes given image to given pokemon variant
@@ -867,6 +874,7 @@ public class window{
             }
             image.setScaleX(scale);
             image.setScaleY(scale);
+            imageViewFitAdjust(image);
             sizeField.setText("");
         });
 
@@ -1962,6 +1970,7 @@ class previouslyCaught extends window{
 
                 sprite.setLayoutX(widthTotal + currentImageWidth / 2);
                 sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
+                imageViewFitAdjust(sprite);
 
                 pokemon.setLayoutX(widthTotal + currentImageWidth / 2);
                 pokemon.setLayoutY(75);
