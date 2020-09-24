@@ -1937,6 +1937,8 @@ class previouslyCaught extends window{
         int numberCaught = data.getfileLength("CaughtPokemon");
         if(numberCaught < previouslyCaught)
             previouslyCaught = numberCaught;
+
+        double widthTotal = 0;
         for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
             if((i - numberCaught) * -1 > displayPrevious) {
                 String line = data.getLinefromFile(i, "CaughtPokemon");
@@ -1956,17 +1958,21 @@ class previouslyCaught extends window{
                 method.setStroke(Color.web("0x00000000"));
                 encounters.setStroke(Color.web("0x00000000"));
 
-                sprite.setLayoutX(50 * (numberCaught - i));
-                sprite.setLayoutY(50);
+                double currentImageWidth = sprite.getImage().getWidth() * sprite.getScaleX();
 
-                pokemon.setLayoutX(50 * (numberCaught - i));
+                sprite.setLayoutX(widthTotal + currentImageWidth / 2);
+                sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
+
+                pokemon.setLayoutX(widthTotal + currentImageWidth / 2);
                 pokemon.setLayoutY(75);
 
-                method.setLayoutX(50 * (numberCaught - i));
+                method.setLayoutX(widthTotal + currentImageWidth / 2);
                 method.setLayoutY(90);
 
-                encounters.setLayoutX(50 * (numberCaught - i));
+                encounters.setLayoutX(widthTotal + currentImageWidth / 2);
                 encounters.setLayoutY(105);
+
+                widthTotal += sprite.getImage().getWidth() * sprite.getScaleX();
 
                 quickEdit(sprite);
                 quickEdit(pokemon);
