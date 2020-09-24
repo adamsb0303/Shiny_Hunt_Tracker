@@ -171,9 +171,8 @@ public class window{
                 sprite.setTranslateX((image.getWidth() * scale - image.getWidth()) / 2);
                 sprite.setTranslateY((image.getHeight() * scale - image.getHeight()) / 2);
             }
-            System.out.println(-((sprite.getImage().getWidth() * sprite.getScaleX()) / 2) + ", " + -((sprite.getImage().getHeight() * sprite.getScaleY())));
             sprite.setTranslateX(sprite.getTranslateX() - ((sprite.getImage().getWidth() * sprite.getScaleX()) / 2));
-            sprite.setTranslateY(sprite.getTranslateY() - sprite.getImage().getHeight() * sprite.getScaleY() / 2);
+            sprite.setTranslateY(sprite.getTranslateY() - sprite.getImage().getHeight() * sprite.getScaleY());
             return sprite;
         }catch (FileNotFoundException e){
             System.out.println(name + " sprite not found");
@@ -1333,22 +1332,23 @@ class huntWindow extends window{
         }
 
         if(this.evo1 != null) {
-            Evo0.setLayoutY((Evo0.getImage().getHeight() * Evo0.getScaleY()) /2);
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
+            Evo0.setLayoutY((Evo0.getImage().getHeight() * Evo0.getScaleY()));
 
-            Evo1.setLayoutY(Evo1.getImage().getHeight() * Evo1.getScaleY()/2);
             Evo1.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + (Evo1.getImage().getWidth() * Evo1.getScaleX()/2));
+            Evo1.setLayoutY(Evo1.getImage().getHeight() * Evo1.getScaleY());
 
-            sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY()/2);
             sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + Evo1.getImage().getWidth()  * Evo1.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
+            sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
         }else if(this.evo0 != null){
-            Evo0.setLayoutY(Evo0.getImage().getHeight() * Evo0.getScaleY()/2);
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
-            sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY()/2);
+            Evo0.setLayoutY(Evo0.getImage().getHeight() * Evo0.getScaleY());
+
             sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
+            sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
         }else {
-            sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY())/2);
             sprite.setLayoutX((sprite.getImage().getWidth() * sprite.getScaleX())/2);
+            sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
         }
 
         Scene huntScene = new Scene(windowLayout, 750, 480);
