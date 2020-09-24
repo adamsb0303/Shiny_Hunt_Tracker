@@ -40,7 +40,7 @@ public class SaveData {
     //writes information to previous hunts file
     public void saveHunt(){
         try {
-            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
+            String saveData = selectedPokemon.getName() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
             File file = new File("Save Data/PreviousHunts.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -66,15 +66,16 @@ public class SaveData {
             for(int i = 0; i < getfileLength("PreviousHunts"); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber) {
-                    int generation = parseInt(splitString(line, 2));
+                    int generation = parseInt(splitString(line, 3));
                     selectedPokemon = new Pokemon(splitString(line, 0), generation);
-                    selectedGame = new Game(splitString(line, 1), generation);
-                    selectedMethod = new Method(splitString(line, 3), generation);
-                    selectedMethod.setModifier(parseInt(splitString(line, 4)));
-                    encounters = parseInt(splitString(line, 5));
-                    combo = parseInt(splitString(line, 6));
-                    increment = parseInt(splitString(line, 7));
-                    layout = splitString(line, 8);
+                    selectedPokemon.setForm(splitString(line,1));
+                    selectedGame = new Game(splitString(line, 2), generation);
+                    selectedMethod = new Method(splitString(line, 4), generation);
+                    selectedMethod.setModifier(parseInt(splitString(line, 5)));
+                    encounters = parseInt(splitString(line, 6));
+                    combo = parseInt(splitString(line, 7));
+                    increment = parseInt(splitString(line, 8));
+                    layout = splitString(line, 9);
                     if(layout.compareTo("") == 0)
                         layout = null;
                     break;

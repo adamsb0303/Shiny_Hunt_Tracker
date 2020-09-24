@@ -805,9 +805,9 @@ public class window{
     }
 
     //creates ImageView settings VBox
-    public VBox createImageSettings(ImageView image, String pokemonName, Game selectedGame){
+    public VBox createImageSettings(ImageView image, Pokemon pokemon, Game selectedGame){
         HBox groupLabel = new HBox();
-        Label Group = new Label(pokemonName + " Sprite:");
+        Label Group = new Label(pokemon.getName() + " Sprite:");
         Group.setUnderline(true);
         groupLabel.getChildren().add(Group);
 
@@ -842,7 +842,7 @@ public class window{
         HBox form = new HBox();
         form.setSpacing(5);
         Label formLabel = new Label("Form");
-        ComboBox<String> formCombo = getPokemonForms(pokemonName, selectedGame.getGeneration());
+        ComboBox<String> formCombo = getPokemonForms(pokemon.getName(), selectedGame.getGeneration());
         formCombo.getSelectionModel().select(0);
         form.getChildren().addAll(formLabel, formCombo);
 
@@ -853,7 +853,7 @@ public class window{
         imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
 
         Accordion accordion = new Accordion();
-        TitledPane imageTitledPane = new TitledPane(pokemonName + " Sprite", imageVBox);
+        TitledPane imageTitledPane = new TitledPane(pokemon.getName() + " Sprite", imageVBox);
         accordion.getPanes().add(imageTitledPane);
 
         VBox imageSettings = new VBox();
@@ -861,7 +861,8 @@ public class window{
 
         formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
-                createAlternateSprite(pokemonName, newValue, selectedGame, image);
+                pokemon.setForm(newValue);
+                createAlternateSprite(pokemon.getName(), newValue, selectedGame, image);
             }
         });
 
@@ -1129,7 +1130,7 @@ public class window{
         });
     }
 
-    //creates string array of avaliable fonts
+    //creates string array of available fonts
     private String[] generateFonts(){
         String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         int fontArraySize = 0;
@@ -1285,6 +1286,9 @@ class huntWindow extends window{
         quickEdit(previousEncountersText);
 
         sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
+        if(selectedPokemon.getForm() != null)
+            createAlternateSprite(selectedPokemon.getName(), selectedPokemon.getForm(), selectedGame, sprite);
+
         Evo0 = new ImageView();
         Evo1 = new ImageView();
         if(evo0 != null) {
@@ -1419,7 +1423,7 @@ class huntWindow extends window{
         if(CustomizeHuntVBox.getChildren().size() == 0) {
             CustomizeHuntStage.setTitle("Settings");
             CustomizeHuntStage.setResizable(false);
-            VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName(), selectedGame);
+            VBox spriteSettings = createImageSettings(sprite, selectedPokemon, selectedGame);
             VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
             VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
             VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
@@ -1460,11 +1464,11 @@ class huntWindow extends window{
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
             if (evo1 != null) {
-                Evo1Settings = createImageSettings(Evo1, evo1, selectedGame);
+                Evo1Settings = createImageSettings(Evo1, new Pokemon(evo1, 0), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
             if (evo0 != null) {
-                Evo0Settings = createImageSettings(Evo0, evo0, selectedGame);
+                Evo0Settings = createImageSettings(Evo0, new Pokemon(evo0, 0), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
             }
 
@@ -1984,7 +1988,7 @@ class previouslyCaught extends window{
                 quickEdit(method);
                 quickEdit(encounters);
 
-                VBox spriteSettings = createImageSettings(sprite, data.splitString(line, 0), caughtGame);
+                VBox spriteSettings = createImageSettings(sprite, new Pokemon(data.splitString(line, 0), 0), caughtGame);
                 VBox pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
                 VBox methodLabelSettings = createLabelSettings(method, "Method");
                 VBox encountersLabelSettings = createLabelSettings(encounters, "Encounters");
@@ -2178,9 +2182,9 @@ class newOrOld extends window{
             for(int i = 0; i < previousHuntData.getfileLength("PreviousHunts"); i++){
                 String line = previousHuntData.getLinefromFile(i, "PreviousHunts");
                 String name = previousHuntData.splitString(line, 0);
-                String game = previousHuntData.splitString(line, 1);
-                String method = previousHuntData.splitString(line, 3);
-                String encounters = previousHuntData.splitString(line, 5);
+                String game = previousHuntData.splitString(line, 2);
+                String method = previousHuntData.splitString(line, 4);
+                String encounters = previousHuntData.splitString(line, 6);
                 makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
             }
 
