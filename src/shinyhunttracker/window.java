@@ -1231,6 +1231,7 @@ class huntWindow extends window{
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
+    VBox CustomizeHuntVBox = new VBox();
 
     //current objects
     Pokemon selectedPokemon;
@@ -1415,99 +1416,101 @@ class huntWindow extends window{
 
     //creates window for the hunt window settings
     public void CustomizeHuntWindow(){
-        CustomizeHuntStage.setTitle("Settings");
-        CustomizeHuntStage.setResizable(false);
-        VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName(), selectedGame);
-        VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
-        VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
-        VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
-        VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
-        VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
+        if(CustomizeHuntVBox.getChildren().size() == 0) {
+            CustomizeHuntStage.setTitle("Settings");
+            CustomizeHuntStage.setResizable(false);
+            VBox spriteSettings = createImageSettings(sprite, selectedPokemon.getName(), selectedGame);
+            VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
+            VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
+            VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
+            VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
+            VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
-        VBox backgroundVBox = new VBox();
-        Label backgroundGroup = new Label("Background");
-        backgroundGroup.setUnderline(true);
-        HBox backgroundColorSettings = new HBox();
-        backgroundColorSettings.setSpacing(5);
-        Label backgroundColorLabel = new Label("Color");
-        ColorPicker backgroundColorPicker = new ColorPicker();
-        backgroundVBox.setPadding(new Insets(10,10,10,10));
-        backgroundVBox.setSpacing(10);
-        backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-        backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings);
+            VBox backgroundVBox = new VBox();
+            Label backgroundGroup = new Label("Background");
+            backgroundGroup.setUnderline(true);
+            HBox backgroundColorSettings = new HBox();
+            backgroundColorSettings.setSpacing(5);
+            Label backgroundColorLabel = new Label("Color");
+            ColorPicker backgroundColorPicker = new ColorPicker();
+            backgroundVBox.setPadding(new Insets(10, 10, 10, 10));
+            backgroundVBox.setSpacing(10);
+            backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+            backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings);
 
-        if(windowLayout.getBackground() != null)
-            backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
+            if (windowLayout.getBackground() != null)
+                backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
 
-        Accordion accordion = new Accordion();
-        TitledPane backgroundTitledPane = new TitledPane("Background", backgroundVBox);
-        accordion.getPanes().add(backgroundTitledPane);
+            Accordion accordion = new Accordion();
+            TitledPane backgroundTitledPane = new TitledPane("Background", backgroundVBox);
+            accordion.getPanes().add(backgroundTitledPane);
 
-        VBox backgroundSettings = new VBox();
-        backgroundSettings.getChildren().add(accordion);
+            VBox backgroundSettings = new VBox();
+            backgroundSettings.getChildren().add(accordion);
 
-        HBox saveClose = new HBox();
-        saveClose.setPadding(new Insets(10,10,10,10));
-        saveClose.setSpacing(5);
-        Button Save = new Button("Save");
-        Button Load = new Button("Load");
-        saveClose.getChildren().addAll(Save,Load);
+            HBox saveClose = new HBox();
+            saveClose.setPadding(new Insets(10, 10, 10, 10));
+            saveClose.setSpacing(5);
+            Button Save = new Button("Save");
+            Button Load = new Button("Load");
+            saveClose.getChildren().addAll(Save, Load);
 
-        VBox CustomizeHuntVBox = new VBox();
-        VBox Evo0Settings;
-        VBox Evo1Settings;
+            VBox Evo0Settings;
+            VBox Evo1Settings;
 
-        CustomizeHuntVBox.getChildren().add(spriteSettings);
-        if(evo1 != null){
-            Evo1Settings = createImageSettings(Evo1, evo1, selectedGame);
-            CustomizeHuntVBox.getChildren().add(Evo1Settings);
+            CustomizeHuntVBox.getChildren().add(spriteSettings);
+            if (evo1 != null) {
+                Evo1Settings = createImageSettings(Evo1, evo1, selectedGame);
+                CustomizeHuntVBox.getChildren().add(Evo1Settings);
+            }
+            if (evo0 != null) {
+                Evo0Settings = createImageSettings(Evo0, evo0, selectedGame);
+                CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
+            }
+
+            VBox comboSettings;
+            VBox previousEncountersSettings;
+
+            switch (selectedMethod.getName()) {
+                case "Radar Chaining":
+                case "Chain Fishing":
+                case "SOS Chaining":
+                case "Catch Combo":
+                    comboSettings = createLabelSettings(currentComboText, "Combo");
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
+                    break;
+                case "DexNav":
+                    comboSettings = createLabelSettings(currentComboText, "Combo");
+                    previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
+                    break;
+                case "Total Encounters":
+                    previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
+                    break;
+                default:
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+                    break;
+            }
+
+            AnchorPane CustomizeHuntLayout = new AnchorPane();
+            CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
+            AnchorPane.setTopAnchor(CustomizeHuntVBox, 0d);
+
+            ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
+            CustomizeHuntScrollpane.setFitToHeight(true);
+
+            Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 263, 500);
+            CustomizeHuntStage.setScene(CustomizeHuntScene);
+
+            backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+
+            Save.setOnAction(e -> saveLayout());
+
+            Load.setOnAction(e -> loadLayout());
         }
-        if(evo0 != null){
-            Evo0Settings = createImageSettings(Evo0, evo0, selectedGame);
-            CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
-        }
-
-        VBox comboSettings;
-        VBox previousEncountersSettings;
-
-        switch (selectedMethod.getName()) {
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "SOS Chaining":
-            case "Catch Combo":
-                comboSettings = createLabelSettings(currentComboText, "Combo");
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
-                break;
-            case "DexNav":
-                comboSettings = createLabelSettings(currentComboText, "Combo");
-                previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
-                break;
-            case "Total Encounters":
-                previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
-                break;
-            default:
-                CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
-                break;
-        }
-
-        AnchorPane CustomizeHuntLayout = new AnchorPane();
-        CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
-        AnchorPane.setTopAnchor(CustomizeHuntVBox,0d);
-
-        ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
-        CustomizeHuntScrollpane.setFitToHeight(true);
-
-        Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 263, 500);
-        CustomizeHuntStage.setScene(CustomizeHuntScene);
         CustomizeHuntStage.show();
-
-        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
-
-        Save.setOnAction(e -> saveLayout());
-
-        Load.setOnAction(e -> loadLayout());
+        CustomizeHuntStage.setOnCloseRequest(e -> CustomizeHuntStage.hide());
     }
 
     //adds increment to the encounters
