@@ -1834,7 +1834,7 @@ class previouslyCaught extends window{
     int displayPrevious = 0;
 
     Stage previouslyCaughtSettingsStage = new Stage();
-    VBox previouslyCaughtSettingsLayout;
+    VBox previouslyCaughtSettingsLayout = new VBox();
     ColorPicker backgroundColorPicker = new ColorPicker();
 
     previouslyCaught(int displayCaught){
@@ -1853,86 +1853,79 @@ class previouslyCaught extends window{
 
     //creates elements for previously caught element settings
     public void previouslyCaughtPokemonSettings(){
-        windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
-        previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
+        if(previouslyCaughtSettingsLayout.getChildren().size() == 0) {
+            previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
 
-        Label numberCaught = new Label("Display Previously Caught: ");
-        TextField numberCaughtField = new TextField();
-        numberCaughtField.setMaxWidth(50);
-        numberCaughtField.setPromptText(String.valueOf(displayCaught));
+            Label numberCaught = new Label("Display Previously Caught: ");
+            TextField numberCaughtField = new TextField();
+            numberCaughtField.setMaxWidth(50);
+            numberCaughtField.setPromptText(String.valueOf(displayCaught));
 
-        HBox numberPreviouslyCaught = new HBox();
-        numberPreviouslyCaught.setAlignment(Pos.CENTER);
-        numberPreviouslyCaught.setSpacing(5);
-        numberPreviouslyCaught.setPadding(new Insets(10,0,0,10));
-        numberPreviouslyCaught.getChildren().addAll(numberCaught,numberCaughtField);
+            HBox numberPreviouslyCaught = new HBox();
+            numberPreviouslyCaught.setAlignment(Pos.CENTER);
+            numberPreviouslyCaught.setSpacing(5);
+            numberPreviouslyCaught.setPadding(new Insets(10, 0, 0, 10));
+            numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField);
 
-        Label backgroundColorLabel = new Label("Background: ");
-        backgroundColorPicker.setDisable(!windowStage.isShowing());
-        if(windowLayout.getBackground() != null)
-            backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
+            Label backgroundColorLabel = new Label("Background: ");
+            backgroundColorPicker.setDisable(!windowStage.isShowing());
+            if (windowLayout.getBackground() != null)
+                backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
 
-        HBox backgroundColor = new HBox();
-        backgroundColor.setAlignment(Pos.CENTER);
-        backgroundColor.setSpacing(5);
-        backgroundColor.setPadding(new Insets(10,0,0,10));
-        backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+            HBox backgroundColor = new HBox();
+            backgroundColor.setAlignment(Pos.CENTER);
+            backgroundColor.setSpacing(5);
+            backgroundColor.setPadding(new Insets(10, 0, 0, 10));
+            backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
 
-        Label layoutLabel = new Label("Layout: ");
-        Button loadLayout = new Button("Load");
-        Button saveLayout = new Button("Save");
+            Label layoutLabel = new Label("Layout: ");
+            Button loadLayout = new Button("Load");
+            Button saveLayout = new Button("Save");
 
-        HBox layoutSettings = new HBox();
-        layoutSettings.setAlignment(Pos.CENTER);
-        layoutSettings.setSpacing(5);
-        layoutSettings.setPadding(new Insets(10,0,0,10));
-        layoutSettings.getChildren().addAll(layoutLabel, saveLayout, loadLayout);
+            HBox layoutSettings = new HBox();
+            layoutSettings.setAlignment(Pos.CENTER);
+            layoutSettings.setSpacing(5);
+            layoutSettings.setPadding(new Insets(10, 0, 0, 10));
+            layoutSettings.getChildren().addAll(layoutLabel, saveLayout, loadLayout);
 
-        previouslyCaughtSettingsLayout = new VBox();
-        previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
-        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
+            previouslyCaughtSettingsLayout = new VBox();
+            previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
+            previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
 
-        if(displayCaught != 0) {
-            addPreviouslyCaughtPokemon(displayCaught);
+            ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
+
+            Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
+            previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
+
+            numberCaughtField.setOnAction(e ->{
+                try{
+                    if(displayCaught == 0)
+                        createPreviouslyCaughtPokemonWindow();
+                    displayPrevious = displayCaught;
+                    displayCaught = parseInt(numberCaughtField.getText());
+                    if(displayCaught == 0) {
+                        windowStage.close();
+                        backgroundColorPicker.setDisable(true);
+                        previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+                    }
+                    else {
+                        windowStage.show();
+                        addPreviouslyCaughtPokemon(displayCaught);
+                    }
+                    numberCaughtField.setText("");
+                    numberCaughtField.setPromptText(String.valueOf(displayCaught));
+                }catch(NumberFormatException f){
+                    numberCaughtField.setText("");
+                }
+            });
+
+            backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+
+            saveLayout.setOnAction(e -> saveLayout());
+            loadLayout.setOnAction(e -> loadLayout());
         }
-
-        ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
-
-        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
-        previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
         previouslyCaughtSettingsStage.show();
-
-        if(currentLayout != null) {
-            SaveData data = new SaveData();
-            data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
-        }
-
-        numberCaughtField.setOnAction(e ->{
-            try{
-                if(displayCaught == 0)
-                    createPreviouslyCaughtPokemonWindow();
-                displayPrevious = displayCaught;
-                displayCaught = parseInt(numberCaughtField.getText());
-                if(displayCaught == 0) {
-                    windowStage.close();
-                    backgroundColorPicker.setDisable(true);
-                    previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-                }
-                else {
-                    windowStage.show();
-                    addPreviouslyCaughtPokemon(displayCaught);
-                }
-                numberCaughtField.setText("");
-                numberCaughtField.setPromptText(String.valueOf(displayCaught));
-            }catch(NumberFormatException f){
-                numberCaughtField.setText("");
-            }
-        });
-
-        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
-
-        saveLayout.setOnAction(e -> saveLayout());
-        loadLayout.setOnAction(e -> loadLayout());
+        previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
     }
 
     //create elements of the last x previously caught pokemon
