@@ -14,7 +14,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -434,7 +433,7 @@ public class window{
         }
 
         if(generation == 8) {
-            String[] GMax = {"Alcremie", "Appletun", "Blastoise", "Butterfree", "Centiskorch", "Charizard", "Cinderace", "Coalossal", "Copperajah", "Corviknight", "Drednew", "Duraludon", "Eevee", "Flapple", "Garbodor", "Gengar", "Grimmsnarl", "Hatterene", "Inteleon", "Kingler", "Lapras", "Machamp", "Melmetal", "Meowth", "Orbeetle", "Pikachu", "Rillaboom", "Sandaconda", "Snorlax", "Toxtricity", "Venusaur"};
+            String[] GMax = {"Alcremie", "Appletun", "Blastoise", "Butterfree", "Centiskorch", "Charizard", "Cinderace", "Coalossal", "Copperajah", "Corviknight", "Drednaw", "Duraludon", "Eevee", "Flapple", "Garbodor", "Gengar", "Grimmsnarl", "Hatterene", "Inteleon", "Kingler", "Lapras", "Machamp", "Melmetal", "Meowth", "Orbeetle", "Pikachu", "Rillaboom", "Sandaconda", "Snorlax", "Toxtricity", "Venusaur"};
             for(String i : GMax)
                 if(i.compareTo(name) == 0) {
                     if (comboBox.getItems().size() == 0)
@@ -453,7 +452,7 @@ public class window{
     }
 
     //changes given image to given pokemon variant
-    public void createAlternateSprite(String name, String form, Game selectedGame, ImageView image){
+    public void createAlternateSprite(String name, String form, Game selectedGame, ImageView sprite){
         String filePath = createGameFilePath(selectedGame);
         switch(form) {
             case "Female":
@@ -798,7 +797,26 @@ public class window{
             filePath += ".gif";
 
         try{
-            image.setImage(new Image(new FileInputStream(filePath)));
+            //image.setImage(new Image(new FileInputStream(filePath)));
+            FileInputStream input = new FileInputStream(filePath);
+            Image image = new Image(input);
+            sprite.setImage(image);
+            if(image.getWidth() != 200 && image.getHeight() != 200){
+                double height = image.getHeight();
+                double width = image.getWidth();
+                double scale;
+                if(height > width)
+                    scale = 200 / height;
+                else
+                    scale = 200 / width;
+                sprite.setScaleX(scale);
+                sprite.setScaleY(scale);
+                sprite.setTranslateX((image.getWidth() * scale - image.getWidth()) / 2);
+                sprite.setTranslateY((image.getHeight() * scale - image.getHeight()) / 2);
+            }
+            sprite.setTranslateX(sprite.getTranslateX() - sprite.getImage().getWidth() * sprite.getScaleX() / 2);
+            sprite.setTranslateY(sprite.getTranslateY() - sprite.getImage().getHeight() * sprite.getScaleY());
+            imageViewFitAdjust(sprite);
         }catch(IOException ignored) {
 
         }
@@ -1935,6 +1953,13 @@ class previouslyCaught extends window{
         previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
     }
 
+    //refreshes previously caught pokemon window
+    public void refreshPreviouslyCaughtPokemon(){
+        previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+        windowLayout.getChildren().remove(0,windowLayout.getChildren().size());
+        addPreviouslyCaughtPokemon(displayCaught);
+    }
+
     //create elements of the last x previously caught pokemon
     public void addPreviouslyCaughtPokemon(int previouslyCaught){
         if(previouslyCaught < displayPrevious){
@@ -1950,15 +1975,19 @@ class previouslyCaught extends window{
         for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
             if((i - numberCaught) * -1 > displayPrevious) {
                 String line = data.getLinefromFile(i, "CaughtPokemon");
-                Game caughtGame = new Game(data.splitString(line, 1), parseInt(data.splitString(line, 2)));
+                Game caughtGame = new Game(data.splitString(line, 2), parseInt(data.splitString(line, 3)));
                 selectionPageController findGeneration = new selectionPageController();
                 int selectedPokemonGeneration = findGeneration.findGenerationPokemon(data.splitString(line, 0));
                 if (caughtGame.getGeneration() < findGeneration.findGenerationPokemon(data.splitString(line, 0)))
                     caughtGame.setGeneration(selectedPokemonGeneration);
-                ImageView sprite = createPokemonSprite(data.splitString(line, 0), caughtGame);
+                Pokemon previouslyCaughtPokemon = new Pokemon(data.splitString(line, 0), 0);
+                previouslyCaughtPokemon.setForm(data.splitString(line,1));
+                ImageView sprite = createPokemonSprite(previouslyCaughtPokemon.getName(), caughtGame);
+                if(previouslyCaughtPokemon.getForm() != null)
+                    createAlternateSprite(previouslyCaughtPokemon.getName(), previouslyCaughtPokemon.getForm(), caughtGame, sprite);
                 Text pokemon = new Text(data.splitString(line, 0));
-                Text method = new Text(data.splitString(line, 3));
-                Text encounters = new Text(data.splitString(line, 5));
+                Text method = new Text(data.splitString(line, 4));
+                Text encounters = new Text(data.splitString(line, 6));
 
                 windowLayout.getChildren().addAll(sprite, pokemon, method, encounters);
 
@@ -2116,6 +2145,7 @@ class previouslyCaught extends window{
                     displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
                     createPreviouslyCaughtPokemonWindow();
                     previouslyCaughtPokemonSettings();
+                    addPreviouslyCaughtPokemon(displayCaught);
                     data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
                     loadSavedLayoutStage.close();
                 });

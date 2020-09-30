@@ -2,7 +2,6 @@ package shinyhunttracker;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -91,7 +90,7 @@ public class SaveData {
     //writes information to caught pokemon file
     public void pokemonCaught(){
         try{
-            String saveData = selectedPokemon.getName() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
+            String saveData = selectedPokemon.getName() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
             File file = new File("Save Data/CaughtPokemon.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

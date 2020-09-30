@@ -140,7 +140,7 @@ public class huntController {
                 SaveData temp = new SaveData();
                 temp.saveLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout(), false);
                 boolean settingsIsOpen = previousCatches.getSettingsStage().isShowing();
-                previousCatches.previouslyCaughtPokemonSettings();
+                previousCatches.refreshPreviouslyCaughtPokemon();
                 temp.loadLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout());
                 if(!settingsIsOpen)
                     previousCatches.getSettingsStage().close();
