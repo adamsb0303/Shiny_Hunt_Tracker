@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -1861,6 +1862,7 @@ class previouslyCaught extends window{
     Stage previouslyCaughtSettingsStage = new Stage();
     VBox previouslyCaughtSettingsLayout = new VBox();
     ColorPicker backgroundColorPicker = new ColorPicker();
+    TextField numberCaughtField = new TextField();
 
     previouslyCaught(int displayCaught){
         this.displayCaught = displayCaught;
@@ -1882,10 +1884,8 @@ class previouslyCaught extends window{
             previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
 
             Label numberCaught = new Label("Display Previously Caught: ");
-            TextField numberCaughtField = new TextField();
             numberCaughtField.setMaxWidth(50);
             numberCaughtField.setPromptText(String.valueOf(displayCaught));
-
             HBox numberPreviouslyCaught = new HBox();
             numberPreviouslyCaught.setAlignment(Pos.CENTER);
             numberPreviouslyCaught.setSpacing(5);
@@ -2143,8 +2143,11 @@ class previouslyCaught extends window{
                 .addListener((v, oldValue, newValue) -> {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
                     displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
+                    numberCaughtField.setPromptText(String.valueOf(displayCaught));
                     previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
                     windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
+                    if(!windowStage.isShowing())
+                        createPreviouslyCaughtPokemonWindow();
                     previouslyCaughtPokemonSettings();
                     addPreviouslyCaughtPokemon(displayCaught);
                     data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
