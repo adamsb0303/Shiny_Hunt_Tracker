@@ -1,6 +1,5 @@
 package shinyhunttracker;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -168,12 +167,10 @@ public class window{
                     scale = 200 / width;
                 sprite.setScaleX(scale);
                 sprite.setScaleY(scale);
-                sprite.setTranslateX((image.getWidth() * scale - image.getWidth()) / 2);
-                sprite.setTranslateY((image.getHeight() * scale - image.getHeight()) / 2);
+                imageViewFitAdjust(sprite);
             }
-            sprite.setTranslateX(sprite.getTranslateX() - sprite.getImage().getWidth() * sprite.getScaleX() / 2);
-            sprite.setTranslateY(sprite.getTranslateY() - sprite.getImage().getHeight() * sprite.getScaleY());
-            imageViewFitAdjust(sprite);
+            sprite.setTranslateX(-image.getWidth() / 2);
+            sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
             return sprite;
         }catch (FileNotFoundException e){
             System.out.println(name + " sprite not found");
@@ -798,28 +795,29 @@ public class window{
             filePath += ".gif";
 
         try{
-            //image.setImage(new Image(new FileInputStream(filePath)));
             FileInputStream input = new FileInputStream(filePath);
             Image image = new Image(input);
             sprite.setImage(image);
-            if(image.getWidth() != 200 && image.getHeight() != 200){
+            if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
                 double height = image.getHeight();
                 double width = image.getWidth();
                 double scale;
                 if(height > width)
-                    scale = 200 / height;
+                    scale = -sprite.getFitHeight() / height;
                 else
-                    scale = 200 / width;
+                    scale = -sprite.getFitWidth() / width;
                 sprite.setScaleX(scale);
                 sprite.setScaleY(scale);
-                sprite.setTranslateX((image.getWidth() * scale - image.getWidth()) / 2);
-                sprite.setTranslateY((image.getHeight() * scale - image.getHeight()) / 2);
+                imageViewFitAdjust(sprite);
+            }else{
+                sprite.setScaleX(1);
+                sprite.setScaleY(1);
+                imageViewFitAdjust(sprite);
             }
-            sprite.setTranslateX(sprite.getTranslateX() - sprite.getImage().getWidth() * sprite.getScaleX() / 2);
-            sprite.setTranslateY(sprite.getTranslateY() - sprite.getImage().getHeight() * sprite.getScaleY());
-            imageViewFitAdjust(sprite);
+            sprite.setTranslateX(-image.getWidth() / 2);
+            sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
         }catch(IOException ignored) {
-
+            
         }
     }
 
@@ -894,6 +892,8 @@ public class window{
             }
             image.setScaleX(scale);
             image.setScaleY(scale);
+            image.setTranslateX(-image.getImage().getWidth() / 2);
+            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
             imageViewFitAdjust(image);
             sizeField.setText("");
         });
