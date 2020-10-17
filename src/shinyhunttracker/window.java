@@ -445,8 +445,12 @@ public class window{
 
     //adjust ImageView fit
     public void imageViewFitAdjust(ImageView image){
-        image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
-        image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
+        double newWidth = image.getImage().getWidth() * image.getScaleX();
+        double newHeight = image.getImage().getHeight() * image.getScaleY();
+        if(newWidth > -image.getFitWidth())
+            image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
+        if(newHeight > -image.getFitHeight())
+            image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
     }
 
     //changes given image to given pokemon variant
