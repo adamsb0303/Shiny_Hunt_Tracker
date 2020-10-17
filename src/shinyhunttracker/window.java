@@ -1142,7 +1142,14 @@ public class window{
     }
 
     //change location of element when dragged
+    //change scale of element when scrolled
     public void quickEdit(Node element){
+        element.setOnScroll(e -> {
+            element.setScaleX(element.getScaleX() + (e.getDeltaY() / 1000));
+            element.setScaleY(element.getScaleY() + (e.getDeltaY() / 1000));
+            if(element instanceof ImageView)
+                imageViewFitAdjust((ImageView) element);
+        });
         element.setOnMousePressed(e -> {
             double diffX = element.getLayoutX() - e.getSceneX();
             double diffY = element.getLayoutY() - e.getSceneY();
