@@ -2172,6 +2172,7 @@ class previouslyCaught extends window{
                 .addListener((v, oldValue, newValue) -> {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
                     displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
+                    displayPrevious = 0;
                     numberCaughtField.setPromptText(String.valueOf(displayCaught));
                     previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
                     windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
