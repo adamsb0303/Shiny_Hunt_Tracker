@@ -174,18 +174,16 @@ public class SaveData {
                             double width = -image.getFitWidth();
                             double height = -image.getFitHeight();
                             double scale;
-                            if(imageWidth > imageHeight && width > height)//wide sprite to wide sprite
-                                scale = imageWidth / width;
-                            else if(imageHeight > imageWidth && height > width)//tall sprite to tall sprite
+                            if(height > width)
                                 scale = imageHeight / height;
-                            else if(width > height)//wide sprite to tall sprite
-                                scale = imageHeight / width;
-                            else //tall sprite to wide sprite
-                                scale = imageWidth / height;
+                            else
+                                scale = imageWidth / width;
                             image.setScaleX(image.getScaleX() * scale);
                             image.setScaleY(image.getScaleY() * scale);
                             image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
                             image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
+                            image.setTranslateX(-image.getImage().getWidth() / 2);
+                            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
                         }
                         image.setVisible(splitString(line, 4).compareTo("true") == 0);
                     } else if (i < 10) {
@@ -216,18 +214,16 @@ public class SaveData {
                             double width = -image.getFitWidth();
                             double height = -image.getFitHeight();
                             double scale;
-                            if(imageWidth > imageHeight && width > height)//wide sprite to wide sprite
-                                scale = imageWidth / width;
-                            else if(imageHeight > imageWidth && height > width)//tall sprite to tall sprite
+                            if(height > width)
                                 scale = imageHeight / height;
-                            else if(width > height)//wide sprite to tall sprite
-                                scale = imageHeight / width;
-                            else //tall sprite to wide sprite
-                                scale = imageWidth / height;
+                            else
+                                scale = imageWidth / width;
                             image.setScaleX(image.getScaleX() * scale);
                             image.setScaleY(image.getScaleY() * scale);
                             image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
                             image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
+                            image.setTranslateX(-image.getImage().getWidth() / 2);
+                            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
                         }
                         image.setVisible(splitString(line, 4).compareTo("true") == 0);
                     }else{
