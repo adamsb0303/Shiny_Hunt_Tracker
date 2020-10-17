@@ -1141,14 +1141,32 @@ public class window{
         return labelSettings;
     }
 
-    //change location of element when dragged
-    //change scale of element when scrolled
-    public void quickEdit(Node element){
+    //change location of Text when dragged
+    //change scale of Text when scrolled
+    public void quickEdit(Text element){
         element.setOnScroll(e -> {
             element.setScaleX(element.getScaleX() + (e.getDeltaY() / 1000));
             element.setScaleY(element.getScaleY() + (e.getDeltaY() / 1000));
-            if(element instanceof ImageView)
-                imageViewFitAdjust((ImageView) element);
+        });
+        element.setOnMousePressed(e -> {
+            double diffX = element.getLayoutX() - e.getSceneX();
+            double diffY = element.getLayoutY() - e.getSceneY();
+            element.setOnMouseDragged(f -> {
+                element.setLayoutX(f.getSceneX() + diffX);
+                element.setLayoutY(f.getSceneY() + diffY);
+            });
+        });
+    }
+
+    //change location of ImageView when dragged
+    //change scale of ImageView when scrolled
+    public void quickEdit(ImageView element){
+        element.setOnScroll(e -> {
+            element.setScaleX(element.getScaleX() + (e.getDeltaY() / 1000));
+            element.setScaleY(element.getScaleY() + (e.getDeltaY() / 1000));
+            imageViewFitAdjust(element);
+            element.setTranslateX(-element.getImage().getWidth() / 2);
+            element.setTranslateY(-((element.getImage().getHeight() / 2) + (element.getImage().getHeight() * element.getScaleX()) / 2));
         });
         element.setOnMousePressed(e -> {
             double diffX = element.getLayoutX() - e.getSceneX();
