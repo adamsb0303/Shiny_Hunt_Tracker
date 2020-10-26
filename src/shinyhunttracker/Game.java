@@ -1,17 +1,21 @@
 package shinyhunttracker;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Game {
-    String name;
+    StringProperty name = new SimpleStringProperty();
     int generation;
     String[] Methods = new String[5];
     String[] ShinyLocked = new String[18];
 
     Game(){
-
+        name.setValue("");
+        generation = 0;
     }
 
     Game(String name, int generation){
-        this.name = name;
+        this.name.setValue(name);
         this.generation = generation;
     }
 
@@ -25,7 +29,7 @@ public class Game {
             case 4:
                 if (selectedPokemon.getBreedable())
                     Methods[1] = "Masuda";
-                if (name.compareTo("Diamond") == 0 || name.compareTo("Pearl") == 0 || name.compareTo("Platinum") == 0)
+                if (name.getValue().compareTo("Diamond") == 0 || name.getValue().compareTo("Pearl") == 0 || name.getValue().compareTo("Platinum") == 0)
                     if (isWild(selectedPokemon))
                         Methods[2] = "Radar Chaining";
                 break;
@@ -38,7 +42,7 @@ public class Game {
                     Methods[1] = "Masuda";
                 if(isFish(selectedPokemon))
                     Methods[2] = "Chain Fishing";
-                if(name.compareTo("X") == 0 || name.compareTo("Y") == 0){
+                if(name.getValue().compareTo("X") == 0 || name.getValue().compareTo("Y") == 0){
                     if(isWild(selectedPokemon))
                         Methods[3] = "Radar Chaining";
                     if(isFriendSafari(selectedPokemon))
@@ -52,13 +56,13 @@ public class Game {
             case 7:
                 if(selectedPokemon.getBreedable())
                     Methods[1] = "Masuda";
-                if(isSOS(selectedPokemon) && !(name.substring(0,3).compareTo("Let") == 0))
+                if(isSOS(selectedPokemon) && !(name.getValue().substring(0,3).compareTo("Let") == 0))
                     Methods[2] = "SOS Chaining";
-                if(name.substring(0,3).compareTo("Ult") == 0) {
+                if(name.getValue().substring(0,3).compareTo("Ult") == 0) {
                     if(isWormhole(selectedPokemon))
                     Methods[3] = "Ultra Wormholes";
                 }
-                if(name.substring(0,3).compareTo("Let") == 0) {
+                if(name.getValue().substring(0,3).compareTo("Let") == 0) {
                     Methods[1] = null;
                     if (isWild(selectedPokemon))
                         Methods[2] = "Catch Combo";
@@ -115,7 +119,7 @@ public class Game {
                 for(String i: DPP)
                     if(i.compareTo(selectedPokemon.getName()) == 0)
                         return true;
-                switch(this.name){
+                switch(this.name.getValue()){
                     case "Diamond":
                         for(String i: Diamond)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -136,7 +140,7 @@ public class Game {
                 }
                 break;
             case 6:
-                switch (this.name){
+                switch (this.name.getValue()){
                     case "X":
                         for(String i: XY)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -177,7 +181,7 @@ public class Game {
                 for(String i: LetsGo)
                     if(i.compareTo(selectedPokemon.getName()) == 0)
                         return true;
-                switch (this.name){
+                switch (this.name.getValue()){
                     case "Let's Go Pikachu":
                         for(String i: LetsGoPikachu)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -196,7 +200,7 @@ public class Game {
                 for(String i: SWSH)
                     if(i.compareTo(selectedPokemon.getName()) == 0)
                         return true;
-                switch (this.name){
+                switch (this.name.getValue()){
                     case "Sword":
                         for(String i: Sword)
                             if(i.compareTo(selectedPokemon.getName()) == 0)
@@ -224,11 +228,11 @@ public class Game {
         String[] fishX = {"Huntail", "Clauncher", "Clawitzer", "Staryu", "Starmie"};
         String[] fishY = {"Gorebyss", "Shellder", "Cloyster", "Skrelp", "Dragalge"};
         String[] fishORAS = {"Magikarp", "Tentacool", "Goldeen", "Feebas", "Wailmer", "Corphish", "Barboach", "Carvanha", "Luvdisc", "Remoraid", "Crawdaunt", "Sharpedo", "Seaking", "Staryu", "Corsola", "Gyarados", "Whiscash", "Horsea", "Seadra", "Octillery"};
-        if(this.name.compareTo("Omega Ruby") == 0 || this.name.compareTo("Alpha Sapphire") == 0)
+        if(this.name.getValue().compareTo("Omega Ruby") == 0 || this.name.getValue().compareTo("Alpha Sapphire") == 0)
             for(String i: fishORAS)
                 if(selectedPokemon.getName().compareTo(i) == 0)
                     return true;
-        switch(this.name) {
+        switch(this.name.getValue()) {
             case "X":
                 for(String i: fishXY)
                     if(selectedPokemon.getName().compareTo(i) == 0)
@@ -262,7 +266,7 @@ public class Game {
     public boolean isSOS(Pokemon selectedPokemon){
         String[] SOS ={"Caterpie", "Metapod", "Butterfree", "Golbat", "Crobat", "Tentacruel", "Lumineon", "Slowpoke", "Slowbro", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Pichu", "Pikachu", "Happiny", "Igglybuff", "Jigglypuff", "Corsola", "Mareanie", "Elekid", "Electabuzz", "Chansey", "Magby", "Magmar", "Wailmer", "Wailord", "Barbaoch", "Whiscash", "Snorunt", "Bagon", "Shelgon", "Salamence", "Bonsly", "Sudowoodo", "Muchlax", "Snorlax", "Riolu", "Lucario", "Tubbish", "Pancham", "Carbink", "Sableye", "Trumbeak", "Oranguru", "Passimian", "Jangmo-o", "Hakamo-o", "Kommo-o"};
         String[] SOSUltra = {"Caterpie", "Metapod", "Butterfree", "Rattata", "Raticate", "Zubat", "Golbat", "Crobat", "Dugtrio", "Meowth", "Persian", "Psyduck", "Slowpoke", "Slowbro", "Slowking", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Chansey", "Blissey", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Hoothoot", "Noctowl", "Chinchou", "Lanturn", "Pichu", "Pikachu", "Cleffa", "Clefairy", "Happiny", "Natu", "Xatu", "Aipom", "Ambipom", "Corsola", "Mareanie", "Remoraid", "Octillery", "Smoochum", "Jynx", "Elekid", "Electabuzz", "Magby", "Magmar", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Trapinch", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Clamperl", "Huntail", "Gorebyss", "Bagon", "Shelgon", "Salamence", "Buneary", "Lopunny", "Bonsly", "Sudowoodo", "Mime Jr.", "Mr. Mime", "Munchlax", "Snorlax", "Riolu", "Lucario", "Finneon", "Lumineon", "Mantyke", "Krokorok", "Scraggy", "Fearow", "Druddigon", "Bisharp", "Pawniard", "Larvesta", "Volcarona", "Fletchling", "Fletchinder", "Pancham", "Pangoro", "Dedenne", "Togedemaru", "Carbink", "Sableye", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Charjabug", "Grubbin", "Vikavolt", "Mudbray", "Mudsdale", "Salandit", "Salazzle", "Stufful", "Oranguru", "Passimian", "Pyukumuku", "Wingull", "Togedemaru", "Janhmo-o", "Hakamo-o", "Kommo-o"};
-        if(this.name.substring(0,3).compareTo("Ult") == 0) {
+        if(this.name.getValue().substring(0,3).compareTo("Ult") == 0) {
             for (String i : SOSUltra)
                 if (i.compareTo(selectedPokemon.getName()) == 0)
                     return true;
@@ -283,46 +287,6 @@ public class Game {
             if(i.compareTo(selectedPokemon.getName()) == 0)
                 return true;
         return false;
-    }
-
-    //adds shiny locked pokemon to ShinyLocked array based on the selected game
-    public void setShinyLocked(){
-        switch (generation){
-            case 5:
-                ShinyLocked[0] = "Reshiram";
-                ShinyLocked[1] = "Zekrom";
-                if(name.compareTo("Black") == 0 || name.compareTo("White") == 0)
-                    ShinyLocked[2] = "Victini";
-                break;
-            case 6:
-                if(name.compareTo("X") == 0 || name.compareTo("Y") == 0) {
-                    ShinyLocked = new String[]{"Articuno", "Zapdos", "Moltres", "Mewtwo", "Xerneas", "Yveltal", "Zygarde"};
-                }else{
-                    ShinyLocked = new String[]{"Zyogre", "Groudon", "Rayquaza", "Deoxys"};
-                }
-                break;
-            case 7:
-                if(name.substring(0,3).compareTo("Ult") == 0) {
-                    ShinyLocked = new String[]{"Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Solgaleo", "Lunala", "Zygarde", "Silvally", "Naganadel"};
-
-                }
-                else if(name.substring(0,3).compareTo("Let") == 0){
-                    ShinyLocked = new String[]{"Articuno", "Zapdos", "Moltres", "Mewtwo"};
-                }
-                else{
-                    ShinyLocked = new String[]{"Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Zygarde", "Silvally", "Naganadel"};
-                }
-                break;
-            case 8:
-                ShinyLocked = new String[]{"Type: Null", "Silvally", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude"};
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void setGeneration(int generation){
-        this.generation = generation;
     }
 
     //checks to see if the legendary pokemon is available in the selected Game
@@ -351,9 +315,9 @@ public class Game {
                     default:
                         break;
                 }
-                return this.name.compareTo("Crystal") == 0 && selectedPokemon.getName().compareTo("Celebi") == 0;
+                return this.name.getValue().compareTo("Crystal") == 0 && selectedPokemon.getName().compareTo("Celebi") == 0;
             case 3:
-                switch (this.name) {
+                switch (this.name.getValue()) {
                     case "Ruby":
                     case "Sapphire":
                     case "Emerald": {
@@ -369,9 +333,9 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Ruby") == 0)
+                        if (this.name.getValue().compareTo("Ruby") == 0)
                             return selectedPokemon.getName().compareTo("Groudon") == 0;
-                        else if (this.name.compareTo("Sapphire") == 0)
+                        else if (this.name.getValue().compareTo("Sapphire") == 0)
                             return selectedPokemon.getName().compareTo("Kyogre") == 0;
                         else
                             switch (selectedPokemon.getName()) {
@@ -411,7 +375,7 @@ public class Game {
                         break;
                 }
             case 4:
-                switch (this.name) {
+                switch (this.name.getValue()) {
                     case "Diamond":
                     case "Pearl":
                     case "Platinum": {
@@ -432,9 +396,9 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Diamond") == 0)
+                        if (this.name.getValue().compareTo("Diamond") == 0)
                             return selectedPokemon.getName().compareTo("Dialga") == 0;
-                        else if (this.name.compareTo("Pearl") == 0)
+                        else if (this.name.getValue().compareTo("Pearl") == 0)
                             return selectedPokemon.getName().compareTo("Palkia") == 0;
                         else
                             switch (selectedPokemon.getName()) {
@@ -474,15 +438,15 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("SoulSilver") == 0)
+                        if (this.name.getValue().compareTo("SoulSilver") == 0)
                             return selectedPokemon.getName().compareTo("Groudon") == 0;
-                        else if(this.name.compareTo("HeartGold") == 0)
+                        else if(this.name.getValue().compareTo("HeartGold") == 0)
                             return selectedPokemon.getName().compareTo("Kyogre") == 0;
                         return false;
                     }
                 }
             case 5:
-                switch (this.name) {
+                switch (this.name.getValue()) {
                     case "Black":
                     case "White": {
                         switch (selectedPokemon.getName()) {
@@ -497,9 +461,9 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("White") == 0) {
+                        if (this.name.getValue().compareTo("White") == 0) {
                             return selectedPokemon.getName().compareTo("Zekrom") == 0;
-                        } else if(this.name.compareTo("Black") == 0)
+                        } else if(this.name.getValue().compareTo("Black") == 0)
                             return selectedPokemon.getName().compareTo("Reshiram") == 0;
                         return false;
                     }
@@ -523,7 +487,7 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("White 2") == 0) {
+                        if (this.name.getValue().compareTo("White 2") == 0) {
                             switch (selectedPokemon.getName()) {
                                 case "Latias":
                                 case "Reshiram":
@@ -543,7 +507,7 @@ public class Game {
                     }
                 }
             case 6:
-                switch (this.name) {
+                switch (this.name.getValue()) {
                     case "X":
                     case "Y": {
                         switch (selectedPokemon.getName()) {
@@ -556,9 +520,9 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("X") == 0) {
+                        if (this.name.getValue().compareTo("X") == 0) {
                             return selectedPokemon.getName().compareTo("Xerneas") == 0;
-                        } else if (this.name.compareTo("Y") == 0)
+                        } else if (this.name.getValue().compareTo("Y") == 0)
                             return selectedPokemon.getName().compareTo("Yveltal") == 0;
                         return false;
                     }
@@ -592,7 +556,7 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Omega Ruby") == 0) {
+                        if (this.name.getValue().compareTo("Omega Ruby") == 0) {
                             switch (selectedPokemon.getName()) {
                                 case "Ho-Oh":
                                 case "Groudon":
@@ -618,7 +582,7 @@ public class Game {
                     }
                 }
             case 7:
-                switch (this.name) {
+                switch (this.name.getValue()) {
                     case "Sun":
                     case "Moon": {
                         switch (selectedPokemon.getName()) {
@@ -638,7 +602,7 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Sun") == 0)
+                        if (this.name.getValue().compareTo("Sun") == 0)
                             switch (selectedPokemon.getName()){
                                 case "Solgaleo":
                                 case "Buzzwole":
@@ -647,7 +611,7 @@ public class Game {
                                 default:
                                     break;
                             }
-                        else if (this.name.compareTo("Moon") == 0)
+                        else if (this.name.getValue().compareTo("Moon") == 0)
                             switch (selectedPokemon.getName()){
                                 case "Lunala":
                                 case "Pheromosa":
@@ -699,7 +663,7 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Ultra Sun") == 0) {
+                        if (this.name.getValue().compareTo("Ultra Sun") == 0) {
                             switch (selectedPokemon.getName()) {
                                 case "Raikou":
                                 case "Ho-Oh":
@@ -754,7 +718,7 @@ public class Game {
                     }
                 }
             case 8:
-                switch (this.name) {
+                switch (this.name.getValue()) {
                     case "Sword":
                     case "Shield": {
                         switch (selectedPokemon.getName()) {
@@ -766,10 +730,10 @@ public class Game {
                             default:
                                 break;
                         }
-                        if (this.name.compareTo("Sword") == 0) {
-                            return selectedPokemon.name.compareTo("Zacian") == 0;
-                        } else if(this.name.compareTo("Shield") == 0){
-                            return selectedPokemon.name.compareTo("Zamazenta") == 0;
+                        if (this.name.getValue().compareTo("Sword") == 0) {
+                            return selectedPokemon.name.getValue().compareTo("Zacian") == 0;
+                        } else if(this.name.getValue().compareTo("Shield") == 0){
+                            return selectedPokemon.name.getValue().compareTo("Zamazenta") == 0;
                         }
                         return false;
                     }
@@ -780,8 +744,10 @@ public class Game {
         return false;
     }
 
+    public StringProperty getNameProperty(){return name;}
+
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public int getGeneration(){
@@ -790,5 +756,45 @@ public class Game {
 
     public String[] getMethods(){
         return Methods;
+    }
+
+    public void setGeneration(int generation){
+        this.generation = generation;
+    }
+
+    //adds shiny locked pokemon to ShinyLocked array based on the selected game
+    public void setShinyLocked(){
+        switch (generation){
+            case 5:
+                ShinyLocked[0] = "Reshiram";
+                ShinyLocked[1] = "Zekrom";
+                if(name.getValue().compareTo("Black") == 0 || name.getValue().compareTo("White") == 0)
+                    ShinyLocked[2] = "Victini";
+                break;
+            case 6:
+                if(name.getValue().compareTo("X") == 0 || name.getValue().compareTo("Y") == 0) {
+                    ShinyLocked = new String[]{"Articuno", "Zapdos", "Moltres", "Mewtwo", "Xerneas", "Yveltal", "Zygarde"};
+                }else{
+                    ShinyLocked = new String[]{"Zyogre", "Groudon", "Rayquaza", "Deoxys"};
+                }
+                break;
+            case 7:
+                if(name.getValue().substring(0,3).compareTo("Ult") == 0) {
+                    ShinyLocked = new String[]{"Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Solgaleo", "Lunala", "Zygarde", "Silvally", "Naganadel"};
+
+                }
+                else if(name.getValue().substring(0,3).compareTo("Let") == 0){
+                    ShinyLocked = new String[]{"Articuno", "Zapdos", "Moltres", "Mewtwo"};
+                }
+                else{
+                    ShinyLocked = new String[]{"Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Zygarde", "Silvally", "Naganadel"};
+                }
+                break;
+            case 8:
+                ShinyLocked = new String[]{"Type: Null", "Silvally", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude"};
+                break;
+            default:
+                break;
+        }
     }
 }

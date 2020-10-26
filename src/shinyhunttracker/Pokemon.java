@@ -1,7 +1,10 @@
 package shinyhunttracker;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Pokemon{
-    String name;
+    StringProperty name = new SimpleStringProperty();
     int generation;
     Boolean breedable;
     Boolean huntable;
@@ -11,7 +14,7 @@ public class Pokemon{
     String[] Legendaries = {"Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Heatran", "Regigigas", "Giratina", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Tornadus", "Thundurus", "Reshiram", "Zekrom", "Landorus", "Kyurem", "Xerneas", "Yveltal", "Zygarde", "Type: Null", "Silvally","Tapu Koko","Tapu Lele","Tapu Bulu","Tapu Fini","Cosmog","Cosmoem","Solgaleo","Lunala","Necrozma","Zacian","Zamazenta","Eternatus","Kubfu","Urshifu","Nihilego","Buzzwole","Pheromosa","Zurkitree","Celesteela","Kartana","Guzzlord","Poipole","Naganadel","Stakataka","Blacephalon","Mew","Celebi","Jirachi","Deoxys","Manaphy","Darkrai","Shaymin","Arceus","Victini","Keldeo","Meloetta","Genesect", "Diancie", "Hoopa", "Volcanion", "Magearna", "Marshadow", "Zeraora", "Meltan", "Melmetal", "Zarude"};
 
     Pokemon(){
-        name = null;
+        name.setValue("");
         generation = 0;
         breedable = false;
         huntable = true;
@@ -19,7 +22,7 @@ public class Pokemon{
 
     //main constructor
     Pokemon(String name, int generation){
-        this.name = name;
+        this.name.setValue(name);
         this.generation = generation;
         breedable = isBreedable();
         isLegendary();
@@ -29,10 +32,10 @@ public class Pokemon{
     public Boolean isBreedable(){
         String[] nonBreedablePokemon = {"Unown", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish"};
         for(String i: Legendaries)
-            if(i.compareTo(name) == 0)
+            if(i.compareTo(name.getValue()) == 0)
                 return false;
         for(String i: nonBreedablePokemon)
-            if(i.compareTo(name) == 0)
+            if(i.compareTo(name.getValue()) == 0)
                 return false;
         return true;
     }
@@ -42,12 +45,12 @@ public class Pokemon{
     public void isLegendary(){
         //since unown is neither breedable or able to evolve, I needed to treat it as a legendary
         //to get it to only show games that it is wild in
-        if(name.compareTo("Unown") == 0) {
+        if(name.getValue().compareTo("Unown") == 0) {
             huntable = false;
             return;
         }
         for(String i: Legendaries)
-            if(i.compareTo(name) == 0) {
+            if(i.compareTo(name.getValue()) == 0) {
                 huntable = false;
                 return;
             }
@@ -58,7 +61,7 @@ public class Pokemon{
     public Boolean isAlolan(){
         String[] alolanPokemon = {"Rattata", "Raticate", "Raichu", "Sandshrew", "Sandslash", "Vulpix", "Ninetales", "Diglett", "Dugtrio", "Meowth", "Persian", "Geodude", "Graveler", "Golem", "Grimer", "Muk", "Exeggutor", "Marowak"};
         for(String i: alolanPokemon)
-            if(i.compareTo(this.name) == 0)
+            if(i.compareTo(this.name.getValue()) == 0)
                 return true;
         return false;
     }
@@ -67,7 +70,7 @@ public class Pokemon{
     public Boolean isGalarian(){
         String[] galarianPokemon = {"Meowth", "Ponyta", "Rapidash", "Slowpoke", "Farfetch'd", "Weezing", "Mr. Mime", "Corsola", "Zigzagoon", "Linoone", "Darumaka", "Darmanitan", "Yamask", "Stunfisk", "Slowpoke", "Slowbro"};
         for(String i: galarianPokemon)
-            if(i.compareTo(this.name) == 0)
+            if(i.compareTo(this.name.getValue()) == 0)
                 return true;
         return false;
     }
@@ -77,7 +80,7 @@ public class Pokemon{
         int dexNum = 0;
         String[] pokemonStatDex = {"Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"};
         for(int i = 0; i < pokemonStatDex.length; i++)
-            if(pokemonStatDex[i].compareTo(name) == 0)
+            if(pokemonStatDex[i].compareTo(name.getValue()) == 0)
                 dexNum = i;
 
         //Pokemon base Stats (Health, Attack, Defense, Special, Speed)
@@ -248,8 +251,10 @@ public class Pokemon{
         }
     }
 
+    public StringProperty getNameProperty(){return name;}
+
     public String getName(){
-        return name;
+        return name.getValue();
     }
 
     public Boolean getBreedable(){
@@ -267,7 +272,7 @@ public class Pokemon{
     public String getForm(){ return form;}
 
     public void setName(String name){
-        this.name = name;
+        this.name.setValue(name);
     }
 
     public void setHuntable(Boolean huntable){

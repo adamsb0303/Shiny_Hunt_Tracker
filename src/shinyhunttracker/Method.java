@@ -1,11 +1,15 @@
 package shinyhunttracker;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Method {
-    String name;
+    StringProperty name = new SimpleStringProperty();
     int base;
     int modifier;
 
     Method(){
+        name.setValue("");
         base = 8192;
         modifier = 0;
     }
@@ -25,22 +29,22 @@ public class Method {
             case "Ultra Wormholes":
             case "Catch Combo":
             case "Total Encounters":
-                this.name = name;
+                this.name.setValue(name);
                 modifier = 1;
                 break;
             case "Breeding with Shiny":
-                this.name = name;
+                this.name.setValue(name);
                 modifier += 128;
                 break;
             case "Masuda":
-                this.name = name;
+                this.name.setValue(name);
                 if(generation == 4)
                     modifier = 5;
                 else
                     modifier = 6;
                 break;
             case "Friend Safari":
-                this.name = name;
+                this.name.setValue(name);
                 modifier = 6;
                 break;
             default:
@@ -96,7 +100,7 @@ public class Method {
     }
 
     public int sosChaining(int encounters){
-        if(encounters >= 255 && (name.compareTo("Sun") == 0 || name.compareTo("Moon") == 0)) {
+        if(encounters >= 255 && (name.getValue().compareTo("Sun") == 0 || name.getValue().compareTo("Moon") == 0)) {
             while(encounters >= 255){
                 encounters = encounters - 255;
             }
@@ -137,8 +141,10 @@ public class Method {
             return 5;
     }
 
+    public StringProperty getNameProperty(){return name;}
+
     public String getName(){
-        return name;
+        return name.getValue();
     }
 
     public int getModifier(){

@@ -1,4 +1,6 @@
 package shinyhunttracker;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -20,7 +22,7 @@ public class selectionPageController implements Initializable {
     //selection page elements
     public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
-    public Label pokemonLabel, gameLabel, methodLabel;
+    public Label pokemonLabel = new Label(), gameLabel = new Label(), methodLabel = new Label();
     public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox;
     public Button beginHuntButton, helpButton;
     Tooltip methodToolTip = new Tooltip();
@@ -31,11 +33,11 @@ public class selectionPageController implements Initializable {
     public TreeItem<String> methodRoot, evolution0, evolution1, evolution2;
     int index = 0;
     Tooltip searchField = new Tooltip("Type to search for Pokemon");
-    String pokemonSearch = "";
+    StringProperty pokemonSearch = new SimpleStringProperty();
 
     //selected objects
     Game selectedGame = new Game();
-    Pokemon selectedPokemon;
+    Pokemon selectedPokemon = new Pokemon();
     Pokemon Stage0 = new Pokemon();
     Pokemon Stage1 = new Pokemon();
     Method selectedMethod = new Method();
@@ -78,6 +80,8 @@ public class selectionPageController implements Initializable {
         searchField.setShowDelay(new Duration(500));
         PokemonList.setTooltip(searchField);
 
+        searchField.textProperty().bind(pokemonSearch);
+
         PokemonList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
@@ -92,7 +96,7 @@ public class selectionPageController implements Initializable {
                                 }
                             }
                             selectedPokemon = new Pokemon(newSelectionPokemon, findGenerationPokemon(newSelectionPokemon));//creates Pokemon object
-                            pokemonLabel.setText(selectedPokemon.getName());//updates selected pokemon label
+                            pokemonLabel.textProperty().bind(selectedPokemon.getNameProperty());
 
                             //checks if pokemon has regional variant, and resets checkbox
                             alolanCheckBox.setDisable(!selectedPokemon.isAlolan());
@@ -101,7 +105,7 @@ public class selectionPageController implements Initializable {
                             galarianCheckBox.setSelected(false);
 
                             //captures old selected game generation
-                            if(selectedGame.getName() != null)
+                            if(!selectedGame.getName().equals(""))
                                 oldSelectionGameGeneration = selectedGame.getGeneration();
 
                             InitializeGameList(selectedPokemon.getGeneration());//creates game list
@@ -122,7 +126,7 @@ public class selectionPageController implements Initializable {
                         String newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
                         if(findGenerationGame(newSelectionGame) != 0) {//throws away input if selection is Generation 1, Generation 2, etc.
                             selectedGame = new Game(newSelectionGame, findGenerationGame(newSelectionGame));//create Game object
-                            gameLabel.setText(selectedGame.getName());//update selected Game label
+                            gameLabel.textProperty().bind(selectedGame.getNameProperty());
 
                             //resets shiny charm and lure checkboxes
                             shinyCharmCheckBox.setSelected(false);
@@ -151,7 +155,7 @@ public class selectionPageController implements Initializable {
                         String newSelectionMethod = newValue.toString().substring(18, newValue.toString().length() - 2);
                         if(findGenerationPokemon(newSelectionMethod) == 0) {
                             selectedMethod = new Method(newSelectionMethod, selectedGame.getGeneration());//creates Method object
-                            methodLabel.setText(selectedMethod.getName());//updates selected Method label
+                            methodLabel.textProperty().bind(selectedMethod.getNameProperty());
                             beginHuntButton.setDisable(selectedMethod.getName() == null);//disables begin hunt button if the selected method is a pokemon name
                             helpButton.setVisible(selectedMethod.getName() != null);//displays tooltip button
                             setToolTip(selectedMethod.getName());//creates the tool tip that appears when method is selected
@@ -164,7 +168,6 @@ public class selectionPageController implements Initializable {
 
     //creates pokemon list
     public void InitializePokemonList(){
-        pokemonLabel.setText("");//clear selected pokemon label
         pokemonRoot = new TreeItem<>();
 
         //create tree views by pokemon generation
@@ -358,8 +361,6 @@ public class selectionPageController implements Initializable {
         shinyCharmCheckBox.setSelected(false);
         lureCheckBox.setSelected(false);
 
-        gameLabel.setText(selectedGame.getName());//updates selected game label
-
         //since legendaries are only available in certain games, I created a method to restrict what games are displayed
         if(!selectedPokemon.getHuntable()) {
             InitializeRestrictedGameList(generation);
@@ -548,7 +549,6 @@ public class selectionPageController implements Initializable {
     //creates method list
     public void InitializeMethodList(){
         selectedMethod = new Method();
-        methodLabel.setText(selectedMethod.getName());
         methodRoot = new TreeItem<>();
         createFamily(selectedPokemon.getName());
         selectedGame.generateMethods(selectedPokemon);
@@ -581,7 +581,6 @@ public class selectionPageController implements Initializable {
     //clears method list
     public void clearMethodList(){
         selectedMethod = new Method();
-        methodLabel.setText(selectedMethod.getName());
         methodRoot = new TreeItem<>();
         Stage0 = new Pokemon();
         Stage1 = new Pokemon();
@@ -723,7 +722,6 @@ public class selectionPageController implements Initializable {
             selectedPokemon.setName("Alolan " + selectedPokemon.getName());
         else
             selectedPokemon.setName(selectedPokemon.getName().substring(7));
-        pokemonLabel.setText(selectedPokemon.getName());
         InitializeGameList(selectedPokemon.getGeneration());
     }
 
@@ -736,7 +734,6 @@ public class selectionPageController implements Initializable {
             selectedPokemon.setName("Galarian " + selectedPokemon.getName());
         else
             selectedPokemon.setName(selectedPokemon.getName().substring(9));
-        pokemonLabel.setText(selectedPokemon.getName());
         InitializeGameList(selectedPokemon.getGeneration());
     }
 
@@ -830,80 +827,94 @@ public class selectionPageController implements Initializable {
         for(String[] i : Pokedex)
             PokedexSize += i.length;
 
-        pokemonSearch += e.getCharacter().toLowerCase();
-
-        while(index < PokedexSize){
-            if(index < 151){
-                String selectedPokemon = Gen1.getChildren().get(index).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen1.getChildren().get(index).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen1.getChildren().get(index));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen1);
-                    return;
-                }
-            }else if(index < 251){
-                String selectedPokemon = Gen2.getChildren().get(index - 151).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen2.getChildren().get(index - 151).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen2.getChildren().get(index - 151));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen2);
-                    return;
-                }
-            }else if(index < 386){
-                String selectedPokemon = Gen3.getChildren().get(index - 251).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen3.getChildren().get(index - 251).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen3.getChildren().get(index - 251));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen3);
-                    return;
-                }
-            }else if(index < 493){
-                String selectedPokemon = Gen4.getChildren().get(index - 386).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen4.getChildren().get(index - 386).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen4.getChildren().get(index - 386));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen4);
-                    return;
-                }
-            }else if(index < 649){
-                String selectedPokemon = Gen5.getChildren().get(index - 493).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen5.getChildren().get(index - 493).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen5.getChildren().get(index - 493));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen5);
-                    return;
-                }
-            }else if(index < 721){
-                String selectedPokemon = Gen6.getChildren().get(index - 649).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen6.getChildren().get(index - 649).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen6.getChildren().get(index - 649));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen6);
-                    return;
-                }
-            }else if(index < 809){
-                String selectedPokemon = Gen7.getChildren().get(index - 721).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && Gen7.getChildren().get(index - 721).getValue().toLowerCase().substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen7.getChildren().get(index - 721));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen7);
-                    return;
-                }
-            }else{
-                String selectedPokemon = Gen8.getChildren().get(index - 809).getValue().toLowerCase();
-                if(selectedPokemon.length() >= pokemonSearch.length() && selectedPokemon.substring(0,pokemonSearch.length()).contains(pokemonSearch)){
-                    PokemonList.getSelectionModel().select(Gen8.getChildren().get(index - 809));
-                    searchField.setText(pokemonSearch);
-                    collapsePokemonTrees(Gen8);
-                    return;
-                }
+        if(e.getCharacter().compareTo("\b") == 0) {
+            index = 0;
+            try {
+                pokemonSearch.setValue(pokemonSearch.getValue().substring(0, pokemonSearch.getValue().length() - 1));
+            }catch (StringIndexOutOfBoundsException f){
+                selectedPokemon.setName("");
             }
-            index++;
         }
-        collapsePokemonTrees(new TreeItem<>());
-        index = 0;
-        searchField.setText("");
-        pokemonSearch = "";
+        else {
+            if(pokemonSearch.getValue() == null)
+                pokemonSearch.setValue(e.getCharacter());
+            else
+                pokemonSearch.setValue(pokemonSearch.getValue() + e.getCharacter());
+
+            String searchString = pokemonSearch.getValue();
+
+            while (index < PokedexSize) {
+                if (index < 151) {
+                    String selectedPokemon = Pokedex[0][index];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen1.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen1.getChildren().get(index));
+                        collapsePokemonTrees(Gen1);
+                        return;
+                    }
+                } else if (index < 251) {
+                    String selectedPokemon = Pokedex[1][index - 151];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen2.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen2.getChildren().get(index - 151));
+                        collapsePokemonTrees(Gen2);
+                        return;
+                    }
+                } else if (index < 386) {
+                    String selectedPokemon = Pokedex[2][index - 251];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen3.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen3.getChildren().get(index - 251));
+                        collapsePokemonTrees(Gen3);
+                        return;
+                    }
+                } else if (index < 493) {
+                    String selectedPokemon = Pokedex[3][index - 386];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen4.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen4.getChildren().get(index - 386));
+                        collapsePokemonTrees(Gen4);
+                        return;
+                    }
+                } else if (index < 649) {
+                    String selectedPokemon = Pokedex[4][index - 493];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen5.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen5.getChildren().get(index - 493));
+                        collapsePokemonTrees(Gen5);
+                        return;
+                    }
+                } else if (index < 721) {
+                    String selectedPokemon = Pokedex[5][index - 649];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen6.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen6.getChildren().get(index - 649));
+                        collapsePokemonTrees(Gen6);
+                        return;
+                    }
+                } else if (index < 809) {
+                    String selectedPokemon = Pokedex[6][index - 721];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen7.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen7.getChildren().get(index - 721));
+                        collapsePokemonTrees(Gen7);
+                        return;
+                    }
+                } else {
+                    String selectedPokemon = Pokedex[7][index - 809];
+                    if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
+                        Gen8.setExpanded(true);
+                        PokemonList.getSelectionModel().select(Gen8.getChildren().get(index - 809));
+                        collapsePokemonTrees(Gen8);
+                        return;
+                    }
+                }
+                index++;
+            }
+            selectedPokemon.setName("");
+            collapsePokemonTrees(new TreeItem<>());
+            index = 0;
+        }
     }
 
     //method to collapse all but the given treeitem
