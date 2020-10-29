@@ -73,6 +73,8 @@ public class Game {
                     Methods[1] = "Masuda";
                 if(isWild(selectedPokemon))
                     Methods[2] = "Total Encounters";
+                if(inDynamaxAdventure(selectedPokemon))
+                    Methods[3] = "Dynamax Adventure";
                 break;
             default:
                 break;
@@ -286,6 +288,19 @@ public class Game {
         for(String i: Wormhole)
             if(i.compareTo(selectedPokemon.getName()) == 0)
                 return true;
+        return false;
+    }
+
+    //for SWSH
+    //checks to see if the pokemon is available in dynamax adventures
+    public boolean inDynamaxAdventure(Pokemon selectedPokemon){
+        String[] dynamaxAdventures = {"Ivysaur", "Charmeleon", "Wartortle", "Butterfree", "Raichu", "Alolan Raichu", "Sandslash", "Alolan Sandslash", "Nidoqueen", "Nidoking", "Clefairy", "Clefable", "Jigglypuff", "Wigglytuff", "Gloom", "Vileplume", "Dugtrio", "Alolan Dugtrio", "Persian", "Alolan Persian", "Golduck", "Poliwrath", "Kadabra", "Machoke", "Tentacruel", "Slowbro", "Magneton", "Haunter", "Kingler", "Exeggutor", "Marowak", "Alolan Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Weezing", "Galarian Weezing", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Seadra", "Seaking", "Starmie", "Mr. Mime", "Galarian Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Tauros", "Ditto", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Dragonair", "Noctowl", "Lanturn", "Togetic", "Xatu", "Bellossom", "Azumarill", "Sudowoodo", "Politoed", "Quagsire", "Slowking", "Dunsparce", "Qwilfish", "Sneasel", "Piloswine", "Octillery", "Mantine", "Skarmory", "Hitmontop", "Miltank", "Grovyle", "Sceptile", "Combusken", "Blaziken", "Marshtomp", "Swampert", "Linoone", "Galarian Linoone", "Pelipper", "Ninjask", "Exploud", "Lairon", "Manectric", "Roselia", "Sharpedo", "Wailmer", "Torkoal", "Flygon", "Altaria", "Whiscash", "Crawdaunt", "Claydol", "Cradily", "Armaldo", "Dusclops", "Absol", "Glalie", "Sealeo", "Relicanth", "Metang", "Luxray", "Vespiquen", "Cherrim", "Gastrodon", "Drifblim", "Lopunny", "Skuntank", "Bronzong", "Munchlax", "Drapion", "Abomasnow", "Froslass", "Rotom", "Stoutland", "Liepard", "Musharna", "Unfezant", "Boldore", "Swoobat", "Audino", "Gurdurr", "Palpitoad", "Seismitoad", "Scolipede", "Whimsicott", "Lilligant", "Basculin", "Krookodile", "Maractus", "Crustle", "Sigilyph", "Cofagrigus", "Garbodor", "Cinccino", "Vanillish", "Emolga", "Escavalier", "Amoonguss", "Jellicent", "Galvantula", "Klang", "Klinklang", "Beheeyem", "Lampent", "Fraxure", "Beartic", "Cryogonal", "Accelgor", "Stunfisk", "Galarian Stunfisk", "Mienshao", "Druddigon", "Golurk", "Bisharp", "Bouffalant", "Heatmor", "Durant", "Diggersby", "Talonflame", "Pangoro", "Doublade", "Malamar", "Barbaracle", "Heliolisk", "Tyrantrum", "Aurorus", "Hawlucha", "Dedenne", "Klefki", "Trevenat", "Gourgeist", "Charjabug", "Vikavolt", "Ribombee", "Lycanroc", "Mudsdale", "Araquanid", "Lurantis", "Shiinotic", "Salazzle", "Bewear", "Tsareena", "Comfey", "Oranguru", "Passimian", "Palossand", "Pyukumuku", "Togedemaru", "Mimikyu", "Greedent", "Orbeetle", "Thievul", "Eldegoss", "Dubwool", "Drednaw", "Boltund", "Carkol", "Coalossal", "Sandaconda", "Cramorant", "Barraskewda", "Toxtricity", "Centiskorch", "Grapploct", "Polteageist", "Hatterene", "Grimmsnarl", "Obstagoon", "Perrserker", "Alcremie", "Falinks", "Pincurchin", "Frosmoth", "Indeedee", "Morpeko", "Copperajah", "Duraludon", "Drakloak", "Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Heatran", "Giratina", "Cresselia", "Landorus", "Kyurem", "Zygarde", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Stakataka", "Blacephalon", "Ho-Oh", "Latios", "Groudon", "Palkia", "Tornadus", "Reshiram", "Xerneas", "Solgaleo", "Lugia", "Latias", "Kyogre", "Dialga", "Thundurus", "Zekrom", "Yveltal", "Lunala"};
+
+        //loops through array backwards, since the user is more likely to be targeting a legendary
+        for(int i = dynamaxAdventures.length - 1; i >= 0; i--)
+            if(dynamaxAdventures[i].contains(selectedPokemon.getName()))
+                return true;
+
         return false;
     }
 
@@ -722,6 +737,61 @@ public class Game {
                     case "Sword":
                     case "Shield": {
                         switch (selectedPokemon.getName()) {
+                            case "Articuno":
+                            case "Zapdos":
+                            case "Moltres":
+                            case "Mewtwo":
+                            case "Raikou":
+                            case "Entei":
+                            case "Suicune":
+                            case "Lugia":
+                            case "Ho-Oh":
+                            case "Regirock":
+                            case "Regice":
+                            case "Registeel":
+                            case "Latias":
+                            case "Latios":
+                            case "Kyogre":
+                            case "Groudon":
+                            case "Rayquaza":
+                            case "Uxie":
+                            case "Mesprit":
+                            case "Azelf":
+                            case "Dialga":
+                            case "Palkia":
+                            case "Heatran":
+                            case "Regigigas":
+                            case "Giratina":
+                            case "Cresselia":
+                            case "Cobalion":
+                            case "Terrakion":
+                            case "Virizion":
+                            case "Tornadus":
+                            case "Thundurus":
+                            case "Reshiram":
+                            case "Zekrom":
+                            case "Landorus":
+                            case "Kyurem":
+                            case "Keldeo":
+                            case "Xerneas":
+                            case "Yveltal":
+                            case "Zygarde":
+                            case "Tapu Koko":
+                            case "Tapu Lele":
+                            case "Tapu Bulu":
+                            case "Tapu Fini":
+                            case "Solgaleo":
+                            case "Lunala":
+                            case "Nihilego":
+                            case "Buzzwole":
+                            case "Pheromosa":
+                            case "Xurkitree":
+                            case "Celesteela":
+                            case "Kartana":
+                            case "Guzzlord":
+                            case "Necrozma":
+                            case "Stakataka":
+                            case "Blacephalon":
                             case "Type: Null":
                             case "Eternatus":
                             case "Kubfu":

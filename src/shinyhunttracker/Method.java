@@ -47,6 +47,10 @@ public class Method {
                 this.name.setValue(name);
                 modifier = 6;
                 break;
+            case "Dynamax Adventure":
+                this.name.setValue(name);
+                base = 300;
+                modifier = 1;
             default:
                 break;
         }
