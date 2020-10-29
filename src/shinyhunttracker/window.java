@@ -1339,12 +1339,12 @@ class huntWindow extends window{
 
         Evo0 = new ImageView();
         Evo1 = new ImageView();
-        if(evo0 != null) {
+        if(!evo0.equals("")) {
             Evo0 = createPokemonSprite(evo0, selectedGame);
             if(Evo0 == null)
                 Evo0 = new ImageView();
         }
-        if(evo1 != null) {
+        if(!evo1.equals("")) {
             Evo1 = createPokemonSprite(evo1, selectedGame);
             if(Evo1 == null)
                 Evo1 = new ImageView();
@@ -1382,9 +1382,9 @@ class huntWindow extends window{
                 double evo1Width = 0;
                 double evo0Width = 0;
                 double spriteWidth = sprite.getImage().getWidth() * sprite.getScaleX();
-                if(evo1 != null)
+                if(!evo1.equals(""))
                     evo1Width = Evo1.getImage().getWidth() * Evo1.getScaleX();
-                if(evo0 != null)
+                if(!evo0.equals(""))
                     evo0Width = Evo0.getImage().getWidth() * Evo0.getScaleX();
                 windowLayout.getChildren().get(i).setLayoutX(evo0Width + evo1Width + spriteWidth + 5);
                 windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
@@ -1392,7 +1392,7 @@ class huntWindow extends window{
             }
         }
 
-        if(this.evo1 != null) {
+        if(!this.evo1.equals("")) {
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
             Evo0.setLayoutY((Evo0.getImage().getHeight() * Evo0.getScaleY()));
 
@@ -1401,7 +1401,7 @@ class huntWindow extends window{
 
             sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + Evo1.getImage().getWidth()  * Evo1.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
             sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
-        }else if(this.evo0 != null){
+        }else if(!this.evo0.equals("")){
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
             Evo0.setLayoutY(Evo0.getImage().getHeight() * Evo0.getScaleY());
 
@@ -1511,11 +1511,11 @@ class huntWindow extends window{
             VBox Evo1Settings;
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
-            if (evo1 != null) {
+            if (!evo1.equals("")) {
                 Evo1Settings = createImageSettings(Evo1, new Pokemon(evo1, 0), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
-            if (evo0 != null) {
+            if (!evo0.equals("")) {
                 Evo0Settings = createImageSettings(Evo0, new Pokemon(evo0, 0), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
             }
