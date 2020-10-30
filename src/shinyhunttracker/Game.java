@@ -116,6 +116,9 @@ public class Game {
         String[] Sword = {"Galarian Darumaka", "Galarian Darmanitan", "Stonjourner", "Jangmo-o", "Hakamo-o", "Kommo-o", "Turtonator", "Passimian", "Swirlix", "Deino", "Zweilous", "Rufflet", "Braviary", "Gothita", "Gothorita", "Scraggy", "Seedot", "Nuzleaf", "Shiftry", "Mawile"};
         String[] Shield = {"Galarian Corsola", "Eiscue", "Drampa", "Oranguru", "Goomy", "Sliggoo", "Spritzee", "Vullaby", "Mandibuzz", "Solosis", "Duosion", "Reuniclus", "Croagunk", "Toxicroak", "Solrock", "Larvitar", "Pupitar", "Lotad", "Lombre", "Ludicolo"};
 
+        String[] IoA = {};
+        String[] CT = {};
+
         switch (this.generation){
             case 4:
                 for(String i: DPP)
