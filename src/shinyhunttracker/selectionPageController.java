@@ -445,10 +445,15 @@ public class selectionPageController implements Initializable {
             for (String i : Games[7]) {
                 //since the whole national dex isn't in SWSH it needs to check if the pokemon is in the SWSH pokedex
                 //if the selected pokemon's generation is lower than 8
+                boolean inSWSH = true;
                 if (generation < 8) {
                     for (String j : SWSHPokedex)
-                        if (j.compareTo(selectedPokemon.getName()) != 0)
-                            makeBranch(i, treeGamesGen8);
+                        if (j.compareTo(selectedPokemon.getName()) == 0) {
+                            inSWSH = false;
+                            break;
+                        }
+                    if(inSWSH)
+                        makeBranch(i, treeGamesGen8);
                 } else
                     makeBranch(i, treeGamesGen8);
             }
