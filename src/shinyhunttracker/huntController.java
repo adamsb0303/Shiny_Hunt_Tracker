@@ -112,14 +112,14 @@ public class huntController {
         MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
 
         Menu huntSettings = new Menu("Hunt Settings");
+        MenuItem pokemonCaught = new MenuItem("Caught");
         MenuItem increment= new MenuItem("Change Increment");
         MenuItem resetEncounters = new MenuItem("Fail");
-        MenuItem phaseHunt = new MenuItem("Phase Hunt");
-        MenuItem pokemonCaught = new MenuItem("Pokemon Caught");
+        MenuItem phaseHunt = new MenuItem("Phase");
         MenuItem resetCombo = new MenuItem("Reset Combo");
         MenuItem saveHunt = new MenuItem("Save Hunt");
         MenuItem DVTable = new MenuItem("DV Table");
-        huntSettings.getItems().addAll(increment, resetEncounters, phaseHunt, pokemonCaught, resetCombo, saveHunt);
+        huntSettings.getItems().addAll(pokemonCaught, increment, resetEncounters, phaseHunt, resetCombo, saveHunt);
 
         if(window.getGameGeneration() == 1)
             huntSettings.getItems().add(DVTable);
@@ -139,15 +139,8 @@ public class huntController {
         pokemonCaught.setOnAction(e -> {
             window.pokemonCaught();
             removeWindow(window);
-            if(previousCatches.getStage().isShowing()) {
-                SaveData temp = new SaveData();
-                temp.saveLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout(), false);
-                boolean settingsIsOpen = previousCatches.getSettingsStage().isShowing();
+            if(previousCatches.getStage().isShowing())
                 previousCatches.refreshPreviouslyCaughtPokemon();
-                temp.loadLayout("Previously-Caught/layoutTransition", previousCatches.getWindowLayout());
-                if(!settingsIsOpen)
-                    previousCatches.getSettingsStage().close();
-            }
         });
         resetCombo.setOnAction(e -> window.resetCombo());
         saveHunt.setOnAction(e -> window.saveHunt());
