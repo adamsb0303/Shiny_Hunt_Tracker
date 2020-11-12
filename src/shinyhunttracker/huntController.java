@@ -132,7 +132,10 @@ public class huntController {
         customizeHuntLayout.setOnAction(e -> window.CustomizeHuntWindow());
         increment.setOnAction(e -> window.changeIncrement());
         resetEncounters.setOnAction(e -> window.resetEncounters());
-        phaseHunt.setOnAction(e -> window.phaseHunt());
+        phaseHunt.setOnAction(e -> {
+            window.setPreviouslyCaughtWindow(previousCatches);
+            window.phaseHunt();
+        });
         pokemonCaught.setOnAction(e -> {
             window.pokemonCaught();
             removeWindow(window);

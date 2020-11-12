@@ -1273,6 +1273,7 @@ class huntWindow extends window{
     String evo0, evo1;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
     Text previousEncountersText = new Text();
+    previouslyCaught previouslyCaughtWindow;
     int encounters, previousEncounters, combo;
     int increment;
     int huntNumber;
@@ -1612,6 +1613,9 @@ class huntWindow extends window{
                 SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
                 data.pokemonCaught();
                 resetCombo();
+                resetEncounters();
+                if(previouslyCaughtWindow.getStage().isShowing())
+                    previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();
                 phaseStage.close();
             }
         });
@@ -1869,10 +1873,6 @@ class huntWindow extends window{
 
     public Pokemon getSelectedPokemon(){ return selectedPokemon; }
 
-    public void setKeybind(char keybind){
-        this.keybind = keybind;
-    }
-
     public int getHuntNumber(){
         return huntNumber;
     }
@@ -1882,6 +1882,12 @@ class huntWindow extends window{
     }
 
     public int getGameGeneration(){ return selectedGame.getGeneration(); }
+
+    public void setKeybind(char keybind){
+        this.keybind = keybind;
+    }
+
+    public void setPreviouslyCaughtWindow(previouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }
 
 class previouslyCaught extends window{
@@ -1984,9 +1990,14 @@ class previouslyCaught extends window{
 
     //refreshes previously caught pokemon window
     public void refreshPreviouslyCaughtPokemon(){
+        SaveData temp = new SaveData();
+        temp.saveLayout("Previously-Caught/layoutTransition", windowLayout, false);
+
         previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
         windowLayout.getChildren().remove(0,windowLayout.getChildren().size());
         addPreviouslyCaughtPokemon(displayCaught);
+
+        temp.loadLayout("Previously-Caught/layoutTransition", windowLayout);
     }
 
     //create elements of the last x previously caught pokemon
