@@ -4,7 +4,6 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -86,101 +85,6 @@ public class window{
                 break;
         }
         return filePath;
-    }
-
-    //returns ImageView with the sprite of the given pokemon
-    public ImageView createPokemonSprite(String name, Game selectedGame){
-        String filePath = createGameFilePath(selectedGame);
-
-        if(name.contains("Galarian")) {
-            filePath += "galarian/";
-            name = name.substring(9);
-        }
-        else if(name.contains("Alolan")) {
-            filePath += "alolan/";
-            name = name.substring(7);
-        }
-
-        if(!filePath.contains("alternateforms")) {
-            switch (name) {
-                case "Type: Null":
-                    filePath += "type-null";
-                    break;
-                case "Nidoran♀":
-                    filePath += "nidoran-f";
-                    break;
-                case "Nidoran♂":
-                    filePath += "nidoran-m";
-                    break;
-                case "Mr. Mime":
-                    filePath += "mr-mime";
-                    break;
-                case "Mr. Rime":
-                    filePath += "mr-rime";
-                    break;
-                case "Mime Jr.":
-                    filePath += "mime-jr";
-                    break;
-                case "Flabébé":
-                    filePath += "flabebe";
-                    break;
-                case "Tapu Koko":
-                    filePath += "tapu-koko";
-                    break;
-                case "Tapu Lele":
-                    filePath += "tapu-lele";
-                    break;
-                case "Tapu Bulu":
-                    filePath += "tapu-bulu";
-                    break;
-                case "Tapu Fini":
-                    filePath += "tapu-fini";
-                    break;
-                case "Farfetch'd":
-                    filePath += "farfetchd";
-                    break;
-                case "Sirfetch'd":
-                    filePath += "sirfetchd";
-                    break;
-                default:
-                    filePath += name.toLowerCase();
-                    break;
-            }
-        }
-
-        if(selectedGame.getGeneration() < 5)
-            filePath += ".png";
-        else
-            filePath += ".gif";
-
-        try {
-            FileInputStream input = new FileInputStream(filePath);
-            Image image = new Image(input);
-            ImageView sprite = new ImageView(image);
-            if(image.getWidth() != 200 && image.getHeight() != 200){
-                double height = image.getHeight();
-                double width = image.getWidth();
-                double scale;
-                if(height > width)
-                    scale = 200 / height;
-                else
-                    scale = 200 / width;
-                sprite.setScaleX(scale);
-                sprite.setScaleY(scale);
-                imageViewFitAdjust(sprite);
-            }
-            sprite.setTranslateX(-image.getWidth() / 2);
-            sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
-            return sprite;
-        }catch (FileNotFoundException e){
-            System.out.println(name + " sprite not found");
-            try {
-                return new ImageView(new Image(new FileInputStream("Images/Sprites/blank.png")));
-            }catch(IOException f){
-                System.out.println("Placeholder not found");
-            }
-        }
-        return null;
     }
 
     //comboBox of all variants of given pokemon
@@ -453,8 +357,77 @@ public class window{
             image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
     }
 
+    //returns ImageView with the sprite of the given pokemon
+    public void setPokemonSprite(ImageView sprite, String name, Game selectedGame){
+        String filePath = createGameFilePath(selectedGame);
+
+        if(name.contains("Galarian")) {
+            filePath += "galarian/";
+            name = name.substring(9);
+        }
+        else if(name.contains("Alolan")) {
+            filePath += "alolan/";
+            name = name.substring(7);
+        }
+
+        if(!filePath.contains("alternateforms")) {
+            switch (name) {
+                case "Type: Null":
+                    filePath += "type-null";
+                    break;
+                case "Nidoran♀":
+                    filePath += "nidoran-f";
+                    break;
+                case "Nidoran♂":
+                    filePath += "nidoran-m";
+                    break;
+                case "Mr. Mime":
+                    filePath += "mr-mime";
+                    break;
+                case "Mr. Rime":
+                    filePath += "mr-rime";
+                    break;
+                case "Mime Jr.":
+                    filePath += "mime-jr";
+                    break;
+                case "Flabébé":
+                    filePath += "flabebe";
+                    break;
+                case "Tapu Koko":
+                    filePath += "tapu-koko";
+                    break;
+                case "Tapu Lele":
+                    filePath += "tapu-lele";
+                    break;
+                case "Tapu Bulu":
+                    filePath += "tapu-bulu";
+                    break;
+                case "Tapu Fini":
+                    filePath += "tapu-fini";
+                    break;
+                case "Farfetch'd":
+                    filePath += "farfetchd";
+                    break;
+                case "Sirfetch'd":
+                    filePath += "sirfetchd";
+                    break;
+                default:
+                    filePath += name.toLowerCase();
+                    break;
+            }
+        }
+
+        if(selectedGame.getGeneration() < 5)
+            filePath += ".png";
+        else
+            filePath += ".gif";
+
+        fetchImage getImage = new fetchImage(filePath);
+        getImage.setImage(sprite);
+    }
+
     //changes given image to given pokemon variant
-    public void createAlternateSprite(String name, String form, Game selectedGame, ImageView sprite){
+    public void setAlternateSprite(String name, String form, Game selectedGame, ImageView sprite){
         String filePath = createGameFilePath(selectedGame);
         switch(form) {
             case "Female":
@@ -798,31 +771,8 @@ public class window{
         else
             filePath += ".gif";
 
-        try{
-            FileInputStream input = new FileInputStream(filePath);
-            Image image = new Image(input);
-            sprite.setImage(image);
-            if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
-                double height = image.getHeight();
-                double width = image.getWidth();
-                double scale;
-                if(height > width)
-                    scale = -sprite.getFitHeight() / height;
-                else
-                    scale = -sprite.getFitWidth() / width;
-                sprite.setScaleX(scale);
-                sprite.setScaleY(scale);
-                imageViewFitAdjust(sprite);
-            }else{
-                sprite.setScaleX(1);
-                sprite.setScaleY(1);
-                imageViewFitAdjust(sprite);
-            }
-            sprite.setTranslateX(-image.getWidth() / 2);
-            sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
-        }catch(IOException ignored) {
-            
-        }
+        fetchImage getImage = new fetchImage(filePath);
+        getImage.setImage(sprite);
     }
 
     //creates ImageView settings VBox
@@ -883,7 +833,7 @@ public class window{
         formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
                 pokemon.setForm(newValue);
-                createAlternateSprite(pokemon.getName(), newValue, selectedGame, image);
+                setAlternateSprite(pokemon.getName(), newValue, selectedGame, image);
             }
         });
 
@@ -1253,10 +1203,6 @@ public class window{
         return windowStage;
     }
 
-    public AnchorPane getWindowLayout(){
-        return windowLayout;
-    }
-
     public String getCurrentLayout(){
         return currentLayout;
     }
@@ -1334,19 +1280,21 @@ class huntWindow extends window{
         quickEdit(currentComboText);
         quickEdit(previousEncountersText);
 
-        sprite = createPokemonSprite(selectedPokemon.getName(), selectedGame);
+        sprite = new ImageView();
+
+        setPokemonSprite(sprite, selectedPokemon.getName(), selectedGame);
         if(selectedPokemon.getForm() != null)
-            createAlternateSprite(selectedPokemon.getName(), selectedPokemon.getForm(), selectedGame, sprite);
+            setAlternateSprite(selectedPokemon.getName(), selectedPokemon.getForm(), selectedGame, sprite);
 
         Evo0 = new ImageView();
         Evo1 = new ImageView();
         if(!evo0.equals("")) {
-            Evo0 = createPokemonSprite(evo0, selectedGame);
+            setPokemonSprite(Evo0, evo0, selectedGame);
             if(Evo0 == null)
                 Evo0 = new ImageView();
         }
         if(!evo1.equals("")) {
-            Evo1 = createPokemonSprite(evo1, selectedGame);
+            setPokemonSprite(Evo1, evo1, selectedGame);
             if(Evo1 == null)
                 Evo1 = new ImageView();
         }
@@ -2022,9 +1970,10 @@ class previouslyCaught extends window{
                     caughtGame.setGeneration(selectedPokemonGeneration);
                 Pokemon previouslyCaughtPokemon = new Pokemon(data.splitString(line, 0), 0);
                 previouslyCaughtPokemon.setForm(data.splitString(line,1));
-                ImageView sprite = createPokemonSprite(previouslyCaughtPokemon.getName(), caughtGame);
+                ImageView sprite = new ImageView();
+                setPokemonSprite(sprite, previouslyCaughtPokemon.getName(), caughtGame);
                 if(previouslyCaughtPokemon.getForm() != null)
-                    createAlternateSprite(previouslyCaughtPokemon.getName(), previouslyCaughtPokemon.getForm(), caughtGame, sprite);
+                    setAlternateSprite(previouslyCaughtPokemon.getName(), previouslyCaughtPokemon.getForm(), caughtGame, sprite);
                 Text pokemon = new Text(data.splitString(line, 0));
                 Text method = new Text(data.splitString(line, 4));
                 Text encounters = new Text(data.splitString(line, 6));
@@ -2286,5 +2235,69 @@ class newOrOld extends window{
 
     public void setController(huntController controller){
         this.controller = controller;
+    }
+}
+
+class fetchImage extends Thread{
+    String filePath;
+
+    fetchImage(String filePath){
+        this.filePath = filePath;
+    }
+
+    public void setImage(TreeItem<String> item){
+        try {
+            Image image = new Image(new FileInputStream(filePath));
+            ImageView sprite = new ImageView(image);
+            item.setGraphic(sprite);
+        }catch(FileNotFoundException e){
+            System.out.println("image at " + filePath + " not found");
+        }
+    }
+
+    public void setImage(ImageView sprite){
+        try {
+            FileInputStream input = new FileInputStream(filePath);
+            Image image = new Image(input);
+            sprite.setImage(image);
+            if(sprite.getFitWidth() == 0 || sprite.getFitHeight() == 0){
+                sprite.setFitWidth(-200);
+                sprite.setFitHeight(-200);
+            }
+            if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
+                double height = image.getHeight();
+                double width = image.getWidth();
+                double scale;
+                if(height > width)
+                    scale = -sprite.getFitHeight() / height;
+                else
+                    scale = -sprite.getFitWidth() / width;
+                sprite.setScaleX(scale);
+                sprite.setScaleY(scale);
+            }else{
+                sprite.setScaleX(1);
+                sprite.setScaleY(1);
+            }
+            imageViewFitAdjust(sprite);
+            sprite.setTranslateX(-image.getWidth() / 2);
+            sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
+        }catch (FileNotFoundException e){
+            System.out.println("image at " + filePath + " not found");
+            try {
+                sprite.setImage(new Image(new FileInputStream("Images/Sprites/blank.png")));
+            }catch(IOException f){
+                System.out.println("Placeholder not found");
+            }
+        }
+    }
+
+    //adjust ImageView fit
+    public void imageViewFitAdjust(ImageView image){
+        double newWidth = image.getImage().getWidth() * image.getScaleX();
+        double newHeight = image.getImage().getHeight() * image.getScaleY();
+        if(newWidth > -image.getFitWidth())
+            image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
+        if(newHeight > -image.getFitHeight())
+            image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
     }
 }
