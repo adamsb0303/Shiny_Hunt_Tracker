@@ -787,7 +787,7 @@ public class selectionPageController implements Initializable {
             }catch (StringIndexOutOfBoundsException f){
                 selectedPokemon.setName("");
             }
-        }else if((charAsciiValue >= 60 && charAsciiValue <= 71) || (charAsciiValue >= 65 && charAsciiValue <= 90) || (charAsciiValue >= 97 && charAsciiValue <= 122)){
+        }else if((charAsciiValue >= 48 && charAsciiValue <= 57) || (charAsciiValue >= 65 && charAsciiValue <= 90) || (charAsciiValue >= 97 && charAsciiValue <= 122)){
             if (pokemonSearch.getValue() == null)
                 pokemonSearch.setValue(e.getCharacter());
             else
