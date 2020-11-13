@@ -29,7 +29,7 @@ public class selectionPageController implements Initializable {
     public TreeItem<String> gameRoot, treeGamesGen1, treeGamesGen2, treeGamesGen3, treeGamesGen4, treeGamesGen5, treeGamesGen6, treeGamesGen7, treeGamesGen8;
     public TreeItem<String> methodRoot, evolution0, evolution1, evolution2;
     int index = 0;
-    Tooltip searchField = new Tooltip("Type to search for Pokemon");
+    Tooltip searchField = new Tooltip("Enter the Pokemon that you are hunting here");
     StringProperty pokemonSearch = new SimpleStringProperty();
 
     //selected objects
