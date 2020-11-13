@@ -1,21 +1,15 @@
 package shinyhunttracker;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import static javafx.util.Duration.INDEFINITE;
@@ -785,20 +779,21 @@ public class selectionPageController implements Initializable {
         for(String[] i : Pokedex)
             PokedexSize += i.length;
 
-        if(e.getCharacter().compareTo("\b") == 0) {
+        int charAsciiValue = e.getCharacter().charAt(0);
+        if(charAsciiValue == 8) {
             index = 0;
             try {
                 pokemonSearch.setValue(pokemonSearch.getValue().substring(0, pokemonSearch.getValue().length() - 1));
             }catch (StringIndexOutOfBoundsException f){
                 selectedPokemon.setName("");
             }
-        }
-        else {
-            if(pokemonSearch.getValue() == null)
+        }else if((charAsciiValue >= 60 && charAsciiValue <= 71) || (charAsciiValue >= 65 && charAsciiValue <= 90) || (charAsciiValue >= 97 && charAsciiValue <= 122)){
+            if (pokemonSearch.getValue() == null)
                 pokemonSearch.setValue(e.getCharacter());
             else
                 pokemonSearch.setValue(pokemonSearch.getValue() + e.getCharacter());
-
+        }
+        if(charAsciiValue == 13){
             String searchString = pokemonSearch.getValue();
 
             while (index < PokedexSize) {
@@ -808,6 +803,7 @@ public class selectionPageController implements Initializable {
                         Gen1.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen1.getChildren().get(index));
                         collapsePokemonTrees(Gen1);
+                        index++;
                         return;
                     }
                 } else if (index < 251) {
@@ -816,6 +812,7 @@ public class selectionPageController implements Initializable {
                         Gen2.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen2.getChildren().get(index - 151));
                         collapsePokemonTrees(Gen2);
+                        index++;
                         return;
                     }
                 } else if (index < 386) {
@@ -824,6 +821,7 @@ public class selectionPageController implements Initializable {
                         Gen3.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen3.getChildren().get(index - 251));
                         collapsePokemonTrees(Gen3);
+                        index++;
                         return;
                     }
                 } else if (index < 493) {
@@ -832,6 +830,7 @@ public class selectionPageController implements Initializable {
                         Gen4.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen4.getChildren().get(index - 386));
                         collapsePokemonTrees(Gen4);
+                        index++;
                         return;
                     }
                 } else if (index < 649) {
@@ -840,6 +839,7 @@ public class selectionPageController implements Initializable {
                         Gen5.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen5.getChildren().get(index - 493));
                         collapsePokemonTrees(Gen5);
+                        index++;
                         return;
                     }
                 } else if (index < 721) {
@@ -848,6 +848,7 @@ public class selectionPageController implements Initializable {
                         Gen6.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen6.getChildren().get(index - 649));
                         collapsePokemonTrees(Gen6);
+                        index++;
                         return;
                     }
                 } else if (index < 809) {
@@ -856,6 +857,7 @@ public class selectionPageController implements Initializable {
                         Gen7.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen7.getChildren().get(index - 721));
                         collapsePokemonTrees(Gen7);
+                        index++;
                         return;
                     }
                 } else {
@@ -864,6 +866,7 @@ public class selectionPageController implements Initializable {
                         Gen8.setExpanded(true);
                         PokemonList.getSelectionModel().select(Gen8.getChildren().get(index - 809));
                         collapsePokemonTrees(Gen8);
+                        index++;
                         return;
                     }
                 }
