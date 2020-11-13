@@ -15,12 +15,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -810,6 +814,11 @@ public class window{
         visableCheck.setSelected(image.isVisible());
         visablility.getChildren().addAll(visableLabel, visableCheck);
 
+        HBox imageFit = new HBox();
+        imageFit.setSpacing(5);
+        ToggleButton imageFitButton = new ToggleButton("Adjust Image Layout Bounds");
+        imageFit.getChildren().add(imageFitButton);
+
         HBox form = new HBox();
         form.setSpacing(5);
         Label formLabel = new Label("Form");
@@ -821,7 +830,7 @@ public class window{
         imageVBox.setSpacing(10);
         if(formCombo.getItems().size() != 0)
             imageVBox.getChildren().add(form);
-        imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility);
+        imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility, imageFit);
 
         Accordion accordion = new Accordion();
         TitledPane imageTitledPane = new TitledPane(pokemon.getName() + " Sprite", imageVBox);
@@ -872,7 +881,172 @@ public class window{
 
         visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
 
+        imageFitButton.setOnAction(e -> {
+            if(imageFitButton.isSelected())
+                drawBoundaryGuide(image);
+            else
+                windowLayout.getChildren().remove(windowLayout.getChildren().size() - 15, windowLayout.getChildren().size());
+        });
+
         return imageSettings;
+    }
+
+    public void drawBoundaryGuide(ImageView image){
+        Rectangle square = new Rectangle();
+        square.setHeight(-image.getFitHeight());
+        square.setWidth(-image.getFitWidth());
+        square.setTranslateX(-square.getWidth() / 2);
+        square.setTranslateY(-square.getHeight());
+        square.setLayoutX(image.getLayoutX());
+        square.setLayoutY(image.getLayoutY());
+        square.setOpacity(0.8);
+        windowLayout.getChildren().add(square);
+
+        //vertical center line
+        Line heightLine = new Line();
+        heightLine.setStroke(Color.WHITE);
+        heightLine.startXProperty().bind(square.layoutXProperty());
+        heightLine.endXProperty().bind(square.layoutXProperty());
+        heightLine.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 32));
+        heightLine.endYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 32));
+        heightLine.setStrokeWidth(square.getWidth() / 32);
+        windowLayout.getChildren().add(heightLine);
+
+        //horizontal center line
+        Line widthLine = new Line();
+        widthLine.setStroke(Color.WHITE);
+        widthLine.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 32));
+        widthLine.endXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 32));
+        widthLine.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() / 2) );
+        widthLine.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() / 2));
+        widthLine.setStrokeWidth(square.getWidth() / 32);
+        windowLayout.getChildren().add(widthLine);
+
+        //cornered piece in the top left
+        Line verticalTopLeft = new Line();
+        verticalTopLeft.setStroke(Color.WHITE);
+        verticalTopLeft.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalTopLeft.endXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalTopLeft.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        verticalTopLeft.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() * 7 / 8 - square.getWidth() / 128));
+        verticalTopLeft.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(verticalTopLeft);
+
+        Line horizontalTopLeft = new Line();
+        horizontalTopLeft.setStroke(Color.WHITE);
+        horizontalTopLeft.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        horizontalTopLeft.endXProperty().bind(square.layoutXProperty().subtract(square.getWidth() * 3 / 8 - square.getWidth() / 128));
+        horizontalTopLeft.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        horizontalTopLeft.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        horizontalTopLeft.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(horizontalTopLeft);
+
+        //top center line
+        Line topCenter = new Line();
+        topCenter.setStroke(Color.WHITE);
+        topCenter.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 8));
+        topCenter.endXProperty().bind(square.layoutXProperty().add(square.getWidth() / 8));
+        topCenter.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        topCenter.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        topCenter.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(topCenter);
+
+        //cornered piece in the top right
+        Line verticalTopRight = new Line();
+        verticalTopRight.setStroke(Color.WHITE);
+        verticalTopRight.startXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalTopRight.endXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalTopRight.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        verticalTopRight.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() * 7 / 8 - square.getWidth() / 128));
+        verticalTopRight.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(verticalTopRight);
+
+        Line horizontalTopRight = new Line();
+        horizontalTopRight.setStroke(Color.WHITE);
+        horizontalTopRight.startXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        horizontalTopRight.endXProperty().bind(square.layoutXProperty().add(square.getWidth() * 3 / 8 - square.getWidth() / 128));
+        horizontalTopRight.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        horizontalTopRight.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() - square.getWidth() / 128));
+        horizontalTopRight.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(horizontalTopRight);
+
+        //center right line
+        Line rightCenter = new Line();
+        rightCenter.setStroke(Color.WHITE);
+        rightCenter.startXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        rightCenter.endXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        rightCenter.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() * 5 / 8));
+        rightCenter.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() * 3 / 8));
+        rightCenter.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(rightCenter);
+
+        //cornered piece in the bottom right
+        Line verticalBottomRight = new Line();
+        verticalBottomRight.setStroke(Color.WHITE);
+        verticalBottomRight.startXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalBottomRight.endXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalBottomRight.startYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        verticalBottomRight.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() / 8 - square.getWidth() / 128));
+        verticalBottomRight.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(verticalBottomRight);
+
+        Line horizontalBottomRight = new Line();
+        horizontalBottomRight.setStroke(Color.WHITE);
+        horizontalBottomRight.startXProperty().bind(square.layoutXProperty().add(square.getWidth() / 2 - square.getWidth() / 128));
+        horizontalBottomRight.endXProperty().bind(square.layoutXProperty().add(square.getWidth() * 3 / 8 - square.getWidth() / 128));
+        horizontalBottomRight.startYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        horizontalBottomRight.endYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        horizontalBottomRight.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(horizontalBottomRight);
+
+        //bottom center line
+        Line bottomCenter = new Line();
+        bottomCenter.setStroke(Color.WHITE);
+        bottomCenter.startXProperty().bind(square.layoutXProperty().subtract((square.getWidth() / 8) - square.getWidth() / 128));
+        bottomCenter.endXProperty().bind(square.layoutXProperty().add((square.getWidth() / 8) - square.getWidth() / 128));
+        bottomCenter.startYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        bottomCenter.endYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        bottomCenter.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(bottomCenter);
+
+        Line verticalBottomLeft = new Line();
+        verticalBottomLeft.setStroke(Color.WHITE);
+        verticalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalBottomLeft.endXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        verticalBottomLeft.startYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        verticalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() / 8 - square.getWidth() / 128));
+        verticalBottomLeft.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(verticalBottomLeft);
+
+        Line horizontalBottomLeft = new Line();
+        horizontalBottomLeft.setStroke(Color.WHITE);
+        horizontalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        horizontalBottomLeft.endXProperty().bind(square.layoutXProperty().subtract(square.getWidth() * 3 / 8 - square.getWidth() / 128));
+        horizontalBottomLeft.startYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        horizontalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(square.getWidth() / 128));
+        horizontalBottomLeft.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(horizontalBottomLeft);
+
+        Line leftCenter = new Line();
+        leftCenter.setStroke(Color.WHITE);
+        leftCenter.startXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        leftCenter.endXProperty().bind(square.layoutXProperty().subtract(square.getWidth() / 2 - square.getWidth() / 128));
+        leftCenter.startYProperty().bind(square.layoutYProperty().subtract(square.getHeight() * 5 / 8));
+        leftCenter.endYProperty().bind(square.layoutYProperty().subtract(square.getHeight() * 3 / 8));
+        leftCenter.setStrokeWidth(square.getWidth() / 64);
+        windowLayout.getChildren().add(leftCenter);
+
+        image.layoutXProperty().bindBidirectional(square.layoutXProperty());
+        image.layoutYProperty().bindBidirectional(square.layoutYProperty());
+
+        square.setOnMousePressed(f -> {
+            double diffX = square.getLayoutX() - f.getSceneX();
+            double diffY = square.getLayoutY() - f.getSceneY();
+            square.setOnMouseDragged(g -> {
+                square.setLayoutX(g.getSceneX() + diffX);
+                square.setLayoutY(g.getSceneY() + diffY);
+            });
+        });
     }
 
     //creates Label settings VBox
