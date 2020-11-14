@@ -916,8 +916,8 @@ public class window{
             double oldHeight = square.getHeight();
             double oldWidth = square.getWidth();
             verticalTopLeft.setOnMouseDragged(f -> {
-                adjustY(square, oldHeight, f.getSceneY());
-                adjustX(square, oldWidth, f.getSceneX());
+                adjustY(square, oldHeight, f.getSceneY(), image);
+                adjustX(square, oldWidth, f.getSceneX(), image);
             });
         });
 
@@ -934,8 +934,8 @@ public class window{
             double oldHeight = square.getHeight();
             double oldWidth = square.getWidth();
             horizontalTopLeft.setOnMouseDragged(f -> {
-                adjustY(square, oldHeight, f.getSceneY());
-                adjustX(square, oldWidth, f.getSceneX());
+                adjustY(square, oldHeight, f.getSceneY(), image);
+                adjustX(square, oldWidth, f.getSceneX(), image);
             });
         });
 
@@ -951,7 +951,7 @@ public class window{
 
         topCenter.setOnMousePressed(e -> {
             double oldHeight = square.getHeight();
-            topCenter.setOnMouseDragged(f -> adjustY(square, oldHeight, f.getSceneY()));
+            topCenter.setOnMouseDragged(f -> adjustY(square, oldHeight, f.getSceneY(), image));
         });
 
         //cornered piece in the top right
@@ -968,8 +968,8 @@ public class window{
             double oldHeight = square.getHeight();
             double oldWidth = square.getWidth();
             verticalTopRight.setOnMouseDragged(f -> {
-                adjustY(square, oldHeight, f.getSceneY());
-                adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()));
+                adjustY(square, oldHeight, f.getSceneY(), image);
+                adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()), image);
             });
         });
 
@@ -986,8 +986,8 @@ public class window{
             double oldHeight = square.getHeight();
             double oldWidth = square.getWidth();
             horizontalTopRight.setOnMouseDragged(f -> {
-                adjustY(square, oldHeight, f.getSceneY());
-                adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()));
+                adjustY(square, oldHeight, f.getSceneY(), image);
+                adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()), image);
             });
         });
 
@@ -1003,7 +1003,7 @@ public class window{
 
         rightCenter.setOnMousePressed(e -> {
             double oldWidth = square.getWidth();
-            rightCenter.setOnMouseDragged(f -> adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX())));
+            rightCenter.setOnMouseDragged(f -> adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()), image));
         });
 
         //cornered piece in the bottom right
@@ -1011,8 +1011,8 @@ public class window{
         verticalBottomRight.setStroke(Color.WHITE);
         verticalBottomRight.startXProperty().bind(square.layoutXProperty().add(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7 / 2)));
         verticalBottomRight.endXProperty().bind(square.layoutXProperty().add(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7 / 2)));
-        verticalBottomRight.startYProperty().bind(square.layoutYProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(64)));
-        verticalBottomRight.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).divide(8).subtract(square.widthProperty().divide(64))));
+        verticalBottomRight.startYProperty().bind(square.layoutYProperty().subtract(7/2));
+        verticalBottomRight.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).divide(8).subtract(7/2)));
         verticalBottomRight.setStrokeWidth(7);
         windowLayout.getChildren().add(verticalBottomRight);
 
@@ -1038,27 +1038,27 @@ public class window{
         //bottom left corner piece
         Line verticalBottomLeft = new Line();
         verticalBottomLeft.setStroke(Color.WHITE);
-        verticalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(square.widthProperty().divide(64))));
-        verticalBottomLeft.endXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(square.widthProperty().divide(64))));
-        verticalBottomLeft.startYProperty().bind(square.layoutYProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(64)));
-        verticalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).divide(8).subtract(square.widthProperty().divide(64))));
+        verticalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
+        verticalBottomLeft.endXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
+        verticalBottomLeft.startYProperty().bind(square.layoutYProperty().subtract(7/2));
+        verticalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).divide(8).subtract(7/2)));
         verticalBottomLeft.setStrokeWidth(7);
         windowLayout.getChildren().add(verticalBottomLeft);
 
         Line horizontalBottomLeft = new Line();
         horizontalBottomLeft.setStroke(Color.WHITE);
-        horizontalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(square.widthProperty().divide(64))));
-        horizontalBottomLeft.endXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).multiply(3).divide(8).subtract(square.widthProperty().divide(64))));
-        horizontalBottomLeft.startYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().divide(64)));
-        horizontalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().divide(64)));
+        horizontalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
+        horizontalBottomLeft.endXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).multiply(3).divide(8).subtract(7/2)));
+        horizontalBottomLeft.startYProperty().bind(square.layoutYProperty().subtract(7/2));
+        horizontalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(7/2));
         horizontalBottomLeft.setStrokeWidth(7);
         windowLayout.getChildren().add(horizontalBottomLeft);
 
         //left center line
         Line leftCenter = new Line();
         leftCenter.setStroke(Color.WHITE);
-        leftCenter.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(square.widthProperty().divide(64))));
-        leftCenter.endXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(square.widthProperty().divide(64))));
+        leftCenter.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
+        leftCenter.endXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
         leftCenter.startYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).multiply(5).divide(8)));
         leftCenter.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).multiply(3).divide(8)));
         leftCenter.setStrokeWidth(7);
@@ -1066,7 +1066,7 @@ public class window{
 
         leftCenter.setOnMousePressed(e -> {
             double oldWidth = square.getWidth();
-            leftCenter.setOnMouseDragged(f -> adjustX(square, oldWidth, f.getSceneX()));
+            leftCenter.setOnMouseDragged(f -> adjustX(square, oldWidth, f.getSceneX(), image));
         });
 
         image.layoutXProperty().bindBidirectional(square.layoutXProperty());
@@ -1082,17 +1082,36 @@ public class window{
         });
     }
 
-    public void adjustY(Rectangle square, double oldHeight, double mouseLocation){
+    public void adjustY(Rectangle square, double oldHeight, double mouseLocation, ImageView image){
         if(square.getHeight() * (square.getLayoutY() - mouseLocation) / square.getHeight() >= 20) {
             square.setScaleY((square.getLayoutY() - mouseLocation) / square.getHeight());
             square.setTranslateY(-(square.getHeight() * square.getScaleY() / 2) - oldHeight / 2);
+            double newImageHeight = square.getHeight() * square.getScaleY() ;
+
+            double imageScale = newImageHeight / image.getImage().getHeight();
+            if(image.getImage().getWidth() * imageScale <= square.getWidth() * square.getScaleX()) {
+                image.setScaleY(imageScale);
+                image.setScaleX(imageScale);
+                image.setTranslateX(-image.getImage().getWidth() / 2);
+                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
+            }
         }
     }
 
-    public void adjustX(Rectangle square, double oldWidth, double mouseLocation){
+    public void adjustX(Rectangle square, double oldWidth, double mouseLocation, ImageView image){
         if(square.getWidth() * (square.getLayoutX() - mouseLocation) / square.getWidth() * 2 >= 20) {
             square.setScaleX((square.getLayoutX() - mouseLocation) / square.getWidth() * 2);
             square.setTranslateX(-oldWidth / 2);
+
+            double newImageWidth = square.getWidth() * square.getScaleX();
+
+            double imageScale = newImageWidth / image.getImage().getWidth();
+            if(image.getImage().getHeight() * imageScale <= square.getHeight() * square.getScaleY()) {
+                image.setScaleY(imageScale);
+                image.setScaleX(imageScale);
+                image.setTranslateX(-image.getImage().getWidth() / 2);
+                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
+            }
         }
     }
 
