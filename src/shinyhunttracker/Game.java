@@ -116,11 +116,13 @@ public class Game {
         String[] Sword = {"Galarian Darumaka", "Galarian Darmanitan", "Stonjourner", "Jangmo-o", "Hakamo-o", "Kommo-o", "Turtonator", "Passimian", "Swirlix", "Deino", "Zweilous", "Rufflet", "Braviary", "Gothita", "Gothorita", "Scraggy", "Seedot", "Nuzleaf", "Shiftry", "Mawile"};
         String[] Shield = {"Galarian Corsola", "Eiscue", "Drampa", "Oranguru", "Goomy", "Sliggoo", "Spritzee", "Vullaby", "Mandibuzz", "Solosis", "Duosion", "Reuniclus", "Croagunk", "Toxicroak", "Solrock", "Larvitar", "Pupitar", "Lotad", "Lombre", "Ludicolo"};
 
-        String[] IoA = {"Galarian Slowpoke", "Buneary", "Jigglypuff", "Abra", "Klefki", "Chansey", "Happiny", "Kingler", "Rockruff", "Lopunny", "Starmie", "Toxapex", "Comfey", "Tentacool", "Zorua", "Tentacruel", "Krabby", "Marill", "Luxio", "Fomantis", "Fletchinder", "Blissey", "Kadabra", "Drifloon", "Skorupi", "Dunsparce", "Bouffalant", "Lickitung", "Lickilicky", "Drapion", "Poliwhirl", "Politoad", "Luxray", "Raichu", "Talonflame", "Lilligant", "Wigglytuff", "Azumarill", "Emolga", "Venipede", "Foongus", "Tangela", "Tangrowth", "Amoonguss", "Scolipede", "Accelgor", "Golduck", "Pichu", "Lurantis", "Larvesta", "Escavalier", "Cubone", "Wishiwashi", "Staryu", "Magnemite", "Psyduck", "Dedenne", "Drifblim", "Swoobat", "Shinx", "Magneton", "Magnezone", "Volcarona", "Poliwag", "Whismur", "Woobat", "Azurill", "Poliwrath", "Loudred", "Druddigon", "Gigalith", "Roggenrola", "Mienfoo", "Salandit", "Skarmory", "Mienshao", "Lycanroc", "Fletchling", "Scizor", "Sandygast", "Alakazam", "Palossand", "Zoroark", "Carcanha", "Sharpedo", "Lillipup", "Tauros", "Miltank", "Scyther", "Stoutland", "Kangaskhan", "Herdier", "Sandshrew", "Sandile", "Rhyperior", "Palossand", "Krookodile", "Krokorok", "Marowak", "Exeggcute", "Exeggutor", "Wailord", "Appletun", "Wailmer", "Seadra", "Kingdra", "Combee", "Petlil"};
+        String[] IoA = {"Galarian Slowpoke", "Buneary", "Jigglypuff", "Abra", "Klefki", "Chansey", "Happiny", "Kingler", "Rockruff", "Lopunny", "Starmie", "Toxapex", "Comfey", "Tentacool", "Zorua", "Tentacruel", "Krabby", "Marill", "Luxio", "Fomantis", "Fletchinder", "Blissey", "Kadabra", "Drifloon", "Skorupi", "Dunsparce", "Bouffalant", "Lickitung", "Lickilicky", "Drapion", "Poliwhirl", "Politoad", "Luxray", "Raichu", "Talonflame", "Lilligant", "Wigglytuff", "Azumarill", "Emolga", "Venipede", "Foongus", "Tangela", "Tangrowth", "Amoonguss", "Scolipede", "Accelgor", "Golduck", "Pichu", "Lurantis", "Larvesta", "Escavalier", "Cubone", "Wishiwashi", "Staryu", "Magnemite", "Psyduck", "Dedenne", "Drifblim", "Swoobat", "Shinx", "Magneton", "Magnezone", "Volcarona", "Poliwag", "Whismur", "Woobat", "Azurill", "Poliwrath", "Loudred", "Druddigon", "Gigalith", "Roggenrola", "Mienfoo", "Salandit", "Skarmory", "Mienshao", "Lycanroc", "Fletchling", "Scizor", "Sandygast", "Alakazam", "Palossand", "Zoroark", "Carcanha", "Sharpedo", "Lillipup", "Tauros", "Miltank", "Scyther", "Stoutland", "Kangaskhan", "Herdier", "Sandshrew", "Sandile", "Rhyperior", "Palossand", "Krookodile", "Krokorok", "Marowak", "Exeggcute", "Exeggutor", "Wailord", "Appletun", "Wailmer", "Seadra", "Kingdra", "Combee", "Petlil", "Riolu", "Lucario", "Spheal", "Tortuga", "Sealeo", "Walrein", "Carracosta", "Electivire", ""};
         String[] IoASword = {"Pinsir", "Clauncher", "Clawitzer"};
         String[] IoAShield = {"Heracross", "Skrelp", "Dragalge"};
 
-        String[] CT = {};
+        String[] CT = {"Jynx", "Amaura", "Audino", "Mime Jr.", "Smoochum", "Mamoswine", "Swablu", "Phantump", "Trevenant", "Cryogonal", "Froslass", "Magmar", "Magby", "Magmortar", "Nidoran♀", "Nidoran♂", "Vanillish", "Vanillite", "Vanilluxe", "Absol", "Lileep", "Bronzong", "Nidorina", "Nidoking", "Nidorino", "Conkeldurr", "Nidoqueen", "Aerodactyl", "Lampent", "Altaria", "Chandelure", "Electabuzz", "Elekid", "Polteageist", "Dragapult", "Beldum", "Metang", "Metagross", "Aurorus", "Zubat", "Carbink", "Golbat", "Frosmoth", "Archen", "Dratini", "Tyrunt", "Tyrantrum", "Anorith", "Relicanth", "Noivern", "Aron", "Dragonite", "Armaldo", "Dragonair", "Spiritomb", "Aggron", "Lairon", "Regirock", "Registeel", "Regice", "Regieleki", "Regidrago"};
+        String[] CTSword = {"Bagon", "Salamence", "Omanyte", "Omastar", "Deino", "Hydreigon"};
+        String[] CTShield = {"Galarian Rapidash", "Gible", "Garchomp", "Kabuto", "Kabutops", "Larvitar", "Tyranitar"};
 
         switch (this.generation){
             case 4:
@@ -211,6 +213,9 @@ public class Game {
                 for(String i: IoA)
                     if(i.equals(selectedPokemon.getName()))
                         return true;
+                for(String i: CT)
+                    if(i.equals(selectedPokemon.getName()))
+                        return true;
                 switch (this.name.getValue()){
                     case "Sword":
                         for(String i: Sword)
@@ -219,12 +224,18 @@ public class Game {
                         for(String i: IoASword)
                             if(i.equals(selectedPokemon.getName()))
                                 return true;
+                        for(String i: CTSword)
+                            if(i.equals(selectedPokemon.getName()))
+                                return true;
                         break;
                     case "Shield":
                         for(String i: Shield)
                             if(i.equals(selectedPokemon.getName()))
                                 return true;
                         for(String i: IoAShield)
+                            if(i.equals(selectedPokemon.getName()))
+                                return true;
+                        for(String i: CTShield)
                             if(i.equals(selectedPokemon.getName()))
                                 return true;
                         break;
