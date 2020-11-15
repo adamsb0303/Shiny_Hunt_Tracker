@@ -116,7 +116,10 @@ public class Game {
         String[] Sword = {"Galarian Darumaka", "Galarian Darmanitan", "Stonjourner", "Jangmo-o", "Hakamo-o", "Kommo-o", "Turtonator", "Passimian", "Swirlix", "Deino", "Zweilous", "Rufflet", "Braviary", "Gothita", "Gothorita", "Scraggy", "Seedot", "Nuzleaf", "Shiftry", "Mawile"};
         String[] Shield = {"Galarian Corsola", "Eiscue", "Drampa", "Oranguru", "Goomy", "Sliggoo", "Spritzee", "Vullaby", "Mandibuzz", "Solosis", "Duosion", "Reuniclus", "Croagunk", "Toxicroak", "Solrock", "Larvitar", "Pupitar", "Lotad", "Lombre", "Ludicolo"};
 
-        String[] IoA = {};
+        String[] IoA = {"Galarian Slowpoke", "Buneary", "Jigglypuff", "Abra", "Klefki", "Chansey", "Happiny", "Kingler", "Rockruff", "Lopunny", "Starmie", "Toxapex", "Comfey", "Tentacool", "Zorua", "Tentacruel", "Krabby", "Marill", "Luxio", "Fomantis", "Fletchinder", "Blissey", "Kadabra", "Drifloon", "Skorupi", "Dunsparce", "Bouffalant", "Lickitung", "Lickilicky", "Drapion", "Poliwhirl", "Politoad", "Luxray", "Raichu", "Talonflame", "Lilligant", "Wigglytuff", "Azumarill", "Emolga", "Venipede", "Foongus", "Tangela", "Tangrowth", "Amoonguss", "Scolipede", "Accelgor", "Golduck", "Pichu", "Lurantis", "Larvesta", "Escavalier", "Cubone", "Wishiwashi", "Staryu", "Magnemite", "Psyduck", "Dedenne", "Drifblim", "Swoobat", "Shinx", "Magneton", "Magnezone", "Volcarona", "Poliwag", "Whismur", "Woobat", "Azurill", "Poliwrath", "Loudred", "Druddigon", "Gigalith", "Roggenrola", "Mienfoo", "Salandit", "Skarmory", "Mienshao", "Lycanroc", "Fletchling", "Scizor", "Sandygast", "Alakazam", "Palossand", "Zoroark", "Carcanha", "Sharpedo", "Lillipup", "Tauros", "Miltank", "Scyther", "Stoutland", "Kangaskhan", "Herdier", "Sandshrew", "Sandile", "Rhyperior", "Palossand", "Krookodile", "Krokorok", "Marowak", "Exeggcute", "Exeggutor", "Wailord", "Appletun", "Wailmer", "Seadra", "Kingdra", "Combee", "Petlil"};
+        String[] IoASword = {"Pinsir", "Clauncher", "Clawitzer"};
+        String[] IoAShield = {"Heracross", "Skrelp", "Dragalge"};
+
         String[] CT = {};
 
         switch (this.generation){
@@ -205,14 +208,23 @@ public class Game {
                 for(String i: SWSH)
                     if(i.equals(selectedPokemon.getName()))
                         return true;
+                for(String i: IoA)
+                    if(i.equals(selectedPokemon.getName()))
+                        return true;
                 switch (this.name.getValue()){
                     case "Sword":
                         for(String i: Sword)
                             if(i.equals(selectedPokemon.getName()))
                                 return true;
+                        for(String i: IoASword)
+                            if(i.equals(selectedPokemon.getName()))
+                                return true;
                         break;
                     case "Shield":
                         for(String i: Shield)
+                            if(i.equals(selectedPokemon.getName()))
+                                return true;
+                        for(String i: IoAShield)
                             if(i.equals(selectedPokemon.getName()))
                                 return true;
                         break;
