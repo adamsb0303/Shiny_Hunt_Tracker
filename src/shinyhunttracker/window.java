@@ -17,7 +17,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -1836,9 +1835,11 @@ class huntWindow extends window{
     }
 
     //writes objects to previous hunts file
-    public void saveHunt(){
+    public void saveHunt(String filePath){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
-        data.saveHunt();
+        boolean tempSave = filePath.contains("previousSession");
+        System.out.println(tempSave);
+        data.saveHunt(filePath, tempSave);
     }
 
     //save hunt, but it asks if the user would like to save, and it closes the window
@@ -1867,7 +1868,7 @@ class huntWindow extends window{
             windowStage.close();
             CustomizeHuntStage.close();
             SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
-            data.saveHunt();
+            data.saveHunt("Save Data/PreviousHunts.txt", false);
             save.close();
         });
 
@@ -2485,7 +2486,7 @@ class newOrOld extends window{
             previousHuntsView.getSelectionModel().selectedItemProperty()
                     .addListener((v, oldValue, newValue) -> {
                         String line = newValue.toString().substring(18);
-                        previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1, controller);
+                        previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1, controller, "Save Data/PreviousHunts.txt");
                         windowStage.close();
                     });
         });

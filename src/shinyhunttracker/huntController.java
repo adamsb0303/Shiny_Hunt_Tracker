@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 
 public class huntController {
     Stage huntControls = new Stage();
@@ -50,6 +50,21 @@ public class huntController {
         Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
         huntControls.setScene(huntControlsScene);
         huntControls.show();
+
+        SaveData data = new SaveData();
+        if(data.getfileLength("previousSession") != 0){
+            for(int i = 0; i < data.getfileLength("previousSession"); i++){
+                data.loadHunt(i, this, "Save Data/previousSession.txt");
+            }
+            try {
+                File file = new File("Save Data/previousSession.txt");
+                FileWriter fileWriter = new FileWriter(file, false);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.close();
+            }catch (IOException ignored){
+
+            }
+        }
 
         huntControlsButtonVBox.setOnKeyTyped(e -> {
             for(huntWindow i: windows) {
@@ -95,7 +110,10 @@ public class huntController {
             }
         });
 
-        huntControls.setOnCloseRequest(e -> closeWindows());
+        huntControls.setOnCloseRequest(e -> {
+            saveAll("Save Data/previousSession.txt");
+            closeWindows();
+        });
     }
 
     public void addHuntWindowSettings(huntWindow window){
@@ -143,7 +161,7 @@ public class huntController {
                 previousCatches.refreshPreviouslyCaughtPokemon();
         });
         resetCombo.setOnAction(e -> window.resetCombo());
-        saveHunt.setOnAction(e -> window.saveHunt());
+        saveHunt.setOnAction(e -> window.saveHunt("Save Data/PreviousHunts.txt"));
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
@@ -152,7 +170,7 @@ public class huntController {
             MenuItem saveAll = new MenuItem("Save All");
             Settings.getItems().add(saveAll);
 
-            saveAll.setOnAction(e -> saveAll());
+            saveAll.setOnAction(e -> saveAll("Save Data/PreviousHunts.txt"));
         }
 
         boolean numFound = false;
@@ -258,9 +276,9 @@ public class huntController {
         }
     }
 
-    public void saveAll(){
+    public void saveAll(String filePath){
         for(huntWindow i: windows)
-            i.saveHunt();
+            i.saveHunt(filePath);
     }
 
     public void orderWindowsArray(){

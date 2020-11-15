@@ -37,19 +37,22 @@ public class SaveData {
     }
 
     //writes information to previous hunts file
-    public void saveHunt(){
+    //tempSave is for saving the hunts that are open when the program closes
+    public void saveHunt(String filePath, boolean tempSave){
         try {
             String saveData = selectedPokemon.getName() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
-            File file = new File("Save Data/PreviousHunts.txt");
+            File file = new File(filePath);
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
             int sameDataLine = checkForPreviousData(saveData);
-            if(sameDataLine == -1) {
+            if(tempSave)
+                sameDataLine = -1;
+            if (sameDataLine == -1) {
+                System.out.println("Hunt saved to " + filePath);
                 bufferedWriter.write(saveData);
                 bufferedWriter.write("\n");
-            }
-            else
+            } else
                 replaceLine(sameDataLine, saveData, "PreviousHunts");
             bufferedWriter.close();
         }catch (IOException e){
@@ -58,11 +61,11 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public void loadHunt(int lineNumber, huntController controller){
+    public void loadHunt(int lineNumber, huntController controller, String filePath){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
 
-            for(int i = 0; i < getfileLength("PreviousHunts"); i++) {
+            for(int i = 0; i < getfileLength(filePath.substring(filePath.indexOf('/'), filePath.length() - 4)); i++) {
                 String line = fileReader.readLine();
                 if(i == lineNumber) {
                     int generation = parseInt(splitString(line, 3));
