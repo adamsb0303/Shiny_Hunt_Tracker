@@ -1844,41 +1844,10 @@ class huntWindow extends window{
 
     //save hunt, but it asks if the user would like to save, and it closes the window
     public void saveandCloseHunt(){
-        Stage save = new Stage();
-        save.setTitle("Save hunt");
-        save.setResizable(false);
-        save.initModality(Modality.APPLICATION_MODAL);
-        VBox saveLayout = new VBox();
-        saveLayout.setSpacing(10);
-        saveLayout.setAlignment(Pos.CENTER);
-        Label savePrompt = new Label("Would you like to save your " + selectedPokemon.getName() + " hunt?");
-        HBox yn = new HBox();
-        yn.setSpacing(5);
-        yn.setAlignment(Pos.CENTER);
-        Button yes = new Button("Yes");
-        Button no = new Button("No");
-        yn.getChildren().addAll(yes, no);
-        saveLayout.getChildren().addAll(savePrompt, yn);
-
-        Scene saveScene = new Scene(saveLayout, 275, 75);
-        save.setScene(saveScene);
-        save.show();
-
-        yes.setOnAction(e -> {
-            windowStage.close();
-            CustomizeHuntStage.close();
-            SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
-            data.saveHunt("Save Data/PreviousHunts.txt", false);
-            save.close();
-        });
-
-        no.setOnAction(e -> {
-            windowStage.close();
-            CustomizeHuntStage.close();
-            save.close();
-        });
-
-        save.setOnCloseRequest(Event::consume);
+        windowStage.close();
+        CustomizeHuntStage.close();
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
+        data.saveHunt("Save Data/PreviousHunts.txt", false);
     }
 
     //changes increment
