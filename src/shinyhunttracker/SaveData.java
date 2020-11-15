@@ -182,8 +182,6 @@ public class SaveData {
                                 scale = imageWidth / width;
                             image.setScaleX(image.getScaleX() * scale);
                             image.setScaleY(image.getScaleY() * scale);
-                            image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
-                            image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
                             image.setTranslateX(-image.getImage().getWidth() / 2);
                             image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
                         }
@@ -222,8 +220,6 @@ public class SaveData {
                                 scale = imageWidth / width;
                             image.setScaleX(image.getScaleX() * scale);
                             image.setScaleY(image.getScaleY() * scale);
-                            image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
-                            image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
                             image.setTranslateX(-image.getImage().getWidth() / 2);
                             image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
                         }
