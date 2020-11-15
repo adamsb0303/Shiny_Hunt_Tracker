@@ -49,7 +49,6 @@ public class SaveData {
             if(tempSave)
                 sameDataLine = -1;
             if (sameDataLine == -1) {
-                System.out.println("Hunt saved to " + filePath);
                 bufferedWriter.write(saveData);
                 bufferedWriter.write("\n");
             } else

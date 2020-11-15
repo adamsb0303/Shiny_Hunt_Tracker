@@ -53,8 +53,15 @@ public class huntController {
 
         SaveData data = new SaveData();
         if(data.getfileLength("previousSession") != 0){
-            for(int i = 0; i < data.getfileLength("previousSession"); i++){
+            for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
                 data.loadHunt(i, this, "Save Data/previousSession.txt");
+            }
+            String layout = data.getLinefromFile(data.getfileLength("previousSession") - 1, "previousSession");
+            if(layout != null && !layout.equals("null")) {
+                previousCatches.createPreviouslyCaughtPokemonWindow();
+                previousCatches.setCurrentLayout(layout);
+                previousCatches.loadLayout();
+                previousCatches.getSettingsStage().close();
             }
             try {
                 File file = new File("Save Data/previousSession.txt");
@@ -112,6 +119,15 @@ public class huntController {
 
         huntControls.setOnCloseRequest(e -> {
             saveAll("Save Data/previousSession.txt");
+            try {
+                File file = new File("Save Data/previousSession.txt");
+                FileWriter fileWriter = new FileWriter(file, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(previousCatches.getCurrentLayout());
+                bufferedWriter.close();
+            }catch (IOException ignored){
+
+            }
             closeWindows();
         });
     }

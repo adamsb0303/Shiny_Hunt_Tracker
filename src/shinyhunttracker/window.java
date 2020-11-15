@@ -1838,7 +1838,6 @@ class huntWindow extends window{
     public void saveHunt(String filePath){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
         boolean tempSave = filePath.contains("previousSession");
-        System.out.println(tempSave);
         data.saveHunt(filePath, tempSave);
     }
 
@@ -2078,6 +2077,7 @@ class previouslyCaught extends window{
 
     previouslyCaught(int displayCaught){
         this.displayCaught = displayCaught;
+        this.currentLayout = "null";
         windowStage.setTitle("Previously Caught Pokemon");
     }
 
@@ -2159,7 +2159,7 @@ class previouslyCaught extends window{
             backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
 
             saveLayout.setOnAction(e -> saveLayout());
-            loadLayout.setOnAction(e -> loadLayout());
+            loadLayout.setOnAction(e -> loadLayoutMenu());
         }
         previouslyCaughtSettingsStage.show();
         previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
@@ -2329,7 +2329,7 @@ class previouslyCaught extends window{
     }
 
     //load layout
-    public void loadLayout(){
+    public void loadLayoutMenu(){
         SaveData data = new SaveData();
 
         Stage loadSavedLayoutStage = new Stage();
@@ -2359,22 +2359,36 @@ class previouslyCaught extends window{
         savedLayouts.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                    displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
-                    displayPrevious = 0;
-                    numberCaughtField.setPromptText(String.valueOf(displayCaught));
-                    previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-                    windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
-                    if(!windowStage.isShowing())
-                        createPreviouslyCaughtPokemonWindow();
-                    previouslyCaughtPokemonSettings();
-                    addPreviouslyCaughtPokemon(displayCaught);
-                    data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
                     loadSavedLayoutStage.close();
+                    loadLayout();
                 });
+    }
+
+    public void loadLayout(){
+        SaveData data = new SaveData();
+        displayPrevious = 0;
+        displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
+        numberCaughtField.setPromptText(String.valueOf(displayCaught));
+        if(previouslyCaughtSettingsLayout.getChildren().size() > 0)
+            previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+        windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
+        if(!windowStage.isShowing())
+            createPreviouslyCaughtPokemonWindow();
+        previouslyCaughtPokemonSettings();
+        addPreviouslyCaughtPokemon(displayCaught);
+        data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
     }
 
     public Stage getSettingsStage(){
         return previouslyCaughtSettingsStage;
+    }
+
+    public String getCurrentLayout(){
+        return currentLayout;
+    }
+
+    public void setCurrentLayout(String currentLayout){
+        this.currentLayout = currentLayout;
     }
 }
 
