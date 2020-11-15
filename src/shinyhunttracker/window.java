@@ -351,16 +351,6 @@ public class window{
         return comboBox;
     }
 
-    //adjust ImageView fit
-    public void imageViewFitAdjust(ImageView image){
-        double newWidth = image.getImage().getWidth() * image.getScaleX();
-        double newHeight = image.getImage().getHeight() * image.getScaleY();
-        if(newWidth > -image.getFitWidth())
-            image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
-        if(newHeight > -image.getFitHeight())
-            image.setFitHeight(-image.getImage().getHeight() * image.getScaleY());
-    }
-
     //returns ImageView with the sprite of the given pokemon
     public void setPokemonSprite(ImageView sprite, String name, Game selectedGame){
         String filePath = createGameFilePath(selectedGame);
@@ -816,7 +806,7 @@ public class window{
 
         HBox imageFit = new HBox();
         imageFit.setSpacing(5);
-        ToggleButton imageFitButton = new ToggleButton("Adjust Image Layout Bounds");
+        Button imageFitButton = new Button("Adjust Image Layout Bounds");
         imageFit.getChildren().add(imageFitButton);
 
         HBox form = new HBox();
@@ -857,7 +847,6 @@ public class window{
             image.setScaleY(scale);
             image.setTranslateX(-image.getImage().getWidth() / 2);
             image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-            imageViewFitAdjust(image);
             sizeField.setText("");
         });
 
@@ -882,17 +871,41 @@ public class window{
         visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
 
         imageFitButton.setOnAction(e -> {
-            if(imageFitButton.isSelected())
-                drawBoundaryGuide(image);
-            else
-                windowLayout.getChildren().remove(windowLayout.getChildren().size() - 15, windowLayout.getChildren().size());
+            double originalScale = image.getScaleX();
+
+            Rectangle square = new Rectangle();
+            drawBoundaryGuide(image, square);
+            imageFit.getChildren().remove(0);
+
+            Button saveImageFit = new Button("Save Boundaries");
+            Button cancelImageFit = new Button("Cancel");
+
+            imageFit.getChildren().addAll(saveImageFit, cancelImageFit);
+
+            saveImageFit.setOnAction(f -> {
+                image.setFitHeight(-square.getHeight() * square.getScaleY());
+                image.setFitWidth(-square.getWidth() * square.getScaleX());
+                windowLayout.getChildren().remove(windowLayout.getChildren().size() - 13, windowLayout.getChildren().size());
+                imageFit.getChildren().remove(0,2);
+                imageFit.getChildren().add(imageFitButton);
+            });
+
+            cancelImageFit.setOnAction(f -> {
+                image.setScaleX(originalScale);
+                image.setScaleY(originalScale);
+                image.setTranslateX(-image.getImage().getWidth() / 2);
+                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
+                windowLayout.getChildren().remove(windowLayout.getChildren().size() - 13, windowLayout.getChildren().size());
+                imageFit.getChildren().remove(0,2);
+                imageFit.getChildren().add(imageFitButton);
+            });
         });
 
         return imageSettings;
     }
 
-    public void drawBoundaryGuide(ImageView image){
-        Rectangle square = new Rectangle();
+    //draws square that shows where the fit width and length are
+    public void drawBoundaryGuide(ImageView image, Rectangle square){
         square.setHeight(-image.getFitHeight());
         square.setWidth(-image.getFitWidth());
         square.setTranslateX(-square.getWidth() / 2);
@@ -1082,6 +1095,7 @@ public class window{
         });
     }
 
+    //adjusts boundary Y
     public void adjustY(Rectangle square, double oldHeight, double mouseLocation, ImageView image){
         if(square.getHeight() * (square.getLayoutY() - mouseLocation) / square.getHeight() >= 20) {
             square.setScaleY((square.getLayoutY() - mouseLocation) / square.getHeight());
@@ -1098,6 +1112,7 @@ public class window{
         }
     }
 
+    //adjusts boundary X
     public void adjustX(Rectangle square, double oldWidth, double mouseLocation, ImageView image){
         if(square.getWidth() * (square.getLayoutX() - mouseLocation) / square.getWidth() * 2 >= 20) {
             square.setScaleX((square.getLayoutX() - mouseLocation) / square.getWidth() * 2);
@@ -1352,9 +1367,13 @@ public class window{
     //change scale of ImageView when scrolled
     public void quickEdit(ImageView element){
         element.setOnScroll(e -> {
-            element.setScaleX(element.getScaleX() + (e.getDeltaY() / 1000));
-            element.setScaleY(element.getScaleY() + (e.getDeltaY() / 1000));
-            imageViewFitAdjust(element);
+            double scale = element.getScaleX() + (e.getDeltaY() / 1000);
+            if(element.getImage().getWidth() * scale > -element.getFitWidth())
+                scale = -element.getFitWidth() / element.getImage().getWidth();
+            if(element.getImage().getHeight() * scale > -element.getFitHeight())
+                scale = -element.getFitHeight() / element.getImage().getHeight();
+            element.setScaleX(scale);
+            element.setScaleY(scale);
             element.setTranslateX(-element.getImage().getWidth() / 2);
             element.setTranslateY(-((element.getImage().getHeight() / 2) + (element.getImage().getHeight() * element.getScaleX()) / 2));
         });
@@ -2228,7 +2247,6 @@ class previouslyCaught extends window{
 
                 sprite.setLayoutX(widthTotal + currentImageWidth / 2);
                 sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
-                imageViewFitAdjust(sprite);
 
                 pokemon.setLayoutX(widthTotal + currentImageWidth / 2);
                 pokemon.setLayoutY(75);
