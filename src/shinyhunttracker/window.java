@@ -2498,16 +2498,6 @@ class fetchImage extends Thread{
             item.setGraphic(sprite);
         }catch(FileNotFoundException e){
             System.out.println("image at " + filePath + " not found");
-            String imageUrl = "https://img.pokemondb.net/sprites/sword-shield/icon/"+ filePath.substring(31, filePath.length() - 4) + ".png";
-            try {
-                URL url = new URL(imageUrl);
-                WritableImage test = new WritableImage(1,1);
-                Image image = SwingFXUtils.toFXImage(ImageIO.read(url), test);
-                ImageView sprite = new ImageView(image);
-                item.setGraphic(sprite);
-            }catch(IOException f){
-                System.out.println("Could not reach " + imageUrl);
-            }
         }
     }
 
@@ -2584,6 +2574,9 @@ class fetchImage extends Thread{
                 break;
             case 5:
                 gameAbbreviation = "BW";
+                break;
+            case 8:
+                gameAbbreviation = "SWSH";
                 break;
             default:
                 gameAbbreviation = "SM";
