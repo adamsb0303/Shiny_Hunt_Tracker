@@ -68,7 +68,7 @@ public class SaveData {
                 String line = fileReader.readLine();
                 if(i == lineNumber) {
                     int generation = parseInt(splitString(line, 3));
-                    selectedPokemon = new Pokemon(splitString(line, 0), generation);
+                    selectedPokemon = new Pokemon(splitString(line, 0));
                     selectedPokemon.setForm(splitString(line,1));
                     selectedGame = new Game(splitString(line, 2), generation);
                     selectedMethod = new Method(splitString(line, 4), generation);

@@ -1,6 +1,6 @@
 package shinyhunttracker;
 
-import javafx.event.Event;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -24,10 +25,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -351,8 +354,9 @@ public class window{
     }
 
     //returns ImageView with the sprite of the given pokemon
-    public void setPokemonSprite(ImageView sprite, String name, Game selectedGame){
+    public void setPokemonSprite(ImageView sprite, Pokemon selectedPokemon, Game selectedGame){
         String filePath = createGameFilePath(selectedGame);
+        String name = selectedPokemon.getName();
 
         if(name.contains("Galarian")) {
             filePath += "galarian/";
@@ -416,12 +420,14 @@ public class window{
             filePath += ".gif";
 
         fetchImage getImage = new fetchImage(filePath);
-        getImage.setImage(sprite);
+        getImage.setImage(sprite, selectedPokemon, selectedGame);
     }
 
     //changes given image to given pokemon variant
-    public void setAlternateSprite(String name, String form, Game selectedGame, ImageView sprite){
+    public void setAlternateSprite(Pokemon selectedPokemon, Game selectedGame, ImageView sprite){
         String filePath = createGameFilePath(selectedGame);
+        String form = selectedPokemon.getForm();
+        String name = selectedPokemon.getName();
         switch(form) {
             case "Female":
                 filePath += "alternateforms/female/" + name.toLowerCase() + "-f";
@@ -765,7 +771,7 @@ public class window{
             filePath += ".gif";
 
         fetchImage getImage = new fetchImage(filePath);
-        getImage.setImage(sprite);
+        getImage.setImage(sprite, selectedPokemon, selectedGame);
     }
 
     //creates ImageView settings VBox
@@ -831,7 +837,7 @@ public class window{
         formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
                 pokemon.setForm(newValue);
-                setAlternateSprite(pokemon.getName(), newValue, selectedGame, image);
+                setAlternateSprite(pokemon, selectedGame, image);
             }
         });
 
@@ -1540,19 +1546,19 @@ class huntWindow extends window{
 
         sprite = new ImageView();
 
-        setPokemonSprite(sprite, selectedPokemon.getName(), selectedGame);
+        setPokemonSprite(sprite, selectedPokemon, selectedGame);
         if(selectedPokemon.getForm() != null)
-            setAlternateSprite(selectedPokemon.getName(), selectedPokemon.getForm(), selectedGame, sprite);
+            setAlternateSprite(selectedPokemon, selectedGame, sprite);
 
         Evo0 = new ImageView();
         Evo1 = new ImageView();
         if(!evo0.equals("")) {
-            setPokemonSprite(Evo0, evo0, selectedGame);
+            setPokemonSprite(Evo0, new Pokemon(evo0), selectedGame);
             if(Evo0 == null)
                 Evo0 = new ImageView();
         }
         if(!evo1.equals("")) {
-            setPokemonSprite(Evo1, evo1, selectedGame);
+            setPokemonSprite(Evo1, new Pokemon(evo1), selectedGame);
             if(Evo1 == null)
                 Evo1 = new ImageView();
         }
@@ -1810,10 +1816,9 @@ class huntWindow extends window{
         phaseStage.show();
 
         phasePokemon.setOnAction(e -> {
-            selectionPageController temp = new selectionPageController();
             String userInput = phasePokemon.getText().toLowerCase();
             userInput = userInput.substring(0,1).toUpperCase() + userInput.substring(1);
-            if(temp.findGenerationPokemon(userInput) == 0)
+            if(new Pokemon(userInput).getGeneration() == 0)
                 phasePokemon.setText("");
             else{
                 SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
@@ -2193,16 +2198,15 @@ class previouslyCaught extends window{
             if((i - numberCaught) * -1 > displayPrevious) {
                 String line = data.getLinefromFile(i, "CaughtPokemon");
                 Game caughtGame = new Game(data.splitString(line, 2), parseInt(data.splitString(line, 3)));
-                selectionPageController findGeneration = new selectionPageController();
-                int selectedPokemonGeneration = findGeneration.findGenerationPokemon(data.splitString(line, 0));
-                if (caughtGame.getGeneration() < findGeneration.findGenerationPokemon(data.splitString(line, 0)))
+                int selectedPokemonGeneration = new Pokemon (data.splitString(line, 0)).getGeneration();
+                if (caughtGame.getGeneration() < selectedPokemonGeneration)
                     caughtGame.setGeneration(selectedPokemonGeneration);
                 Pokemon previouslyCaughtPokemon = new Pokemon(data.splitString(line, 0), 0);
                 previouslyCaughtPokemon.setForm(data.splitString(line,1));
                 ImageView sprite = new ImageView();
-                setPokemonSprite(sprite, previouslyCaughtPokemon.getName(), caughtGame);
+                setPokemonSprite(sprite, previouslyCaughtPokemon, caughtGame);
                 if(previouslyCaughtPokemon.getForm() != null)
-                    setAlternateSprite(previouslyCaughtPokemon.getName(), previouslyCaughtPokemon.getForm(), caughtGame, sprite);
+                    setAlternateSprite(previouslyCaughtPokemon, caughtGame, sprite);
                 Text pokemon = new Text(data.splitString(line, 0));
                 Text method = new Text(data.splitString(line, 4));
                 Text encounters = new Text(data.splitString(line, 6));
@@ -2497,40 +2501,110 @@ class fetchImage extends Thread{
         }
     }
 
-    public void setImage(ImageView sprite){
+    public void setImage(ImageView sprite, Pokemon selectedPokemon, Game selectedGame){
         try {
             FileInputStream input = new FileInputStream(filePath);
             Image image = new Image(input);
             sprite.setImage(image);
-            if(sprite.getFitWidth() == 0 || sprite.getFitHeight() == 0){
-                sprite.setFitWidth(-200);
-                sprite.setFitHeight(-200);
-            }
-            if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
-                double height = image.getHeight();
-                double width = image.getWidth();
-                double scale;
-                if(height > width)
-                    scale = -sprite.getFitHeight() / height;
-                else
-                    scale = -sprite.getFitWidth() / width;
-                sprite.setScaleX(scale);
-                sprite.setScaleY(scale);
-            }else{
-                sprite.setScaleX(1);
-                sprite.setScaleY(1);
-            }
-            imageViewFitAdjust(sprite);
-            sprite.setTranslateX(-image.getWidth() / 2);
-            sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
+            adjustImageScale(sprite, image);
         }catch (FileNotFoundException e){
-            System.out.println("image at " + filePath + " not found");
+            System.out.println("Image at " + filePath + " not found");
+            String imageUrl = "";
             try {
-                sprite.setImage(new Image(new FileInputStream("Images/Sprites/blank.png")));
+                imageUrl = getImageURL(selectedPokemon, selectedGame);
+                URL url = new URL(imageUrl);
+                WritableImage test = new WritableImage(1,1);
+                Image image = SwingFXUtils.toFXImage(ImageIO.read(url), test);
+                sprite.setImage(image);
+                adjustImageScale(sprite, image);
             }catch(IOException f){
-                System.out.println("Placeholder not found");
+                System.out.println("Could not reach " + imageUrl);
+                try {
+                    sprite.setImage(new Image(new FileInputStream("Images/Sprites/blank.png")));
+                }catch (IOException g){
+                    System.out.println("Could not find placeholder");
+                }
             }
         }
+    }
+
+    public String getImageURL(Pokemon selectedPokemon, Game selectedGame){
+        int pokemonDexNumber = selectedPokemon.getDexNumber();
+        int numberPlace = 0;
+        int tempdex = pokemonDexNumber;
+        while(tempdex != 0){
+            numberPlace++;
+            tempdex = tempdex / 10;
+        }
+        String dexNumber = "000".substring(0, 3 - numberPlace) + pokemonDexNumber;
+
+        String gameAbbreviation;
+        switch(selectedGame.getGeneration()){
+            case 1:
+                gameAbbreviation = "Crystal";
+                break;
+            case 2:
+                gameAbbreviation = selectedGame.getName();
+                break;
+            case 3:
+                switch(selectedGame.getName()){
+                    case "Ruby":
+                    case "Sapphire":
+                        gameAbbreviation = "RuSa";
+                        break;
+                    case "FireRed":
+                    case "LeafGreen":
+                        gameAbbreviation = "FRLG";
+                        break;
+                    default:
+                        gameAbbreviation = "Em";
+                        break;
+                }
+                break;
+            case 4:
+                switch(selectedGame.getName()){
+                    case "HeartGold":
+                    case "SoulSilver":
+                        gameAbbreviation = "HGSS";
+                        break;
+                    default:
+                        gameAbbreviation = "DP";
+                        break;
+                }
+                break;
+            case 5:
+                gameAbbreviation = "BW";
+                break;
+            default:
+                gameAbbreviation = "SM";
+                break;
+        }
+
+        return "https://www.serebii.net/Shiny/"+ gameAbbreviation +"/"+ dexNumber + ".png";
+    }
+
+    public void adjustImageScale(ImageView sprite, Image image){
+        if(sprite.getFitWidth() == 0 || sprite.getFitHeight() == 0){
+            sprite.setFitWidth(-200);
+            sprite.setFitHeight(-200);
+        }
+        if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
+            double height = image.getHeight();
+            double width = image.getWidth();
+            double scale;
+            if(height > width)
+                scale = -sprite.getFitHeight() / height;
+            else
+                scale = -sprite.getFitWidth() / width;
+            sprite.setScaleX(scale);
+            sprite.setScaleY(scale);
+        }else{
+            sprite.setScaleX(1);
+            sprite.setScaleY(1);
+        }
+        imageViewFitAdjust(sprite);
+        sprite.setTranslateX(-image.getWidth() / 2);
+        sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
     }
 
     //adjust ImageView fit
