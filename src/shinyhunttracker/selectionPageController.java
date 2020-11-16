@@ -48,21 +48,14 @@ public class selectionPageController implements Initializable {
     int evolutionStage = 0;
 
     //array with every pokemon
-    String[][] Pokedex = {{"Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"},
-                        {"Chikorita", "Bayleef", "Meganium", "Cyndaquil", "Quilava", "Typhlosion", "Totodile", "Croconaw", "Feraligatr", "Sentret", "Furret", "Hoothoot", "Noctowl", "Ledyba", "Ledian", "Spinarak", "Ariados", "Crobat", "Chinchou", "Lanturn", "Pichu", "Cleffa", "Igglybuff", "Togepi", "Togetic", "Natu", "Xatu", "Mareep", "Flaaffy", "Ampharos", "Bellossom", "Marill", "Azumarill", "Sudowoodo", "Politoed", "Hoppip", "Skiploom", "Jumpluff", "Aipom", "Sunkern", "Sunflora", "Yanma", "Wooper", "Quagsire", "Espeon", "Umbreon", "Murkrow", "Slowking", "Misdreavus", "Unown", "Wobbuffet", "Girafarig", "Pineco", "Forretress", "Dunsparce", "Gligar", "Steelix", "Snubbull", "Granbull", "Qwilfish", "Scizor", "Shuckle", "Heracross", "Sneasel", "Teddiursa", "Ursaring", "Slugma", "Magcargo", "Swinub", "Piloswine", "Corsola", "Remoraid", "Octillery", "Delibird", "Mantine", "Skarmory", "Houndour", "Houndoom", "Kingdra", "Phanpy", "Donphan", "Porygon2", "Stantler", "Smeargle", "Tyrogue", "Hitmontop", "Smoochum", "Elekid", "Magby", "Miltank", "Blissey", "Raikou", "Entei", "Suicune", "Larvitar", "Pupitar", "Tyranitar", "Lugia", "Ho-Oh", "Celebi"},
-                        {"Treecko", "Grovyle", "Sceptile", "Torchic", "Combusken", "Blaziken", "Mudkip", "Marshtomp", "Swampert", "Poochyena", "Mightyena", "Zigzagoon", "Linoone", "Wurmple", "Silcoon", "Beautifly", "Cascoon", "Dustox", "Lotad", "Lombre", "Ludicolo", "Seedot", "Nuzleaf", "Shiftry", "Taillow", "Swellow", "Wingull", "Pelipper", "Ralts", "Kirlia", "Gardevoir", "Surskit", "Masquerain", "Shroomish", "Breloom", "Slakoth", "Vigoroth", "Slaking", "Nincada", "Ninjask", "Shedinja", "Whismur", "Loudred", "Exploud", "Makuhita", "Hariyama", "Azurill", "Nosepass", "Skitty", "Delcatty", "Sableye", "Mawile", "Aron", "Lairon", "Aggron", "Meditite", "Medicham", "Electrike", "Manectric", "Plusle", "Minun", "Volbeat", "Illumise", "Roselia", "Gulpin", "Swalot", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Numel", "Camerupt", "Torkoal", "Spoink", "Grumpig", "Spinda", "Trapinch", "Vibrava", "Flygon", "Cacnea", "Cacturne", "Swablu", "Altaria", "Zangoose", "Seviper", "Lunatone", "Solrock", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Baltoy", "Claydol", "Lileep", "Cradily", "Anorith", "Armaldo", "Feebas", "Milotic", "Castform", "Kecleon", "Shuppet", "Banette", "Duskull", "Dusclops", "Tropius", "Chimecho", "Absol", "Wynaut", "Snorunt", "Glalie", "Spheal", "Sealeo", "Walrein", "Clamperl", "Huntail", "Gorebyss", "Relicanth", "Luvdisc", "Bagon", "Shelgon", "Salamence", "Beldum", "Metang", "Metagross", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Jirachi", "Deoxys"},
-                        {"Turtwig", "Grotle", "Torterra", "Chimchar", "Monferno", "Infernape", "Piplup", "Prinplup", "Empoleon", "Starly", "Staravia", "Staraptor", "Bidoof", "Bibarel", "Kricketot", "Kricketune", "Shinx", "Luxio", "Luxray", "Budew", "Roserade", "Cranidos", "Rampardos", "Shieldon", "Bastiodon", "Burmy", "Wormadam", "Mothim", "Combee", "Vespiquen", "Pachirisu", "Buizel", "Floatzel", "Cherubi", "Cherrim", "Shellos", "Gastrodon", "Ambipom", "Drifloon", "Drifblim", "Buneary", "Lopunny", "Mismagius", "Honchkrow", "Glameow", "Purugly", "Chingling", "Stunky", "Skuntank", "Bronzor", "Bronzong", "Bonsly", "Mime Jr.", "Happiny", "Chatot", "Spiritomb", "Gible", "Gabite", "Garchomp", "Munchlax", "Riolu", "Lucario", "Hippopotas", "Hippowdon", "Skorupi", "Drapion", "Croagunk", "Toxicroak", "Carnivine", "Finneon", "Lumineon", "Mantyke", "Snover", "Abomasnow", "Weavile", "Magnezone", "Lickilicky", "Rhyperior", "Tangrowth", "Electivire", "Magmortar", "Togekiss", "Yanmega", "Leafeon", "Glaceon", "Gliscor", "Mamoswine", "Porygon-Z", "Gallade", "Probopass", "Dusknoir", "Froslass", "Rotom", "Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Heatran", "Regigigas", "Giratina", "Cresselia", "Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus"},
-                        {"Victini", "Snivy", "Servine", "Serperior", "Tepig", "Pignite", "Emboar", "Oshawott", "Dewott", "Samurott", "Patrat", "Watchog", "Lillipup", "Herdier", "Stoutland", "Purrloin", "Liepard", "Pansage", "Simisage", "Pansear", "Simisear", "Panpour", "Simipour", "Munna", "Musharna", "Pidove", "Tranquill", "Unfezant", "Blitzle", "Zebstrika", "Roggenrola", "Boldore", "Gigalith", "Woobat", "Swoobat", "Drilbur", "Excadrill", "Audino", "Timburr", "Gurdurr", "Conkeldurr", "Tympole", "Palpitoad", "Seismitoad", "Throh", "Sawk", "Sewaddle", "Swadloon", "Leavanny", "Venipede", "Whirlipede", "Scolipede", "Cottonee", "Whimsicott", "Petilil", "Lilligant", "Basculin", "Sandile", "Krokorok", "Krookodile", "Darumaka", "Darmanitan", "Maractus", "Dwebble", "Crustle", "Scraggy", "Scrafty", "Sigilyph", "Yamask", "Cofagrigus", "Tirtouga", "Carracosta", "Archen", "Archeops", "Trubbish", "Garbodor", "Zorua", "Zoroark", "Minccino", "Cinccino", "Gothita", "Gothorita", "Gothitelle", "Solosis", "Duosion", "Reuniclus", "Ducklett", "Swanna", "Vanillite", "Vanillish", "Vanilluxe", "Deerling", "Sawsbuck", "Emolga", "Karrablast", "Escavalier", "Foongus", "Amoonguss", "Frillish", "Jellicent", "Alomomola", "Joltik", "Galvantula", "Ferroseed", "Ferrothorn", "Klink", "Klang", "Klinklang", "Tynamo", "Eelektrik", "Eelektross", "Elgyem", "Beheeyem", "Litwick", "Lampent", "Chandelure", "Axew", "Fraxure", "Haxorus", "Cubchoo", "Beartic", "Cryogonal", "Shelmet", "Accelgor", "Stunfisk", "Mienfoo", "Mienshao", "Druddigon", "Golett", "Golurk", "Pawniard", "Bisharp", "Bouffalant", "Rufflet", "Braviary", "Vullaby", "Mandibuzz", "Heatmor", "Durant", "Deino", "Zweilous", "Hydreigon", "Larvesta", "Volcarona", "Cobalion", "Terrakion", "Virizion", "Tornadus", "Thundurus", "Reshiram", "Zekrom", "Landorus", "Kyurem", "Keldeo", "Meloetta", "Genesect"},
-                        {"Chespin", "Quilladin", "Chesnaught", "Fennekin", "Braixen", "Delphox", "Froakie", "Frogadier", "Greninja", "Bunnelby", "Diggersby", "Fletchling", "Fletchinder", "Talonflame", "Scatterbug", "Spewpa", "Vivillon", "Litleo", "Pyroar", "Flabébé", "Floette", "Florges", "Skiddo", "Gogoat", "Pancham", "Pangoro", "Furfrou", "Espurr", "Meowstic", "Honedge", "Doublade", "Aegislash", "Spritzee", "Aromatisse", "Swirlix", "Slurpuff", "Inkay", "Malamar", "Binacle", "Barbaracle", "Skrelp", "Dragalge", "Clauncher", "Clawitzer", "Helioptile", "Heliolisk", "Tyrunt", "Tyrantrum", "Amaura", "Aurorus", "Sylveon", "Hawlucha", "Dedenne", "Carbink", "Goomy", "Sliggoo", "Goodra", "Klefki", "Phantump", "Trevenant", "Pumpkaboo", "Gourgeist", "Bergmite", "Avalugg", "Noibat", "Noivern", "Xerneas", "Yveltal", "Zygarde", "Diancie", "Hoopa", "Volcanion"},
-                        {"Rowlet", "Dartrix", "Decidueye", "Litten", "Torracat", "Incineroar", "Popplio", "Brionne", "Primarina", "Pikipek", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Grubbin", "Charjabug", "Vikavolt", "Crabrawler", "Crabominable", "Oricorio", "Cutiefly", "Ribombee", "Rockruff", "Lycanroc", "Wishiwashi", "Mareanie", "Toxapex", "Mudbray", "Mudsdale", "Dewpider", "Araquanid", "Fomantis", "Lurantis", "Morelull", "Shiinotic", "Salandit", "Salazzle", "Stufful", "Bewear", "Bounsweet", "Steenee", "Tsareena", "Comfey", "Oranguru", "Passimian", "Wimpod", "Golisopod", "Sandygast", "Palossand", "Pyukumuku", "Type: Null", "Silvally", "Minior", "Komala", "Turtonator", "Togedemaru", "Mimikyu", "Bruxish", "Drampa", "Dhelmise", "Jangmo-o", "Hakamo-o", "Kommo-o", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Cosmog", "Cosmoem", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Magearna", "Marshadow", "Poipole", "Naganadel", "Stakataka", "Blacephalon", "Zeraora", "Meltan", "Melmetal"},
-                        {"Grookey", "Thwackey", "Rillaboom", "Scorbunny", "Raboot", "Cinderace", "Sobble", "Drizzile", "Inteleon", "Skwovet", "Greedent", "Rookidee", "Corvisquire", "Corviknight", "Blipbug", "Dottler", "Orbeetle", "Nickit", "Thievul", "Gossifleur", "Eldegoss", "Wooloo", "Dubwool", "Chewtle", "Drednaw", "Yamper", "Boltund", "Rolycoly", "Carkol", "Coalossal", "Applin", "Flapple", "Appletun", "Silicobra", "Sandaconda", "Cramorant", "Arrokuda", "Barraskewda", "Toxel", "Toxtricity", "Sizzlipede", "Centiskorch", "Clobbopus", "Grapploct", "Sinistea", "Polteaseist", "Hatenna", "Hattrem", "Hatterene", "Impidimp", "Morgrem", "Grimmsnarl", "Obstagoon", "Perrserker", "Cursola", "Sirfetch'd", "Mr. Rime", "Runerigus", "Milcery", "Alcremie", "Falinks", "Pincurchin", "Snom", "Frosmoth", "Stonjourner", "Eiscue", "Indeedee", "Morpeko", "Cufant", "Copperajah", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish", "Duraludon", "Dreepy", "Drakloak", "Dragapult", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude", "Regieleki", "Regidrago", "Glastrier", "Spectrier", "Calyrex"}};
+    String[][] Pokedex = selectedPokemon.getPokedex();
 
     //array with pokemon not avaliable in SWSH
     String[] SWSHPokedex = {"Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Alolan Rattata", "Alolan Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Paras", "Parasect", "Venonat", "Venomoth", "Mankey", "Primeape", "Bellsprout", "Weepinbell", "Victribell", "Geodude", "Graveler", "Golem", "Alolan Geodude", "Alolan Graveler", "Alolan Golem", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Alolan Grimer", "Alolan Muk", "Drowzee", "Hypno", "Voltorb", "Electrode", "Chikorita", "Bayleef", "Meganium", "Cynadquil", "Quilava", "Typhlosion", "Totodile", "Craconaw", "Feraligatr", "Sentret", "Ferret", "Ledyba", "Ledian", "Spinarak", "Ariados", "Mareep", "Flaaffy", "Ampharos", "Hoppip", "Skiploom", "Jumpluff", "Aipom", "Sunkern", "Sunfloura", "Yanma", "Murkow", "Misdreavus", "Unown", "Girafarig", "Pineco", "Forretress", "Gligar", "Snubbull", "Granbull", "Teddiursa", "Ursaring", "Slugma", "Magcargo", "Houndour", "Houndoom", "Phanpey", "Donphan", "Stantler", "Smeargle", "Poochyena", "Mightyena", "Wurmple", "Cascoon", "Beautifly", "Silcoon", "Dustox", "Taillow", "Sweallow", "Surskit", "Masquerain", "Shroomish", "Breloom", "Slackoth", "Vigoroth", "Slacking", "Makuhita", "Hariyama", "Nosepass", "Skitty", "Delcatty", "Meditite", "Medicham", "Plusle", "Minun", "Illumise", "Volbeat", "Gulpin", "Swallot", "Numel", "Camerupt", "Spoink", "Grumpig", "Spinda", "Cacnea", "Cactern", "Zangoose", "Serviper", "Castform", "Kecleon", "Shuppet", "Bannette", "Tropius", "Chimecho", "Clamperl", "Huntail", "Gorebyss", "Luvdisc", "Deoxys", "Turtwig", "Grotle", "Torterra", "Chimchar", "Monferno", "Infernape", "Piplup", "Prinplup", "Empoleon", "Starly", "Staravia", "Staraptor", "Bidoof", "Bibarel", "Kricketune", "Kricketot", "Cranidos", "Rampardos", "Shieldon", "Bastiodon", "Burmy", "Wormadam", "Mothim", "Pachirisu", "Buizel", "Floatzel", "Ambipom", "Mismagius", "Honchkrow", "Glameow", "Purugly", "Chingling", "Chatot", "Carnivine", "Finneon", "Lumineon", "Yanmega", "Gliscor", "Probopass", "Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus", "Snivy", "Servine", "Serperior", "Tepig", "Pignite", "Emboar", "Oshawott", "Dewott", "Samurott", "Patrat", "Watchog", "Pansage", "Simisage", "Pansear", "Simisear", "Panpour", "Simipour", "Blitzle", "Zebstrika", "Sewaddle", "Swadloon", "Levanny", "Ducklett", "Swanna", "Deerling", "Sawsbuck", "Alomomola", "Tynamo", "Elektrik", "Elektross", "Meloetta", "Chespin", "Quilladin", "Chesnaught", "Fennekin", "Braixen", "Delphox", "Froakie", "Frogadeir", "Greninja", "Scatterbug", "Spewpa", "Vivillion", "Litleo", "Pyroar", "Flabébé", "Floette", "Florges", "Skiddo", "Gogoat", "Furfrou", "Hoopa", "Pikipek", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Crabrawler", "Crabominable", "Oricorio", "Minior", "Komala", "Bruxish"};
 
 
     //array with every main line pokemon game
-    String[][] Games= {{"Red", "Green", "Blue", "Yellow"},
+    public String[][] Games= {{"Red", "Green", "Blue", "Yellow"},
                     {"Gold", "Silver", "Crystal"},
                     {"Ruby", "Sapphire", "FireRed", "LeafGreen", "Emerald"},
                     {"Diamond", "Pearl", "Platinum", "HeartGold", "SoulSilver"},
@@ -86,14 +79,14 @@ public class selectionPageController implements Initializable {
                         String newSelectionPokemon, oldSelectionPokemon;
 
                         newSelectionPokemon = newValue.toString().substring(18, newValue.toString().length()-2);
-                        if(findGenerationPokemon(newSelectionPokemon) != 0) {//throws away input if selection is Generation 1, Generation 2, etc.
+                        if(new Pokemon (newSelectionPokemon).getGeneration() != 0) {//throws away input if selection is Generation 1, Generation 2, etc.
                             if (oldValue != null) {//sets old value to old selected pokemon name if it wasn't one of the generation tree views
                                 oldSelectionPokemon = oldValue.toString().substring(18, oldValue.toString().length() - 2);
-                                if (findGenerationPokemon(oldSelectionPokemon) != 0) {
-                                    oldSelectionGeneration = findGenerationPokemon(oldSelectionPokemon);
+                                if (new Pokemon (oldSelectionPokemon).getGeneration() != 0) {
+                                    oldSelectionGeneration = new Pokemon(oldSelectionPokemon).getGeneration();
                                 }
                             }
-                            selectedPokemon = new Pokemon(newSelectionPokemon, findGenerationPokemon(newSelectionPokemon));//creates Pokemon object
+                            selectedPokemon = new Pokemon(newSelectionPokemon);//creates Pokemon object
                             pokemonLabel.textProperty().bind(selectedPokemon.getNameProperty());
 
                             //checks if pokemon has regional variant, and resets checkbox
@@ -151,7 +144,7 @@ public class selectionPageController implements Initializable {
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
                         String newSelectionMethod = newValue.toString().substring(18, newValue.toString().length() - 2);
-                        if(findGenerationPokemon(newSelectionMethod) == 0) {
+                        if(new Pokemon (newSelectionMethod).getGeneration() == 0) {
                             selectedMethod = new Method(newSelectionMethod, selectedGame.getGeneration());//creates Method object
                             methodLabel.textProperty().bind(selectedMethod.getNameProperty());
                             beginHuntButton.setDisable(selectedMethod.getName() == null);//disables begin hunt button if the selected method is a pokemon name
@@ -511,14 +504,14 @@ public class selectionPageController implements Initializable {
             }
             evolution2.setExpanded(true);
 
-        if(evolutionStage == 2 && findGenerationPokemon(Stage1.getName()) <= selectedGame.getGeneration()){
+        if(evolutionStage == 2 && Stage1.getGeneration() <= selectedGame.getGeneration()){
             selectedGame.generateMethods(Stage1);
             evolution1 = makeBranch(Stage1.getName(), methodRoot);
             for(String i: selectedGame.getMethods())
                 if (i != null)
                     makeBranch(i, evolution1);
 
-        }if(evolutionStage >= 1 && findGenerationPokemon(Stage0.getName()) <= selectedGame.getGeneration()){
+        }if(evolutionStage >= 1 && Stage0.getGeneration() <= selectedGame.getGeneration()){
             selectedGame.generateMethods(Stage0);
             evolution0 = makeBranch(Stage0.getName(), methodRoot);
             for(String i: selectedGame.getMethods())
@@ -564,44 +557,15 @@ public class selectionPageController implements Initializable {
                 if (pokemonEvolution[j].compareTo(name) == 0) {
                     evolutionStage = j;
                     if (j >= 1) {
-                        Stage0 = new Pokemon(pokemonEvolution[0], findGenerationPokemon(pokemonEvolution[0]));
+                        Stage0 = new Pokemon(pokemonEvolution[0]);
                     }
                     if (j == 2) {
-                        Stage1 = new Pokemon(pokemonEvolution[1], findGenerationPokemon(pokemonEvolution[1]));
+                        Stage1 = new Pokemon(pokemonEvolution[1]);
                     }
                     return;
                 }
             }
         }
-    }
-
-    //returns the generation of the given pokemon
-    public int findGenerationPokemon(String name){
-        for(String i: Pokedex[0])
-            if(name.compareTo(i) == 0)
-                return 1;
-        for(String i: Pokedex[1])
-            if(i.compareTo(name) == 0)
-                return 2;
-        for(String i: Pokedex[2])
-            if(i.compareTo(name) == 0)
-                return 3;
-        for(String i: Pokedex[3])
-            if(i.compareTo(name) == 0)
-                return 4;
-        for(String i: Pokedex[4])
-            if(i.compareTo(name) == 0)
-                return 5;
-        for(String i: Pokedex[5])
-            if(i.compareTo(name) == 0)
-                return 6;
-        for(String i: Pokedex[6])
-            if(i.compareTo(name) == 0)
-                return 7;
-        for(String i: Pokedex[7])
-            if(i.compareTo(name) == 0)
-                return 8;
-        return 0;
     }
 
     //returns the generation of the given game
