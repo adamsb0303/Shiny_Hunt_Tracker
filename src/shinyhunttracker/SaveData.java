@@ -10,6 +10,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import javax.sound.sampled.Line;
 import java.io.*;
 
 import static java.lang.Double.parseDouble;
@@ -144,7 +146,7 @@ public class SaveData {
                 if(i instanceof ImageView){
                     ImageView image = (ImageView) i;
                     bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getFitWidth() + "," + image.getFitHeight() + "," + image.isVisible() + ",\n");
-                }else {
+                }else if(i instanceof Text){
                     Text text = (Text) i;
                     bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + text.getFont().getName() + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isUnderline() + "," + text.isVisible() + ",\n");
                 }
