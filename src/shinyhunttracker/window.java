@@ -2201,7 +2201,7 @@ class previouslyCaught extends window{
                 int selectedPokemonGeneration = new Pokemon (data.splitString(line, 0)).getGeneration();
                 if (caughtGame.getGeneration() < selectedPokemonGeneration)
                     caughtGame.setGeneration(selectedPokemonGeneration);
-                Pokemon previouslyCaughtPokemon = new Pokemon(data.splitString(line, 0), 0);
+                Pokemon previouslyCaughtPokemon = new Pokemon(data.splitString(line, 0));
                 previouslyCaughtPokemon.setForm(data.splitString(line,1));
                 ImageView sprite = new ImageView();
                 setPokemonSprite(sprite, previouslyCaughtPokemon, caughtGame);

@@ -308,6 +308,7 @@ public class Pokemon{
         for(int i = 0; i < Pokedex[this.getGeneration() - 1].length; i++)
             if(Pokedex[this.getGeneration() - 1][i].equals(this.getName())) {
                 dexNumber += i + 1;
+                break;
             }
         return dexNumber;
     }
@@ -334,7 +335,7 @@ public class Pokemon{
             if(i.compareTo(name) == 0)
                 return 6;
         for(String i: Pokedex[6])
-            if(i.compareTo(name) == 0)
+            if (i.compareTo(name) == 0)
                 return 7;
         for(String i: Pokedex[7])
             if(i.compareTo(name) == 0)
