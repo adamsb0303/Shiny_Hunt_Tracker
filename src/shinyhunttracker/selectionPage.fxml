@@ -5,11 +5,8 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="shinyTrackerScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shinyhunttracker.selectionPageController">
-   <left>
-      <TreeView fx:id="PokemonList" onKeyTyped="#pokemonQuickSelect" prefHeight="400.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
-   </left>
    <center>
-      <TreeView fx:id="GameList" prefHeight="400.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="GameList" prefHeight="430.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
    </center>
    <right>
       <VBox>
@@ -111,4 +108,10 @@
          </VBox>
       </HBox>
    </bottom>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+         <TreeView fx:id="PokemonList" onKeyTyped="#pokemonQuickSelect" prefHeight="430.0" prefWidth="250.0"/>
+         <TextField fx:id="pokemonSearchBar" onAction="#pokemonQuickSelect"/>
+      </VBox>
+   </left>
 </BorderPane>

@@ -2512,7 +2512,6 @@ class fetchImage extends Thread{
 
     public void setImage(ImageView sprite, Pokemon selectedPokemon, Game selectedGame){
         try {
-            System.out.println("Grabbing " + filePath);
             FileInputStream input = new FileInputStream(filePath);
             Image image = new Image(input);
             sprite.setImage(image);
