@@ -2165,6 +2165,12 @@ class previouslyCaught extends window{
 
             backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
 
+            windowStage.setOnCloseRequest(e -> {
+                displayCaught = 0;
+                numberCaughtField.setPromptText("0");
+                previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+            });
+
             saveLayout.setOnAction(e -> saveLayout());
             loadLayout.setOnAction(e -> loadLayoutMenu());
         }
