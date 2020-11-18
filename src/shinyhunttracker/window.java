@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -1547,7 +1548,7 @@ class huntWindow extends window{
         sprite = new ImageView();
 
         setPokemonSprite(sprite, selectedPokemon, selectedGame);
-        if(selectedPokemon.getForm() != null)
+        if(selectedPokemon.getForm() != null && !selectedPokemon.getForm().equals("null"))
             setAlternateSprite(selectedPokemon, selectedGame, sprite);
 
         Evo0 = new ImageView();
@@ -2511,6 +2512,7 @@ class fetchImage extends Thread{
 
     public void setImage(ImageView sprite, Pokemon selectedPokemon, Game selectedGame){
         try {
+            System.out.println("Grabbing " + filePath);
             FileInputStream input = new FileInputStream(filePath);
             Image image = new Image(input);
             sprite.setImage(image);
