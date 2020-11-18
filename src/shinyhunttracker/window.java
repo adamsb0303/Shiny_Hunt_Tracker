@@ -2122,7 +2122,9 @@ class previouslyCaught extends window{
 
             Label layoutLabel = new Label("Layout: ");
             Button loadLayout = new Button("Load");
+            loadLayout.disableProperty().bind(windowStage.showingProperty().not());
             Button saveLayout = new Button("Save");
+            saveLayout.disableProperty().bind(windowStage.showingProperty().not());
 
             HBox layoutSettings = new HBox();
             layoutSettings.setAlignment(Pos.CENTER);
