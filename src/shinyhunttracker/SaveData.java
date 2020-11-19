@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import javax.sound.sampled.Line;
 import java.io.*;
 
 import static java.lang.Double.parseDouble;

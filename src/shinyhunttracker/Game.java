@@ -3,6 +3,10 @@ package shinyhunttracker;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Game {
     StringProperty name = new SimpleStringProperty();
     int generation;
@@ -95,156 +99,138 @@ public class Game {
     //for XY, DPP, ORAS, and SWSH
     //checks to see if the pokemon is wild for shiny hunt methods that require the pokemon to be wild
     public boolean isWild(Pokemon selectedPokemon){
-        String[] DPP = {"Starly", "Staravia", "Bidoof", "Bibarel", "Kricketot", "Kricketune", "Shinx", "Luxio", "Abra", "Kadabra", "Magikarp", "Gyarados", "Budew", "Roselia", "Zubat", "Goldbat", "Geodude", "Graveler", "Onix", "Steelix", "Machop", "Machoke", "Psyduck", "Golduck", "Burmy", "Wurmple", "Silcoon", "Beautifly", "Casoon", "Dustox", "Combee", "Pachirisu", "Buizel", "Floatzel", "Cherubi", "Shellos", "Gastrodon", "Heracross", "Aipom", "Drifloon", "Buneary", "Gastly", "Haunter", "Goldeen", "Seaking", "Barboach", "Whiscash", "Chingling", "Chimecho", "Meditite", "Medicham", "Bronzor", "Bronzong", "Ponyta", "Bonsly", "Sudowoodo", "Mime Jr.", "Mr. Mime", "Happiny", "Chansey", "Cleffa", "Clefairy", "Chatot", "Pichu", "Pikachu", "Hoothoot", "Noctowl", "Gible", "Unown", "Riolu", "Wooper", "Quagsire", "Wingull", "Pelipper", "Girafarig", "Hippopotas", "Hippowdon", "Azurill", "Marill", "Skorupi", "Drapion", "Croagunk", "Toxicroak", "Carnivine", "Remoraid", "Octillery", "Finneon", "Lumieon", "Tentacool", "Tentacruel", "Feebas", "Mantyke", "Snover", "Abomasnow", "Sneasel", "Nidoran♀", "Nidorina", "Nidoran♂", "Nidorino", "Venonat", "Venomoth", "Mankey", "Primape", "Grimer", "Tauros", "Ditto", "Sentret", "Togepi", "Mareep", "Flaaffy", "Hoppip", "Skiploom", "Sunkern", "Wobbuffet", "Smeargle", "Tyrogue", "Miltank", "Swellow", "Ralts", "Kirlia", "Nincada", "Loudred", "Torkoal", "Swablu", "Baltoy", "Duskull", "Dusclops", "Snorunt"};
         String[] Platinum = {"Slowpoke", "Larvitar", "Mightyena", "Aron", "Kecleon", "Bagon", "Stantler", "Houndour"};
         String[] Diamond = {"Murkow", "Stunky", "Skuntank", "Larvitar", "Mightyena", "Aron", "Trapinch", "Vibrava", "Kecleon"};
         String[] Pearl = {"Misdreavus", "Glameow", "Purugly", "Slowpoke", "Trapinch", "Vibrava", "Bagon", "Stantler", "Houndoom"};
 
-        String[] XY = {"Carterpie", "Weedle", "Kakuna", "Pidgey", "Fearow", "Ekans", "Arbok", "Pikachu", "Sandslash", "Nidoran♀", "Nidorina", "Nidoran♂", "Nidorino", "Jigglypuff", "Zubat", "Oddish", "Dugtrio", "Psyduck", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Machop", "Bellsprout", "Weepinbell", "Tentacool", "Geodude", "Graveler", "Slowpoke", "Magneton", "Farfetch'd", "Doduo", "Haunter", "Onix", "Electrode", "Exeggcute", "Cubone", "Lickitung", "Rhyhorn", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Mr. Mime", "Scyther", "Jynx", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Dratini", "Dragonair", "Sentret", "Noctowl", "Ledyba", "Ariados", "Chinchou", "Lanturn", "Mareep", "Azumarill", "Sudowoodo", "Politoed", "Hoppip", "Yanma", "Quagsire", "Murkrow", "Wobbuffet", "Dunsparce", "Gligar", "Snubbull", "Shuckle", "Sneasel", "Ursaring", "Slugma", "Piloswine", "Remoraid", "Octillery", "Delibird", "Skarmory", "Smeargle", "Smoochum", "Miltank", "Zigzagoon", "Lombre", "Taillow", "Wingull", "Ralts", "Masquerain", "Nincada", "Whismur", "Hariyama", "Azurill", "Nosepass", "Skitty", "Sableye", "Mawile", "Meditite", "Plusle", "Minun", "Volbeat", "Illumise", "Roselia", "Gulpin", "Carvanha", "Sharpedo", "Wailmer", "Torkoal", "Spoink", "Spinda", "Trapinch", "Swablu", "Altaria", "Zangoose", "Seviper", "Lunatone", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Kecleon", "Banette", "Absol", "Sealeo", "Luvdisc", "Bagon", "Starly", "Staravia", "Bidoof", "Bibarel", "Luxio", "Budew", "Burmy", "Combee", "Pachirisu", "Floatzel", "Chingling", "Stunky", "Mime Jr.", "Chatot", "Gible", "Riolu", "Hippopotas", "Skorupi", "Drapion", "Croagunk", "Carnivine", "Mantyke", "Snover", "Abomasnow", "Watchog", "Pansage", "Pansear", "Panpour", "Roggenrola", "Woobat", "Audino", "Gurdurr", "Venipede", "Basculin", "Sandile", "Dwebble", "Scraggy", "Sigilyph", "Trubbish", "Garbodor", "Zoroark", "Gothorita", "Solosis", "Ducklett", "Vanillite", "Emolga", "Karrablast", "Foongus", "Amoonguss", "Ferroseed", "Litwick", "Axew", "Cubchoo", "Beartic", "Cryogonal", "Stunfisk", "Mienfoo", "Druddigon", "Golett", "Pawniard", "Rufflet", "Heatmor", "Durant", "Zweilous", "Hydreigon", "Bunnelby", "Diggersby", "Fletchling", "Scatterbug", "Litleo", "Flabebe", "Skiddo", "Pancham", "Furfrou", "Espurr", "Honedge", "Inkay", "Binacle", "Helioptile", "Hawlucha", "Dedenne", "Carbink", "Sliggoo", "Klefki", "Phantump", "Trevenant", "Bergmite", "Noibat"};
         String[] X = {"Clauncher", "Clawitzer", "Swirlix", "Sawk", "Aron", "Lairon", "Mightyena", "Houndour", "Pinsir"};
         String[] Y = {"Heracross", "Larvitar", "Pupitar", "Electrike", "Liepard", "Throh", "Spritzee", "Skrelp", "Dragalge"};
 
-        String[] ORAS = {"Kakuna", "Pidgeotto", "Rattata", "Raticate", "Pikachu", "Sandshrew", "Clefairy", "Vulpix", "Jigglypuff", "Zubat", "Golbat", "Oddish", "Gloom", "Paras", "Venomoth", "Diglett", "Persian", "Psyduck", "Growlithe", "Abra", "Machop", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Ponyta", "Slowpoke", "Magnemite", "Doduo", "Seel", "Dewgong", "Grimer", "Onix", "Hypno", "Krabby", "Voltorb", "Electrode", "Koffing", "Tangela", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Pinsir", "Magikarp", "Gyarados", "Ditto", "Eevee", "Porygon", "Ariados", "Chinchou", "Lanturn", "Xatu", "Marill", "Azumarill", "Aipom", "Sunkern", "Misdreavus", "Unown", "Wobbuffet", "Girafarig", "Forretress", "Heracross", "Slugma", "Corsola", "Remoraid", "Octillery", "Delibird", "Mantine", "Skarmory", "Donphan", "Stantler", "Tyrogue", "Elekid", "Magby", "Poochyena", "Zigzagoon", "Linoone", "Wurmple", "Silcoon", "Cascoon", "Taillow", "Wingull", "Pelipper", "Ralts", "Surskit", "Masquerain", "Shroomish", "Slakoth", "Nincada", "Whismur", "Loudred", "Makuhita", "Hariyama", "Nosepass", "Skitty", "Aron", "Lairon", "Meditite", "Electrike", "Plusle", "Minun", "Volbeat", "Illumise", "Roselia", "Gulpin", "Carvanha", "Sharpedo", "Wailmer", "Numel", "Torkoal", "Spoink", "Spinda", "Trapinch", "Cacnea", "Swablu", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Baltoy", "Claydol", "Feebas", "Kecleon", "Shuppet", "Duskull", "Tropuis", "Chimecho", "Absol", "Snorunt", "Spheal", "Clamperl", "Relicanth", "Luvdisc", "Bagon", "Kricketune", "Cherubi", "Shellos", "Beneary", "Glameow", "Purugly", "Bronzor", "Happiny", "Chatot", "Gible", "Skorupi", "Finneon", "Mantyke", "Munna", "Pidove", "Zebstrika", "Roggenrola", "Boldore", "Excadrill", "Audino", "Timburr", "Tympole", "Throh", "Sawk", "Sewaddle", "Cottonee", "Petilil", "Sandile", "Darmanitan", "Maractus", "Dwebble", "Crustle", "Scraggy", "Cofagrigus", "Trubbish", "Zorua", "Minccino", "Deerling", "Frillish", "Alomomola", "Joltik", "Klink", "Tynamo", "Elgyem", "Axew", "Cubchoo", "Druddigon", "Bouffalant", "Rufflet", "Vullaby", "Larvesta", "Skrelp", "Clauncher", "Klefki", "Phantump"};
         String[] OmegaRuby = {"Seedot","Nuzleaf", "Mawile", "Zangoose"};
         String[] AlphaSapphire = {"Seviper", "Lunatone", "Sableye", "Lombre"};
 
-        String[] LetsGo = {"Bulbasaur", "Charmander", "Charizard", "Squirtle", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Pikachu", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Jigglypuff", "Zubat", "Golbat", "Paras", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Psyduck", "Golduck", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Machop", "Machoke", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo", "Dodrio", "Seel", "Dewgong", "Shellder", "Cloyster", "Gastly", "Haunter", "Onix", "Drowzee", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Hitmonlee", "Hitmonchan", "Lickitung", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Staryu", "Starmie", "Mr. Mime", "Jynx", "Electabuzz", "Magmar", "Tauros", "Magikarp", "Gyarados", "Lapras", "Eevee", "Porygon", "Snorlax", "Dratini", "Dragonair", "Dragonite"};
         String[] LetsGoPikachu = {"Scyther", "Grimer", "Muk", "Mankey", "Growlithe", "Oddish", "Gloom", "Vileplume", "Sandshrew"};
         String[] LetsGoEevee = {"Ekans", "Vulpix", "Ninetales", "Meowth", "Bellsprout", "Weepinbell", "Victreebel", "Koffing", "Pinsir"};
 
-        String[] SWSH = {"Caterpie", "Metapod", "Butterfree", "Pikachu", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Oddish", "Gloom", "Vileplume", "Diglett", "Dugtrio", "Persian", "Growlithe", "Arcanine", "Machop", "Machoke", "Machamp", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Krabby", "Kingler", "Hitmonlee", "Hitmonchan", "Koffing", "Rhyhorn", "Rhydon", "Goldeen", "Seaking", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Snorlax", "Hoothoot", "Noctowl", "Chinchou", "Lanturn", "Togetic", "Natu", "Xatu", "Bellossom", "Sudowoodo", "Wooper", "Quagsire", "Espeon", "Umbreon", "Wobbuffet", "Steelix", "Qwilfish", "Shuckle", "Sneasel", "Swinub", "Piloswine", "Remoraid", "Octillery", "Delibird", "Mantine", "Tyrogue", "Hitmontop", "Wingull", "Pelipper", "Ralts", "Kirlia", "Gardevoir", "Nincada", "Ninjask", "Shedinja", "Electrike", "Manectric", "Roselia", "Wailmer", "Wailord", "Torkoal", "Trapinch", "Flygon", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Baltoy", "Claydol", "Feebas", "Milotic", "Duskull", "Dusclops", "Snorunt", "Glalie", "Budew", "Roserade", "Combee", "Vespiquen", "Cherubi", "Shellos", "Gastrodon", "Stunky", "Skuntank", "Bronzor", "Bronzong", "Bonsly", "Mime Jr.", "Munchlax", "Riolu", "Lucario", "Hippopotas", "Hippowdon", "Skorupi", "Drapion", "Mantyke", "Snover", "Abomasnow", "Weavile", "Togekiss", "Leafeon", "Glaceon", "Gallade", "Dusknoir", "Rotom", "Purrloin", "Liepard", "Munna", "Musharna", "Pidove", "Tranquill", "Unfezant", "Roggenrola", "Boldore", "Gigalith", "Woobat", "Drilbur", "Excadrill", "Timburr", "Gurdurr", "Conkeldurr", "Tympole", "Palpitoad", "Seismitoad", "Throh", "Sawk", "Cottonee", "Basculin","Maractus", "Dwebble", "Crustle", "Sigilyph", "Trubbish", "Garbodor", "Minccino", "Cinccino", "Vanillite", "Vanillish", "Vanilluxe", "Karrablast", "Frillish", "Jellicent", "Joltik", "Galvantula", "Ferroseed", "Ferrothorn", "Klink", "Klank", "Klinklang", "Elgyem", "Beheeyem", "Litwick", "Lampent", "Chandelure", "Axew", "Haxorus", "Cubchoo", "Beartic", "Shelmet", "Golett", "Golurk", "Pawniard", "Bisharp", "Heatmor", "Durant", "Bunnelby", "Diggersby", "Pancham", "Pangoro", "Espurr", "Meowstic", "Honedge", "Doublade", "Aegislash", "Inkay", "Binacle", "Barbaracle", "Helioptile", "Sylveon", "Hawlucha", "Phantump", "Pumpkaboo", "Gourgeist", "Bergmite", "Avalugg", "Noibat", "Noivern", "Grubbin", "Charjabug", "Vikavolt", "Cutiefly", "Ribombee", "Wishiwashi", "Mareanie", "Toxapex", "Mudbray", "Mudsdale", "Dewpider", "Araquanid", "Morelull", "Shiinotic", "Salandit", "Stufful", "Bewear", "Bounsweet", "Steenee", "Tsareena", "Wimpod", "Golisopod", "Pyukumuku", "Togedemaru", "Mimikyu", "Dhelmise", "Skwovet", "Greedent", "Rookidee", "Corvisquire", "Corviknight", "Blipbug", "Dottler", "Orbeetle", "Nickit", "Thievul", "Gossifleur", "Eldegoss", "Wooloo", "Dubwool", "Chewtle", "Drednaw", "Yamper", "Boltund", "Rolycoly", "Carkol", "Coalossal", "Applin", "Silicobra", "Sandaconda", "Cramorant", "Arrokuda", "Barraskewda", "Toxel", "Sizzlipede", "Clobbopus", "Grapploct", "Sinistea", "Hatenna", "Hattrem", "Hatterene", "Impidimp", "Morgrem", "Grimmsnarl", "Obstagoon", "Perrserker", "Milcery", "Falinks", "Pincurchin", "Snom", "Indeedee", "Morpeko", "Cufant", "Copperajah", "Duraludon", "Dreepy", "Drakloak", "Galarian Meowth", "Galarian Ponyta", "Galarian Farfetch'd", "Galarian Weezing", "Galarian Mr Mime", "Galarian Zigzagoon", "Galarian Linoone", "Galarian Yamask", "Galarian Stunfisk"};
-        String[] Sword = {"Galarian Darumaka", "Galarian Darmanitan", "Stonjourner", "Jangmo-o", "Hakamo-o", "Kommo-o", "Turtonator", "Passimian", "Swirlix", "Deino", "Zweilous", "Rufflet", "Braviary", "Gothita", "Gothorita", "Scraggy", "Seedot", "Nuzleaf", "Shiftry", "Mawile"};
-        String[] Shield = {"Galarian Corsola", "Eiscue", "Drampa", "Oranguru", "Goomy", "Sliggoo", "Spritzee", "Vullaby", "Mandibuzz", "Solosis", "Duosion", "Reuniclus", "Croagunk", "Toxicroak", "Solrock", "Larvitar", "Pupitar", "Lotad", "Lombre", "Ludicolo"};
+        String[] Sword = {"Galarian Darumaka", "Galarian Darmanitan", "Stonjourner", "Jangmo-o", "Hakamo-o", "Kommo-o", "Turtonator", "Passimian", "Swirlix", "Deino", "Zweilous", "Rufflet", "Braviary", "Gothita", "Gothorita", "Scraggy", "Seedot", "Nuzleaf", "Shiftry", "Mawile", "Pinsir", "Clauncher", "Clawitzer", "Bagon", "Salamence", "Omanyte", "Omastar", "Deino", "Hydreigon"};
+        String[] Shield = {"Galarian Corsola", "Eiscue", "Drampa", "Oranguru", "Goomy", "Sliggoo", "Spritzee", "Vullaby", "Mandibuzz", "Solosis", "Duosion", "Reuniclus", "Croagunk", "Toxicroak", "Solrock", "Larvitar", "Pupitar", "Lotad", "Lombre", "Ludicolo", "Heracross", "Skrelp", "Dragalge", "Galarian Rapidash", "Gible", "Garchomp", "Kabuto", "Kabutops", "Larvitar", "Tyranitar"};
 
-        String[] IoA = {"Galarian Slowpoke", "Buneary", "Jigglypuff", "Abra", "Klefki", "Chansey", "Happiny", "Kingler", "Rockruff", "Lopunny", "Starmie", "Toxapex", "Comfey", "Tentacool", "Zorua", "Tentacruel", "Krabby", "Marill", "Luxio", "Fomantis", "Fletchinder", "Blissey", "Kadabra", "Drifloon", "Skorupi", "Dunsparce", "Bouffalant", "Lickitung", "Lickilicky", "Drapion", "Poliwhirl", "Politoad", "Luxray", "Raichu", "Talonflame", "Lilligant", "Wigglytuff", "Azumarill", "Emolga", "Venipede", "Foongus", "Tangela", "Tangrowth", "Amoonguss", "Scolipede", "Accelgor", "Golduck", "Pichu", "Lurantis", "Larvesta", "Escavalier", "Cubone", "Wishiwashi", "Staryu", "Magnemite", "Psyduck", "Dedenne", "Drifblim", "Swoobat", "Shinx", "Magneton", "Magnezone", "Volcarona", "Poliwag", "Whismur", "Woobat", "Azurill", "Poliwrath", "Loudred", "Druddigon", "Gigalith", "Roggenrola", "Mienfoo", "Salandit", "Skarmory", "Mienshao", "Lycanroc", "Fletchling", "Scizor", "Sandygast", "Alakazam", "Palossand", "Zoroark", "Carcanha", "Sharpedo", "Lillipup", "Tauros", "Miltank", "Scyther", "Stoutland", "Kangaskhan", "Herdier", "Sandshrew", "Sandile", "Rhyperior", "Palossand", "Krookodile", "Krokorok", "Marowak", "Exeggcute", "Exeggutor", "Wailord", "Appletun", "Wailmer", "Seadra", "Kingdra", "Combee", "Petlil", "Riolu", "Lucario", "Spheal", "Tortuga", "Sealeo", "Walrein", "Carracosta", "Electivire", ""};
-        String[] IoASword = {"Pinsir", "Clauncher", "Clawitzer"};
-        String[] IoAShield = {"Heracross", "Skrelp", "Dragalge"};
-
-        String[] CT = {"Jynx", "Amaura", "Audino", "Mime Jr.", "Smoochum", "Mamoswine", "Swablu", "Phantump", "Trevenant", "Cryogonal", "Froslass", "Magmar", "Magby", "Magmortar", "Nidoran♀", "Nidoran♂", "Vanillish", "Vanillite", "Vanilluxe", "Absol", "Lileep", "Bronzong", "Nidorina", "Nidoking", "Nidorino", "Conkeldurr", "Nidoqueen", "Aerodactyl", "Lampent", "Altaria", "Chandelure", "Electabuzz", "Elekid", "Polteageist", "Dragapult", "Beldum", "Metang", "Metagross", "Aurorus", "Zubat", "Carbink", "Golbat", "Frosmoth", "Archen", "Dratini", "Tyrunt", "Tyrantrum", "Anorith", "Relicanth", "Noivern", "Aron", "Dragonite", "Armaldo", "Dragonair", "Spiritomb", "Aggron", "Lairon", "Regirock", "Registeel", "Regice", "Regieleki", "Regidrago"};
-        String[] CTSword = {"Bagon", "Salamence", "Omanyte", "Omastar", "Deino", "Hydreigon"};
-        String[] CTShield = {"Galarian Rapidash", "Gible", "Garchomp", "Kabuto", "Kabutops", "Larvitar", "Tyranitar"};
-
-        switch (this.generation){
-            case 4:
-                for(String i: DPP)
-                    if(i.equals(selectedPokemon.getName()))
-                        return true;
-                switch(this.name.getValue()){
-                    case "Diamond":
-                        for(String i: Diamond)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Pearl":
-                        for(String i: Pearl)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Platinum":
-                        for(String i: Platinum)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 6:
-                switch (this.name.getValue()){
-                    case "X":
-                        for(String i: XY)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: X)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Y":
-                        for(String i: XY)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: Y)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Omega Ruby":
-                        for(String i: ORAS)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: OmegaRuby)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Alpha Sapphire":
-                        for(String i: ORAS)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: AlphaSapphire)
-                                if(i.equals(selectedPokemon.getName()))
+        try {
+            BufferedReader fileReader;
+            String line;
+            switch (this.generation) {
+                case 4:
+                    fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/DPP.txt"));
+                    while ((line = fileReader.readLine()) != null)
+                        if (line.equals(selectedPokemon.getName()))
+                            return true;
+                    switch (this.name.getValue()) {
+                        case "Diamond":
+                            for (String i : Diamond)
+                                if (i.equals(selectedPokemon.getName()))
                                     return true;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 7:
-                for(String i: LetsGo)
-                    if(i.equals(selectedPokemon.getName()))
-                        return true;
-                switch (this.name.getValue()){
-                    case "Let's Go Pikachu":
-                        for(String i: LetsGoPikachu)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Let's Go Eevee":
-                        for(String i: LetsGoEevee)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 8:
-                for(String i: SWSH)
-                    if(i.equals(selectedPokemon.getName()))
-                        return true;
-                for(String i: IoA)
-                    if(i.equals(selectedPokemon.getName()))
-                        return true;
-                for(String i: CT)
-                    if(i.equals(selectedPokemon.getName()))
-                        return true;
-                switch (this.name.getValue()){
-                    case "Sword":
-                        for(String i: Sword)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: IoASword)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: CTSword)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    case "Shield":
-                        for(String i: Shield)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: IoAShield)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        for(String i: CTShield)
-                            if(i.equals(selectedPokemon.getName()))
-                                return true;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
+                            break;
+                        case "Pearl":
+                            for (String i : Pearl)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        case "Platinum":
+                            for (String i : Platinum)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 6:
+                    switch (this.name.getValue()) {
+                        case "X":
+                            fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/XY.txt"));
+                            while ((line = fileReader.readLine()) != null)
+                                if (line.equals(selectedPokemon.getName()))
+                                    return true;
+                            for (String i : X)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        case "Y":
+                            fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/XY.txt"));
+                            while ((line = fileReader.readLine()) != null)
+                                if (line.equals(selectedPokemon.getName()))
+                                    return true;
+                            for (String i : Y)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        case "Omega Ruby":
+                            fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/ORAS.txt"));
+                            while ((line = fileReader.readLine()) != null)
+                                if (line.equals(selectedPokemon.getName()))
+                                    return true;
+                            for (String i : OmegaRuby)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        case "Alpha Sapphire":
+                            fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/ORAS.txt"));
+                            while ((line = fileReader.readLine()) != null)
+                                if (line.equals(selectedPokemon.getName()))
+                                    return true;
+                            for (String i : AlphaSapphire)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 7:
+                    fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/LetsGo.txt"));
+                    while ((line = fileReader.readLine()) != null)
+                        if (line.equals(selectedPokemon.getName()))
+                            return true;
+                    switch (this.name.getValue()) {
+                        case "Let's Go Pikachu":
+                            for (String i : LetsGoPikachu)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        case "Let's Go Eevee":
+                            for (String i : LetsGoEevee)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 8:
+                    fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/SWSH.txt"));
+                    while ((line = fileReader.readLine()) != null)
+                        if (line.equals(selectedPokemon.getName()))
+                            return true;
+                    switch (this.name.getValue()) {
+                        case "Sword":
+                            for (String i : Sword)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        case "Shield":
+                            for (String i : Shield)
+                                if (i.equals(selectedPokemon.getName()))
+                                    return true;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }catch(IOException e){
+            System.out.println("Information file could not be found");
         }
         return false;
     }
