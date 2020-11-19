@@ -68,17 +68,18 @@ public class SaveData {
 
             for(int i = 0; i < getfileLength(filePath.substring(filePath.indexOf('/'), filePath.length() - 4)); i++) {
                 String line = fileReader.readLine();
+                String[] data = line.split(",");
                 if(i == lineNumber) {
-                    int generation = parseInt(splitString(line, 3));
-                    selectedPokemon = new Pokemon(splitString(line, 0));
-                    selectedPokemon.setForm(splitString(line,1));
-                    selectedGame = new Game(splitString(line, 2), generation);
-                    selectedMethod = new Method(splitString(line, 4), generation);
-                    selectedMethod.setModifier(parseInt(splitString(line, 5)));
-                    encounters = parseInt(splitString(line, 6));
-                    combo = parseInt(splitString(line, 7));
-                    increment = parseInt(splitString(line, 8));
-                    layout = splitString(line, 9);
+                    int generation = parseInt(data[3]);
+                    selectedPokemon = new Pokemon(data[0]);
+                    selectedPokemon.setForm(data[1]);
+                    selectedGame = new Game(data[2], generation);
+                    selectedMethod = new Method(data[4], generation);
+                    selectedMethod.setModifier(parseInt(data[5]));
+                    encounters = parseInt(data[6]);
+                    combo = parseInt(data[7]);
+                    increment = parseInt(data[8]);
+                    layout = data[9];
                     if(layout.compareTo("") == 0)
                         layout = null;
                     break;
@@ -168,12 +169,13 @@ public class SaveData {
             if(layoutName.substring(0, layoutName.indexOf('/')).compareTo("Hunts") == 0) {
                 for (int i = 0; i < getfileLength("Layouts/" + layoutName) - 1; i++) {
                     String line = fileReader.readLine();
+                    String[] data = line.split(",");
                     if (i < 3) {
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
-                        image.setLayoutX(parseDouble(splitString(line, 0)));
-                        image.setLayoutY(parseDouble(splitString(line, 1)));
-                        double imageWidth = -parseDouble(splitString(line, 2));
-                        double imageHeight = -parseDouble(splitString(line, 3));
+                        image.setLayoutX(parseDouble(data[0]));
+                        image.setLayoutY(parseDouble(data[1]));
+                        double imageWidth = -parseDouble(data[2]);
+                        double imageHeight = -parseDouble(data[3]);
                         if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight){
                             double width = -image.getFitWidth();
                             double height = -image.getFitHeight();
@@ -187,31 +189,32 @@ public class SaveData {
                             image.setTranslateX(-image.getImage().getWidth() / 2);
                             image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
                         }
-                        image.setVisible(splitString(line, 4).compareTo("true") == 0);
+                        image.setVisible(data[4].compareTo("true") == 0);
                     } else if (i < 10) {
                         Text text = (Text) huntLayout.getChildren().get(i);
-                        text.setLayoutX(parseDouble(splitString(line, 0)));
-                        text.setLayoutY(parseDouble(splitString(line, 1)));
-                        text.setScaleX(parseDouble(splitString(line, 2)));
-                        text.setScaleY(parseDouble(splitString(line, 2)));
-                        text.setFont(new Font(splitString(line, 3), 12));
-                        text.setFill(Color.web(splitString(line, 4)));
-                        text.setStrokeWidth(parseDouble(splitString(line, 5)));
-                        text.setStroke(Color.web(splitString(line, 6)));
-                        text.setUnderline(splitString(line, 7).compareTo("true") == 0);
-                        text.setVisible(splitString(line, 8).compareTo("true") == 0);
+                        text.setLayoutX(parseDouble(data[0]));
+                        text.setLayoutY(parseDouble(data[1]));
+                        text.setScaleX(parseDouble(data[2]));
+                        text.setScaleY(parseDouble(data[2]));
+                        text.setFont(new Font(data[3], 12));
+                        text.setFill(Color.web(data[4]));
+                        text.setStrokeWidth(parseDouble(data[5]));
+                        text.setStroke(Color.web(data[6]));
+                        text.setUnderline(data[7].compareTo("true") == 0);
+                        text.setVisible(data[8].compareTo("true") == 0);
                     }
                 }
                 huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 1, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
             }else{
                 for(int i = 0; i < getfileLength("Layouts/" + layoutName) - 2; i++){
                     String line = fileReader.readLine();
+                    String[] data = line.split(",");
                     if(i % 4 == 0){
                         ImageView image = (ImageView) huntLayout.getChildren().get(i);
-                        image.setLayoutX(parseDouble(splitString(line, 0)));
-                        image.setLayoutY(parseDouble(splitString(line, 1)));
-                        double imageWidth = -parseDouble(splitString(line, 2));
-                        double imageHeight = -parseDouble(splitString(line, 3));
+                        image.setLayoutX(parseDouble(data[0]));
+                        image.setLayoutY(parseDouble(data[1]));
+                        double imageWidth = -parseDouble(data[2]);
+                        double imageHeight = -parseDouble(data[3]);
                         if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight){
                             double width = -image.getFitWidth();
                             double height = -image.getFitHeight();
@@ -225,19 +228,19 @@ public class SaveData {
                             image.setTranslateX(-image.getImage().getWidth() / 2);
                             image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
                         }
-                        image.setVisible(splitString(line, 4).compareTo("true") == 0);
+                        image.setVisible(data[4].compareTo("true") == 0);
                     }else{
                         Text text = (Text) huntLayout.getChildren().get(i);
-                        text.setLayoutX(parseDouble(splitString(line, 0)));
-                        text.setLayoutY(parseDouble(splitString(line, 1)));
-                        text.setScaleX(parseDouble(splitString(line, 2)));
-                        text.setScaleY(parseDouble(splitString(line, 2)));
-                        text.setFont(new Font(splitString(line, 3), 12));
-                        text.setFill(Color.web(splitString(line, 4)));
-                        text.setStrokeWidth(parseDouble(splitString(line, 5)));
-                        text.setStroke(Color.web(splitString(line, 6)));
-                        text.setUnderline(splitString(line, 7).compareTo("true") == 0);
-                        text.setVisible(splitString(line, 8).compareTo("true") == 0);
+                        text.setLayoutX(parseDouble(data[0]));
+                        text.setLayoutY(parseDouble(data[1]));
+                        text.setScaleX(parseDouble(data[2]));
+                        text.setScaleY(parseDouble(data[2]));
+                        text.setFont(new Font(data[3], 12));
+                        text.setFill(Color.web(data[4]));
+                        text.setStrokeWidth(parseDouble(data[5]));
+                        text.setStroke(Color.web(data[6]));
+                        text.setUnderline(data[7].compareTo("true") == 0);
+                        text.setVisible(data[8].compareTo("true") == 0);
                     }
                 }
                 huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 2, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -263,16 +266,6 @@ public class SaveData {
         return null;
     }
 
-    //splits the given string by the , and returns the number word that is given
-    public String splitString(String line, int word){
-        int index;
-        for(int i = 0; i < word; i++){
-            index = line.indexOf(',');
-            line = line.substring(index + 1);
-        }
-        return line.substring(0,line.indexOf(','));
-    }
-
     //returns how many lines are in the previous hunts file
     public int getfileLength(String file){
         try {
@@ -294,11 +287,14 @@ public class SaveData {
 
             int lineNumber = 0;
             String line;
+
+            String[] saveDataArray = saveData.split(",");
             while ((line = fileReader.readLine()) != null) {
+                String[] lineDataArray = line.split(",");
                 for (int i = 0; i < 6; i++) {
                     if (i == 5)
                         return lineNumber;
-                    if (splitString(saveData, i).compareTo(splitString(line, i)) != 0) {
+                    if (saveDataArray[i].compareTo(lineDataArray[i]) != 0) {
                         break;
                     }
                 }

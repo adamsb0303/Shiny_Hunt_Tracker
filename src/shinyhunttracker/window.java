@@ -2201,28 +2201,29 @@ class previouslyCaught extends window{
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
             previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
         }
-        SaveData data = new SaveData();
-        int numberCaught = data.getfileLength("CaughtPokemon");
+        SaveData SaveData = new SaveData();
+        int numberCaught = SaveData.getfileLength("CaughtPokemon");
         if(numberCaught < previouslyCaught)
             previouslyCaught = numberCaught;
 
         double widthTotal = 0;
         for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
             if((i - numberCaught) * -1 > displayPrevious) {
-                String line = data.getLinefromFile(i, "CaughtPokemon");
-                Game caughtGame = new Game(data.splitString(line, 2), parseInt(data.splitString(line, 3)));
-                int selectedPokemonGeneration = new Pokemon (data.splitString(line, 0)).getGeneration();
+                String line = SaveData.getLinefromFile(i, "CaughtPokemon");
+                String[] data = line.split(",");
+                Game caughtGame = new Game(data[2], parseInt(data[3]));
+                int selectedPokemonGeneration = new Pokemon (data[0]).getGeneration();
                 if (caughtGame.getGeneration() < selectedPokemonGeneration)
                     caughtGame.setGeneration(selectedPokemonGeneration);
-                Pokemon previouslyCaughtPokemon = new Pokemon(data.splitString(line, 0));
-                previouslyCaughtPokemon.setForm(data.splitString(line,1));
+                Pokemon previouslyCaughtPokemon = new Pokemon(data[0]);
+                previouslyCaughtPokemon.setForm(data[1]);
                 ImageView sprite = new ImageView();
                 setPokemonSprite(sprite, previouslyCaughtPokemon, caughtGame);
                 if(previouslyCaughtPokemon.getForm() != null)
                     setAlternateSprite(previouslyCaughtPokemon, caughtGame, sprite);
-                Text pokemon = new Text(data.splitString(line, 0));
-                Text method = new Text(data.splitString(line, 4));
-                Text encounters = new Text(data.splitString(line, 6));
+                Text pokemon = new Text(data[0]);
+                Text method = new Text(data[4]);
+                Text encounters = new Text(data[6]);
 
                 windowLayout.getChildren().addAll(sprite, pokemon, method, encounters);
 
@@ -2251,7 +2252,7 @@ class previouslyCaught extends window{
                 quickEdit(method);
                 quickEdit(encounters);
 
-                VBox spriteSettings = createImageSettings(sprite, new Pokemon(data.splitString(line, 0), 0), caughtGame);
+                VBox spriteSettings = createImageSettings(sprite, new Pokemon(data[0], 0), caughtGame);
                 VBox pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
                 VBox methodLabelSettings = createLabelSettings(method, "Method");
                 VBox encountersLabelSettings = createLabelSettings(encounters, "Encounters");
@@ -2270,10 +2271,11 @@ class previouslyCaught extends window{
 
         for(int i = previoulyCaughtData.getfileLength("CaughtPokemon") - 1; i >= 0 ; i--){
             String line = previoulyCaughtData.getLinefromFile(i, "CaughtPokemon");
-            String name = previoulyCaughtData.splitString(line, 0);
-            String game = previoulyCaughtData.splitString(line, 2);
-            String method = previoulyCaughtData.splitString(line, 3);
-            String encounters = previoulyCaughtData.splitString(line, 5);
+            String[] data = line.split(",");
+            String name = data[0];
+            String game = data[2];
+            String method = data[3];
+            String encounters = data[5];
             makeBranch((previoulyCaughtData.getfileLength("CaughtPokemon") - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previoulyCaughtRoot);
         }
 
@@ -2492,10 +2494,11 @@ class newOrOld extends window{
 
             for(int i = 0; i < previousHuntData.getfileLength("PreviousHunts"); i++){
                 String line = previousHuntData.getLinefromFile(i, "PreviousHunts");
-                String name = previousHuntData.splitString(line, 0);
-                String game = previousHuntData.splitString(line, 2);
-                String method = previousHuntData.splitString(line, 4);
-                String encounters = previousHuntData.splitString(line, 6);
+                String[] data = line.split(",");
+                String name = data[0];
+                String game = data[2];
+                String method = data[4];
+                String encounters = data[6];
                 makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
             }
 
