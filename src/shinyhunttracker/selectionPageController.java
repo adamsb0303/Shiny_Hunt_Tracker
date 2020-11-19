@@ -744,12 +744,33 @@ public class selectionPageController implements Initializable {
 
         String searchString = pokemonSearchBar.getText();
 
+        if(searchString.isEmpty())
+            return;
+
+        boolean alolan = false, galarian = false;
+
+        if(searchString.length() > 7 && searchString.substring(0, 7).toLowerCase().compareTo("alolan ") == 0) {
+            alolan = true;
+            searchString = searchString.substring(7);
+        } else if(searchString.length() > 9 && searchString.substring(0, 9).toLowerCase().compareTo("galarian ") == 0) {
+            galarian = true;
+            searchString = searchString.substring(9);
+        }
+
         while (index < PokedexSize) {
             if (index < 151) {
                 String selectedPokemon = Pokedex[0][index];
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen1.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen1.getChildren().get(index));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen1);
                     index++;
                     return;
@@ -759,6 +780,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen2.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen2.getChildren().get(index - 151));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen2);
                     index++;
                     return;
@@ -768,6 +797,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen3.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen3.getChildren().get(index - 251));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen3);
                     index++;
                     return;
@@ -777,6 +814,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen4.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen4.getChildren().get(index - 386));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen4);
                     index++;
                     return;
@@ -786,6 +831,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen5.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen5.getChildren().get(index - 493));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen5);
                     index++;
                     return;
@@ -795,6 +848,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen6.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen6.getChildren().get(index - 649));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen6);
                     index++;
                     return;
@@ -804,6 +865,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen7.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen7.getChildren().get(index - 721));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen7);
                     index++;
                     return;
@@ -813,6 +882,14 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen8.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen8.getChildren().get(index - 809));
+                    if(alolan && !alolanCheckBox.isDisable()) {
+                        alolanCheckBox.setSelected(true);
+                        setAlolan();
+                    }
+                    if(galarian && !galarianCheckBox.isDisable()){
+                        galarianCheckBox.setSelected(true);
+                        setGalarian();
+                    }
                     collapsePokemonTrees(Gen8);
                     index++;
                     return;
