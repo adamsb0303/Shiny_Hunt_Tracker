@@ -35,6 +35,14 @@ public class Pokemon{
         isLegendary();
     }
 
+    Pokemon(String name, String[][] Pokedex){
+        this.name.setValue(name);
+        this.Pokedex = Pokedex;
+        this.generation = findGeneration();
+        breedable = isBreedable();
+        isLegendary();
+    }
+
     //main constructor
     Pokemon(String name, int generation){
         this.name.setValue(name);

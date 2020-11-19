@@ -1,7 +1,6 @@
 package shinyhunttracker;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,14 +24,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -2082,6 +2079,8 @@ class previouslyCaught extends window{
     ColorPicker backgroundColorPicker = new ColorPicker();
     TextField numberCaughtField = new TextField();
 
+    Pokemon Pokedex = new Pokemon();
+
     previouslyCaught(int displayCaught){
         this.displayCaught = displayCaught;
         this.currentLayout = "null";
@@ -2090,6 +2089,8 @@ class previouslyCaught extends window{
 
     //creates window with previously caught pokemon
     public void createPreviouslyCaughtPokemonWindow(){
+        Thread initializePokedex = new Thread(new initializeArray(Pokedex));
+        initializePokedex.start();
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(previousHuntScene);
@@ -2212,14 +2213,14 @@ class previouslyCaught extends window{
                 String line = SaveData.getLinefromFile(i, "CaughtPokemon");
                 String[] data = line.split(",");
                 Game caughtGame = new Game(data[2], parseInt(data[3]));
-                int selectedPokemonGeneration = new Pokemon (data[0]).getGeneration();
+                int selectedPokemonGeneration = new Pokemon (data[0], Pokedex.getPokedex()).getGeneration();
                 if (caughtGame.getGeneration() < selectedPokemonGeneration)
                     caughtGame.setGeneration(selectedPokemonGeneration);
-                Pokemon previouslyCaughtPokemon = new Pokemon(data[0]);
+                Pokemon previouslyCaughtPokemon = new Pokemon(data[0], Pokedex.getPokedex());
                 previouslyCaughtPokemon.setForm(data[1]);
                 ImageView sprite = new ImageView();
                 setPokemonSprite(sprite, previouslyCaughtPokemon, caughtGame);
-                if(previouslyCaughtPokemon.getForm() != null)
+                if(previouslyCaughtPokemon.getForm() != null && !previouslyCaughtPokemon.getForm().equals("null"))
                     setAlternateSprite(previouslyCaughtPokemon, caughtGame, sprite);
                 Text pokemon = new Text(data[0]);
                 Text method = new Text(data[4]);
