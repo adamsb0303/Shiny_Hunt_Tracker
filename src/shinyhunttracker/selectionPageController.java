@@ -763,6 +763,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen1.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen1.getChildren().get(index));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -780,6 +782,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen2.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen2.getChildren().get(index - 151));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -797,6 +801,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen3.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen3.getChildren().get(index - 251));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -814,6 +820,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen4.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen4.getChildren().get(index - 386));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -831,6 +839,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen5.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen5.getChildren().get(index - 493));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -848,6 +858,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen6.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen6.getChildren().get(index - 649));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -865,6 +877,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen7.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen7.getChildren().get(index - 721));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
@@ -882,6 +896,8 @@ public class selectionPageController implements Initializable {
                 if (selectedPokemon.length() >= searchString.length() && selectedPokemon.toLowerCase().substring(0, searchString.length()).contains(searchString.toLowerCase())) {
                     Gen8.setExpanded(true);
                     PokemonList.getSelectionModel().select(Gen8.getChildren().get(index - 809));
+                    if(searchString.toLowerCase().equals(selectedPokemon.toLowerCase()))
+                        pokemonSearchBar.setText("");
                     if(alolan && !alolanCheckBox.isDisable()) {
                         alolanCheckBox.setSelected(true);
                         setAlolan();
