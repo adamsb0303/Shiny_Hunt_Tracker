@@ -713,6 +713,10 @@ public class selectionPageController implements Initializable {
                 methodToolTip.setText("The more of the pokemon that you have caught/defeated in total your shiny odds increase\n\nShiny odds cap at 500 total encounters");
                 helpButton.setTooltip(methodToolTip);
                 break;
+            case "Dynamax Adventures":
+                methodToolTip.setText("When catching pokemon in dynamax adventures, odds are dramatically higher");
+                helpButton.setTooltip(methodToolTip);
+                break;
             default:
                 break;
         }
