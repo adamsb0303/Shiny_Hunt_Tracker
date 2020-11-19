@@ -68,6 +68,8 @@ public class selectionPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
 
+        pokemonSearchBar.setPromptText("Search");
+
         PokemonList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
@@ -744,7 +746,7 @@ public class selectionPageController implements Initializable {
 
         String searchString = pokemonSearchBar.getText();
 
-        if(searchString.isEmpty())
+        if(searchString.isEmpty() || searchString.length() > 20)
             return;
 
         boolean alolan = false, galarian = false;
