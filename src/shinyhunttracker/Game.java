@@ -267,28 +267,43 @@ public class Game {
 
     //for XY
     //checks to see if the pokemon is in available in the friend safari
-    public boolean isFriendSafari(Pokemon selectedPokemon){
-        String[] FriendSafari = {"Teddiursa", "Aipom", "Dunsparce", "Lillipup", "Loudred", "Kecleon", "Audino", "Minccino", "Chansey", "Ditto", "Eevee", "Smeargle", "Growlithe", "Ponyta", "Magmar", "Pansear", "Charmeleon", "Slugma", "Larvesta", "Pyroar", "Ninetales", "Braixen", "Fletchinder", "Mankey", "Machoke", "Meditite", "Mienfoo", "Throh", "Sawk", "Pancham", "Tyrogue", "Breloom", "Hariyama", "Riolu", "Krabby", "Octillery", "Vivarel", "Panpour", "Wartortle", "Gyarados", "Quagsire", "Floatzel", "Poliwhirl", "Azumarill", "Frogadier", "Pidget", "Spearow", "Farfetch'd", "Doduo", "Hoothoot", "Tranquill", "Woodbat", "Swanna", "Tropuis", "Rufflet", "Fletchinder", "Hawlucha", "Oddish", "Tangela", "Sunkern", "Pansage", "Ivysaur", "Swadloon", "Petilil", "Sawsbuck", "Maractus", "Quilladin", "Gogoat", "Kakuna", "Gloom", "Cascoon", "Seviper", "Venomoth", "Ariados", "Swalot", "Garbodor", "Muk", "Drapion", "Toxicroak", "Whirlipede", "Electrode", "Pachirisu", "Emolga", "Dedenne", "Pikachu", "Electabuzz", "Stunfisk", "Helioptile", "Manectric", "Luxio", "Zebstrika", "Galvantula", "Sandshrew", "Wooper", "Phanpy", "Trapinch", "Dugrio", "Marowak", "Nincada", "Camerupt", "Gastrodon", "Papitoad", "Diggersby", "Abra", "Drowzee", "Grumpig", "Munna", "Wobbuffet", "Sigilyph", "Espurr", "Xatu", "Girafarig", "Gothorita", "Duosion", "Nosepass", "Boldore", "Dwebble", "Onix", "Magcargo", "Corsola", "Pupitar", "Rhydon", "Shuckle", "Barbaracle", "Delibird", "Snorunt", "Snover", "Sneasel", "Bearic", "Bergmite", "Dewgong", "Clowster", "Lapras", "Piloswine", "Butterfree", "Paras", "Ledyba", "Combee", "Beautifly", "Masquerain", "Volbeat", "Illumise", "Venomoth", "Pinsir", "Heracross", "Vivillion", "Gabite", "Fraxure", "Dragonair", "Shelgon", "Noibat", "Druddigon", "Sliggoo", "Shuppet", "Lampent", "Phantump", "Pumpkaboo", "Dusclops", "Drifblim", "Spiritomb", "Golurk", "Mightyena", "Nuzleaf", "Pawniard", "Vullaby", "Sneasel", "Cacturne", "Crawdaunt", "Sandile", "Sableye", "Absol", "Liepard", "Inkay", "Magneton", "Mawile", "Ferroseed", "Forretress", "Skamory", "Metang", "Klang", "Bronzong", "Excadrill", "Klefki", "Togepi", "Snubbull", "Kirlia", "Dedenne", "Jigglypuff", "Mawile", "Spirtzee", "Swirlix", "Clefairy", "Floette"};
-        for(String i: FriendSafari)
-            if(i.equals(selectedPokemon.getName()))
-                return true;
+    public boolean isFriendSafari(Pokemon selectedPokemon) {
+        try{
+            BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/DPP.txt"));
+            String line;
+            while ((line = fileReader.readLine()) != null)
+                if (line.equals(selectedPokemon.getName()))
+                    return true;
+        }catch (IOException e){
+            System.out.println("Fish file not found");
+        }
         return false;
     }
 
     //for SM and USUM
     //checks to see if the pokemon can be called through SOS
     public boolean isSOS(Pokemon selectedPokemon){
-        String[] SOS ={"Caterpie", "Metapod", "Butterfree", "Golbat", "Crobat", "Tentacruel", "Lumineon", "Slowpoke", "Slowbro", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Pichu", "Pikachu", "Happiny", "Igglybuff", "Jigglypuff", "Corsola", "Mareanie", "Elekid", "Electabuzz", "Chansey", "Magby", "Magmar", "Wailmer", "Wailord", "Barbaoch", "Whiscash", "Snorunt", "Bagon", "Shelgon", "Salamence", "Bonsly", "Sudowoodo", "Muchlax", "Snorlax", "Riolu", "Lucario", "Tubbish", "Pancham", "Carbink", "Sableye", "Trumbeak", "Oranguru", "Passimian", "Jangmo-o", "Hakamo-o", "Kommo-o"};
-        String[] SOSUltra = {"Caterpie", "Metapod", "Butterfree", "Rattata", "Raticate", "Zubat", "Golbat", "Crobat", "Dugtrio", "Meowth", "Persian", "Psyduck", "Slowpoke", "Slowbro", "Slowking", "Haunter", "Gengar", "Cubone", "Kangaskhan", "Chansey", "Blissey", "Goldeen", "Seaking", "Staryu", "Starmie", "Tauros", "Miltank", "Magikarp", "Gyarados", "Eevee", "Espeon", "Umbreon", "Dratini", "Dragonair", "Dragonite", "Hoothoot", "Noctowl", "Chinchou", "Lanturn", "Pichu", "Pikachu", "Cleffa", "Clefairy", "Happiny", "Natu", "Xatu", "Aipom", "Ambipom", "Corsola", "Mareanie", "Remoraid", "Octillery", "Smoochum", "Jynx", "Elekid", "Electabuzz", "Magby", "Magmar", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Trapinch", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Clamperl", "Huntail", "Gorebyss", "Bagon", "Shelgon", "Salamence", "Buneary", "Lopunny", "Bonsly", "Sudowoodo", "Mime Jr.", "Mr. Mime", "Munchlax", "Snorlax", "Riolu", "Lucario", "Finneon", "Lumineon", "Mantyke", "Krokorok", "Scraggy", "Fearow", "Druddigon", "Bisharp", "Pawniard", "Larvesta", "Volcarona", "Fletchling", "Fletchinder", "Pancham", "Pangoro", "Dedenne", "Togedemaru", "Carbink", "Sableye", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Charjabug", "Grubbin", "Vikavolt", "Mudbray", "Mudsdale", "Salandit", "Salazzle", "Stufful", "Oranguru", "Passimian", "Pyukumuku", "Wingull", "Togedemaru", "Janhmo-o", "Hakamo-o", "Kommo-o"};
-        if(this.name.getValue().startsWith("Ult")) {
-            for (String i : SOSUltra)
-                if (i.equals(selectedPokemon.getName()))
-                    return true;
+        if(this.name.getValue().contains("Ultra")) {
+            try{
+                BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/UltraSOS.txt"));
+                String line;
+                while ((line = fileReader.readLine()) != null)
+                    if (line.equals(selectedPokemon.getName()))
+                        return true;
+            }catch (IOException e){
+                System.out.println("Ultra SOS file not found");
+            }
         }
         else{
-            for (String i : SOS)
-                if (i.equals(selectedPokemon.getName()))
-                    return true;
+            try{
+                BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/SOS.txt"));
+                String line;
+                while ((line = fileReader.readLine()) != null)
+                    if (line.equals(selectedPokemon.getName()))
+                        return true;
+            }catch (IOException e){
+                System.out.println("SOS file not found");
+            }
         }
         return false;
     }
@@ -306,12 +321,15 @@ public class Game {
     //for SWSH
     //checks to see if the pokemon is available in dynamax adventures
     public boolean inDynamaxAdventure(Pokemon selectedPokemon){
-        String[] dynamaxAdventures = {"Ivysaur", "Charmeleon", "Wartortle", "Butterfree", "Raichu", "Alolan Raichu", "Sandslash", "Alolan Sandslash", "Nidoqueen", "Nidoking", "Clefairy", "Clefable", "Jigglypuff", "Wigglytuff", "Gloom", "Vileplume", "Dugtrio", "Alolan Dugtrio", "Persian", "Alolan Persian", "Golduck", "Poliwrath", "Kadabra", "Machoke", "Tentacruel", "Slowbro", "Magneton", "Haunter", "Kingler", "Exeggutor", "Marowak", "Alolan Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Weezing", "Galarian Weezing", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Seadra", "Seaking", "Starmie", "Mr. Mime", "Galarian Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Tauros", "Ditto", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Dragonair", "Noctowl", "Lanturn", "Togetic", "Xatu", "Bellossom", "Azumarill", "Sudowoodo", "Politoed", "Quagsire", "Slowking", "Dunsparce", "Qwilfish", "Sneasel", "Piloswine", "Octillery", "Mantine", "Skarmory", "Hitmontop", "Miltank", "Grovyle", "Sceptile", "Combusken", "Blaziken", "Marshtomp", "Swampert", "Linoone", "Galarian Linoone", "Pelipper", "Ninjask", "Exploud", "Lairon", "Manectric", "Roselia", "Sharpedo", "Wailmer", "Torkoal", "Flygon", "Altaria", "Whiscash", "Crawdaunt", "Claydol", "Cradily", "Armaldo", "Dusclops", "Absol", "Glalie", "Sealeo", "Relicanth", "Metang", "Luxray", "Vespiquen", "Cherrim", "Gastrodon", "Drifblim", "Lopunny", "Skuntank", "Bronzong", "Munchlax", "Drapion", "Abomasnow", "Froslass", "Rotom", "Stoutland", "Liepard", "Musharna", "Unfezant", "Boldore", "Swoobat", "Audino", "Gurdurr", "Palpitoad", "Seismitoad", "Scolipede", "Whimsicott", "Lilligant", "Basculin", "Krookodile", "Maractus", "Crustle", "Sigilyph", "Cofagrigus", "Garbodor", "Cinccino", "Vanillish", "Emolga", "Escavalier", "Amoonguss", "Jellicent", "Galvantula", "Klang", "Klinklang", "Beheeyem", "Lampent", "Fraxure", "Beartic", "Cryogonal", "Accelgor", "Stunfisk", "Galarian Stunfisk", "Mienshao", "Druddigon", "Golurk", "Bisharp", "Bouffalant", "Heatmor", "Durant", "Diggersby", "Talonflame", "Pangoro", "Doublade", "Malamar", "Barbaracle", "Heliolisk", "Tyrantrum", "Aurorus", "Hawlucha", "Dedenne", "Klefki", "Trevenat", "Gourgeist", "Charjabug", "Vikavolt", "Ribombee", "Lycanroc", "Mudsdale", "Araquanid", "Lurantis", "Shiinotic", "Salazzle", "Bewear", "Tsareena", "Comfey", "Oranguru", "Passimian", "Palossand", "Pyukumuku", "Togedemaru", "Mimikyu", "Greedent", "Orbeetle", "Thievul", "Eldegoss", "Dubwool", "Drednaw", "Boltund", "Carkol", "Coalossal", "Sandaconda", "Cramorant", "Barraskewda", "Toxtricity", "Centiskorch", "Grapploct", "Polteageist", "Hatterene", "Grimmsnarl", "Obstagoon", "Perrserker", "Alcremie", "Falinks", "Pincurchin", "Frosmoth", "Indeedee", "Morpeko", "Copperajah", "Duraludon", "Drakloak", "Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Heatran", "Giratina", "Cresselia", "Landorus", "Kyurem", "Zygarde", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Stakataka", "Blacephalon", "Ho-Oh", "Latios", "Groudon", "Palkia", "Tornadus", "Reshiram", "Xerneas", "Solgaleo", "Lugia", "Latias", "Kyogre", "Dialga", "Thundurus", "Zekrom", "Yveltal", "Lunala"};
-
-        //loops through array backwards, since the user is more likely to be targeting a legendary
-        for(int i = dynamaxAdventures.length - 1; i >= 0; i--)
-            if(dynamaxAdventures[i].equals(selectedPokemon.getName()))
-                return true;
+        try{
+            BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Available Pokemon/DynamaxAdventure.txt"));
+            String line;
+            while ((line = fileReader.readLine()) != null)
+                if (line.equals(selectedPokemon.getName()))
+                    return true;
+        }catch (IOException e){
+            System.out.println("Dynamax Adventure file not found");
+        }
 
         return false;
     }
