@@ -281,15 +281,13 @@ public class huntController {
     }
 
     public void closeWindows(){
-        keyBindingSettingsStage.close();
-        previousCatches.getStage().close();
-        previousCatches.getSettingsStage().close();
         for(int i = 0; i < windows.length; i++) {
             if(windows[i] != null) {
                 windows[i].saveandCloseHunt();
                 windows[i] = null;
             }
         }
+        System.exit(0);
     }
 
     public void saveAll(String filePath){

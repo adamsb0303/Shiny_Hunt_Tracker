@@ -1,6 +1,7 @@
 package shinyhunttracker;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -2104,11 +2105,12 @@ class previouslyCaught extends window{
             Label numberCaught = new Label("Display Previously Caught: ");
             numberCaughtField.setMaxWidth(50);
             numberCaughtField.setPromptText(String.valueOf(displayCaught));
+            Button previouslyCaughtList = new Button("List");
             HBox numberPreviouslyCaught = new HBox();
             numberPreviouslyCaught.setAlignment(Pos.CENTER);
             numberPreviouslyCaught.setSpacing(5);
             numberPreviouslyCaught.setPadding(new Insets(10, 0, 0, 10));
-            numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField);
+            numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
 
             Label backgroundColorLabel = new Label("Background: ");
             backgroundColorPicker.setDisable(!windowStage.isShowing());
@@ -2163,6 +2165,8 @@ class previouslyCaught extends window{
                     numberCaughtField.setText("");
                 }
             });
+
+            previouslyCaughtList.setOnAction(e -> displayPreviouslyCaughtList());
 
             backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
 
@@ -2254,6 +2258,34 @@ class previouslyCaught extends window{
                 previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
             }
         }
+    }
+
+    public void displayPreviouslyCaughtList(){
+        Stage displayCaughtListStage = new Stage();
+        displayCaughtListStage.setTitle("Previously Caught Pokemon");
+        TreeView<String> previouslyCaughtView = new TreeView<>();
+        TreeItem<String> previoulyCaughtRoot = new TreeItem<>();
+
+        SaveData previoulyCaughtData = new SaveData();
+
+        for(int i = previoulyCaughtData.getfileLength("CaughtPokemon") - 1; i >= 0 ; i--){
+            String line = previoulyCaughtData.getLinefromFile(i, "CaughtPokemon");
+            String name = previoulyCaughtData.splitString(line, 0);
+            String game = previoulyCaughtData.splitString(line, 2);
+            String method = previoulyCaughtData.splitString(line, 3);
+            String encounters = previoulyCaughtData.splitString(line, 5);
+            makeBranch((previoulyCaughtData.getfileLength("CaughtPokemon") - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previoulyCaughtRoot);
+        }
+
+        previouslyCaughtView.setRoot(previoulyCaughtRoot);
+        previouslyCaughtView.setShowRoot(false);
+
+        VBox previousHuntsLayout = new VBox();
+        previousHuntsLayout.getChildren().addAll(previouslyCaughtView);
+
+        Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
+        displayCaughtListStage.setScene(previousHuntsScene);
+        displayCaughtListStage.show();
     }
 
     //save layout
