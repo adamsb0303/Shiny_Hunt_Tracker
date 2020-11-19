@@ -51,7 +51,7 @@ public class selectionPageController implements Initializable {
     String[][] Pokedex = selectedPokemon.getPokedex();
 
     //array with pokemon not avaliable in SWSH
-    String[] SWSHPokedex = {"Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Alolan Rattata", "Alolan Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Paras", "Parasect", "Venonat", "Venomoth", "Mankey", "Primeape", "Bellsprout", "Weepinbell", "Victribell", "Geodude", "Graveler", "Golem", "Alolan Geodude", "Alolan Graveler", "Alolan Golem", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Alolan Grimer", "Alolan Muk", "Drowzee", "Hypno", "Voltorb", "Electrode", "Chikorita", "Bayleef", "Meganium", "Cynadquil", "Quilava", "Typhlosion", "Totodile", "Craconaw", "Feraligatr", "Sentret", "Ferret", "Ledyba", "Ledian", "Spinarak", "Ariados", "Mareep", "Flaaffy", "Ampharos", "Hoppip", "Skiploom", "Jumpluff", "Aipom", "Sunkern", "Sunfloura", "Yanma", "Murkow", "Misdreavus", "Unown", "Girafarig", "Pineco", "Forretress", "Gligar", "Snubbull", "Granbull", "Teddiursa", "Ursaring", "Slugma", "Magcargo", "Houndour", "Houndoom", "Phanpey", "Donphan", "Stantler", "Smeargle", "Poochyena", "Mightyena", "Wurmple", "Cascoon", "Beautifly", "Silcoon", "Dustox", "Taillow", "Sweallow", "Surskit", "Masquerain", "Shroomish", "Breloom", "Slackoth", "Vigoroth", "Slacking", "Makuhita", "Hariyama", "Nosepass", "Skitty", "Delcatty", "Meditite", "Medicham", "Plusle", "Minun", "Illumise", "Volbeat", "Gulpin", "Swallot", "Numel", "Camerupt", "Spoink", "Grumpig", "Spinda", "Cacnea", "Cactern", "Zangoose", "Serviper", "Castform", "Kecleon", "Shuppet", "Bannette", "Tropius", "Chimecho", "Clamperl", "Huntail", "Gorebyss", "Luvdisc", "Deoxys", "Turtwig", "Grotle", "Torterra", "Chimchar", "Monferno", "Infernape", "Piplup", "Prinplup", "Empoleon", "Starly", "Staravia", "Staraptor", "Bidoof", "Bibarel", "Kricketune", "Kricketot", "Cranidos", "Rampardos", "Shieldon", "Bastiodon", "Burmy", "Wormadam", "Mothim", "Pachirisu", "Buizel", "Floatzel", "Ambipom", "Mismagius", "Honchkrow", "Glameow", "Purugly", "Chingling", "Chatot", "Carnivine", "Finneon", "Lumineon", "Yanmega", "Gliscor", "Probopass", "Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus", "Snivy", "Servine", "Serperior", "Tepig", "Pignite", "Emboar", "Oshawott", "Dewott", "Samurott", "Patrat", "Watchog", "Pansage", "Simisage", "Pansear", "Simisear", "Panpour", "Simipour", "Blitzle", "Zebstrika", "Sewaddle", "Swadloon", "Levanny", "Ducklett", "Swanna", "Deerling", "Sawsbuck", "Alomomola", "Tynamo", "Elektrik", "Elektross", "Meloetta", "Chespin", "Quilladin", "Chesnaught", "Fennekin", "Braixen", "Delphox", "Froakie", "Frogadeir", "Greninja", "Scatterbug", "Spewpa", "Vivillion", "Litleo", "Pyroar", "Flabébé", "Floette", "Florges", "Skiddo", "Gogoat", "Furfrou", "Hoopa", "Pikipek", "Trumbeak", "Toucannon", "Yungoos", "Gumshoos", "Crabrawler", "Crabominable", "Oricorio", "Minior", "Komala", "Bruxish"};
+    String[] SWSHPokedex = {};
 
 
     //array with every main line pokemon game
@@ -67,6 +67,9 @@ public class selectionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
+
+        Thread initializePokedex = new Thread(new initializeArray(selectedPokemon));
+        initializePokedex.start();
 
         pokemonSearchBar.setPromptText("Search");
 
@@ -180,108 +183,123 @@ public class selectionPageController implements Initializable {
 
         //add listeners for when the lists are expanded, and add all pokemon and sprites to the list
         Gen1.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen1.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen1.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen1.getChildren().remove(0);
-            for(String i: Pokedex[0]) {
-                String filePath;
-                if(i.compareTo("Nidoran♀") == 0)
-                    filePath = "Images/PC Sprites/Generation 1/nidoran-f.png";
-                else if(i.compareTo("Nidoran♂") == 0)
-                    filePath = "Images/PC Sprites/Generation 1/nidoran-m.png";
-                else if(i.compareTo("Mr. Mime") == 0)
-                    filePath = "Images/PC Sprites/Generation 1/mr-mime.png";
-                else if(i.compareTo("Farfetch'd") == 0)
-                    filePath = "Images/PC Sprites/Generation 1/farfetchd.png";
-                else
-                    filePath = "Images/PC Sprites/Generation 1/" + i.toLowerCase() + ".png";
-                fetchImage getImage = new fetchImage(filePath);
-                getImage.setImage(makeBranch(i, Gen1));
+                for (int i = 0; i < 151; i++) {
+                    String filePath;
+                    String pokemonName = Pokedex[0][i];
+                    if (pokemonName.compareTo("Nidoran♀") == 0)
+                        filePath = "Images/PC Sprites/Generation 1/nidoran-f.png";
+                    else if (pokemonName.compareTo("Nidoran♂") == 0)
+                        filePath = "Images/PC Sprites/Generation 1/nidoran-m.png";
+                    else if (pokemonName.compareTo("Mr. Mime") == 0)
+                        filePath = "Images/PC Sprites/Generation 1/mr-mime.png";
+                    else if (pokemonName.compareTo("Farfetch'd") == 0)
+                        filePath = "Images/PC Sprites/Generation 1/farfetchd.png";
+                    else
+                        filePath = "Images/PC Sprites/Generation 1/" + pokemonName.toLowerCase() + ".png";
+                    fetchImage getImage = new fetchImage(filePath);
+                    getImage.setImage(makeBranch(pokemonName, Gen1));
+                }
             }
         });
         Gen2.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen2.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen2.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen2.getChildren().remove(0);
-            for(String i: Pokedex[1]) {
-                fetchImage getImage = new fetchImage("Images/PC Sprites/Generation 2/" + i.toLowerCase() + ".png");
-                getImage.setImage(makeBranch(i, Gen2));
+                for (int i = 0; i < 100; i++) {
+                    String pokemonName = Pokedex[1][i];
+                    fetchImage getImage = new fetchImage("Images/PC Sprites/Generation 2/" + pokemonName.toLowerCase() + ".png");
+                    getImage.setImage(makeBranch(pokemonName, Gen2));
+                }
             }
         });
         Gen3.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen3.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen3.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen3.getChildren().remove(0);
-            for(String i: Pokedex[2]) {
-                fetchImage getImage = new fetchImage("Images/PC Sprites/Generation 3/" + i.toLowerCase() + ".png");
-                getImage.setImage(makeBranch(i, Gen3));
+                for (int i = 0; i < 135; i++) {
+                    String pokemonName = Pokedex[2][i];
+                    fetchImage getImage = new fetchImage("Images/PC Sprites/Generation 3/" + pokemonName.toLowerCase() + ".png");
+                    getImage.setImage(makeBranch(pokemonName, Gen3));
+                }
             }
         });
         Gen4.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen4.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen4.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen4.getChildren().remove(0);
-            for(String i: Pokedex[3]) {
-                String filePath;
-                if(i.compareTo("Mime Jr.") == 0)
-                    filePath = ("Images/PC Sprites/Generation 4/mime-jr.png");
-                else
-                    filePath = "Images/PC Sprites/Generation 4/" + i.toLowerCase() + ".png";
-                fetchImage getImage = new fetchImage(filePath);
-                getImage.setImage(makeBranch(i, Gen4));
+                for (int i = 0; i < 107; i++) {
+                    String filePath;
+                    String pokemonName = Pokedex[3][i];
+                    if (pokemonName.compareTo("Mime Jr.") == 0)
+                        filePath = ("Images/PC Sprites/Generation 4/mime-jr.png");
+                    else
+                        filePath = "Images/PC Sprites/Generation 4/" + pokemonName.toLowerCase() + ".png";
+                    fetchImage getImage = new fetchImage(filePath);
+                    getImage.setImage(makeBranch(pokemonName, Gen4));
+                }
             }
         });
         Gen5.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen5.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen5.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen5.getChildren().remove(0);
-            for(String i: Pokedex[4]) {
-                fetchImage getImage = new fetchImage("Images/PC Sprites/Generation 5/" + i.toLowerCase() + ".png");
-                getImage.setImage(makeBranch(i, Gen5));
+                for (String i : Pokedex[4]) {
+                    fetchImage getImage = new fetchImage("Images/PC Sprites/Generation 5/" + i.toLowerCase() + ".png");
+                    getImage.setImage(makeBranch(i, Gen5));
+                }
             }
         });
         Gen6.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen6.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen6.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen6.getChildren().remove(0);
-            for(String i: Pokedex[5]) {
-                String filePath;
-                if(i.compareTo("Flabébé") == 0)
-                    filePath = ("Images/PC Sprites/Generation 6/flabebe.png");
-                else
-                    filePath = ("Images/PC Sprites/Generation 6/" + i.toLowerCase() + ".png");
-                fetchImage getImage = new fetchImage(filePath);
-                getImage.setImage(makeBranch(i, Gen6));
+                for (int i = 0; i < 72; i++) {
+                    String pokemonName = Pokedex[5][i];
+                    String filePath;
+                    if (pokemonName.compareTo("Flabébé") == 0)
+                        filePath = ("Images/PC Sprites/Generation 6/flabebe.png");
+                    else
+                        filePath = ("Images/PC Sprites/Generation 6/" + pokemonName.toLowerCase() + ".png");
+                    fetchImage getImage = new fetchImage(filePath);
+                    getImage.setImage(makeBranch(pokemonName, Gen6));
+                }
             }
         });
         Gen7.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen7.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen7.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen7.getChildren().remove(0);
-            for(String i: Pokedex[6]) {
-                String filePath;
-                if(i.compareTo("Type: Null") == 0)
-                    filePath = ("Images/PC Sprites/Generation 7/type-null.png");
-                else if(i.compareTo("Tapu Koko") == 0)
-                    filePath = ("Images/PC Sprites/Generation 7/tapu-koko.png");
-                else if(i.compareTo("Tapu Lele") == 0)
-                    filePath = ("Images/PC Sprites/Generation 7/tapu-lele.png");
-                else if(i.compareTo("Tapu Bulu") == 0)
-                    filePath = ("Images/PC Sprites/Generation 7/tapu-bulu.png");
-                else if(i.compareTo("Tapu Fini") == 0)
-                    filePath = ("Images/PC Sprites/Generation 7/tapu-fini.png");
-                else
-                    filePath = ("Images/PC Sprites/Generation 7/" + i.toLowerCase() + ".png");
-                fetchImage getImage = new fetchImage(filePath);
-                getImage.setImage(makeBranch(i, Gen7));
+                for (int i = 0; i < 88; i++) {
+                    String pokemonName = Pokedex[6][i];
+                    String filePath;
+                    if (pokemonName.compareTo("Type: Null") == 0)
+                        filePath = ("Images/PC Sprites/Generation 7/type-null.png");
+                    else if (pokemonName.compareTo("Tapu Koko") == 0)
+                        filePath = ("Images/PC Sprites/Generation 7/tapu-koko.png");
+                    else if (pokemonName.compareTo("Tapu Lele") == 0)
+                        filePath = ("Images/PC Sprites/Generation 7/tapu-lele.png");
+                    else if (pokemonName.compareTo("Tapu Bulu") == 0)
+                        filePath = ("Images/PC Sprites/Generation 7/tapu-bulu.png");
+                    else if (pokemonName.compareTo("Tapu Fini") == 0)
+                        filePath = ("Images/PC Sprites/Generation 7/tapu-fini.png");
+                    else
+                        filePath = ("Images/PC Sprites/Generation 7/" + pokemonName.toLowerCase() + ".png");
+                    fetchImage getImage = new fetchImage(filePath);
+                    getImage.setImage(makeBranch(pokemonName, Gen7));
+                }
             }
         });
         Gen8.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
-            if(Gen8.getChildren().get(0).getValue().contains("placeholder"))
+            if(Gen8.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen8.getChildren().remove(0);
-            for(String i: Pokedex[7]) {
-                String filePath;
-                if(i.compareTo("Mr. Rime") == 0)
-                    filePath = ("Images/PC Sprites/Generation 8/mr-rime.png");
-                else if(i.compareTo("Sirfetch'd") == 0)
-                    filePath = ("Images/PC Sprites/Generation 8/sirfetchd.png");
-                else
-                    filePath = ("Images/PC Sprites/Generation 8/" + i.toLowerCase() + ".png");
-                fetchImage getImage = new fetchImage(filePath);
-                getImage.setImage(makeBranch(i, Gen8));
+                for (int i = 0; i < 89; i++) {
+                    String pokemonName = Pokedex[7][i];
+                    String filePath;
+                    if (pokemonName.compareTo("Mr. Rime") == 0)
+                        filePath = ("Images/PC Sprites/Generation 8/mr-rime.png");
+                    else if (pokemonName.compareTo("Sirfetch'd") == 0)
+                        filePath = ("Images/PC Sprites/Generation 8/sirfetchd.png");
+                    else
+                        filePath = ("Images/PC Sprites/Generation 8/" + pokemonName.toLowerCase() + ".png");
+                    fetchImage getImage = new fetchImage(filePath);
+                    getImage.setImage(makeBranch(pokemonName, Gen8));
+                }
             }
         });
 
@@ -942,5 +960,18 @@ public class selectionPageController implements Initializable {
 
     public void setCurrentLayout(String currentLayout){
         this.currentLayout = currentLayout;
+    }
+}
+
+class initializeArray implements Runnable{
+    Pokemon pokemon;
+    initializeArray(Pokemon pokemon){
+        this.pokemon = pokemon;
+    }
+
+    @Override
+    public void run() {
+        for(int i = 1; i <= 8; i++)
+            pokemon.initializePokedex(i);
     }
 }

@@ -11,5 +11,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         huntController controller = new huntController();
+
+
+        GameData gameData = new GameData();
+        //gameData.translateData();
     }
 }
