@@ -55,7 +55,7 @@ public class selectionPageController implements Initializable {
     String[][] Pokedex = selectedPokemon.getPokedex();
 
     //array with pokemon not avaliable in SWSH
-    String[] SWSHPokedex = {};
+    String[] SWSHPokedex = new String[241];
 
 
     //array with every main line pokemon game
@@ -71,6 +71,18 @@ public class selectionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
+
+        try{
+            BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Pokedex/SWSH.txt"));
+            String line;
+            int index = 0;
+            while((line = fileReader.readLine()) != null) {
+                SWSHPokedex[index] = line;
+                index++;
+            }
+        }catch (IOException e) {
+            System.out.println("Ultra SOS file not found");
+        }
 
         Thread initializePokedex = new Thread(new initializeArray(selectedPokemon));
         initializePokedex.start();
