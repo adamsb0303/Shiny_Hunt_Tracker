@@ -360,7 +360,7 @@ public class Pokemon{
                 return 7;
         for(int i = 0; i < 89; i++)
             if(name.equals(Pokedex[7][i]))
-                return 1;
+                return 8;
         return 0;
     }
 

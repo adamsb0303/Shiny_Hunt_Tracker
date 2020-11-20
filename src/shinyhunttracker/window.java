@@ -371,10 +371,10 @@ public class window{
                 case "Type: Null":
                     filePath += "type-null";
                     break;
-                case "Nidoran♀":
+                case "NidoranF":
                     filePath += "nidoran-f";
                     break;
-                case "Nidoran♂":
+                case "NidoranM":
                     filePath += "nidoran-m";
                     break;
                 case "Mr. Mime":
@@ -385,9 +385,6 @@ public class window{
                     break;
                 case "Mime Jr.":
                     filePath += "mime-jr";
-                    break;
-                case "Flabébé":
-                    filePath += "flabebe";
                     break;
                 case "Tapu Koko":
                     filePath += "tapu-koko";
@@ -2126,7 +2123,6 @@ class previouslyCaught extends window{
 
             Label layoutLabel = new Label("Layout: ");
             Button loadLayout = new Button("Load");
-            loadLayout.disableProperty().bind(windowStage.showingProperty().not());
             Button saveLayout = new Button("Save");
             saveLayout.disableProperty().bind(windowStage.showingProperty().not());
 

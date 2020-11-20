@@ -204,9 +204,9 @@ public class selectionPageController implements Initializable {
                 for (int i = 0; i < 151; i++) {
                     String filePath;
                     String pokemonName = Pokedex[0][i];
-                    if (pokemonName.compareTo("Nidoran♀") == 0)
+                    if (pokemonName.compareTo("NidoranF") == 0)
                         filePath = "Images/PC Sprites/Generation 1/nidoran-f.png";
-                    else if (pokemonName.compareTo("Nidoran♂") == 0)
+                    else if (pokemonName.compareTo("NidoranM") == 0)
                         filePath = "Images/PC Sprites/Generation 1/nidoran-m.png";
                     else if (pokemonName.compareTo("Mr. Mime") == 0)
                         filePath = "Images/PC Sprites/Generation 1/mr-mime.png";
@@ -268,12 +268,7 @@ public class selectionPageController implements Initializable {
                 Gen6.getChildren().remove(0);
                 for (int i = 0; i < 72; i++) {
                     String pokemonName = Pokedex[5][i];
-                    String filePath;
-                    if (pokemonName.compareTo("Flabébé") == 0)
-                        filePath = ("Images/PC Sprites/Generation 6/flabebe.png");
-                    else
-                        filePath = ("Images/PC Sprites/Generation 6/" + pokemonName.toLowerCase() + ".png");
-                    fetchImage getImage = new fetchImage(filePath);
+                    fetchImage getImage = new fetchImage(("Images/PC Sprites/Generation 6/" + pokemonName.toLowerCase() + ".png"));
                     getImage.setImage(makeBranch(pokemonName, Gen6));
                 }
             }
@@ -775,9 +770,7 @@ public class selectionPageController implements Initializable {
     }
 
     public void pokemonQuickSelect(){
-        int PokedexSize = 0;
-        for(String[] i : Pokedex)
-            PokedexSize += i.length;
+        int PokedexSize = 898;
 
         String searchString = pokemonSearchBar.getText();
 
