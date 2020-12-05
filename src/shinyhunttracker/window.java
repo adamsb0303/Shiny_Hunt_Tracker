@@ -2271,8 +2271,8 @@ class previouslyCaught extends window{
             String[] data = line.split(",");
             String name = data[0];
             String game = data[2];
-            String method = data[3];
-            String encounters = data[5];
+            String method = data[4];
+            String encounters = data[6];
             makeBranch((previoulyCaughtData.getfileLength("CaughtPokemon") - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previoulyCaughtRoot);
         }
 
