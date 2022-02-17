@@ -1,0 +1,8 @@
+Latios,null,Ultra Sun,7,None,3,156,156,1,null,
+Cresselia,null,Ultra Sun,7,None,3,1000,1000,1,null,
+Grapploct,null,Sword,8,Masuda,8,472,472,1,null,
+Wormadam,Trash,White,5,Masuda,6,0,0,1,null,
+Reshiram,null,Ultra Sun,7,None,1,16,16,1,null,
+Venusaur,null,Green,1,None,1,0,0,1,null,
+Cresselia,null,Sword,8,Dynamax Adventure,1,0,0,1,null,
+Wormadam,Plant,White,5,Masuda,6,0,0,1,Masuda,

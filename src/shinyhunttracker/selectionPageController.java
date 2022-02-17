@@ -66,7 +66,7 @@ public class selectionPageController implements Initializable {
                     {"Black", "White","Black 2", "White 2"},
                     {"X", "Y", "Omega Ruby", "Alpha Sapphire"},
                     {"Sun", "Moon", "Ultra Sun", "Ultra Moon", "Let's Go Pikachu", "Let's Go Eevee"},
-                    {"Sword", "Shield"}};
+                    {"Sword", "Shield", "Brilliant Diamond", "Shining Pearl", "Legends: Arceus"}};
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -299,7 +299,7 @@ public class selectionPageController implements Initializable {
         Gen8.addEventHandler(TreeItem.branchExpandedEvent(), objectTreeModificationEvent -> {
             if(Gen8.getChildren().get(0).getValue().contains("placeholder")) {
                 Gen8.getChildren().remove(0);
-                for (int i = 0; i < 89; i++) {
+                for (int i = 0; i < 96; i++) {
                     String pokemonName = Pokedex[7][i];
                     String filePath;
                     if (pokemonName.compareTo("Mr. Rime") == 0)
@@ -749,6 +749,9 @@ public class selectionPageController implements Initializable {
                 methodToolTip.setText("When catching pokemon in dynamax adventures, odds are dramatically higher");
                 helpButton.setTooltip(methodToolTip);
                 break;
+            case "Mass Outbreak":
+                methodToolTip.setText("Mass Outbreaks have an increased shiny chance");
+                helpButton.setTooltip(methodToolTip);
             default:
                 break;
         }

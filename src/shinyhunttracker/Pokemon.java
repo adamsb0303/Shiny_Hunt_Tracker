@@ -358,7 +358,7 @@ public class Pokemon{
         for(int i = 0; i < 88; i++)
             if(name.equals(Pokedex[6][i]))
                 return 7;
-        for(int i = 0; i < 89; i++)
+        for(int i = 0; i < 96; i++)
             if(name.equals(Pokedex[7][i]))
                 return 8;
         return 0;

@@ -1,4 +1,4 @@
-"Ivysaur
+Ivysaur
 Charmeleon
 Wartortle
 Butterfree
@@ -268,4 +268,4 @@ Dialga
 Thundurus
 Zekrom
 Yveltal
-Lunala"
+Lunala
