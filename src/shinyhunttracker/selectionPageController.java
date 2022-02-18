@@ -749,6 +749,9 @@ public class selectionPageController implements Initializable {
                 methodToolTip.setText("When catching pokemon in dynamax adventures, odds are dramatically higher");
                 helpButton.setTooltip(methodToolTip);
                 break;
+            case "Underground":
+                methodToolTip.setText("Digletts drop a buff that gives you slightly better shiny odds");
+                helpButton.setTooltip(methodToolTip);
             case "Mass Outbreak":
                 methodToolTip.setText("Mass Outbreaks have an increased shiny chance");
                 helpButton.setTooltip(methodToolTip);

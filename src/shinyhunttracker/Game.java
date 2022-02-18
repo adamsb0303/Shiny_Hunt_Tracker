@@ -73,12 +73,20 @@ public class Game {
                 }
                 break;
             case 8:
-                if(selectedPokemon.getBreedable())
+                if(selectedPokemon.getBreedable() && !name.getValue().equals("Legends: Arceus"))
                     Methods[1] = "Masuda";
-                if(isWild(selectedPokemon))
-                    Methods[2] = "Total Encounters";
-                if(inDynamaxAdventure(selectedPokemon))
-                    Methods[3] = "Dynamax Adventure";
+                if (name.getValue().equals("Brilliant Diamond") || name.getValue().equals("Shining Pearl")) {
+                    if (isWild(selectedPokemon))
+                        Methods[2] = "Radar Chaining";
+                    Methods[3] = "Underground";
+                }
+                if (name.getValue().equals("Sword") || name.getValue().equals("Shield")) {
+                    if (isWild(selectedPokemon))
+                        Methods[2] = "Total Encounters";
+                    if (inDynamaxAdventure(selectedPokemon))
+                        Methods[3] = "Dynamax Adventure";
+                }else
+                    Methods[2] = "Mass Outbreak";
                 break;
             default:
                 break;
@@ -899,7 +907,12 @@ public class Game {
                 }
                 break;
             case 8:
-                ShinyLocked = new String[]{"Type: Null", "Silvally", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude", "Cosmog", "Poipole", "Keldeo", "Galarian Articuno", "Galarian Zapdos", "Galarian Moltres", "Glastrier", "Spectrier", "Calyrex"};
+                if(name.getValue().substring(0,1).compareTo("S") == 0)
+                    ShinyLocked = new String[]{"Type: Null", "Silvally", "Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Zarude", "Cosmog", "Poipole", "Keldeo", "Galarian Articuno", "Galarian Zapdos", "Galarian Moltres", "Glastrier", "Spectrier", "Calyrex"};
+                else if(name.getValue().substring(0,7).compareTo("Legends") == 0)
+                    ShinyLocked = new String[]{"Cyndaquil", "Oshawott", "Rowlet", "Alolan Vulpix", "Dialga", "Palkia", "Uxie", "Mesprit", "Azelf", "Heatran", "Regigigas", "Giratina", "Cresselia", "Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus", "Tornadus", "Thundurus", "Landorus", "Enamorus"};
+                else
+                    ShinyLocked = new String[]{"Mew", "Jirachi"};
                 break;
             default:
                 break;

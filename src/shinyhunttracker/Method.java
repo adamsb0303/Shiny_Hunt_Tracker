@@ -51,6 +51,12 @@ public class Method {
                 this.name.setValue(name);
                 base = 300;
                 modifier = 1;
+            case "Underground":
+                this.name.setValue(name);
+                modifier = 1;
+            case "Mass Outbreak":
+                this.name.setValue(name);
+                modifier = 26;
             default:
                 break;
         }
