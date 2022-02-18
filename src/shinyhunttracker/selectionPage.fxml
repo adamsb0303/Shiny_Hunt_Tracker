@@ -94,13 +94,25 @@
                <Insets left="150.0" top="5.0"/>
             </HBox.margin>
             <CheckBox fx:id="shinyCharmCheckBox" disable="true" mnemonicParsing="false" onAction="#setShinyCharm"
-                      prefHeight="20.0" prefWidth="90.0" text="Shiny Charm">
+                      prefHeight="20.0" prefWidth="100.0" text="Shiny Charm">
                <VBox.margin>
                   <Insets left="5.0"/>
                </VBox.margin>
             </CheckBox>
             <CheckBox fx:id="lureCheckBox" disable="true" mnemonicParsing="false" onAction="#setLure"
                       prefHeight="20.0" prefWidth="50.0" text="Lure">
+               <VBox.margin>
+                  <Insets left="5.0"/>
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="dexComplete" disable="true" mnemonicParsing="false" onAction="#setDexComplete"
+                      prefHeight="20.0" prefWidth="100.0" text="Dex Complete">
+               <VBox.margin>
+                  <Insets left="5.0"/>
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="dexPerfect" disable="true" mnemonicParsing="false" onAction="#setDexPerfect"
+                      prefHeight="20.0" prefWidth="100.0" text="Dex Perfect">
                <VBox.margin>
                   <Insets left="5.0"/>
                </VBox.margin>

@@ -25,7 +25,7 @@ public class selectionPageController implements Initializable {
     public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
     public Label pokemonLabel = new Label(), gameLabel = new Label(), methodLabel = new Label();
-    public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox;
+    public CheckBox alolanCheckBox, galarianCheckBox, shinyCharmCheckBox, lureCheckBox, dexComplete, dexPerfect;
     public Button beginHuntButton, helpButton;
     public TextField pokemonSearchBar = new TextField();
     Tooltip methodToolTip = new Tooltip();
@@ -129,6 +129,8 @@ public class selectionPageController implements Initializable {
                         //disables shiny charm and lure checkboxes
                         shinyCharmCheckBox.setDisable(true);
                         lureCheckBox.setDisable(true);
+                        dexComplete.setDisable(true);
+                        dexPerfect.setDisable(true);
 
                         String newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
                         if(findGenerationGame(newSelectionGame) != 0) {//throws away input if selection is Generation 1, Generation 2, etc.
@@ -138,6 +140,8 @@ public class selectionPageController implements Initializable {
                             //resets shiny charm and lure checkboxes
                             shinyCharmCheckBox.setSelected(false);
                             lureCheckBox.setSelected(false);
+                            dexComplete.setSelected(false);
+                            dexPerfect.setSelected(false);
 
                             //Enables Shiny Charm if it is avaliable in the selected Game
                             //Shiny Charm is available from Black 2, White 2 up to the present games
@@ -147,9 +151,12 @@ public class selectionPageController implements Initializable {
                             }else
                                 shinyCharmCheckBox.setDisable(true);
 
-                            //Enables Lure if the selected game is one of the let's go games
-                            if(selectedGame.getName().length() >= 3)
-                                lureCheckBox.setDisable(!(selectedGame.getName().substring(0,3).compareTo("Let") == 0));
+                            //Enables Lure if the selected game is one of the let's go games or legends arceus
+                            if(selectedGame.getName().length() >= 3) {
+                                lureCheckBox.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Let") == 0));
+                                dexComplete.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Leg") == 0));
+                                dexPerfect.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Leg") == 0));
+                            }
 
                             InitializeMethodList();//creates method list
                         }
@@ -687,10 +694,22 @@ public class selectionPageController implements Initializable {
         else
             selectedMethod.setModifier(selectedMethod.getModifier() - 2);
     }
+    public void setDexPerfect(){
+        if(dexPerfect.isSelected())
+            selectedMethod.setModifier(selectedMethod.getModifier() + 2);
+        else
+            selectedMethod.setModifier(selectedMethod.getModifier() - 2);
+    }
 
     //adds 1 to the selected method modifier
     public void setLure(){
         if(lureCheckBox.isSelected())
+            selectedMethod.setModifier(selectedMethod.getModifier() + 1);
+        else
+            selectedMethod.setModifier(selectedMethod.getModifier() - 1);
+    }
+    public void setDexComplete(){
+        if(dexComplete.isSelected())
             selectedMethod.setModifier(selectedMethod.getModifier() + 1);
         else
             selectedMethod.setModifier(selectedMethod.getModifier() - 1);
