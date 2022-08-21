@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="Added git ignore and added missing files">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="finalized merging original project with maven project">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shiny Hunt Tracker - Compile.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shiny Hunt Tracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Shiny Hunt Tracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Method.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Method.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Pokemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Pokemon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/SaveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/SaveData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/huntController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/huntController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/selectionPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/selectionPage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/selectionPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/selectionPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +122,14 @@
       <option name="presentableId" value="Default" />
       <updated>1601476608946</updated>
     </task>
+    <task id="LOCAL-00001" summary="finalized merging original project with maven project">
+      <created>1661052405342</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1661052405343</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -149,7 +145,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added git ignore and added missing files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added git ignore and added missing files" />
+    <MESSAGE value="finalized merging original project with maven project" />
+    <option name="LAST_COMMIT_MESSAGE" value="finalized merging original project with maven project" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
