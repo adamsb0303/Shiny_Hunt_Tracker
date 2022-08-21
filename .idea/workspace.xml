@@ -5,41 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="Added git ignore and added missing files">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Shiny_Hunt_Tracker_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Shiny_Hunt_Tracker.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Shiny_Hunt_Tracker1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Save Data/SWSH.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shiny Hunt Tracker - Compile.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Shiny_Hunt_Tracker/Shiny_Hunt_Tracker.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Shiny_Hunt_Tracker_jar/Shiny_Hunt_Tracker.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Game.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Method.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Pokemon.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/SaveData.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/fetchImage.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/huntController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/huntWindow.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/initializeArray.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/newOrOld.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/previouslyCaught.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/selectionPage.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/selectionPageController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/window.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shiny Hunt Tracker - Compile.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shiny Hunt Tracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Shiny Hunt Tracker.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Method.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Method.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/Pokemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Pokemon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/SaveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/SaveData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/huntController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/huntController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/selectionPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/selectionPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/selectionPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/selectionPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,26 +52,34 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/IntelliJ_JDK/javafx-sdk-18.0.2/lib/javafx.web.jar" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.35287356" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\adamsb0303\IdeaProjects\Shiny Hunt Tracker\src\shinyhunttracker\shinyhunttracker" />
       <recent name="C:\Users\adamsb0303\IdeaProjects\Shiny Hunt Tracker - Compile\src\main\java\shinyhunttracker" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.shinyhunttracker [javafx:run]">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="shinyhunttracker.Main" />
+      <module name="shinyhunttracker" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$USER_HOME$/Documents/IntelliJ_JDK/javafx-sdk-18.0.2/lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="shinyhunttracker.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -163,5 +150,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added git ignore and added missing files" />
     <option name="LAST_COMMIT_MESSAGE" value="Added git ignore and added missing files" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

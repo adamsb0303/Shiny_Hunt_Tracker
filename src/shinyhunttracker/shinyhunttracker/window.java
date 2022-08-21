@@ -2464,7 +2464,7 @@ class newOrOld extends window{
             try {
                 //creates selection page window
                 FXMLLoader selectionPageLoader = new FXMLLoader();
-                selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+                selectionPageLoader.setLocation(getClass().getResource("shinyhunttracker/selectionPage.fxml"));
                 Parent root = selectionPageLoader.load();
 
                 windowStage.setTitle("Shiny Hunt Tracker");

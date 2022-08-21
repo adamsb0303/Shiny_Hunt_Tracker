@@ -98,7 +98,7 @@ public class huntController {
                 }else{
                     //creates selection page window
                     FXMLLoader selectionPageLoader = new FXMLLoader();
-                    selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+                    selectionPageLoader.setLocation(getClass().getResource("shinyhunttracker/selectionPage.fxml"));
                     Parent root = selectionPageLoader.load();
 
                     Stage huntSelectionWindow = new Stage();
