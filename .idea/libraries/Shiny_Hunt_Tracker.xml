@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Shiny_Hunt_Tracker">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ShinyHuntTracker/ShinyHuntTracker/out/artifacts/Shiny_Hunt_Tracker_jar/Shiny_Hunt_Tracker.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

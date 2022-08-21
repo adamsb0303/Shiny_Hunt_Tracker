@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="Added git ignore and added missing files">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Shiny_Hunt_Tracker_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Shiny_Hunt_Tracker.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Shiny_Hunt_Tracker1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Save Data/SWSH.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Shiny Hunt Tracker - Compile.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/Shiny_Hunt_Tracker/Shiny_Hunt_Tracker.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/Shiny_Hunt_Tracker_jar/Shiny_Hunt_Tracker.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Game.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Method.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/Pokemon.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/SaveData.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/fetchImage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/huntController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/huntWindow.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/initializeArray.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/newOrOld.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/previouslyCaught.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/selectionPage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/selectionPageController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Shiny Hunt Tracker/shinyhunttracker/window.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1iEdIv3fkS99Vg70PB1UzDLCW0Y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.35287356" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\adamsb0303\IdeaProjects\Shiny Hunt Tracker - Compile\src\main\java\shinyhunttracker" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Maven.shinyhunttracker [javafx:run]">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="shinyhunttracker.Main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="shinyhunttracker [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="javafx:run" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Maven.shinyhunttracker [javafx:run]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="" />
+      <created>1601476608946</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601476608946</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added git ignore and added missing files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added git ignore and added missing files" />
+  </component>
+</project>
