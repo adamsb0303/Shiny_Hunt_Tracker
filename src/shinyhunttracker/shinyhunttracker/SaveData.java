@@ -10,6 +10,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.json.simple.JSONObject;
 
 import java.io.*;
 
@@ -70,7 +71,7 @@ public class SaveData {
                 String[] data = line.split(",");
                 if(i == lineNumber) {
                     int generation = parseInt(data[3]);
-                    selectedPokemon = new Pokemon(data[0]);
+                    //selectedPokemon = new Pokemon(data[0]);
                     selectedPokemon.setForm(data[1]);
                     selectedGame = new Game(data[2], generation);
                     selectedMethod = new Method(data[4], generation);
@@ -95,7 +96,7 @@ public class SaveData {
     public void pokemonCaught(){
         try{
             String saveData = selectedPokemon.getName() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
-            File file = new File("Save Data/CaughtPokemon.txt");
+            File file = new File("SaveData/CaughtPokemon.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
@@ -124,9 +125,9 @@ public class SaveData {
             try {
                 File file;
                 if(layoutName.substring(0, layoutName.indexOf('/')).compareTo("Hunts") == 0)
-                    file = new File("Save Data/Layouts/Hunts/~Layouts.txt");
+                    file = new File("SaveData/Layouts/Hunts/~Layouts.txt");
                 else
-                    file = new File("Save Data/Layouts/Previously-Caught/~Layouts.txt");
+                    file = new File("SaveData/Layouts/Previously-Caught/~Layouts.txt");
                 FileWriter fileWriter = new FileWriter(file, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
@@ -138,7 +139,7 @@ public class SaveData {
         }
 
         try{
-            File file = new File("Save Data/Layouts/" + layoutName + ".txt");
+            File file = new File("SaveData/Layouts/" + layoutName + ".txt");
             FileWriter fileWriter = new FileWriter(file, false);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
@@ -163,7 +164,7 @@ public class SaveData {
     //load saved layout
     public void loadLayout(String layoutName, AnchorPane huntLayout){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/Layouts/" + layoutName + ".txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/Layouts/" + layoutName + ".txt"));
 
             if(layoutName.substring(0, layoutName.indexOf('/')).compareTo("Hunts") == 0) {
                 for (int i = 0; i < getfileLength("Layouts/" + layoutName) - 1; i++) {
@@ -252,7 +253,7 @@ public class SaveData {
     //returns the given line from the previous hunts file
     public String getLinefromFile(int lineNumber, String file){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
 
             for(int i = 0; i < getfileLength(file); i++) {
                 String line = fileReader.readLine();
@@ -268,7 +269,7 @@ public class SaveData {
     //returns how many lines are in the previous hunts file
     public int getfileLength(String file){
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
             int lines = 0;
             while(reader.readLine() != null)
                 lines++;
@@ -282,7 +283,7 @@ public class SaveData {
     //checks to see if the given string is already in the preivous hunts file
     public int checkForPreviousData(String saveData){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/PreviousHunts.txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/PreviousHunts.txt"));
 
             int lineNumber = 0;
             String line;
@@ -308,7 +309,7 @@ public class SaveData {
     //replaces the given line with the given string
     public void replaceLine(int lineNumber, String saveData, String file){
         try{
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
             StringBuilder inputBuffer = new StringBuilder();
 
             for (int i = 0; i < getfileLength(file); i++) {
@@ -320,7 +321,7 @@ public class SaveData {
                 inputBuffer.append('\n');
             }
 
-            FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
+            FileOutputStream fileOut = new FileOutputStream("SaveData/" + file + ".txt");
             fileOut.write(inputBuffer.toString().getBytes());
             fileOut.close();
         }catch(IOException e){
@@ -331,7 +332,7 @@ public class SaveData {
     //deletes the given line
     public void deleteLine(int lineNumber, String file){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("Save Data/" + file + ".txt"));
+            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
             StringBuilder inputBuffer = new StringBuilder();
 
             for (int i = 0; i < getfileLength(file); i++) {
@@ -343,7 +344,7 @@ public class SaveData {
                 inputBuffer.append('\n');
             }
 
-            FileOutputStream fileOut = new FileOutputStream("Save Data/" + file + ".txt");
+            FileOutputStream fileOut = new FileOutputStream("SaveData/" + file + ".txt");
             fileOut.write(inputBuffer.toString().getBytes());
             fileOut.close();
         }catch(IOException e){

@@ -2,6 +2,10 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,12 +14,14 @@ import java.io.IOException;
 public class Pokemon{
     StringProperty name = new SimpleStringProperty();
     int generation;
+    int id;
     Boolean breedable;
-    Boolean huntable;
+    Boolean huntable = true;
+    Boolean legendary;
     String form;
-
-    //array of all legendary pokemon
-    String[] Legendaries = {"Articuno", "Zapdos", "Moltres", "Mewtwo", "Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Heatran", "Regigigas", "Giratina", "Cresselia", "Cobalion", "Terrakion", "Virizion", "Tornadus", "Thundurus", "Reshiram", "Zekrom", "Landorus", "Kyurem", "Xerneas", "Yveltal", "Zygarde", "Type: Null", "Silvally","Tapu Koko","Tapu Lele","Tapu Bulu","Tapu Fini","Cosmog","Cosmoem","Solgaleo","Lunala","Necrozma","Zacian","Zamazenta","Eternatus","Kubfu","Urshifu","Nihilego","Buzzwole","Pheromosa","Zurkitree","Celesteela","Kartana","Guzzlord","Poipole","Naganadel","Stakataka","Blacephalon","Mew","Celebi","Jirachi","Deoxys","Manaphy","Darkrai","Shaymin","Arceus","Victini","Keldeo","Meloetta","Genesect", "Diancie", "Hoopa", "Volcanion", "Magearna", "Marshadow", "Zeraora", "Meltan", "Melmetal", "Zarude", "Regieleki", "Regidrago", "Glastrier", "Spectrier", "Calyrex"};
+    String[] family;
+    String[] forms;
+    String[] base;
 
     String[][] Pokedex = new String[8][156];
 
@@ -23,36 +29,30 @@ public class Pokemon{
         name.setValue("");
         generation = 0;
         breedable = false;
-        huntable = true;
     }
 
-    Pokemon(String name){
-        this.name.setValue(name);
-        for(int i = 1; i <= 8; i++)
-            initializePokedex(i);
-        this.generation = findGeneration();
-        breedable = isBreedable();
-        isLegendary();
-    }
+    Pokemon(int dexNum){
+        JSONParser jsonParser = new JSONParser();
 
-    Pokemon(String name, String[][] Pokedex){
-        this.name.setValue(name);
-        this.Pokedex = Pokedex;
-        this.generation = findGeneration();
-        breedable = isBreedable();
-        isLegendary();
-    }
+        try (FileReader reader = new FileReader("GameData/pokemon.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray pokemonList = (JSONArray) obj;
 
-    //main constructor
-    Pokemon(String name, int generation){
-        this.name.setValue(name);
-        this.generation = generation;
-        breedable = isBreedable();
-        isLegendary();
+            //parse pokemon data
+            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum);
+            name.setValue((String) pokemonObject.get("name"));
+            generation = (int) (long)  pokemonObject.get("generation");
+            id = (int) (long) pokemonObject.get("id");
+            breedable = (Boolean) pokemonObject.get("breedable");
+            legendary = (Boolean) pokemonObject.get("legendary");
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     //checks to see if pokemon is in the undiscovered egg group, and that it doesn't have any evolutions
-    public Boolean isBreedable(){
+    /*public Boolean isBreedable(){
         String[] nonBreedablePokemon = {"Unown", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish"};
         for(String i: Legendaries)
             if(i.compareTo(name.getValue()) == 0)
@@ -61,11 +61,11 @@ public class Pokemon{
             if(i.compareTo(name.getValue()) == 0)
                 return false;
         return true;
-    }
+    }*/
 
     //checks to see if the pokemon is legendary
     //if they are we have to start by assuming that it is not available
-    public void isLegendary(){
+    /*public void isLegendary(){
         //since unown is neither breedable or able to evolve, I needed to treat it as a legendary
         //to get it to only show games that it is wild in
         if(name.getValue().compareTo("Unown") == 0) {
@@ -78,7 +78,7 @@ public class Pokemon{
                 return;
             }
         huntable = true;
-    }
+    }*/
 
     //checks to see if the pokemon has a alolan variant available
     public Boolean isAlolan(){
@@ -96,20 +96,6 @@ public class Pokemon{
             if(i.compareTo(this.name.getValue()) == 0)
                 return true;
         return false;
-    }
-
-    public void initializePokedex(int generation){
-        try{
-            BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Pokedex/Generation " + generation + ".txt"));
-            String line;
-            int index = 0;
-            while ((line = fileReader.readLine()) != null) {
-                Pokedex[generation - 1][index] = line;
-                index++;
-            }
-        }catch (IOException e){
-            System.out.println("Fish file not found");
-        }
     }
 
     //gets base states for generation 1 pokemon

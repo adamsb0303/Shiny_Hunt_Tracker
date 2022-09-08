@@ -1548,7 +1548,7 @@ class huntWindow extends window{
 
         Evo0 = new ImageView();
         Evo1 = new ImageView();
-        if(!evo0.equals("")) {
+        /*if(!evo0.equals("")) {
             setPokemonSprite(Evo0, new Pokemon(evo0), selectedGame);
             if(Evo0 == null)
                 Evo0 = new ImageView();
@@ -1557,7 +1557,7 @@ class huntWindow extends window{
             setPokemonSprite(Evo1, new Pokemon(evo1), selectedGame);
             if(Evo1 == null)
                 Evo1 = new ImageView();
-        }
+        }*/
 
         quickEdit(sprite);
         quickEdit(Evo0);
@@ -1720,14 +1720,14 @@ class huntWindow extends window{
             VBox Evo1Settings;
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
-            if (!evo1.equals("")) {
+            /*if (!evo1.equals("")) {
                 Evo1Settings = createImageSettings(Evo1, new Pokemon(evo1, 0), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
             if (!evo0.equals("")) {
                 Evo0Settings = createImageSettings(Evo0, new Pokemon(evo0, 0), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
-            }
+            }*/
 
             VBox comboSettings;
             VBox previousEncountersSettings;
@@ -1812,7 +1812,7 @@ class huntWindow extends window{
         phaseStage.show();
 
         phasePokemon.setOnAction(e -> {
-            String userInput = phasePokemon.getText().toLowerCase();
+            /*String userInput = phasePokemon.getText().toLowerCase();
             userInput = userInput.substring(0,1).toUpperCase() + userInput.substring(1);
             if(new Pokemon(userInput).getGeneration() == 0)
                 phasePokemon.setText("");
@@ -1824,7 +1824,7 @@ class huntWindow extends window{
                 if(previouslyCaughtWindow.getStage().isShowing())
                     previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();
                 phaseStage.close();
-            }
+            }*/
         });
     }
 
@@ -2086,8 +2086,6 @@ class previouslyCaught extends window{
 
     //creates window with previously caught pokemon
     public void createPreviouslyCaughtPokemonWindow(){
-        Thread initializePokedex = new Thread(new initializeArray(Pokedex));
-        initializePokedex.start();
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(previousHuntScene);
@@ -2194,6 +2192,7 @@ class previouslyCaught extends window{
 
     //create elements of the last x previously caught pokemon
     public void addPreviouslyCaughtPokemon(int previouslyCaught){
+/*
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
             previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
@@ -2202,7 +2201,6 @@ class previouslyCaught extends window{
         int numberCaught = SaveData.getfileLength("CaughtPokemon");
         if(numberCaught < previouslyCaught)
             previouslyCaught = numberCaught;
-
         double widthTotal = 0;
         for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
             if((i - numberCaught) * -1 > displayPrevious) {
@@ -2248,7 +2246,6 @@ class previouslyCaught extends window{
                 quickEdit(pokemon);
                 quickEdit(method);
                 quickEdit(encounters);
-
                 VBox spriteSettings = createImageSettings(sprite, new Pokemon(data[0], 0), caughtGame);
                 VBox pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
                 VBox methodLabelSettings = createLabelSettings(method, "Method");
@@ -2256,6 +2253,7 @@ class previouslyCaught extends window{
                 previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
             }
         }
+*/
     }
 
     public void displayPreviouslyCaughtList(){
@@ -2464,7 +2462,7 @@ class newOrOld extends window{
             try {
                 //creates selection page window
                 FXMLLoader selectionPageLoader = new FXMLLoader();
-                selectionPageLoader.setLocation(getClass().getResource("shinyhunttracker/selectionPage.fxml"));
+                selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
                 Parent root = selectionPageLoader.load();
 
                 windowStage.setTitle("Shiny Hunt Tracker");

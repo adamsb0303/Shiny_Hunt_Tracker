@@ -1,5 +1,5 @@
 /target/*
 desktop.ini
-Save Data/Layouts/Hunts/*
-Save Data/Layouts/Previously-Caught/*
+SaveData/Layouts/Hunts/*
+SaveData/Layouts/Previously-Caught/*
 out/*

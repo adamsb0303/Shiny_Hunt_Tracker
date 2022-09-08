@@ -54,7 +54,7 @@ public class huntController {
         SaveData data = new SaveData();
         if(data.getfileLength("previousSession") != 0){
             for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
-                data.loadHunt(i, this, "Save Data/previousSession.txt");
+                data.loadHunt(i, this, "SaveData/previousSession.txt");
             }
             String layout = data.getLinefromFile(data.getfileLength("previousSession") - 1, "previousSession");
             if(layout != null && !layout.equals("null")) {
@@ -64,7 +64,7 @@ public class huntController {
                 previousCatches.getSettingsStage().close();
             }
             try {
-                File file = new File("Save Data/previousSession.txt");
+                File file = new File("SaveData/previousSession.txt");
                 FileWriter fileWriter = new FileWriter(file, false);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.close();
