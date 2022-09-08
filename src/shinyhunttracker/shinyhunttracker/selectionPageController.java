@@ -50,20 +50,6 @@ public class selectionPageController implements Initializable {
     int oldSelectionGeneration, oldSelectionGameGeneration = 0;
     int evolutionStage = 0;
 
-    //array with every pokemon
-    String[][] Pokedex = selectedPokemon.getPokedex();
-
-
-    //array with every main line pokemon game
-    public String[][] Games= {{"Red", "Green", "Blue", "Yellow"},
-                    {"Gold", "Silver", "Crystal"},
-                    {"Ruby", "Sapphire", "FireRed", "LeafGreen", "Emerald"},
-                    {"Diamond", "Pearl", "Platinum", "HeartGold", "SoulSilver"},
-                    {"Black", "White","Black 2", "White 2"},
-                    {"X", "Y", "Omega Ruby", "Alpha Sapphire"},
-                    {"Sun", "Moon", "Ultra Sun", "Ultra Moon", "Let's Go Pikachu", "Let's Go Eevee"},
-                    {"Sword", "Shield", "Brilliant Diamond", "Shining Pearl", "Legends: Arceus"}};
-
     @Override
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
@@ -102,9 +88,7 @@ public class selectionPageController implements Initializable {
                         dexComplete.setDisable(true);
                         dexPerfect.setDisable(true);
 
-                        String newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
-
-                        selectedGame = new Game(newSelectionGame, findGenerationGame(newSelectionGame));//create Game object
+                        selectedGame = new Game(GameList.getSelectionModel().getSelectedIndex());//create Game object
                         gameLabel.textProperty().bind(selectedGame.getNameProperty());
 
                         //resets shiny charm and lure checkboxes
@@ -113,7 +97,7 @@ public class selectionPageController implements Initializable {
                         dexComplete.setSelected(false);
                         dexPerfect.setSelected(false);
 
-                        //Enables Shiny Charm if it is avaliable in the selected Game
+                        //Enables Shiny Charm if it is available in the selected Game
                         //Shiny Charm is available from Black 2, White 2 up to the present games
                         if(selectedGame.generation >= 5) {
                             if (!(selectedGame.getName().compareTo("Black") == 0 || selectedGame.getName().compareTo("White") == 0))
@@ -220,95 +204,6 @@ public class selectionPageController implements Initializable {
         GameList.setShowRoot(false);
     }
 
-    //creates game list for legendary pokemon
-    public void InitializeRestrictedGameList(int generation){
-        //initializes needed tree elements
-        gameRoot = new TreeItem<>();
-        treeGamesGen1 = new TreeItem<>();
-        treeGamesGen2 = new TreeItem<>();
-        treeGamesGen3 = new TreeItem<>();
-        treeGamesGen4 = new TreeItem<>();
-        treeGamesGen5 = new TreeItem<>();
-        treeGamesGen6 = new TreeItem<>();
-        treeGamesGen7 = new TreeItem<>();
-        treeGamesGen8 = new TreeItem<>();
-
-        //creates object to allow access to legendaryIsAvaliable method
-        Game testGame;
-
-        //goes through games array and checks if the legendary is avaliable in any given game
-        //if they aren't the game isn't displayed
-        if(generation == 0)
-            return;
-        if(generation <= 1) {
-            treeGamesGen1 = makeBranch("Generation 1", gameRoot);
-            for (String i : Games[0]) {
-                testGame = new Game(i, 1);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen1);
-            }
-        }
-        if(generation <= 2) {
-            treeGamesGen2 = makeBranch("Generation 2", gameRoot);
-            for (String i : Games[1]) {
-                testGame = new Game(i, 2);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen2);
-            }
-        }
-        if(generation <= 3) {
-            treeGamesGen3 = makeBranch("Generation 3", gameRoot);
-            for (String i : Games[2]) {
-                testGame = new Game(i, 3);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen3);
-            }
-        }
-        if(generation <= 4) {
-            treeGamesGen4 = makeBranch("Generation 4", gameRoot);
-            for (String i : Games[3]) {
-                testGame = new Game(i, 4);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen4);
-            }
-        }
-        if(generation <= 5) {
-            treeGamesGen5 = makeBranch("Generation 5", gameRoot);
-            for (String i : Games[4]) {
-                testGame = new Game(i, 5);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen5);
-            }
-        }
-        if(generation <= 6) {
-            treeGamesGen6 = makeBranch("Generation 6", gameRoot);
-            for (String i : Games[5]) {
-                testGame = new Game(i, 6);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen6);
-            }
-        }
-        if(generation <= 7) {
-            treeGamesGen7 = makeBranch("Generation 7", gameRoot);
-            for (String i : Games[6]) {
-                testGame = new Game(i, 7);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen7);
-            }
-        }
-        if(generation <= 8) {
-            treeGamesGen8 = makeBranch("Generation 8", gameRoot);
-            for (String i : Games[7]) {
-                testGame = new Game(i, 8);
-                if(testGame.legendaryIsAvaliable(selectedPokemon))
-                    makeBranch(i, treeGamesGen8);
-            }
-        }
-
-        GameList.setRoot(gameRoot);
-        GameList.setShowRoot(false);
-    }
-
     //creates method list
     public void InitializeMethodList(){
         selectedMethod = new Method();
@@ -354,35 +249,6 @@ public class selectionPageController implements Initializable {
 
         MethodList.setRoot(methodRoot);
         MethodList.setShowRoot(false);
-    }
-
-    //returns the generation of the given game
-    public int findGenerationGame(String name){
-        for(String i: Games[0])
-            if(name.compareTo(i) == 0)
-                return 1;
-        for(String i: Games[1])
-            if(i.compareTo(name) == 0)
-                return 2;
-        for(String i: Games[2])
-            if(i.compareTo(name) == 0)
-                return 3;
-        for(String i: Games[3])
-            if(i.compareTo(name) == 0)
-                return 4;
-        for(String i: Games[4])
-            if(i.compareTo(name) == 0)
-                return 5;
-        for(String i: Games[5])
-            if(i.compareTo(name) == 0)
-                return 6;
-        for(String i: Games[6])
-            if(i.compareTo(name) == 0)
-                return 7;
-        for(String i: Games[7])
-            if(i.compareTo(name) == 0)
-                return 8;
-        return 0;
     }
 
     //expands the given generation tree view
@@ -549,7 +415,7 @@ public class selectionPageController implements Initializable {
     }
 
     public void pokemonQuickSelect(){
-        int PokedexSize = 898;
+        /*int PokedexSize = 898;
 
         String searchString = pokemonSearchBar.getText();
 
@@ -724,7 +590,7 @@ public class selectionPageController implements Initializable {
         }
         selectedPokemon.setName("");
         collapsePokemonTrees(new TreeItem<>());
-        index = 0;
+        index = 0;*/
     }
 
     //method to collapse all but the given treeitem

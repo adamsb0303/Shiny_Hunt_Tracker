@@ -10,9 +10,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -73,7 +76,7 @@ public class SaveData {
                     int generation = parseInt(data[3]);
                     //selectedPokemon = new Pokemon(data[0]);
                     selectedPokemon.setForm(data[1]);
-                    selectedGame = new Game(data[2], generation);
+                    //selectedGame = new Game(data[2], generation);
                     selectedMethod = new Method(data[4], generation);
                     selectedMethod.setModifier(parseInt(data[5]));
                     encounters = parseInt(data[6]);
@@ -349,5 +352,14 @@ public class SaveData {
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static String[] parseJSONArray(JSONArray json){
+        if(json == null)
+            return null;
+        List<String> list = new ArrayList<>();
+        for (Object o : json)
+            list.add((String) o);
+        return list.toArray(new String[0]);
     }
 }

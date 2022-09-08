@@ -2,15 +2,22 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static shinyhunttracker.SaveData.parseJSONArray;
+
 public class Game {
     StringProperty name = new SimpleStringProperty();
     int generation;
-    String[] Methods = new String[5];
+    String[] legends;
+    String[] methods = new String[5];
     String[] ShinyLocked = new String[18];
 
     Game(){
@@ -18,9 +25,23 @@ public class Game {
         generation = 0;
     }
 
-    Game(String name, int generation){
-        this.name.setValue(name);
-        this.generation = generation;
+    Game(int id){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("GameData/game.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray gameList = (JSONArray) obj;
+
+            //parse pokemon data
+            JSONObject gameObject = (JSONObject) gameList.get(id);
+            name.setValue((String) gameObject.get("name"));
+            generation = (int) (long)  gameObject.get("generation");
+            methods = parseJSONArray((JSONArray) gameObject.get("method"));
+            legends = parseJSONArray((JSONArray) gameObject.get("legends"));
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     //add method names to the Method array based on the game
@@ -28,65 +49,65 @@ public class Game {
         switch(generation){
             case 2:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = "Breeding with Shiny";
+                    methods[1] = "Breeding with Shiny";
                 break;
             case 4:
                 if (selectedPokemon.getBreedable())
-                    Methods[1] = "Masuda";
+                    methods[1] = "Masuda";
                 if (name.getValue().equals("Diamond") || name.getValue().equals("Pearl") || name.getValue().equals("Platinum"))
                     if (isWild(selectedPokemon))
-                        Methods[2] = "Radar Chaining";
+                        methods[2] = "Radar Chaining";
                 break;
             case 5:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = "Masuda";
+                    methods[1] = "Masuda";
                 break;
             case 6:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = "Masuda";
+                    methods[1] = "Masuda";
                 if(isFish(selectedPokemon))
-                    Methods[2] = "Chain Fishing";
+                    methods[2] = "Chain Fishing";
                 if(name.getValue().equals("X") || name.getValue().equals("Y")){
                     if(isWild(selectedPokemon))
-                        Methods[3] = "Radar Chaining";
+                        methods[3] = "Radar Chaining";
                     if(isFriendSafari(selectedPokemon))
-                        Methods[4] = "Friend Safari";
+                        methods[4] = "Friend Safari";
                 }
                 else{
                     if(isWild(selectedPokemon))
-                        Methods[3] = "DexNav";
+                        methods[3] = "DexNav";
                 }
                 break;
             case 7:
                 if(selectedPokemon.getBreedable())
-                    Methods[1] = "Masuda";
+                    methods[1] = "Masuda";
                 if(isSOS(selectedPokemon) && !(name.getValue().startsWith("Let")))
-                    Methods[2] = "SOS Chaining";
+                    methods[2] = "SOS Chaining";
                 if(name.getValue().startsWith("Ult")) {
                     if(isWormhole(selectedPokemon))
-                    Methods[3] = "Ultra Wormholes";
+                    methods[3] = "Ultra Wormholes";
                 }
                 if(name.getValue().startsWith("Let")) {
-                    Methods[1] = null;
+                    methods[1] = null;
                     if (isWild(selectedPokemon))
-                        Methods[2] = "Catch Combo";
+                        methods[2] = "Catch Combo";
                 }
                 break;
             case 8:
                 if(selectedPokemon.getBreedable() && !name.getValue().equals("Legends: Arceus"))
-                    Methods[1] = "Masuda";
+                    methods[1] = "Masuda";
                 if (name.getValue().equals("Brilliant Diamond") || name.getValue().equals("Shining Pearl")) {
                     if (isWild(selectedPokemon))
-                        Methods[2] = "Radar Chaining";
-                    Methods[3] = "Underground";
+                        methods[2] = "Radar Chaining";
+                    methods[3] = "Underground";
                 }
                 if (name.getValue().equals("Sword") || name.getValue().equals("Shield")) {
                     if (isWild(selectedPokemon))
-                        Methods[2] = "Total Encounters";
+                        methods[2] = "Total Encounters";
                     if (inDynamaxAdventure(selectedPokemon))
-                        Methods[3] = "Dynamax Adventure";
+                        methods[3] = "Dynamax Adventure";
                 }else
-                    Methods[2] = "Mass Outbreak";
+                    methods[2] = "Mass Outbreak";
                 break;
             default:
                 break;
@@ -101,7 +122,7 @@ public class Game {
             }
         }
         if(selectedPokemon.getHuntable())
-            Methods[0] = "None";
+            methods[0] = "None";
     }
 
     //for XY, DPP, ORAS, and SWSH
@@ -871,7 +892,7 @@ public class Game {
     }
 
     public String[] getMethods(){
-        return Methods;
+        return methods;
     }
 
     public void setGeneration(int generation){

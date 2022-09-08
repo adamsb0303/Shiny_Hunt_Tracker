@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static shinyhunttracker.SaveData.parseJSONArray;
+
 public class Pokemon{
     StringProperty name = new SimpleStringProperty();
     int generation;
@@ -354,15 +356,6 @@ public class Pokemon{
             if(name.equals(Pokedex[7][i]))
                 return 8;
         return 0;
-    }
-
-    private String[] parseJSONArray(JSONArray json){
-        if(json == null)
-            return null;
-        List<String> list = new ArrayList<>();
-        for (Object o : json)
-            list.add((String) o);
-        return list.toArray(new String[0]);
     }
 
     public String[][] getPokedex(){ return this.Pokedex; }
