@@ -10,6 +10,8 @@ import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pokemon{
     StringProperty name = new SimpleStringProperty();
@@ -46,6 +48,10 @@ public class Pokemon{
             id = (int) (long) pokemonObject.get("id");
             breedable = (Boolean) pokemonObject.get("breedable");
             legendary = (Boolean) pokemonObject.get("legendary");
+
+            family = parseJSONArray((JSONArray) pokemonObject.get("family"));
+            forms = parseJSONArray((JSONArray) pokemonObject.get("forms"));
+            //base = parseJSONArray((JSONArray) pokemonObject.get("base"));
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -348,6 +354,15 @@ public class Pokemon{
             if(name.equals(Pokedex[7][i]))
                 return 8;
         return 0;
+    }
+
+    private String[] parseJSONArray(JSONArray json){
+        if(json == null)
+            return null;
+        List<String> list = new ArrayList<>();
+        for (Object o : json)
+            list.add((String) o);
+        return list.toArray(new String[0]);
     }
 
     public String[][] getPokedex(){ return this.Pokedex; }

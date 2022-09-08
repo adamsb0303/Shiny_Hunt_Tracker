@@ -4,42 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="updated gitignore">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="71c49550-2884-473a-9f26-9012be5bf3ca" name="Default Changelist" comment="pokemon list updates from json file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/DPP.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/DPP.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/DynamaxAdventure.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/DynamaxAdventure.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/FriendSafari.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/FriendSafari.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/LetsGo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/LetsGo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/ORAS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/ORAS.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/SOS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/SOS.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/SWSH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/SWSH.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/UltraSOS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/UltraSOS.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Available Pokemon/XY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Available Pokemon/XY.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Family.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Family.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 4.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 7.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/Generation 8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/Generation 8.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game Data/Pokedex/SWSH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GameData/Pokedex/SWSH.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/CaughtPokemon.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/CaughtPokemon.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/Layouts/Hunts/~Layouts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/Layouts/Hunts/~Layouts.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/Layouts/Previously-Caught/~Layouts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/Layouts/Previously-Caught/~Layouts.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/PreviousHunts.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/PreviousHunts.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/SWSH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/SWSH.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/keyBinds.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/keyBinds.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Save Data/previousSession.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SaveData/previousSession.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Pokemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Pokemon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/SaveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/SaveData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/huntController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/huntController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/selectionPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/selectionPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661052549724</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="pokemon list updates from json file">
+      <created>1662603623137</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1662603623137</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,15 +162,16 @@
     <MESSAGE value="Added git ignore and added missing files" />
     <MESSAGE value="finalized merging original project with maven project" />
     <MESSAGE value="updated gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated gitignore" />
+    <MESSAGE value="pokemon list updates from json file" />
+    <option name="LAST_COMMIT_MESSAGE" value="pokemon list updates from json file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/shinyhunttracker/shinyhunttracker/Pokemon.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="6" />
+          <line>52</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

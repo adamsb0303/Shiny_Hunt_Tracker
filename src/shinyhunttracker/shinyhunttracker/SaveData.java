@@ -114,7 +114,6 @@ public class SaveData {
     //opens huntControls window
     public void beginHunt(huntController controller){
         selectionPageController family = new selectionPageController();
-        family.createFamily(selectedPokemon.getName());
 
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, family.getStage0().getName(), family.getStage1().getName(), layout, encounters, combo, 1);
     }

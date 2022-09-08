@@ -53,9 +53,6 @@ public class selectionPageController implements Initializable {
     //array with every pokemon
     String[][] Pokedex = selectedPokemon.getPokedex();
 
-    //array with pokemon not avaliable in SWSH
-    String[] SWSHPokedex = new String[241];
-
 
     //array with every main line pokemon game
     public String[][] Games= {{"Red", "Green", "Blue", "Yellow"},
@@ -70,18 +67,6 @@ public class selectionPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         InitializePokemonList();//creates pokemon list
-
-        try{
-            BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Pokedex/SWSH.txt"));
-            String line;
-            int index = 0;
-            while((line = fileReader.readLine()) != null) {
-                SWSHPokedex[index] = line;
-                index++;
-            }
-        }catch (IOException e) {
-            System.out.println("Ultra SOS file not found");
-        }
 
         pokemonSearchBar.setPromptText("Search");
 
@@ -118,33 +103,32 @@ public class selectionPageController implements Initializable {
                         dexPerfect.setDisable(true);
 
                         String newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
-                        if(findGenerationGame(newSelectionGame) != 0) {//throws away input if selection is Generation 1, Generation 2, etc.
-                            selectedGame = new Game(newSelectionGame, findGenerationGame(newSelectionGame));//create Game object
-                            gameLabel.textProperty().bind(selectedGame.getNameProperty());
 
-                            //resets shiny charm and lure checkboxes
-                            shinyCharmCheckBox.setSelected(false);
-                            lureCheckBox.setSelected(false);
-                            dexComplete.setSelected(false);
-                            dexPerfect.setSelected(false);
+                        selectedGame = new Game(newSelectionGame, findGenerationGame(newSelectionGame));//create Game object
+                        gameLabel.textProperty().bind(selectedGame.getNameProperty());
 
-                            //Enables Shiny Charm if it is avaliable in the selected Game
-                            //Shiny Charm is available from Black 2, White 2 up to the present games
-                            if(selectedGame.generation >= 5) {
-                                if (!(selectedGame.getName().compareTo("Black") == 0 || selectedGame.getName().compareTo("White") == 0))
-                                    shinyCharmCheckBox.setDisable(false);
-                            }else
-                                shinyCharmCheckBox.setDisable(true);
+                        //resets shiny charm and lure checkboxes
+                        shinyCharmCheckBox.setSelected(false);
+                        lureCheckBox.setSelected(false);
+                        dexComplete.setSelected(false);
+                        dexPerfect.setSelected(false);
 
-                            //Enables Lure if the selected game is one of the let's go games or legends arceus
-                            if(selectedGame.getName().length() >= 3) {
-                                lureCheckBox.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Let") == 0));
-                                dexComplete.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Leg") == 0));
-                                dexPerfect.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Leg") == 0));
-                            }
+                        //Enables Shiny Charm if it is avaliable in the selected Game
+                        //Shiny Charm is available from Black 2, White 2 up to the present games
+                        if(selectedGame.generation >= 5) {
+                            if (!(selectedGame.getName().compareTo("Black") == 0 || selectedGame.getName().compareTo("White") == 0))
+                                shinyCharmCheckBox.setDisable(false);
+                        }else
+                            shinyCharmCheckBox.setDisable(true);
 
-                            InitializeMethodList();//creates method list
+                        //Enables Lure if the selected game is one of the let's go games or legends arceus
+                        if(selectedGame.getName().length() >= 3) {
+                            lureCheckBox.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Let") == 0));
+                            dexComplete.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Leg") == 0));
+                            dexPerfect.setDisable(!(selectedGame.getName().substring(0, 3).compareTo("Leg") == 0));
                         }
+
+                        InitializeMethodList();//creates method list
                     }
                 });
 
@@ -178,10 +162,10 @@ public class selectionPageController implements Initializable {
 
             //Iterate over array
             pokemonList.forEach( e -> {
-                //Get employee object within list
+                //Get pokemon object within list
                 JSONObject pokemonObject = (JSONObject) e;
 
-                //Get employee first name
+                //Get pokemon name
                 String pokemonName = (String) pokemonObject.get("name");
                 makeBranch(pokemonName, pokemonRoot);
             });
@@ -203,100 +187,33 @@ public class selectionPageController implements Initializable {
         lureCheckBox.setSelected(false);
 
         //since legendaries are only available in certain games, I created a method to restrict what games are displayed
-        if(!selectedPokemon.getHuntable()) {
+        /*if(!selectedPokemon.getHuntable()) {
             InitializeRestrictedGameList(generation);
             return;
-        }
+        }*/
 
         //initializes all tree items
         gameRoot = new TreeItem<>();
-        treeGamesGen1 = new TreeItem<>();
-        treeGamesGen2 = new TreeItem<>();
-        treeGamesGen3 = new TreeItem<>();
-        treeGamesGen4 = new TreeItem<>();
-        treeGamesGen5 = new TreeItem<>();
-        treeGamesGen6 = new TreeItem<>();
-        treeGamesGen7 = new TreeItem<>();
-        treeGamesGen8 = new TreeItem<>();
 
-        //checks to see if the selected pokemon is alolan or galarian and sets the generation accordingly
-        if(selectedPokemon.getName().length() > 6)
-            if(selectedPokemon.getName().substring(0,6).compareTo("Alolan") == 0)
-                generation = 7;
-        if(selectedPokemon.getName().length() > 8)
-            if(selectedPokemon.getName().substring(0,8).compareTo("Galarian") == 0)
-                generation = 8;
+        JSONParser jsonParser = new JSONParser();
 
-        //goes through and adds the games to the respective generations based on the selected pokemon's generation
-        if(generation == 0)
-            return;
-        if(generation <= 1) {
-            treeGamesGen1 = makeBranch("Generation 1", gameRoot);
-            for (String i : Games[0]) {
-                makeBranch(i, treeGamesGen1);
-            }
-        }
-        if(generation <= 2) {
-            treeGamesGen2 = makeBranch("Generation 2", gameRoot);
-            for (String i : Games[1]) {
-                makeBranch(i, treeGamesGen2);
-            }
-        }
-        if(generation <= 3) {
-            treeGamesGen3 = makeBranch("Generation 3", gameRoot);
-            for (String i : Games[2]) {
-                makeBranch(i, treeGamesGen3);
-            }
-        }
-        if(generation <= 4) {
-            treeGamesGen4 = makeBranch("Generation 4", gameRoot);
-            for (String i : Games[3]) {
-                makeBranch(i, treeGamesGen4);
-            }
-        }
-        if(generation <= 5) {
-            treeGamesGen5 = makeBranch("Generation 5", gameRoot);
-            for (String i : Games[4]) {
-                makeBranch(i, treeGamesGen5);
-            }
-        }
-        if(generation <= 6) {
-            treeGamesGen6 = makeBranch("Generation 6", gameRoot);
-            for (String i : Games[5]) {
-                makeBranch(i, treeGamesGen6);
-            }
-        }
-        if(generation <= 7){
-            treeGamesGen7 = makeBranch("Generation 7", gameRoot);
-            for(String i: Games[6]) {
-                //only generation 1 pokemon are available in the lets go games
-                if(i.substring(0,3).compareTo("Let") == 0) {
-                    if (generation == 1)
-                        makeBranch(i, treeGamesGen7);
-                    if(selectedPokemon.getName().length() > 6)
-                        if(selectedPokemon.getName().substring(0,6).compareTo("Alolan") == 0)
-                            makeBranch(i, treeGamesGen7);
-                }else
-                    makeBranch(i, treeGamesGen7);
-            }
-        }
-        if(generation <= 8) {
-            treeGamesGen8 = makeBranch("Generation 8", gameRoot);
-            for (String i : Games[7]) {
-                //since the whole national dex isn't in SWSH it needs to check if the pokemon is in the SWSH pokedex
-                //if the selected pokemon's generation is lower than 8
-                boolean inSWSH = true;
-                if (generation < 8) {
-                    for (String j : SWSHPokedex)
-                        if (j.compareTo(selectedPokemon.getName()) == 0) {
-                            inSWSH = false;
-                            break;
-                        }
-                    if(inSWSH)
-                        makeBranch(i, treeGamesGen8);
-                } else
-                    makeBranch(i, treeGamesGen8);
-            }
+        try (FileReader reader = new FileReader("GameData/game.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray gameList = (JSONArray) obj;
+
+            //Iterate over array
+            gameList.forEach( e -> {
+                //Get game object within list
+                JSONObject gameObject = (JSONObject) e;
+
+                //Get game name
+                String gameName = (String) gameObject.get("name");
+                if(generation <= (int) (long) gameObject.get("generation"))
+                    makeBranch(gameName, gameRoot);
+            });
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
 
         GameList.setRoot(gameRoot);
@@ -396,7 +313,6 @@ public class selectionPageController implements Initializable {
     public void InitializeMethodList(){
         selectedMethod = new Method();
         methodRoot = new TreeItem<>();
-        createFamily(selectedPokemon.getName());
         selectedGame.generateMethods(selectedPokemon);
         evolution2 = makeBranch(selectedPokemon.getName(), methodRoot);
         for(String i: selectedGame.getMethods())
@@ -438,36 +354,6 @@ public class selectionPageController implements Initializable {
 
         MethodList.setRoot(methodRoot);
         MethodList.setShowRoot(false);
-    }
-
-    //creates Stage0 and Stage1 objects based on selected pokemon's prior evolutions
-    public void createFamily(String name){
-        String [][] pokemonEvolutions = new String[338][3];
-        try{
-            BufferedReader fileReader = new BufferedReader(new FileReader("Game Data/Pokedex/Family.txt"));
-            String line;
-            int index = 0;
-            while ((line = fileReader.readLine()) != null) {
-                pokemonEvolutions[index] = line.split(",");
-                index++;
-            }
-        }catch (IOException e){
-            System.out.println("Ultra SOS file not found");
-        }
-        for (String[] pokemonEvolution : pokemonEvolutions) {
-            for (int j = 0; j < pokemonEvolution.length; j++) {
-                if (pokemonEvolution[j].compareTo(name) == 0) {
-                    evolutionStage = j;
-                    if (j >= 1) {
-                        //Stage0 = new Pokemon(pokemonEvolution[0]);
-                    }
-                    if (j == 2) {
-                        //Stage1 = new Pokemon(pokemonEvolution[1]);
-                    }
-                    return;
-                }
-            }
-        }
     }
 
     //returns the generation of the given game
