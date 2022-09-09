@@ -401,7 +401,7 @@ public class SelectionPageController implements Initializable {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
 
-        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], currentLayout,0, 0, 1);
+        controller.addHunt(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], currentLayout,0, 0, 1);
     }
 
     public void pokemonQuickSelect(){

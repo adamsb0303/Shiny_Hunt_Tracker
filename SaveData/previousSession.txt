@@ -1,0 +1,4 @@
+Blastoise,null,Silver,2,Breeding with Shiny,128,0,0,1,,
+Charmeleon,null,Green,1,None,1,0,0,1,,
+Squirtle,null,Green,1,None,1,41,0,1,,
+Metapod,null,Gold,2,Breeding with Shiny,128,13,0,1,,

@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import static java.lang.Integer.parseInt;
 
 class HuntWindow extends Window {
+    Hunt currentHunt;
+
     //hunt window elements
     int huntLayoutSize = 0;
     ImageView Evo0, Evo1, sprite;
@@ -24,7 +26,6 @@ class HuntWindow extends Window {
     int encounters, previousEncounters, combo;
     int increment;
     int huntNumber;
-    char keybind;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
@@ -36,20 +37,11 @@ class HuntWindow extends Window {
     Method selectedMethod;
     int methodBase;
 
-    public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntNumber){
-        this.selectedPokemon = selectedPokemon;
-        this.selectedGame = selectedGame;
-        this.selectedMethod = selectedMethod;
-        methodBase = selectedMethod.getBase();
-        this.evo0 = evo0;
-        this.evo1 = evo1;
-        this.currentLayout = layout;
-        this.encounters = encounters;
-        this.combo = combo;
-        this.increment = increment;
-        this.huntNumber = huntNumber;
-        if(selectedPokemon.getGeneration() > 0)
-            createHuntWindow();
+    public HuntWindow(Hunt currentHunt, String layout){
+        //methodBase = selectedMethod.getBase();
+        //this.currentLayout = layout;
+        //if(selectedPokemon.getGeneration() > 0)
+            //createHuntWindow();
     }
 
     //creates hunt window
@@ -376,13 +368,6 @@ class HuntWindow extends Window {
         dynamicOddsMethods();
     }
 
-    //writes objects to previous hunts file
-    public void saveHunt(String filePath){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
-        boolean tempSave = filePath.contains("previousSession");
-        data.saveHunt(filePath, tempSave);
-    }
-
     //save hunt, but it asks if the user would like to save, and it closes the window
     public void saveandCloseHunt(){
         windowStage.close();
@@ -595,15 +580,7 @@ class HuntWindow extends Window {
         return huntNumber;
     }
 
-    public char getKeyBinding(){
-        return keybind;
-    }
-
     public int getGameGeneration(){ return selectedGame.getGeneration(); }
-
-    public void setKeybind(char keybind){
-        this.keybind = keybind;
-    }
 
     public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }

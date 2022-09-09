@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +21,7 @@ public class HuntController {
     VBox huntControlsButtonVBox;
     PreviouslyCaught previousCatches = new PreviouslyCaught(0);
 
-    HuntWindow[] windows = new HuntWindow[0];
+    Hunt[] windows = new Hunt[0];
     String[] currentLayouts = new String[0];
     int huntNum = 1;
 
@@ -52,7 +53,7 @@ public class HuntController {
         huntControls.show();
 
         SaveData data = new SaveData();
-        if(data.getfileLength("previousSession") != 0){
+        /*if(data.getfileLength("previousSession") != 0){
             for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
                 data.loadHunt(i, this, "SaveData/previousSession.txt");
             }
@@ -71,12 +72,12 @@ public class HuntController {
             }catch (IOException ignored){
 
             }
-        }
+        }*/
 
         huntControlsButtonVBox.setOnKeyTyped(e -> {
-            for(HuntWindow i: windows) {
-                if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
-                    i.incrementEncounters();
+            for(Hunt i: windows) {
+                //if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
+                    //i.incrementEncounters();
             }
         });
 
@@ -92,8 +93,8 @@ public class HuntController {
                 if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
                     NewOrOld newOrOld = new NewOrOld();
                     newOrOld.setController(this);
-                    if(windows.length > 0)
-                        newOrOld.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    //if(windows.length > 0)
+                        //newOrOld.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
                     newOrOld.newOrOldHunt();
                 }else{
                     //creates selection page window
@@ -108,8 +109,8 @@ public class HuntController {
 
                     SelectionPageController selectionPageController = selectionPageLoader.getController();
                     selectionPageController.setController(this);
-                    if(windows.length > 0)
-                        selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    //if(windows.length > 0)
+                        //selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
                     huntSelectionWindow.show();
                 }
             }catch(IOException f){
@@ -118,7 +119,7 @@ public class HuntController {
         });
 
         huntControls.setOnCloseRequest(e -> {
-            saveAll("Save Data/previousSession.txt");
+            saveAll("SaveData/previousSession.txt");
             try {
                 File file = new File("Save Data/previousSession.txt");
                 FileWriter fileWriter = new FileWriter(file, true);
@@ -128,19 +129,11 @@ public class HuntController {
             }catch (IOException ignored){
 
             }
-            closeWindows();
+            //closeWindows();
         });
     }
 
     public void addHuntWindowSettings(HuntWindow window){
-        HBox huntControlsButtonHBox = new HBox();
-        huntControlsButtonHBox.setAlignment(Pos.CENTER);
-        huntControlsButtonHBox.setSpacing(10);
-
-        Button encountersButton = new Button("Increment " + window.getHuntNumber());
-        huntControlsButtonHBox.getChildren().addAll(encountersButton);
-        huntControlsButtonVBox.getChildren().add(huntControlsButtonHBox);
-
         Menu newHuntSettings = new Menu("Hunt " + window.getHuntNumber() + " Settings");
 
         MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
@@ -161,8 +154,6 @@ public class HuntController {
         newHuntSettings.getItems().addAll(customizeHuntLayout, huntSettings);
         Settings.getItems().add(newHuntSettings);
 
-        encountersButton.setOnAction(e -> window.incrementEncounters());
-
         customizeHuntLayout.setOnAction(e -> window.CustomizeHuntWindow());
         increment.setOnAction(e -> window.changeIncrement());
         resetEncounters.setOnAction(e -> window.resetEncounters());
@@ -172,16 +163,16 @@ public class HuntController {
         });
         pokemonCaught.setOnAction(e -> {
             window.pokemonCaught();
-            removeWindow(window);
+            //removeWindow(window);
             if(previousCatches.getStage().isShowing())
                 previousCatches.refreshPreviouslyCaughtPokemon();
         });
         resetCombo.setOnAction(e -> window.resetCombo());
-        saveHunt.setOnAction(e -> window.saveHunt("Save Data/PreviousHunts.txt"));
+        //saveHunt.setOnAction(e -> window.saveHunt("Save Data/PreviousHunts.txt"));
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
-    public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+    public void addHunt(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
         if(windows.length == 0){
             MenuItem saveAll = new MenuItem("Save All");
             Settings.getItems().add(saveAll);
@@ -191,7 +182,7 @@ public class HuntController {
 
         boolean numFound = false;
         for(int i = 0; i < windows.length; i++){
-            for(HuntWindow j : windows){
+            for(Hunt j : windows){
                 if (j.getHuntNumber() == (i + 1)) {
                     numFound = true;
                     break;
@@ -215,19 +206,35 @@ public class HuntController {
             currentLayouts[huntNum - 1] = layout;
         }
 
-        HuntWindow newWindow = new HuntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
+        SaveData data = new SaveData();
+        Hunt newHunt = new Hunt(selectedPokemon, selectedGame, selectedMethod, new SimpleIntegerProperty(encounters), new SimpleIntegerProperty(combo), increment, huntNum, data.getLinefromFile(huntNum - 1, "keyBinds").charAt(0));
+
+        HBox huntControlsButtonHBox = new HBox();
+        huntControlsButtonHBox.setAlignment(Pos.CENTER);
+        huntControlsButtonHBox.setSpacing(10);
+
+        Button encountersButton = new Button("+");
+
+        Label encounterLabel = new Label();
+        encounterLabel.textProperty().bind(newHunt.encountersProperty().asString());
+
+        Label nameLabel = new Label(newHunt.getSelectedPokemon().getName());
+
+        huntControlsButtonHBox.getChildren().addAll(encountersButton, nameLabel, encounterLabel);
+        huntControlsButtonVBox.getChildren().add(huntControlsButtonHBox);
+
+        HuntWindow newWindow = new HuntWindow(newHunt, layout);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
 
-        SaveData data = new SaveData();
-        newWindow.setKeybind(data.getLinefromFile(newWindow.getHuntNumber() - 1, "keyBinds").charAt(0));
+        //addHuntWindowSettings(newWindow);
 
-        addHuntWindowSettings(newWindow);
-
-        HuntWindow[] temp = new HuntWindow[windows.length + 1];
+        Hunt[] temp = new Hunt[windows.length + 1];
         System.arraycopy(windows, 0, temp, 0, windows.length);
-        temp[windows.length] = newWindow;
+        temp[windows.length] = newHunt;
         windows = temp;
 
+        encountersButton.setOnAction(e -> newHunt.incrementEncounters());
+/*
         if(!numFound && windows.length != 1) {
             orderWindowsArray();
             refreshHuntWindowSettings();
@@ -247,9 +254,9 @@ public class HuntController {
             currentLayouts[newWindow.getHuntNumber()-1] = newWindow.getCurrentLayout();
             newWindow.saveandCloseHunt();
             removeWindow(newWindow);
-        });
+        });*/
     }
-
+/*
     public void removeWindow(HuntWindow window){
         if(window.getHuntNumber() == huntNum)
             if(windows.length == 1)
@@ -268,14 +275,13 @@ public class HuntController {
         windows = temp;
         refreshHuntWindowSettings();
     }
-
     public void refreshHuntWindowSettings(){
         if(windows.length == 0)
             Settings.getItems().remove(2, Settings.getItems().size());
         else
             Settings.getItems().remove(3, Settings.getItems().size());
         huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
-        for(HuntWindow i : windows)
+        for(Hunt i : windows)
             if(i != null)
                 addHuntWindowSettings(i);
     }
@@ -293,11 +299,6 @@ public class HuntController {
         System.exit(0);
     }
 
-    public void saveAll(String filePath){
-        for(HuntWindow i: windows)
-            i.saveHunt(filePath);
-    }
-
     public void orderWindowsArray(){
         HuntWindow temp;
         for(int i = 0; i < windows.length; i++){
@@ -310,6 +311,12 @@ public class HuntController {
             }
         }
     }
+*/
+
+    public void saveAll(String filePath){
+        for(Hunt i: windows)
+            i.saveHunt(filePath);
+    }
 
     public void keyBindingSettings(){
         keyBindingSettingsStage.setTitle("Key Bindings");
@@ -318,25 +325,25 @@ public class HuntController {
         keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
         keyBindingsLayout.setPadding(new Insets(10,0,50,75));
-        for (HuntWindow i : windows) {
+        for (Hunt i : windows) {
             HBox windowSettings = new HBox();
             windowSettings.setAlignment(Pos.CENTER);
             windowSettings.setSpacing(10);
             Label huntWindowLabel = new Label("Hunt " + i.getHuntNumber());
             TextField keyField = new TextField();
-            keyField.setPromptText(String.valueOf(i.getKeyBinding()));
+            keyField.setPromptText(String.valueOf(i.getKeyBind()));
             keyField.setMaxWidth(50);
             windowSettings.getChildren().addAll(huntWindowLabel, keyField);
             keyBindingsLayout.getChildren().add(windowSettings);
 
             keyField.setOnAction(f -> {
                 if(keyField.getText().length() == 1)
-                    for(HuntWindow j: windows)
+                    for(Hunt j: windows)
                         if(j.getHuntNumber() == i.getHuntNumber()) {
-                            j.setKeybind(keyField.getText().charAt(0));
+                            j.setKeyBind(keyField.getText().charAt(0));
                             SaveData data = new SaveData();
                             data.replaceLine(j.getHuntNumber() - 1, keyField.getText().substring(0,1), "keyBinds");
-                            keyField.setPromptText(String.valueOf(j.getKeyBinding()));
+                            keyField.setPromptText(String.valueOf(j.getKeyBind()));
                             break;
                         }
                 keyField.setText("");
