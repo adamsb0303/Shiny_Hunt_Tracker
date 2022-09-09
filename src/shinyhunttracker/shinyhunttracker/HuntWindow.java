@@ -1,5 +1,7 @@
 package shinyhunttracker;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,18 +16,16 @@ import javafx.stage.Stage;
 import static java.lang.Integer.parseInt;
 
 class HuntWindow extends Window {
-    Hunt currentHunt;
-
     //hunt window elements
     int huntLayoutSize = 0;
     ImageView Evo0, Evo1, sprite;
-    String evo0, evo1;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
     Text previousEncountersText = new Text();
     PreviouslyCaught previouslyCaughtWindow;
-    int encounters, previousEncounters, combo;
-    int increment;
-    int huntNumber;
+    IntegerProperty encounters = new SimpleIntegerProperty();
+    IntegerProperty combo = new SimpleIntegerProperty();
+    int previousEncounters, increment, huntNumber;
+    char keybind;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
@@ -37,9 +37,16 @@ class HuntWindow extends Window {
     Method selectedMethod;
     int methodBase;
 
-    public HuntWindow(Hunt currentHunt, String layout){
-        //methodBase = selectedMethod.getBase();
-        //this.currentLayout = layout;
+    public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntNumber){
+        this.selectedPokemon = selectedPokemon;
+        this.selectedGame = selectedGame;
+        this.selectedMethod = selectedMethod;
+        methodBase = selectedMethod.getBase();
+        this.currentLayout = layout;
+        this.encounters.setValue(encounters);
+        this.combo.setValue(combo);
+        this.increment = increment;
+        this.huntNumber = huntNumber;
         //if(selectedPokemon.getGeneration() > 0)
             //createHuntWindow();
     }
@@ -81,12 +88,12 @@ class HuntWindow extends Window {
 
         Evo0 = new ImageView();
         Evo1 = new ImageView();
-        if(!evo0.equals("")) {
+        if(!selectedPokemon.getFamily()[0].equals("")) {
             setPokemonSprite(Evo0, selectedPokemon.getFamily()[0], selectedGame);
             if(Evo0 == null)
                 Evo0 = new ImageView();
         }
-        if(!evo1.equals("")) {
+        if(!selectedPokemon.getFamily()[1].equals("")) {
             setPokemonSprite(Evo1, selectedPokemon.getFamily()[1], selectedGame);
             if(Evo1 == null)
                 Evo1 = new ImageView();
@@ -124,9 +131,9 @@ class HuntWindow extends Window {
                 double evo1Width = 0;
                 double evo0Width = 0;
                 double spriteWidth = sprite.getImage().getWidth() * sprite.getScaleX();
-                if(!evo1.equals(""))
+                if(!selectedPokemon.getFamily()[0].equals(""))
                     evo1Width = Evo1.getImage().getWidth() * Evo1.getScaleX();
-                if(!evo0.equals(""))
+                if(!selectedPokemon.getFamily()[1].equals(""))
                     evo0Width = Evo0.getImage().getWidth() * Evo0.getScaleX();
                 windowLayout.getChildren().get(i).setLayoutX(evo0Width + evo1Width + spriteWidth + 5);
                 windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
@@ -134,7 +141,7 @@ class HuntWindow extends Window {
             }
         }
 
-        if(!this.evo1.equals("")) {
+        if(!this.selectedPokemon.getFamily()[1].equals("")) {
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
             Evo0.setLayoutY((Evo0.getImage().getHeight() * Evo0.getScaleY()));
 
@@ -143,7 +150,7 @@ class HuntWindow extends Window {
 
             sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + Evo1.getImage().getWidth()  * Evo1.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
             sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
-        }else if(!this.evo0.equals("")){
+        }else if(!this.selectedPokemon.getFamily()[0].equals("")){
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
             Evo0.setLayoutY(Evo0.getImage().getHeight() * Evo0.getScaleY());
 
@@ -153,6 +160,9 @@ class HuntWindow extends Window {
             sprite.setLayoutX((sprite.getImage().getWidth() * sprite.getScaleX())/2);
             sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
         }
+
+        encountersText.textProperty().bind(encounters.asString());
+        currentComboText.textProperty().bind(combo.asString());
 
         Scene huntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(huntScene);
@@ -187,7 +197,7 @@ class HuntWindow extends Window {
                 previousEncounters = parseInt(previousInput.getText());
                 previousEncountersText.setText(String.valueOf(previousEncounters));
                 if(selectedMethod.getName().compareTo("DexNav") == 0)
-                    oddFractionText.setText("1/" + selectedMethod.dexNav(encounters, previousEncounters));
+                    oddFractionText.setText("1/" + selectedMethod.dexNav(encounters.getValue(), previousEncounters));
                 else
                     oddFractionText.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
                 promptWindow.close();
@@ -309,16 +319,14 @@ class HuntWindow extends Window {
 
     //adds increment to the encounters
     public void incrementEncounters(){
-        encounters += increment;
-        combo += increment;
-        encountersText.setText(String.valueOf(encounters));
-        currentComboText.setText(String.valueOf(combo));
+        encounters.setValue(encounters.getValue() + increment);
+        combo.setValue(combo.getValue() + increment);
         dynamicOddsMethods();
     }
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
         data.pokemonCaught();
 
         CustomizeHuntStage.close();
@@ -363,16 +371,23 @@ class HuntWindow extends Window {
 
     //resets encounters
     public void resetCombo(){
-        combo = 0;
+        combo.setValue(0);
         currentComboText.setText(String.valueOf(combo));
         dynamicOddsMethods();
+    }
+
+    //writes objects to previous hunts file
+    public void saveHunt(String filePath){
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
+        boolean tempSave = filePath.contains("previousSession");
+        data.saveHunt(filePath, tempSave);
     }
 
     //save hunt, but it asks if the user would like to save, and it closes the window
     public void saveandCloseHunt(){
         windowStage.close();
         CustomizeHuntStage.close();
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
         data.saveHunt("SaveData/PreviousHunts.txt", false);
     }
 
@@ -403,7 +418,7 @@ class HuntWindow extends Window {
 
     //reset encounters
     public void resetEncounters(){
-        encounters = 0;
+        encounters.setValue(0);
         encountersText.setText("0");
     }
 
@@ -412,14 +427,14 @@ class HuntWindow extends Window {
         switch(selectedMethod.getName()){
             case "Radar Chaining":
                 int tempEncounters;
-                if (combo >= 40)
+                if (combo.getValue() >= 40)
                     tempEncounters = 39;
                 else
-                    tempEncounters = combo;
+                    tempEncounters = combo.getValue();
                 oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(methodBase - 8196) / 4096)))));
                 break;
             case "Chain Fishing":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo.getValue()), methodBase));
                 break;
             case "DexNav":
                 if (previousEncounters < 999) {
@@ -427,13 +442,13 @@ class HuntWindow extends Window {
                     previousEncountersText.setText(String.valueOf(previousEncounters));
                 }else
                     previousEncountersText.setText("999");
-                oddFractionText.setText("1/" + selectedMethod.dexNav(combo, previousEncounters));
+                oddFractionText.setText("1/" + selectedMethod.dexNav(combo.getValue(), previousEncounters));
                 break;
             case "SOS Chaining":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo.getValue()), methodBase));
                 break;
             case "Catch Combo":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo.getValue()), methodBase));
                 break;
             case "Total Encounters":
                 previousEncounters++;
@@ -580,7 +595,17 @@ class HuntWindow extends Window {
         return huntNumber;
     }
 
+    public char getKeyBinding(){
+        return keybind;
+    }
+
+    public IntegerProperty encounterProperty(){ return encounters; }
+
     public int getGameGeneration(){ return selectedGame.getGeneration(); }
+
+    public void setKeybind(char keybind){
+        this.keybind = keybind;
+    }
 
     public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }
