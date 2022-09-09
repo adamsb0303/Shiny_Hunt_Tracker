@@ -71,7 +71,7 @@ public class selectionPageController implements Initializable {
                             oldSelectionGameGeneration = selectedGame.getGeneration();
 
                         InitializeGameList(selectedPokemon.getGeneration());//creates game list
-                        collapseGeneration(oldSelectionGameGeneration);//opens game generation tree view based on previously selected game
+                        //collapseGeneration(oldSelectionGameGeneration);//opens game generation tree view based on previously selected game
                     }
                 });
 
@@ -86,7 +86,8 @@ public class selectionPageController implements Initializable {
                         dexComplete.setDisable(true);
                         dexPerfect.setDisable(true);
 
-                        selectedGame = new Game(GameList.getSelectionModel().getSelectedIndex());//create Game object
+                        String newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
+                        selectedGame = new Game(newSelectionGame);//create Game object
                         gameLabel.textProperty().bind(selectedGame.getNameProperty());
 
                         //resets shiny charm and lure checkboxes

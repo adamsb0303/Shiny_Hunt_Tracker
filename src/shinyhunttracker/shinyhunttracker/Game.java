@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 import static shinyhunttracker.SaveData.parseJSONArray;
 
@@ -25,7 +26,7 @@ public class Game {
         generation = 0;
     }
 
-    Game(int id){
+    Game(String name){
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("GameData/game.json")){
@@ -34,11 +35,16 @@ public class Game {
             JSONArray gameList = (JSONArray) obj;
 
             //parse pokemon data
-            JSONObject gameObject = (JSONObject) gameList.get(id);
-            name.setValue((String) gameObject.get("name"));
-            generation = (int) (long)  gameObject.get("generation");
-            methods = parseJSONArray((JSONArray) gameObject.get("method"));
-            legends = parseJSONArray((JSONArray) gameObject.get("legends"));
+            for (Object o : gameList) {
+                JSONObject gameObject = (JSONObject) o;
+
+                if (Objects.equals(gameObject.get("name").toString(), name)) {
+                    this.name.setValue((String) gameObject.get("name"));
+                    generation = (int) (long)  gameObject.get("generation");
+                    methods = parseJSONArray((JSONArray) gameObject.get("method"));
+                    legends = parseJSONArray((JSONArray) gameObject.get("legends"));
+                }
+            }
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
