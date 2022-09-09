@@ -296,6 +296,8 @@ public class Pokemon{
         return generation;
     }
 
+    public String[] getFamily(){ return family; }
+
     public Boolean getHuntable(){
         return huntable;
     }

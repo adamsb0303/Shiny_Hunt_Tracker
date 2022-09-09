@@ -1,0 +1,863 @@
+[
+  {
+    "name": "Red",
+    "generation": 1,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Mew"
+    ]
+  },
+  {
+    "name": "Blue",
+    "generation": 1,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Mew"
+    ]
+  },
+  {
+  "name": "Green",
+  "generation": 1,
+  "method": [
+    "Full Odds"
+  ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Mew"
+    ]
+  },
+  {
+    "name": "Yellow",
+    "generation": 1,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Mew"
+    ]
+  },
+  {
+    "name": "Gold",
+    "generation": 2,
+    "method": [
+      "Full Odds",
+      "Breeding with Shiny"
+    ],
+    "legends": [
+      "Raikou",
+      "Luiga",
+      "Entei",
+      "Suicune",
+      "Ho-Oh",
+      "Unown"
+    ]
+  },
+  {
+    "name": "Silver",
+    "generation": 2,
+    "method": [
+      "Full Odds",
+      "Breeding with Shiny"
+    ],
+    "legends": [
+      "Raikou",
+      "Luiga",
+      "Entei",
+      "Suicune",
+      "Ho-Oh",
+      "Unown"
+    ]
+  },
+  {
+    "name": "Crystal",
+    "generation": 2,
+    "method": [
+      "Full Odds",
+      "Breeding with Shiny"
+    ],
+    "legends": [
+      "Raikou",
+      "Luiga",
+      "Entei",
+      "Suicune",
+      "Ho-Oh",
+      "Unown",
+      "Celebi"
+    ]
+  },
+  {
+    "name": "Ruby",
+    "generation": 3,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Rayquaza",
+      "Jirachi",
+      "Groudon"
+    ]
+  },
+  {
+    "name": "Sapphire",
+    "generation": 3,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Rayquaza",
+      "Jirachi",
+      "Kyogre"
+    ]
+  },
+  {
+    "name": "FireRed",
+    "generation": 3,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Luiga",
+      "Ho-Oh",
+      "Deoxys",
+      "Unown"
+    ]
+  },
+  {
+    "name": "LeafGreen",
+    "generation": 3,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Luiga",
+      "Ho-Oh",
+      "Deoxys",
+      "Unown"
+    ]
+  },
+  {
+    "name": "Emerald",
+    "generation": 3,
+    "method": [
+      "Full Odds"
+    ],
+    "legends": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Rayquaza",
+      "Jirachi",
+      "Lugia",
+      "Ho-Oh",
+      "Kyogre",
+      "Groudon",
+      "Mew",
+      "Deoxys"
+    ]
+  },
+  {
+    "name": "Diamond",
+    "generation": 4,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Radar Chaining"
+    ],
+    "legends": [
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigias",
+      "Giratina",
+      "Cresselia",
+      "Darkrai",
+      "Shaymin",
+      "Arceus",
+      "Manaphy",
+      "Unown",
+      "Dialga"
+    ]
+  },
+  {
+    "name": "Pearl",
+    "generation": 4,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Radar Chaining"
+    ],
+    "legends": [
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigias",
+      "Giratina",
+      "Cresselia",
+      "Darkrai",
+      "Shaymin",
+      "Arceus",
+      "Manaphy",
+      "Unown",
+      "Palkia"
+    ]
+  },
+  {
+    "name": "Platinum",
+    "generation": 4,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Radar Chaining"
+    ],
+    "legends": [
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigias",
+      "Giratina",
+      "Cresselia",
+      "Darkrai",
+      "Shaymin",
+      "Arceus",
+      "Manaphy",
+      "Unown",
+      "Dialga",
+      "Palkia",
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Regirock",
+      "Regice",
+      "Registeel"
+    ]
+  },
+  {
+    "name": "HeartGold",
+    "generation": 4,
+    "method": [
+      "Full Odds",
+      "Masuda"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Lugia",
+      "Ho-Oh",
+      "Latias",
+      "Latios",
+      "Dialga",
+      "Palkia",
+      "Giratina",
+      "Unown",
+      "Kyogre"
+    ]
+  },
+  {
+    "name": "SoulSilver",
+    "generation": 4,
+    "method": [
+      "Full Odds",
+      "Masuda"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Lugia",
+      "Ho-Oh",
+      "Latias",
+      "Latios",
+      "Dialga",
+      "Palkia",
+      "Giratina",
+      "Unown",
+      "Groudon"
+    ]
+  },
+  {
+    "name": "Black",
+    "generation": 5,
+    "method": [
+      "Full Odds",
+      "Masuda"
+    ],
+    "legends": [
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Tornadus",
+      "Landorus",
+      "Kyurem",
+      "Tornadus"
+    ]
+  },
+  {
+    "name": "White",
+    "generation": 5,
+    "method": [
+      "Full Odds",
+      "Masuda"
+    ],
+    "legends": [
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Thundurus",
+      "Landorus",
+      "Kyurem",
+      "Thundurus"
+    ]
+  },
+  {
+    "name": "Black 2",
+    "generation": 5,
+    "method": [
+      "Full Odds",
+      "Masuda"
+    ],
+    "legends": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigigas",
+      "Cresselia",
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Kyurem",
+      "Latios"
+    ]
+  },
+  {
+    "name": "White 2",
+    "generation": 5,
+    "method": [
+      "Full Odds",
+      "Masuda"
+    ],
+    "legends": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigigas",
+      "Cresselia",
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Kyurem",
+      "Latias"
+    ]
+  },
+  {
+    "name": "X",
+    "generation": 6,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Chain Fishing",
+      "Radar Chaining",
+      "Friend Safari"
+    ]
+  },
+  {
+    "name": "Y",
+    "generation": 6,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Chain Fishing",
+      "Radar Chaining",
+      "Friend Safari"
+    ]
+  },
+  {
+    "name": "Omega Ruby",
+    "generation": 6,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Chain Fishing",
+      "DexNav"
+    ],
+    "legends": [
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigigas",
+      "Giratina",
+      "Cresselia",
+      "Terrakion",
+      "Virizion",
+      "Landorus",
+      "Kyurem",
+      "Unown",
+      "Ho-Oh",
+      "Palkia",
+      "Tornadus",
+      "Reshiram"
+    ]
+  },
+  {
+    "name": "Alpha Sapphire",
+    "generation": 6,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Chain Fishing",
+      "DexNav"
+    ],
+    "legends": [
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigigas",
+      "Giratina",
+      "Cresselia",
+      "Terrakion",
+      "Virizion",
+      "Landorus",
+      "Kyurem",
+      "Unown",
+      "Lugia",
+      "Dialga",
+      "Thundurus",
+      "Zekrom"
+    ]
+  },
+  {
+    "name": "Sun",
+    "generation": 7,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "SOS Chaining"
+    ],
+    "legends": [
+      "Type: Null"
+    ]
+  },
+  {
+    "name": "Moon",
+    "generation": 7,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "SOS Chaining"
+    ],
+    "legends": [
+      "Type: Null"
+    ]
+  },
+  {
+    "name": "Ultra Sun",
+    "generation": 7,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "SOS Chaining",
+      "Ultra Wormholes"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Suicune",
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Rayquaza",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Giratina",
+      "Cresselia",
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Landorus",
+      "Kyurem",
+      "Type: Null",
+      "Nihilego",
+      "Xurkitree",
+      "Guzzlord",
+      "Poipole",
+      "Naganadel",
+      "Magearna",
+      "Raikou",
+      "Ho-Oh",
+      "Latios",
+      "Groudon",
+      "Dialga",
+      "Heatran",
+      "Tornadus",
+      "Reshiram",
+      "Xerneas",
+      "Buzzwole",
+      "Kartana",
+      "Blacephalon"
+    ]
+  },
+  {
+    "name": "Ultra Moon",
+    "generation": 7,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "SOS Chaining",
+      "Ultra Wormholes"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Suicune",
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Rayquaza",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Giratina",
+      "Cresselia",
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Landorus",
+      "Kyurem",
+      "Type: Null",
+      "Nihilego",
+      "Xurkitree",
+      "Guzzlord",
+      "Poipole",
+      "Naganadel",
+      "Magearna",
+      "Entei",
+      "Lugia",
+      "Latias",
+      "Kyogre",
+      "Palkia",
+      "Regigigas",
+      "Thundurus",
+      "Zekrom",
+      "Yveltal",
+      "Pheromosa",
+      "Celesteela",
+      "Stakataka"
+    ]
+  },
+  {
+    "name": "Let's Go Pikachu",
+    "generation": 7,
+    "method": [
+      "Full Odds",
+      "Catch Combo"
+    ]
+  },
+  {
+    "name": "Let's Go Eevee",
+    "generation": 7,
+    "method": [
+      "Full Odds",
+      "Catch Combo"
+    ]
+  },
+  {
+    "name": "Sword",
+    "generation": 8,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "KO",
+      "Dynamax Adventure"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Lugia",
+      "Ho-Oh",
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Kyogre",
+      "Groudon",
+      "Rayquaza",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Dialga",
+      "Palkia",
+      "Heatran",
+      "Regigigas",
+      "Giratina",
+      "Cresselia",
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Tornadus",
+      "Thundurus",
+      "Reshiram",
+      "Zekrom",
+      "Kyurem",
+      "Landorus",
+      "Xerneas",
+      "Yveltal",
+      "Zygarde",
+      "Tapu Koko",
+      "Tapu Lele",
+      "Tapu Bulu",
+      "Tapu Fini",
+      "Solgaleo",
+      "Lunala",
+      "Nihilego",
+      "Buzzwole",
+      "Pheromosa",
+      "Xurkitree",
+      "Celesteela",
+      "Kartana",
+      "Guzzlord",
+      "Necrozma",
+      "Stakataka",
+      "Blacephalon",
+      "Regieleki",
+      "Regidrago"
+    ]
+  },
+  {
+    "name": "Shield",
+    "generation": 8,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "KO",
+      "Dynamax Adventure"
+    ],
+    "legends": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Mewtwo",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Lugia",
+      "Ho-Oh",
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Latias",
+      "Latios",
+      "Kyogre",
+      "Groudon",
+      "Rayquaza",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Dialga",
+      "Palkia",
+      "Heatran",
+      "Regigigas",
+      "Giratina",
+      "Cresselia",
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Tornadus",
+      "Thundurus",
+      "Reshiram",
+      "Zekrom",
+      "Kyurem",
+      "Landorus",
+      "Xerneas",
+      "Yveltal",
+      "Zygarde",
+      "Tapu Koko",
+      "Tapu Lele",
+      "Tapu Bulu",
+      "Tapu Fini",
+      "Solgaleo",
+      "Lunala",
+      "Nihilego",
+      "Buzzwole",
+      "Pheromosa",
+      "Xurkitree",
+      "Celesteela",
+      "Kartana",
+      "Guzzlord",
+      "Necrozma",
+      "Stakataka",
+      "Blacephalon",
+      "Regieleki",
+      "Regidrago"
+    ]
+  },
+  {
+    "name": "Brilliant Diamond",
+    "generation": 8,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Radar Chaining",
+      "Light Stones"
+    ],
+    "legends": [
+      "Dialga",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigigas",
+      "Giratina",
+      "Cresselia",
+      "Shaymin",
+      "Regirock",
+      "Registeel",
+      "Regice",
+      "Raikou",
+      "Entei",
+      "Suicune",
+      "Latias",
+      "Latios",
+      "Ho-Oh",
+      "Kyogre",
+      "Groudon",
+      "Rayquaza",
+      "Mewtwo"
+    ]
+  },
+  {
+    "name": "Shining Pearl",
+    "generation": 8,
+    "method": [
+      "Full Odds",
+      "Masuda",
+      "Radar Chaining",
+      "Light Stones"
+    ],
+    "legends": [
+      "Palkia",
+      "Uxie",
+      "Mesprit",
+      "Azelf",
+      "Heatran",
+      "Regigigas",
+      "Giratina",
+      "Cresselia",
+      "Shaymin",
+      "Regirock",
+      "Registeel",
+      "Regice",
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Latias",
+      "Latios",
+      "Lugia",
+      "Kyogre",
+      "Groudon",
+      "Rayquaza",
+      "Mewtwo"
+    ]
+  },
+  {
+    "name": "Legends: Arceus",
+    "generation": 8,
+    "method": [
+      "Full Odds",
+      "Mass Outbreak",
+      "Massive Mass Outbreak"
+    ]
+  }
+]

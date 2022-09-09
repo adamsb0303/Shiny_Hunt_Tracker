@@ -38,8 +38,6 @@ public class selectionPageController implements Initializable {
     //selected objects
     Game selectedGame = new Game();
     Pokemon selectedPokemon = new Pokemon();
-    Pokemon Stage0 = new Pokemon();
-    Pokemon Stage1 = new Pokemon();
     Method selectedMethod = new Method();
 
     //hunt page after pokemon is caught variables
@@ -116,21 +114,19 @@ public class selectionPageController implements Initializable {
                     }
                 });
 
-        /*MethodList.getSelectionModel().selectedItemProperty()
+        MethodList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
                         String newSelectionMethod = newValue.toString().substring(18, newValue.toString().length() - 2);
-                        if(new Pokemon (newSelectionMethod).getGeneration() == 0) {
-                            selectedMethod = new Method(newSelectionMethod, selectedGame.getGeneration());//creates Method object
-                            methodLabel.textProperty().bind(selectedMethod.getNameProperty());
-                            beginHuntButton.setDisable(selectedMethod.getName() == null);//disables begin hunt button if the selected method is a pokemon name
-                            helpButton.setVisible(selectedMethod.getName() != null);//displays tooltip button
-                            setToolTip(selectedMethod.getName());//creates the tool tip that appears when method is selected
-                            methodToolTip.setShowDelay(ZERO);
-                            methodToolTip.setShowDuration(INDEFINITE);
-                        }
+                        selectedMethod = new Method(newSelectionMethod, selectedGame.getGeneration());//creates Method object
+                        methodLabel.textProperty().bind(selectedMethod.getNameProperty());
+                        beginHuntButton.setDisable(selectedMethod.getName() == null);//disables begin hunt button if the selected method is a pokemon name
+                        helpButton.setVisible(selectedMethod.getName() != null);//displays tooltip button
+                        setToolTip(selectedMethod.getName());//creates the tool tip that appears when method is selected
+                        methodToolTip.setShowDelay(ZERO);
+                        methodToolTip.setShowDuration(INDEFINITE);
                     }
-                });*/
+                });
     }
 
     //creates pokemon list
@@ -163,7 +159,8 @@ public class selectionPageController implements Initializable {
 
     //creates game list
     public void InitializeGameList(int generation){
-        clearMethodList();//clears Method list
+        if(methodRoot != null)//clears Method list
+            clearMethodList();
         selectedGame = new Game();//resets selected Game
 
         //resets Shiny Charm and Lure checkboxes
@@ -208,14 +205,13 @@ public class selectionPageController implements Initializable {
     public void InitializeMethodList(){
         selectedMethod = new Method();
         methodRoot = new TreeItem<>();
-        selectedGame.generateMethods(selectedPokemon);
-        evolution2 = makeBranch(selectedPokemon.getName(), methodRoot);
-        for(String i: selectedGame.getMethods())
-            if (i != null) {
-                makeBranch(i, evolution2);
-            }
-            evolution2.setExpanded(true);
 
+        selectedGame.generateMethods(selectedPokemon);
+        for(String i: selectedGame.getMethods())
+            if (i != null)
+                makeBranch(i, methodRoot);
+        //evolution2.setExpanded(true);
+/*
         if(evolutionStage == 2 && Stage1.getGeneration() <= selectedGame.getGeneration()){
             selectedGame.generateMethods(Stage1);
             evolution1 = makeBranch(Stage1.getName(), methodRoot);
@@ -229,7 +225,7 @@ public class selectionPageController implements Initializable {
             for(String i: selectedGame.getMethods())
                 if (i != null)
                     makeBranch(i, evolution0);
-        }
+        }*/
 
         MethodList.setRoot(methodRoot);
         MethodList.setShowRoot(false);
@@ -238,17 +234,11 @@ public class selectionPageController implements Initializable {
     //clears method list
     public void clearMethodList(){
         selectedMethod = new Method();
-        methodRoot = new TreeItem<>();
-        Stage0 = new Pokemon();
-        Stage1 = new Pokemon();
-        evolutionStage = 0;
+        methodRoot.getChildren().clear();
         shinyCharmCheckBox.setDisable(true);
         lureCheckBox.setDisable(true);
         beginHuntButton.setDisable(true);
         helpButton.setVisible(false);
-
-        MethodList.setRoot(methodRoot);
-        MethodList.setShowRoot(false);
     }
 
     //expands the given generation tree view
@@ -411,7 +401,7 @@ public class selectionPageController implements Initializable {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
 
-        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, Stage0.getName(), Stage1.getName(),currentLayout,0, 0, 1);
+        controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], currentLayout,0, 0, 1);
     }
 
     public void pokemonQuickSelect(){
@@ -599,14 +589,6 @@ public class selectionPageController implements Initializable {
             if(!PokemonList.getTreeItem(i).equals(currentGeneration))
                 PokemonList.getTreeItem(i).setExpanded(false);
         }
-    }
-
-    public Pokemon getStage0(){
-        return Stage0;
-    }
-
-    public Pokemon getStage1(){
-        return Stage1;
     }
 
     public void setController(huntController controller){

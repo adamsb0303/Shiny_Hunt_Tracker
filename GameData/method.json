@@ -1,0 +1,135 @@
+[
+  {
+    "name": "Full Odds",
+    "modifier": 1,
+    "dynamic": false
+  },
+  {
+    "name": "Breeding with Shiny",
+    "modifier": 128,
+    "dynamic": false,
+    "games": [
+      "Crystal"
+    ]
+  },
+  {
+    "name": "Masuda",
+    "modifier": 6,
+    "dynamic": false
+  },
+  {
+    "name": "Radar Chaining",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "Diamond",
+      "Pearl",
+      "Platinum",
+      "X",
+      "Y",
+      "Brilliant Diamond",
+      "Shining Pearl"
+    ]
+  },
+  {
+    "name": "Chain Fishing",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "X",
+      "Y",
+      "Omega Ruby",
+      "Alpha Sapphire"
+    ]
+  },
+  {
+    "name": "Friend Safari",
+    "modifier": 6,
+    "dynamic": false,
+    "games": [
+      "X",
+      "Y"
+    ]
+  },
+  {
+    "name": "DexNav",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "Omega Ruby",
+      "Alpha Sapphire"
+    ]
+  },
+  {
+    "name": "SOS Chaining",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "Sun",
+      "Moon",
+      "Ultra Sun",
+      "Ultra Moon"
+    ]
+  },
+  {
+    "name": "Ultra Wormholes",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "Ultra Sun",
+      "Ultra Moon"
+    ]
+  },
+  {
+    "name": "Catch Combo",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "Let's Go Pikachu",
+      "Let's Go Eevee"
+    ]
+  },
+  {
+    "name": "KO",
+    "modifier": 1,
+    "dynamic": true,
+    "games": [
+      "Sword",
+      "Shield"
+    ]
+  },
+  {
+    "name": "Dynamax Adventure",
+    "modifier": 1,
+    "dynamic": false,
+    "games": [
+      "Sword",
+      "Shield"
+    ]
+  },
+  {
+    "name": "Light Stones",
+    "modifier": 3,
+    "dynamic": false,
+    "games": [
+      "Brilliant Diamond",
+      "Shining Pearl"
+    ]
+  },
+  {
+    "name": "Mass Outbreak",
+    "modifier": 25,
+    "dynamic": false,
+    "games": [
+      "Legends: Arceus"
+    ]
+  },
+  {
+    "name": "Massive Mass Outbreak",
+    "modifier": 12,
+    "dynamic": false,
+    "games": [
+      "Legends: Arceus"
+    ]
+  }
+]
