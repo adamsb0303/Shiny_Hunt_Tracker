@@ -11,7 +11,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
 import static javafx.util.Duration.INDEFINITE;
 import static javafx.util.Duration.ZERO;
 
-public class selectionPageController implements Initializable {
+public class SelectionPageController implements Initializable {
     //selection page elements
     public BorderPane shinyTrackerScene;
     public TreeView<String> PokemonList, GameList, MethodList;
@@ -41,7 +40,7 @@ public class selectionPageController implements Initializable {
     Method selectedMethod = new Method();
 
     //hunt page after pokemon is caught variables
-    huntController controller;
+    HuntController controller;
     String currentLayout;
 
     //misc variables
@@ -592,7 +591,7 @@ public class selectionPageController implements Initializable {
         }
     }
 
-    public void setController(huntController controller){
+    public void setController(HuntController controller){
         this.controller = controller;
     }
 

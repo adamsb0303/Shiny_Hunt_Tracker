@@ -10,6 +10,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        huntController controller = new huntController();
+        HuntController controller = new HuntController();
     }
 }

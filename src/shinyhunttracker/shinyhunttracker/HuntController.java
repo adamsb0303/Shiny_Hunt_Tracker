@@ -13,20 +13,20 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-public class huntController {
+public class HuntController {
     Stage huntControls = new Stage();
     MenuBar Menu = new MenuBar();
     Menu Settings = new Menu("Settings");
     VBox huntControlsButtonVBox;
-    previouslyCaught previousCatches = new previouslyCaught(0);
+    PreviouslyCaught previousCatches = new PreviouslyCaught(0);
 
-    huntWindow[] windows = new huntWindow[0];
+    HuntWindow[] windows = new HuntWindow[0];
     String[] currentLayouts = new String[0];
     int huntNum = 1;
 
     Stage keyBindingSettingsStage = new Stage();
 
-    public huntController(){
+    public HuntController(){
         huntControls.setTitle("Hunt Controller");
 
         huntControlsButtonVBox = new VBox();
@@ -74,7 +74,7 @@ public class huntController {
         }
 
         huntControlsButtonVBox.setOnKeyTyped(e -> {
-            for(huntWindow i: windows) {
+            for(HuntWindow i: windows) {
                 if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
                     i.incrementEncounters();
             }
@@ -90,7 +90,7 @@ public class huntController {
             try {
                 SaveData checkForData = new SaveData();
                 if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
-                    newOrOld newOrOld = new newOrOld();
+                    NewOrOld newOrOld = new NewOrOld();
                     newOrOld.setController(this);
                     if(windows.length > 0)
                         newOrOld.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
@@ -106,7 +106,7 @@ public class huntController {
                     huntSelectionWindow.setResizable(false);
                     huntSelectionWindow.setScene(new Scene(root, 750, 480));
 
-                    selectionPageController selectionPageController = selectionPageLoader.getController();
+                    SelectionPageController selectionPageController = selectionPageLoader.getController();
                     selectionPageController.setController(this);
                     if(windows.length > 0)
                         selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
@@ -132,7 +132,7 @@ public class huntController {
         });
     }
 
-    public void addHuntWindowSettings(huntWindow window){
+    public void addHuntWindowSettings(HuntWindow window){
         HBox huntControlsButtonHBox = new HBox();
         huntControlsButtonHBox.setAlignment(Pos.CENTER);
         huntControlsButtonHBox.setSpacing(10);
@@ -191,7 +191,7 @@ public class huntController {
 
         boolean numFound = false;
         for(int i = 0; i < windows.length; i++){
-            for(huntWindow j : windows){
+            for(HuntWindow j : windows){
                 if (j.getHuntNumber() == (i + 1)) {
                     numFound = true;
                     break;
@@ -215,7 +215,7 @@ public class huntController {
             currentLayouts[huntNum - 1] = layout;
         }
 
-        huntWindow newWindow = new huntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
+        HuntWindow newWindow = new HuntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
 
         SaveData data = new SaveData();
@@ -223,7 +223,7 @@ public class huntController {
 
         addHuntWindowSettings(newWindow);
 
-        huntWindow[] temp = new huntWindow[windows.length + 1];
+        HuntWindow[] temp = new HuntWindow[windows.length + 1];
         System.arraycopy(windows, 0, temp, 0, windows.length);
         temp[windows.length] = newWindow;
         windows = temp;
@@ -250,16 +250,16 @@ public class huntController {
         });
     }
 
-    public void removeWindow(huntWindow window){
+    public void removeWindow(HuntWindow window){
         if(window.getHuntNumber() == huntNum)
             if(windows.length == 1)
                 huntNum = 1;
             else
                 huntNum = windows[windows.length - 2].getHuntNumber();
 
-        huntWindow[] temp = new huntWindow[windows.length - 1];
+        HuntWindow[] temp = new HuntWindow[windows.length - 1];
         int index = 0;
-        for (huntWindow i : windows) {
+        for (HuntWindow i : windows) {
             if (i != window) {
                 temp[index] = i;
                 index++;
@@ -275,7 +275,7 @@ public class huntController {
         else
             Settings.getItems().remove(3, Settings.getItems().size());
         huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
-        for(huntWindow i : windows)
+        for(HuntWindow i : windows)
             if(i != null)
                 addHuntWindowSettings(i);
     }
@@ -294,12 +294,12 @@ public class huntController {
     }
 
     public void saveAll(String filePath){
-        for(huntWindow i: windows)
+        for(HuntWindow i: windows)
             i.saveHunt(filePath);
     }
 
     public void orderWindowsArray(){
-        huntWindow temp;
+        HuntWindow temp;
         for(int i = 0; i < windows.length; i++){
             for (int j = i; j > 0; j--) {
                 if(windows[j].getHuntNumber() < windows[j-1].getHuntNumber()) {
@@ -318,7 +318,7 @@ public class huntController {
         keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
         keyBindingsLayout.setPadding(new Insets(10,0,50,75));
-        for (huntWindow i : windows) {
+        for (HuntWindow i : windows) {
             HBox windowSettings = new HBox();
             windowSettings.setAlignment(Pos.CENTER);
             windowSettings.setSpacing(10);
@@ -331,7 +331,7 @@ public class huntController {
 
             keyField.setOnAction(f -> {
                 if(keyField.getText().length() == 1)
-                    for(huntWindow j: windows)
+                    for(HuntWindow j: windows)
                         if(j.getHuntNumber() == i.getHuntNumber()) {
                             j.setKeybind(keyField.getText().charAt(0));
                             SaveData data = new SaveData();

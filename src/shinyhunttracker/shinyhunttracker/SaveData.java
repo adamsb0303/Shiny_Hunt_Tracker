@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public void loadHunt(int lineNumber, huntController controller, String filePath){
+    public void loadHunt(int lineNumber, HuntController controller, String filePath){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
 
@@ -115,8 +114,8 @@ public class SaveData {
     }
 
     //opens huntControls window
-    public void beginHunt(huntController controller){
-        selectionPageController family = new selectionPageController();
+    public void beginHunt(HuntController controller){
+        SelectionPageController family = new SelectionPageController();
 
         controller.addHuntWindow(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], layout, encounters, combo, 1);
     }
