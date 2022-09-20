@@ -305,29 +305,7 @@ public class Pokemon{
     public String getForm(){ return form;}
 
     public int getDexNumber(){
-        int dexNumber = 0;
-        if(this.generation > 1)
-            dexNumber += 151;
-        if(this.generation > 2)
-            dexNumber += 100;
-        if(this.generation > 3)
-            dexNumber += 135;
-        if(this.generation > 4)
-            dexNumber += 107;
-        if(this.generation > 5)
-            dexNumber += 156;
-        if(this.generation > 6)
-            dexNumber += 72;
-        if(this.generation > 7)
-            dexNumber += 88;
-        if(this.generation > 8)
-            dexNumber += 89;
-        for(int i = 0; i < Pokedex[this.getGeneration() - 1].length; i++)
-            if(Pokedex[this.getGeneration() - 1][i].equals(this.getName())) {
-                dexNumber += i + 1;
-                break;
-            }
-        return dexNumber;
+        return this.id;
     }
 
     //returns the generation of the given pokemon

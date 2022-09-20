@@ -44,7 +44,7 @@ public class SaveData {
     //tempSave is for saving the hunts that are open when the program closes
     public void saveHunt(String filePath, boolean tempSave){
         try {
-            String saveData = selectedPokemon.getName() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
+            String saveData = selectedPokemon.getDexNumber() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
             File file = new File(filePath);
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -73,9 +73,9 @@ public class SaveData {
                 String[] data = line.split(",");
                 if(i == lineNumber) {
                     int generation = parseInt(data[3]);
-                    //selectedPokemon = new Pokemon(data[0]);
+                    selectedPokemon = new Pokemon(Integer.parseInt(data[0]));
                     selectedPokemon.setForm(data[1]);
-                    //selectedGame = new Game(data[2], generation);
+                    selectedGame = new Game(data[2]);
                     selectedMethod = new Method(data[4], generation);
                     selectedMethod.setModifier(parseInt(data[5]));
                     encounters = parseInt(data[6]);
@@ -97,7 +97,7 @@ public class SaveData {
     //writes information to caught pokemon file
     public void pokemonCaught(){
         try{
-            String saveData = selectedPokemon.getName() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
+            String saveData = selectedPokemon.getDexNumber() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
             File file = new File("SaveData/CaughtPokemon.txt");
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

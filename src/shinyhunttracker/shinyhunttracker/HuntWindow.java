@@ -47,8 +47,6 @@ class HuntWindow extends Window {
         this.combo.setValue(combo);
         this.increment = increment;
         this.huntNumber = huntNumber;
-        //if(selectedPokemon.getGeneration() > 0)
-            //createHuntWindow();
     }
 
     //creates hunt window

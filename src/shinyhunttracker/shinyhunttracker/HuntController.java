@@ -17,7 +17,7 @@ public class HuntController {
     Stage huntControls = new Stage();
     MenuBar Menu = new MenuBar();
     Menu Settings = new Menu("Settings");
-    VBox huntControlsButtonVBox;
+    VBox huntControlsVBox;
     PreviouslyCaught previousCatches = new PreviouslyCaught(0);
 
     HuntWindow[] windows = new HuntWindow[0];
@@ -29,11 +29,11 @@ public class HuntController {
     public HuntController(){
         huntControls.setTitle("Hunt Controller");
 
-        huntControlsButtonVBox = new VBox();
-        huntControlsButtonVBox.setAlignment(Pos.CENTER);
-        huntControlsButtonVBox.setSpacing(5);
+        huntControlsVBox = new VBox();
+        huntControlsVBox.setAlignment(Pos.CENTER);
+        huntControlsVBox.setSpacing(5);
         Button addHunt = new Button("Add Hunt");
-        huntControlsButtonVBox.getChildren().add(addHunt);
+        huntControlsVBox.getChildren().add(addHunt);
 
         Menu.getMenus().add(Settings);
 
@@ -45,7 +45,7 @@ public class HuntController {
 
         BorderPane huntControlsLayout = new BorderPane();
         huntControlsLayout.setTop(Menu);
-        huntControlsLayout.setCenter(huntControlsButtonVBox);
+        huntControlsLayout.setCenter(huntControlsVBox);
 
         Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
         huntControls.setScene(huntControlsScene);
@@ -60,7 +60,7 @@ public class HuntController {
             if(layout != null && !layout.equals("null")) {
                 previousCatches.createPreviouslyCaughtPokemonWindow();
                 previousCatches.setCurrentLayout(layout);
-                previousCatches.loadLayout();
+                //previousCatches.loadLayout();
                 previousCatches.getSettingsStage().close();
             }
             try {
@@ -73,7 +73,7 @@ public class HuntController {
             }
         }
 
-        huntControlsButtonVBox.setOnKeyTyped(e -> {
+        huntControlsVBox.setOnKeyTyped(e -> {
             for(HuntWindow i: windows) {
                 if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
                     i.incrementEncounters();
@@ -98,7 +98,7 @@ public class HuntController {
                 }else{
                     //creates selection page window
                     FXMLLoader selectionPageLoader = new FXMLLoader();
-                    selectionPageLoader.setLocation(getClass().getResource("shinyhunttracker/selectionPage.fxml"));
+                    selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
                     Parent root = selectionPageLoader.load();
 
                     Stage huntSelectionWindow = new Stage();
@@ -138,14 +138,13 @@ public class HuntController {
         MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
 
         Menu huntSettings = new Menu("Hunt Settings");
-        MenuItem pokemonCaught = new MenuItem("Caught");
         MenuItem increment= new MenuItem("Change Increment");
         MenuItem resetEncounters = new MenuItem("Fail");
         MenuItem phaseHunt = new MenuItem("Phase");
         MenuItem resetCombo = new MenuItem("Reset Combo");
         MenuItem saveHunt = new MenuItem("Save Hunt");
         MenuItem DVTable = new MenuItem("DV Table");
-        huntSettings.getItems().addAll(pokemonCaught, increment, resetEncounters, phaseHunt, resetCombo, saveHunt);
+        huntSettings.getItems().addAll(increment, resetEncounters, phaseHunt, resetCombo, saveHunt);
 
         if(window.getGameGeneration() == 1)
             huntSettings.getItems().add(DVTable);
@@ -160,23 +159,17 @@ public class HuntController {
             window.setPreviouslyCaughtWindow(previousCatches);
             window.phaseHunt();
         });
-        pokemonCaught.setOnAction(e -> {
-            window.pokemonCaught();
-            removeWindow(window);
-            if(previousCatches.getStage().isShowing())
-                previousCatches.refreshPreviouslyCaughtPokemon();
-        });
         resetCombo.setOnAction(e -> window.resetCombo());
         saveHunt.setOnAction(e -> window.saveHunt("Save Data/PreviousHunts.txt"));
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
-    public void addHuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+    public void addHunt(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
         if(windows.length == 0){
             MenuItem saveAll = new MenuItem("Save All");
             Settings.getItems().add(saveAll);
 
-            saveAll.setOnAction(e -> saveAll("Save Data/PreviousHunts.txt"));
+            saveAll.setOnAction(e -> saveAll("SaveData/PreviousHunts.txt"));
         }
 
         boolean numFound = false;
@@ -209,9 +202,10 @@ public class HuntController {
         HuntWindow newWindow = new HuntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
 
-        HBox huntControlsButtonHBox = new HBox();
-        huntControlsButtonHBox.setAlignment(Pos.CENTER);
-        huntControlsButtonHBox.setSpacing(10);
+        //Hunt Information
+        HBox huntInformationHBox = new HBox();
+        huntInformationHBox.setAlignment(Pos.CENTER);
+        huntInformationHBox.setSpacing(10);
 
         Button encountersButton = new Button("+");
         encountersButton.setOnAction(e -> newWindow.incrementEncounters());
@@ -221,8 +215,19 @@ public class HuntController {
 
         Label nameLabel = new Label(newWindow.getSelectedPokemon().getName());
 
-        huntControlsButtonHBox.getChildren().addAll(encountersButton, nameLabel, encounterLabel);
-        huntControlsButtonVBox.getChildren().add(huntControlsButtonHBox);
+        Button caughtButton = new Button("O");
+
+        Button popOutButton = new Button("O");
+
+        Button windowSettingsButton = new Button("X");
+        windowSettingsButton.setVisible(false);
+
+        Button settingsButton = new Button("O");
+
+        Button helpButton = new Button("O");
+
+        huntInformationHBox.getChildren().addAll(encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
+        huntControlsVBox.getChildren().add(huntInformationHBox);
 
         //Set keybinds
         SaveData data = new SaveData();
@@ -256,6 +261,32 @@ public class HuntController {
             newWindow.saveandCloseHunt();
             removeWindow(newWindow);
         });
+
+        caughtButton.setOnAction(e -> {
+            newWindow.pokemonCaught();
+            removeWindow(newWindow);
+            if(previousCatches.getStage().isShowing())
+                previousCatches.refreshPreviouslyCaughtPokemon();
+        });
+
+        popOutButton.setOnAction(e -> {
+            popOutButton.setVisible(false);
+            windowSettingsButton.setVisible(true);
+            newWindow.createHuntWindow();
+        });
+
+        windowSettingsButton.setOnAction(e -> {
+            popOutButton.setVisible(true);
+            windowSettingsButton.setVisible(false);
+        });
+
+        settingsButton.setOnAction(e -> {
+
+        });
+
+        helpButton.setOnAction(e -> {
+
+        });
     }
 
     public void removeWindow(HuntWindow window){
@@ -282,7 +313,7 @@ public class HuntController {
             Settings.getItems().remove(2, Settings.getItems().size());
         else
             Settings.getItems().remove(3, Settings.getItems().size());
-        huntControlsButtonVBox.getChildren().remove(1, huntControlsButtonVBox.getChildren().size());
+        huntControlsVBox.getChildren().remove(1, huntControlsVBox.getChildren().size());
         for(HuntWindow i : windows)
             if(i != null)
                 addHuntWindowSettings(i);

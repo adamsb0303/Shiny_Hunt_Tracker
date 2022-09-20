@@ -93,7 +93,7 @@ class NewOrOld extends Window {
             previousHuntsView.getSelectionModel().selectedItemProperty()
                     .addListener((v, oldValue, newValue) -> {
                         String line = newValue.toString().substring(18);
-                        previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1, controller, "Save Data/PreviousHunts.txt");
+                        previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1, controller, "SaveData/PreviousHunts.txt");
                         windowStage.close();
                     });
         });
