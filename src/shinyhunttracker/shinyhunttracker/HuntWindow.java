@@ -376,7 +376,7 @@ class HuntWindow extends Window {
     }
 
     //writes objects to previous hunts file
-    public void saveHunt(String filePath){
+    public void saveHunt(){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
         data.saveHunt(huntID);
     }

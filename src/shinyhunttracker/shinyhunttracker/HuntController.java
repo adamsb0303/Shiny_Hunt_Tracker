@@ -118,7 +118,9 @@ public class HuntController {
         });
 
         huntControls.setOnCloseRequest(e -> {
-            saveAll("SaveData/previousSession.txt");
+            for(HuntWindow i: windows)
+                i.saveHunt();
+
             try {
                 File file = new File("Save Data/previousSession.txt");
                 FileWriter fileWriter = new FileWriter(file, true);
@@ -160,7 +162,7 @@ public class HuntController {
             window.phaseHunt();
         });
         resetCombo.setOnAction(e -> window.resetCombo());
-        saveHunt.setOnAction(e -> window.saveHunt("Save Data/PreviousHunts.txt"));
+        saveHunt.setOnAction(e -> window.saveHunt());
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
@@ -169,7 +171,10 @@ public class HuntController {
             MenuItem saveAll = new MenuItem("Save All");
             Settings.getItems().add(saveAll);
 
-            saveAll.setOnAction(e -> saveAll("SaveData/PreviousHunts.txt"));
+            saveAll.setOnAction(e -> {
+                for (HuntWindow i : windows)
+                    i.saveHunt();
+            });
         }
 
         boolean numFound = false;
@@ -330,11 +335,6 @@ public class HuntController {
             }
         }
         System.exit(0);
-    }
-
-    public void saveAll(String filePath){
-        for(HuntWindow i: windows)
-            i.saveHunt(filePath);
     }
 
     public void orderWindowsArray(){

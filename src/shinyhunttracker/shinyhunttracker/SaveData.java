@@ -105,7 +105,7 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public void loadHunt(int lineNumber, HuntController controller, String filePath){
+    public void loadHunt(int lineNumber, HuntController controller){
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
@@ -151,9 +151,9 @@ public class SaveData {
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            int sameDataLine = checkForPreviousData(saveData);
+            /*int sameDataLine = checkForPreviousData(saveData);
             if(sameDataLine != -1)
-                deleteLine(sameDataLine, "PreviousHunts");
+                deleteLine(sameDataLine, "PreviousHunts");*/
             bufferedWriter.write(saveData);
             bufferedWriter.write("\n");
             bufferedWriter.close();
@@ -328,32 +328,6 @@ public class SaveData {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    //checks to see if the given string is already in the preivous hunts file
-    public int checkForPreviousData(String saveData){
-        try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/PreviousHunts.txt"));
-
-            int lineNumber = 0;
-            String line;
-
-            String[] saveDataArray = saveData.split(",");
-            while ((line = fileReader.readLine()) != null) {
-                String[] lineDataArray = line.split(",");
-                for (int i = 0; i < 6; i++) {
-                    if (i == 5)
-                        return lineNumber;
-                    if (saveDataArray[i].compareTo(lineDataArray[i]) != 0) {
-                        break;
-                    }
-                }
-                lineNumber++;
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        return -1;
     }
 
     //replaces the given line with the given string

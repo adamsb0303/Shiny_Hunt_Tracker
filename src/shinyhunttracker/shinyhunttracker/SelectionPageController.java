@@ -403,7 +403,7 @@ public class SelectionPageController implements Initializable {
 
         SaveData saveData = new SaveData(selectedPokemon, selectedGame, selectedMethod, 0, 0, 1, null);
         saveData.saveHunt(-1);
-        saveData.loadHunt(-1, controller, "");
+        saveData.loadHunt(-1, controller);
     }
 
     public void pokemonQuickSelect(){
