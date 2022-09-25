@@ -28,7 +28,7 @@ public class SaveData {
     Game selectedGame;
     Method selectedMethod;
     String layout;
-    int encounters, combo, increment;
+    int encounters, combo, increment, huntID;
 
     SaveData(){
 
@@ -45,20 +45,19 @@ public class SaveData {
     }
 
     //writes information to previous hunts file
-    //tempSave is for saving the hunts that are open when the program closes
-    public void saveHunt(){
-        JSONObject jsonObject = new JSONObject();
+    public void saveHunt(int huntID){
+        JSONObject pokemonData = new JSONObject();
 
-        jsonObject.put("pokemon_id", selectedPokemon.getDexNumber());
-        jsonObject.put("pokemon_form", selectedPokemon.getForm());
-        jsonObject.put("game", selectedGame.getName());
-        jsonObject.put("generation", selectedGame.getGeneration());
-        jsonObject.put("method", selectedMethod.getName());
-        jsonObject.put("modifier", selectedMethod.getModifier());
-        jsonObject.put("encounters", encounters);
-        jsonObject.put("combo", combo);
-        jsonObject.put("increment", increment);
-        jsonObject.put("layout", layout);
+        pokemonData.put("pokemon_id", selectedPokemon.getDexNumber());
+        pokemonData.put("pokemon_form", selectedPokemon.getForm());
+        pokemonData.put("game", selectedGame.getName());
+        pokemonData.put("generation", selectedGame.getGeneration());
+        pokemonData.put("method", selectedMethod.getName());
+        pokemonData.put("modifier", selectedMethod.getModifier());
+        pokemonData.put("encounters", encounters);
+        pokemonData.put("combo", combo);
+        pokemonData.put("increment", increment);
+        pokemonData.put("layout", layout);
 
         JSONParser jsonParser = new JSONParser();
 
@@ -67,7 +66,24 @@ public class SaveData {
             Object obj = jsonParser.parse(reader);
             JSONArray huntList = (JSONArray) obj;
 
-            huntList.add(jsonObject);
+            //Check for duplicate data
+            if(huntID == -1)
+                pokemonData.put("huntID", huntList.size());
+            else {
+                pokemonData.put("huntID", huntID);
+
+                for(int i = 0; i < huntList.size(); i++){
+                    JSONObject checkData = (JSONObject) huntList.get(i);
+                    int checkDataID = Integer.parseInt(checkData.get("huntID").toString());
+                    int pokemonDataID = Integer.parseInt(pokemonData.get("huntID").toString());
+                    if(checkDataID == pokemonDataID) {
+                        huntList.remove(i);
+                        return;
+                    }
+                }
+            }
+
+            huntList.add(pokemonData);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
             file.write(huntList.toJSONString());
@@ -77,7 +93,8 @@ public class SaveData {
         } catch (ParseException f){
             try{
                 FileWriter file = new FileWriter("SaveData/previousHunts.json");
-                file.write("[" + jsonObject.toJSONString() + "]");
+                pokemonData.put("huntID", 0);
+                file.write("[" + pokemonData.toJSONString() + "]");
                 file.close();
             } catch (IOException g) {
                 g.printStackTrace();
@@ -96,20 +113,23 @@ public class SaveData {
             Object obj = jsonParser.parse(reader);
             JSONArray huntList = (JSONArray) obj;
 
+            //for loading the last entry in the list
+            if(lineNumber == -1)
+                lineNumber = huntList.size() - 1;
+
             //parse hunt data
             JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
             int generation = parseInt(huntObject.get("generation").toString());
             selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
-            selectedPokemon.setForm(huntObject.get("pokemon_form").toString());
+            //selectedPokemon.setForm(huntObject.get("pokemon_form").toString());
             selectedGame = new Game(huntObject.get("game").toString());
             selectedMethod = new Method(huntObject.get("method").toString(), generation);
             selectedMethod.setModifier(parseInt(huntObject.get("modifier").toString()));
             encounters = parseInt(huntObject.get("encounters").toString());
             combo = parseInt(huntObject.get("combo").toString());
             increment = parseInt(huntObject.get("increment").toString());
-            layout = huntObject.get("layout").toString();
-            if(layout.compareTo("null") != 0)
-                layout = null;
+            huntID = parseInt(huntObject.get("huntID").toString());
+            //layout = huntObject.get("layout").toString();
 
             beginHunt(controller);
         }catch (IOException | ParseException e) {
@@ -140,7 +160,7 @@ public class SaveData {
     public void beginHunt(HuntController controller){
         SelectionPageController family = new SelectionPageController();
 
-        controller.addHunt(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], layout, encounters, combo, 1);
+        controller.addHunt(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], layout, encounters, combo, 1, huntID);
     }
 
     //saves layout

@@ -24,7 +24,7 @@ class HuntWindow extends Window {
     PreviouslyCaught previouslyCaughtWindow;
     IntegerProperty encounters = new SimpleIntegerProperty();
     IntegerProperty combo = new SimpleIntegerProperty();
-    int previousEncounters, increment, huntNumber;
+    int previousEncounters, increment, huntNumber, huntID;
     char keybind;
 
     //hunt settings window elements
@@ -37,7 +37,7 @@ class HuntWindow extends Window {
     Method selectedMethod;
     int methodBase;
 
-    public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntNumber){
+    public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntNumber, int huntID){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
@@ -47,6 +47,7 @@ class HuntWindow extends Window {
         this.combo.setValue(combo);
         this.increment = increment;
         this.huntNumber = huntNumber;
+        this.huntID = huntID;
     }
 
     //creates hunt window
@@ -324,8 +325,8 @@ class HuntWindow extends Window {
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.pokemonCaught();
+        //SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
+        //data.pokemonCaught();
 
         CustomizeHuntStage.close();
         windowStage.close();
@@ -377,7 +378,7 @@ class HuntWindow extends Window {
     //writes objects to previous hunts file
     public void saveHunt(String filePath){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.saveHunt();
+        data.saveHunt(huntID);
     }
 
     //save hunt, but it asks if the user would like to save, and it closes the window
@@ -385,7 +386,7 @@ class HuntWindow extends Window {
         windowStage.close();
         CustomizeHuntStage.close();
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.saveHunt();
+        data.saveHunt(huntID);
     }
 
     //changes increment

@@ -56,7 +56,7 @@ public class SelectionPageController implements Initializable {
         PokemonList.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null) {
-                        selectedPokemon = new Pokemon(PokemonList.getSelectionModel().getSelectedIndex());//creates Pokemon object
+                        selectedPokemon = new Pokemon(PokemonList.getSelectionModel().getSelectedIndex() + 1);//creates Pokemon object
                         pokemonLabel.textProperty().bind(selectedPokemon.getNameProperty());
 
                         //checks if pokemon has regional variant, and resets checkbox
@@ -401,7 +401,9 @@ public class SelectionPageController implements Initializable {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
 
-        controller.addHunt(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], currentLayout,0, 0, 1);
+        SaveData saveData = new SaveData(selectedPokemon, selectedGame, selectedMethod, 0, 0, 1, null);
+        saveData.saveHunt(-1);
+        saveData.loadHunt(-1, controller, "");
     }
 
     public void pokemonQuickSelect(){

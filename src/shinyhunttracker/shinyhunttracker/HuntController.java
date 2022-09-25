@@ -164,7 +164,7 @@ public class HuntController {
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
-    public void addHunt(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment){
+    public void addHunt(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntID){
         if(windows.length == 0){
             MenuItem saveAll = new MenuItem("Save All");
             Settings.getItems().add(saveAll);
@@ -199,7 +199,7 @@ public class HuntController {
         }
 
         //Add hunt Labels to controller
-        HuntWindow newWindow = new HuntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum);
+        HuntWindow newWindow = new HuntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum, huntID);
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
 
         //Hunt Information

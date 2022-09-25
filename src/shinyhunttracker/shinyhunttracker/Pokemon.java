@@ -44,7 +44,7 @@ public class Pokemon{
             JSONArray pokemonList = (JSONArray) obj;
 
             //parse pokemon data
-            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum);
+            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum - 1);
             name.setValue((String) pokemonObject.get("name"));
             generation = (int) (long)  pokemonObject.get("generation");
             id = (int) (long) pokemonObject.get("id");
