@@ -288,6 +288,23 @@ public class Pokemon{
         return name.getValue();
     }
 
+    public static String findName(int dexNum){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("GameData/pokemon.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray pokemonList = (JSONArray) obj;
+
+            //parse pokemon data
+            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum - 1);
+            return pokemonObject.get("name").toString();
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Boolean getBreedable(){
         return breedable;
     }

@@ -121,7 +121,6 @@ public class SaveData {
             JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
             int generation = parseInt(huntObject.get("generation").toString());
             selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
-            //selectedPokemon.setForm(huntObject.get("pokemon_form").toString());
             selectedGame = new Game(huntObject.get("game").toString());
             selectedMethod = new Method(huntObject.get("method").toString(), generation);
             selectedMethod.setModifier(parseInt(huntObject.get("modifier").toString()));
@@ -129,7 +128,14 @@ public class SaveData {
             combo = parseInt(huntObject.get("combo").toString());
             increment = parseInt(huntObject.get("increment").toString());
             huntID = parseInt(huntObject.get("huntID").toString());
-            //layout = huntObject.get("layout").toString();
+
+            //data-points that can be null
+            Object formObject = huntObject.get("pokemon_form");
+            Object layoutObject = huntObject.get("layout");
+            if(formObject != null)
+                selectedPokemon.setForm(formObject.toString());
+            if(layoutObject != null)
+                layout = layoutObject.toString();
 
             beginHunt(controller);
         }catch (IOException | ParseException e) {

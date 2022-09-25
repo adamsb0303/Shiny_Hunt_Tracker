@@ -10,7 +10,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
@@ -68,14 +73,25 @@ class NewOrOld extends Window {
 
             SaveData previousHuntData = new SaveData();
 
-            for(int i = 0; i < previousHuntData.getfileLength("PreviousHunts"); i++){
-                String line = previousHuntData.getLinefromFile(i, "PreviousHunts");
-                String[] data = line.split(",");
-                String name = data[0];
-                String game = data[2];
-                String method = data[4];
-                String encounters = data[6];
-                makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
+
+            JSONParser jsonParser = new JSONParser();
+
+            try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+                //Read JSON file
+                Object obj = jsonParser.parse(reader);
+                JSONArray huntList = (JSONArray) obj;
+
+                for(int i = 0; i < huntList.size(); i++){
+                    JSONObject huntData = (JSONObject) huntList.get(i);
+                    String name = Pokemon.findName(Integer.parseInt(huntData.get("pokemon_id").toString()));
+                    String game = huntData.get("game").toString();
+                    String method = huntData.get("method").toString();
+                    String encounters = huntData.get("encounters").toString();
+
+                    makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
+                }
+            }catch (IOException | ParseException f) {
+                f.printStackTrace();
             }
 
             previousHuntsView.setRoot(previousHuntsRoot);
