@@ -10,6 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
@@ -87,9 +90,14 @@ public class HuntController {
         addHunt.setOnAction(e -> {
             //check save data file for previous saves
             //if anything is found, ask the user if they would like to start a new hunt or a previous one
-            try {
-                SaveData checkForData = new SaveData();
-                if(checkForData.getLinefromFile(0, "PreviousHunts") != null) {
+            try (FileReader reader = new FileReader("SaveData/previousHunts.json")) {
+                JSONParser jsonParser = new JSONParser();
+
+                //Read JSON file
+                Object obj = jsonParser.parse(reader);
+                JSONArray huntList = (JSONArray) obj;
+
+                if(huntList.size() > 0) {
                     NewOrOld newOrOld = new NewOrOld();
                     newOrOld.setController(this);
                     if(windows.length > 0)
@@ -112,7 +120,7 @@ public class HuntController {
                         selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
                     huntSelectionWindow.show();
                 }
-            }catch(IOException f){
+            }catch(IOException | ParseException f){
                 f.printStackTrace();
             }
         });
@@ -240,7 +248,6 @@ public class HuntController {
 
         addHuntWindowSettings(newWindow);
 
-        //
         HuntWindow[] temp = new HuntWindow[windows.length + 1];
         System.arraycopy(windows, 0, temp, 0, windows.length);
         temp[windows.length] = newWindow;
@@ -269,9 +276,9 @@ public class HuntController {
 
         caughtButton.setOnAction(e -> {
             newWindow.pokemonCaught();
-            removeWindow(newWindow);
+            /*removeWindow(newWindow);
             if(previousCatches.getStage().isShowing())
-                previousCatches.refreshPreviouslyCaughtPokemon();
+                previousCatches.refreshPreviouslyCaughtPokemon();*/
         });
 
         popOutButton.setOnAction(e -> {

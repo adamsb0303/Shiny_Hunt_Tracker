@@ -78,7 +78,7 @@ public class SaveData {
                     int pokemonDataID = Integer.parseInt(pokemonData.get("huntID").toString());
                     if(checkDataID == pokemonDataID) {
                         huntList.remove(i);
-                        return;
+                        break;
                     }
                 }
             }
@@ -100,8 +100,6 @@ public class SaveData {
                 g.printStackTrace();
             }
         }
-
-
     }
 
     //pulls information from previous hunts file
@@ -144,21 +142,57 @@ public class SaveData {
     }
 
     //writes information to caught pokemon file
-    public void pokemonCaught(){
-        try{
-            String saveData = selectedPokemon.getDexNumber() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + ",";
-            File file = new File("SaveData/CaughtPokemon.txt");
-            FileWriter fileWriter = new FileWriter(file, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    public void pokemonCaught(int huntID){
+        JSONObject pokemonData = new JSONObject();
 
-            /*int sameDataLine = checkForPreviousData(saveData);
-            if(sameDataLine != -1)
-                deleteLine(sameDataLine, "PreviousHunts");*/
-            bufferedWriter.write(saveData);
-            bufferedWriter.write("\n");
-            bufferedWriter.close();
-        }catch (IOException e){
+        pokemonData.put("pokemon_id", selectedPokemon.getDexNumber());
+        pokemonData.put("pokemon_form", selectedPokemon.getForm());
+        pokemonData.put("game", selectedGame.getName());
+        pokemonData.put("generation", selectedGame.getGeneration());
+        pokemonData.put("method", selectedMethod.getName());
+        pokemonData.put("modifier", selectedMethod.getModifier());
+        pokemonData.put("encounters", encounters);
+        pokemonData.put("combo", combo);
+
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
+            //Remove Hunt from previousHunts.json
+            Object listObject = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
+            JSONArray huntList = (JSONArray) listObject;
+
+            for(int i = 0; i < huntList.size(); i++){
+                JSONObject checkData = (JSONObject) huntList.get(i);
+                int checkDataID = Integer.parseInt(checkData.get("huntID").toString());
+                if(checkDataID == huntID) {
+                    huntList.remove(i);
+
+                    FileWriter listFile = new FileWriter("SaveData/previousHunts.json");
+                    listFile.write(huntList.toJSONString());
+                    listFile.close();
+                    break;
+                }
+            }
+
+            //Read JSON file
+            Object caughtObj = jsonParser.parse(reader);
+            JSONArray caughtList = (JSONArray) caughtObj;
+
+            caughtList.add(pokemonData);
+
+            FileWriter caughtFile = new FileWriter("SaveData/caughtPokemon.json");
+            caughtFile.write(caughtList.toJSONString());
+            caughtFile.close();
+        }catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException f){
+            try{
+                FileWriter file = new FileWriter("SaveData/caughtPokemon.json");
+                file.write("[" + pokemonData.toJSONString() + "]");
+                file.close();
+            } catch (IOException g) {
+                g.printStackTrace();
+            }
         }
     }
 

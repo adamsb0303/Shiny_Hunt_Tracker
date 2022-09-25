@@ -325,8 +325,8 @@ class HuntWindow extends Window {
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        //SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        //data.pokemonCaught();
+        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
+        data.pokemonCaught(huntID);
 
         CustomizeHuntStage.close();
         windowStage.close();
