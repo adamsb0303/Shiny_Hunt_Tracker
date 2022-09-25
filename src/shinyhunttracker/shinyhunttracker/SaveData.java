@@ -11,10 +11,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -42,54 +46,73 @@ public class SaveData {
 
     //writes information to previous hunts file
     //tempSave is for saving the hunts that are open when the program closes
-    public void saveHunt(String filePath, boolean tempSave){
-        try {
-            String saveData = selectedPokemon.getDexNumber() + "," + selectedPokemon.getForm() + "," + selectedGame.getName() + "," + selectedGame.getGeneration() + "," + selectedMethod.getName() + "," + selectedMethod.getModifier() + "," + encounters + "," + combo + "," + increment + "," + layout + ",";
-            File file = new File(filePath);
-            FileWriter fileWriter = new FileWriter(file, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    public void saveHunt(){
+        JSONObject jsonObject = new JSONObject();
 
-            int sameDataLine = checkForPreviousData(saveData);
-            if(tempSave)
-                sameDataLine = -1;
-            if (sameDataLine == -1) {
-                bufferedWriter.write(saveData);
-                bufferedWriter.write("\n");
-            } else
-                replaceLine(sameDataLine, saveData, "PreviousHunts");
-            bufferedWriter.close();
-        }catch (IOException e){
+        jsonObject.put("pokemon_id", selectedPokemon.getDexNumber());
+        jsonObject.put("pokemon_form", selectedPokemon.getForm());
+        jsonObject.put("game", selectedGame.getName());
+        jsonObject.put("generation", selectedGame.getGeneration());
+        jsonObject.put("method", selectedMethod.getName());
+        jsonObject.put("modifier", selectedMethod.getModifier());
+        jsonObject.put("encounters", encounters);
+        jsonObject.put("combo", combo);
+        jsonObject.put("increment", increment);
+        jsonObject.put("layout", layout);
+
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            huntList.add(jsonObject);
+
+            FileWriter file = new FileWriter("SaveData/previousHunts.json");
+            file.write(huntList.toJSONString());
+            file.close();
+        }catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException f){
+            try{
+                FileWriter file = new FileWriter("SaveData/previousHunts.json");
+                file.write("[" + jsonObject.toJSONString() + "]");
+                file.close();
+            } catch (IOException g) {
+                g.printStackTrace();
+            }
         }
+
+
     }
 
     //pulls information from previous hunts file
     public void loadHunt(int lineNumber, HuntController controller, String filePath){
-        try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
+        JSONParser jsonParser = new JSONParser();
 
-            for(int i = 0; i < getfileLength(filePath.substring(filePath.indexOf('/'), filePath.length() - 4)); i++) {
-                String line = fileReader.readLine();
-                String[] data = line.split(",");
-                if(i == lineNumber) {
-                    int generation = parseInt(data[3]);
-                    selectedPokemon = new Pokemon(Integer.parseInt(data[0]));
-                    selectedPokemon.setForm(data[1]);
-                    selectedGame = new Game(data[2]);
-                    selectedMethod = new Method(data[4], generation);
-                    selectedMethod.setModifier(parseInt(data[5]));
-                    encounters = parseInt(data[6]);
-                    combo = parseInt(data[7]);
-                    increment = parseInt(data[8]);
-                    layout = data[9];
-                    if(layout.compareTo("") == 0)
-                        layout = null;
-                    break;
-                }
-            }
+        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            //parse hunt data
+            JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
+            int generation = parseInt(huntObject.get("generation").toString());
+            selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
+            selectedPokemon.setForm(huntObject.get("pokemon_form").toString());
+            selectedGame = new Game(huntObject.get("game").toString());
+            selectedMethod = new Method(huntObject.get("method").toString(), generation);
+            selectedMethod.setModifier(parseInt(huntObject.get("modifier").toString()));
+            encounters = parseInt(huntObject.get("encounters").toString());
+            combo = parseInt(huntObject.get("combo").toString());
+            increment = parseInt(huntObject.get("increment").toString());
+            layout = huntObject.get("layout").toString();
+            if(layout.compareTo("null") != 0)
+                layout = null;
 
             beginHunt(controller);
-        }catch (IOException e){
+        }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }

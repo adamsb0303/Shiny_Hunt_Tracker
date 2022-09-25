@@ -50,7 +50,7 @@ public class HuntController {
         Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
         huntControls.setScene(huntControlsScene);
         huntControls.show();
-
+/*
         SaveData data = new SaveData();
         if(data.getfileLength("previousSession") != 0){
             for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
@@ -60,7 +60,7 @@ public class HuntController {
             if(layout != null && !layout.equals("null")) {
                 previousCatches.createPreviouslyCaughtPokemonWindow();
                 previousCatches.setCurrentLayout(layout);
-                //previousCatches.loadLayout();
+                previousCatches.loadLayout();
                 previousCatches.getSettingsStage().close();
             }
             try {
@@ -71,7 +71,7 @@ public class HuntController {
             }catch (IOException ignored){
 
             }
-        }
+        }*/
 
         huntControlsVBox.setOnKeyTyped(e -> {
             for(HuntWindow i: windows) {

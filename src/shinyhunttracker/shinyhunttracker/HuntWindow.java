@@ -377,8 +377,7 @@ class HuntWindow extends Window {
     //writes objects to previous hunts file
     public void saveHunt(String filePath){
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        boolean tempSave = filePath.contains("previousSession");
-        data.saveHunt(filePath, tempSave);
+        data.saveHunt();
     }
 
     //save hunt, but it asks if the user would like to save, and it closes the window
@@ -386,7 +385,7 @@ class HuntWindow extends Window {
         windowStage.close();
         CustomizeHuntStage.close();
         SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.saveHunt("SaveData/PreviousHunts.txt", false);
+        data.saveHunt();
     }
 
     //changes increment
