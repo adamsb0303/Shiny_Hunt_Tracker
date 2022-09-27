@@ -200,7 +200,7 @@ public class SaveData {
     public void beginHunt(HuntController controller){
         SelectionPageController family = new SelectionPageController();
 
-        controller.addHunt(selectedPokemon, selectedGame, selectedMethod, selectedPokemon.getFamily()[0], selectedPokemon.getFamily()[1], layout, encounters, combo, 1, huntID);
+        controller.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, 1, huntID));
     }
 
     //saves layout

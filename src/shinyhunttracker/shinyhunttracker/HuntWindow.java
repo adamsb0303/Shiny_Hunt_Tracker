@@ -37,7 +37,7 @@ class HuntWindow extends Window {
     Method selectedMethod;
     int methodBase;
 
-    public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntNumber, int huntID){
+    public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String layout, int encounters, int combo, int increment, int huntID){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
@@ -46,7 +46,6 @@ class HuntWindow extends Window {
         this.encounters.setValue(encounters);
         this.combo.setValue(combo);
         this.increment = increment;
-        this.huntNumber = huntNumber;
         this.huntID = huntID;
     }
 
@@ -589,6 +588,10 @@ class HuntWindow extends Window {
 
     public Pokemon getSelectedPokemon(){ return selectedPokemon; }
 
+    public Method getMethod() {
+        return selectedMethod;
+    }
+
     public int getHuntNumber(){
         return huntNumber;
     }
@@ -600,6 +603,8 @@ class HuntWindow extends Window {
     public IntegerProperty encounterProperty(){ return encounters; }
 
     public int getGameGeneration(){ return selectedGame.getGeneration(); }
+
+    public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
 
     public void setKeybind(char keybind){
         this.keybind = keybind;

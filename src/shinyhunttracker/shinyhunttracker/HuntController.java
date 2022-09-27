@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.util.Vector;
 
 public class HuntController {
     Stage huntControls = new Stage();
@@ -23,13 +24,16 @@ public class HuntController {
     VBox huntControlsVBox;
     PreviouslyCaught previousCatches = new PreviouslyCaught(0);
 
-    HuntWindow[] windows = new HuntWindow[0];
-    String[] currentLayouts = new String[0];
-    int huntNum = 1;
+    Vector<HuntWindow> windowsList = new Vector<>();
 
     Stage keyBindingSettingsStage = new Stage();
 
+    /**
+     * Creates the Hunt Controller and
+     * opens hunts from previous session
+     */
     public HuntController(){
+        //Initial Hunt Controller setup
         huntControls.setTitle("Hunt Controller");
 
         huntControlsVBox = new VBox();
@@ -53,46 +57,57 @@ public class HuntController {
         Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
         huntControls.setScene(huntControlsScene);
         huntControls.show();
-/*
-        SaveData data = new SaveData();
-        if(data.getfileLength("previousSession") != 0){
-            for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
-                data.loadHunt(i, this, "SaveData/previousSession.txt");
-            }
-            String layout = data.getLinefromFile(data.getfileLength("previousSession") - 1, "previousSession");
-            if(layout != null && !layout.equals("null")) {
-                previousCatches.createPreviouslyCaughtPokemonWindow();
-                previousCatches.setCurrentLayout(layout);
-                previousCatches.loadLayout();
-                previousCatches.getSettingsStage().close();
-            }
-            try {
-                File file = new File("SaveData/previousSession.txt");
-                FileWriter fileWriter = new FileWriter(file, false);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.close();
-            }catch (IOException ignored){
 
+        //Check to see if there were hunts open when the hunt controller was last closed
+        JSONParser jsonParser = new JSONParser();
+        /*try (FileReader reader = new FileReader("SaveData/previousSession.txt")) {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            SaveData data = new SaveData();
+
+            if(huntList != null){
+                for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
+                    data.loadHunt(i, this);
+                }
+                String layout = data.getLinefromFile(data.getfileLength("previousSession") - 1, "previousSession");
+                if(layout != null && !layout.equals("null")) {
+                    previousCatches.createPreviouslyCaughtPokemonWindow();
+                    previousCatches.setCurrentLayout(layout);
+                    previousCatches.loadLayout();
+                    previousCatches.getSettingsStage().close();
+                }
+                try {
+                    File file = new File("SaveData/previousSession.txt");
+                    FileWriter fileWriter = new FileWriter(file, false);
+                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                    bufferedWriter.close();
+                }catch (IOException ignored){
+
+                }
             }
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
         }*/
 
+        //Listener for KeyBinds
         huntControlsVBox.setOnKeyTyped(e -> {
-            for(HuntWindow i: windows) {
+            for(HuntWindow i: windowsList) {
                 if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
                     i.incrementEncounters();
             }
         });
 
+        //Popups for given menus
         keyBinding.setOnAction(e -> keyBindingSettings());
-
         previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
+        //Opens pop up for Selection Window
         addHunt.setOnAction(e -> {
             //check save data file for previous saves
             //if anything is found, ask the user if they would like to start a new hunt or a previous one
             try (FileReader reader = new FileReader("SaveData/previousHunts.json")) {
-                JSONParser jsonParser = new JSONParser();
-
                 //Read JSON file
                 Object obj = jsonParser.parse(reader);
                 JSONArray huntList = (JSONArray) obj;
@@ -100,8 +115,8 @@ public class HuntController {
                 if(huntList.size() > 0) {
                     NewOrOld newOrOld = new NewOrOld();
                     newOrOld.setController(this);
-                    if(windows.length > 0)
-                        newOrOld.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    if(windowsList.size() > 0)
+                        newOrOld.setCurrentLayout(windowsList.lastElement().getCurrentLayout());
                     newOrOld.newOrOldHunt();
                 }else{
                     //creates selection page window
@@ -116,8 +131,8 @@ public class HuntController {
 
                     SelectionPageController selectionPageController = selectionPageLoader.getController();
                     selectionPageController.setController(this);
-                    if(windows.length > 0)
-                        selectionPageController.setCurrentLayout(windows[windows.length-1].getCurrentLayout());
+                    if(windowsList.size() > 0)
+                        selectionPageController.setCurrentLayout(windowsList.lastElement().getCurrentLayout());
                     huntSelectionWindow.show();
                 }
             }catch(IOException | ParseException f){
@@ -125,12 +140,14 @@ public class HuntController {
             }
         });
 
+        //Makes sure to save all currently open hunts before closing
         huntControls.setOnCloseRequest(e -> {
-            for(HuntWindow i: windows)
+            for(HuntWindow i: windowsList)
                 i.saveHunt();
 
+            //saves current session to open next time the program is started
             try {
-                File file = new File("Save Data/previousSession.txt");
+                File file = new File("SaveData/previousSession.txt");
                 FileWriter fileWriter = new FileWriter(file, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.write(previousCatches.getCurrentLayout());
@@ -138,7 +155,128 @@ public class HuntController {
             }catch (IOException ignored){
 
             }
-            closeWindows();
+
+            //Close all possibly open windows
+            keyBindingSettingsStage.close();
+            previousCatches.getStage().close();
+            previousCatches.getSettingsStage().close();
+            while(windowsList.size() > 0) {
+                windowsList.elementAt(0).saveandCloseHunt();
+                windowsList.remove(0);
+            }
+            System.exit(0);
+        });
+    }
+
+    /**
+     * Adds a new HuntWindow to the windowsList and
+     * adds appropriate elements to controller with new hunt's information
+     * @param newWindow HuntWindow with new hunt information
+     */
+    public void addHunt(HuntWindow newWindow){
+        //Add "Save All" button to menu
+        if(windowsList.size() == 0){
+            MenuItem saveAll = new MenuItem("Save All");
+            Settings.getItems().add(saveAll);
+
+            saveAll.setOnAction(e -> {
+                for (HuntWindow i : windowsList)
+                    i.saveHunt();
+            });
+        }
+
+        //Set huntNum to first available
+        int huntNum = 0;
+        for(; huntNum < windowsList.size(); ++huntNum)
+            if(windowsList.get(huntNum).getHuntNumber() != huntNum + 1)
+                break;
+        newWindow.setHuntNumber(huntNum + 1);
+        windowsList.add(huntNum, newWindow);
+
+        //Add hunt Labels to controller
+        newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
+
+        //Hunt Information to add to controller vbox
+        HBox huntInformationHBox = new HBox();
+        huntInformationHBox.setAlignment(Pos.CENTER);
+        huntInformationHBox.setSpacing(10);
+
+        Button closeWindowButton = new Button("X");
+        closeWindowButton.setOnAction(e -> newWindow.getStage().close());
+
+        Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
+
+        Button encountersButton = new Button("+");
+        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
+
+        Label encounterLabel = new Label();
+        encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
+
+        Label nameLabel = new Label(newWindow.getSelectedPokemon().getName());
+
+        Button caughtButton = new Button("O");
+
+        Button popOutButton = new Button("O");
+
+        Button windowSettingsButton = new Button("X");
+        windowSettingsButton.setVisible(false);
+
+        Button settingsButton = new Button("O");
+
+        Button helpButton = new Button("O");
+
+        huntInformationHBox.getChildren().addAll(closeWindowButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
+        huntControlsVBox.getChildren().add(newWindow.getHuntNumber(), huntInformationHBox);
+
+        //Set keybinds
+        SaveData data = new SaveData();
+        newWindow.setKeybind(data.getLinefromFile(newWindow.getHuntNumber() - 1, "keyBinds").charAt(0));
+
+        //Add new settings to settings menu
+        addHuntWindowSettings(newWindow);
+
+        //update keybind window if it is open
+        if(keyBindingSettingsStage.isShowing()){
+            keyBindingSettings();
+        }
+
+        //since the search level or total encounters can change between uses, this value needs to be captured after every startup
+        if (newWindow.getMethod().getName().compareTo("DexNav") == 0 || newWindow.getMethod().getName().compareTo("Total Encounters") == 0) {
+            newWindow.promptPreviousEncounters();
+        }
+
+        caughtButton.setOnAction(e -> {
+            newWindow.pokemonCaught();
+            huntControlsVBox.getChildren().remove(huntInformationHBox);
+            windowsList.remove(newWindow);
+            /*if(previousCatches.getStage().isShowing())
+                previousCatches.refreshPreviouslyCaughtPokemon();*/
+        });
+
+        popOutButton.setOnAction(e -> {
+            popOutButton.setVisible(false);
+            windowSettingsButton.setVisible(true);
+            newWindow.createHuntWindow();
+        });
+
+        windowSettingsButton.setOnAction(e -> {
+            popOutButton.setVisible(true);
+            windowSettingsButton.setVisible(false);
+        });
+
+        settingsButton.setOnAction(e -> {
+
+        });
+
+        helpButton.setOnAction(e -> {
+
+        });
+
+        newWindow.getStage().setOnCloseRequest(e -> {
+            e.consume();
+            newWindow.saveandCloseHunt();
+            huntControlsVBox.getChildren().remove(huntInformationHBox);
+            windowsList.remove(newWindow);
         });
     }
 
@@ -174,189 +312,6 @@ public class HuntController {
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
-    public void addHunt(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String evo0, String evo1, String layout, int encounters, int combo, int increment, int huntID){
-        if(windows.length == 0){
-            MenuItem saveAll = new MenuItem("Save All");
-            Settings.getItems().add(saveAll);
-
-            saveAll.setOnAction(e -> {
-                for (HuntWindow i : windows)
-                    i.saveHunt();
-            });
-        }
-
-        boolean numFound = false;
-        for(int i = 0; i < windows.length; i++){
-            for(HuntWindow j : windows){
-                if (j.getHuntNumber() == (i + 1)) {
-                    numFound = true;
-                    break;
-                }
-            }
-            if(!numFound) {
-                huntNum = i + 1;
-                break;
-            }
-        }
-        if(numFound)
-            huntNum++;
-
-        if(currentLayouts.length > windows.length) {
-            layout = currentLayouts[huntNum - 1];
-        }
-        else {
-            String[] temp = new String[currentLayouts.length + 1];
-            System.arraycopy(currentLayouts, 0, temp, 0, currentLayouts.length);
-            currentLayouts = temp;
-            currentLayouts[huntNum - 1] = layout;
-        }
-
-        //Add hunt Labels to controller
-        HuntWindow newWindow = new HuntWindow(selectedPokemon, selectedGame, selectedMethod, evo0, evo1, layout, encounters, combo, increment, huntNum, huntID);
-        newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
-
-        //Hunt Information
-        HBox huntInformationHBox = new HBox();
-        huntInformationHBox.setAlignment(Pos.CENTER);
-        huntInformationHBox.setSpacing(10);
-
-        Button encountersButton = new Button("+");
-        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
-
-        Label encounterLabel = new Label();
-        encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
-
-        Label nameLabel = new Label(newWindow.getSelectedPokemon().getName());
-
-        Button caughtButton = new Button("O");
-
-        Button popOutButton = new Button("O");
-
-        Button windowSettingsButton = new Button("X");
-        windowSettingsButton.setVisible(false);
-
-        Button settingsButton = new Button("O");
-
-        Button helpButton = new Button("O");
-
-        huntInformationHBox.getChildren().addAll(encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
-        huntControlsVBox.getChildren().add(huntInformationHBox);
-
-        //Set keybinds
-        SaveData data = new SaveData();
-        newWindow.setKeybind(data.getLinefromFile(newWindow.getHuntNumber() - 1, "keyBinds").charAt(0));
-
-        addHuntWindowSettings(newWindow);
-
-        HuntWindow[] temp = new HuntWindow[windows.length + 1];
-        System.arraycopy(windows, 0, temp, 0, windows.length);
-        temp[windows.length] = newWindow;
-        windows = temp;
-
-        if(!numFound && windows.length != 1) {
-            orderWindowsArray();
-            refreshHuntWindowSettings();
-        }
-
-        if(keyBindingSettingsStage.isShowing()){
-            keyBindingSettings();
-        }
-
-        //since the search level or total encounters can change between uses, this value needs to be captured after every startup
-        if (selectedMethod.getName().compareTo("DexNav") == 0 || selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            windows[windows.length - 1].promptPreviousEncounters();
-        }
-
-        newWindow.getStage().setOnCloseRequest(e -> {
-            e.consume();
-            currentLayouts[newWindow.getHuntNumber()-1] = newWindow.getCurrentLayout();
-            newWindow.saveandCloseHunt();
-            removeWindow(newWindow);
-        });
-
-        caughtButton.setOnAction(e -> {
-            newWindow.pokemonCaught();
-            /*removeWindow(newWindow);
-            if(previousCatches.getStage().isShowing())
-                previousCatches.refreshPreviouslyCaughtPokemon();*/
-        });
-
-        popOutButton.setOnAction(e -> {
-            popOutButton.setVisible(false);
-            windowSettingsButton.setVisible(true);
-            newWindow.createHuntWindow();
-        });
-
-        windowSettingsButton.setOnAction(e -> {
-            popOutButton.setVisible(true);
-            windowSettingsButton.setVisible(false);
-        });
-
-        settingsButton.setOnAction(e -> {
-
-        });
-
-        helpButton.setOnAction(e -> {
-
-        });
-    }
-
-    public void removeWindow(HuntWindow window){
-        if(window.getHuntNumber() == huntNum)
-            if(windows.length == 1)
-                huntNum = 1;
-            else
-                huntNum = windows[windows.length - 2].getHuntNumber();
-
-        HuntWindow[] temp = new HuntWindow[windows.length - 1];
-        int index = 0;
-        for (HuntWindow i : windows) {
-            if (i != window) {
-                temp[index] = i;
-                index++;
-            }
-        }
-        windows = temp;
-        refreshHuntWindowSettings();
-    }
-
-    public void refreshHuntWindowSettings(){
-        if(windows.length == 0)
-            Settings.getItems().remove(2, Settings.getItems().size());
-        else
-            Settings.getItems().remove(3, Settings.getItems().size());
-        huntControlsVBox.getChildren().remove(1, huntControlsVBox.getChildren().size());
-        for(HuntWindow i : windows)
-            if(i != null)
-                addHuntWindowSettings(i);
-    }
-
-    public void closeWindows(){
-        keyBindingSettingsStage.close();
-        previousCatches.getStage().close();
-        previousCatches.getSettingsStage().close();
-        for(int i = 0; i < windows.length; i++) {
-            if(windows[i] != null) {
-                windows[i].saveandCloseHunt();
-                windows[i] = null;
-            }
-        }
-        System.exit(0);
-    }
-
-    public void orderWindowsArray(){
-        HuntWindow temp;
-        for(int i = 0; i < windows.length; i++){
-            for (int j = i; j > 0; j--) {
-                if(windows[j].getHuntNumber() < windows[j-1].getHuntNumber()) {
-                    temp = windows[j];
-                    windows[j] = windows[j - 1];
-                    windows[j - 1] = temp;
-                }
-            }
-        }
-    }
-
     public void keyBindingSettings(){
         keyBindingSettingsStage.setTitle("Key Bindings");
 
@@ -364,7 +319,7 @@ public class HuntController {
         keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
         keyBindingsLayout.setPadding(new Insets(10,0,50,75));
-        for (HuntWindow i : windows) {
+        for (HuntWindow i : windowsList) {
             HBox windowSettings = new HBox();
             windowSettings.setAlignment(Pos.CENTER);
             windowSettings.setSpacing(10);
@@ -377,7 +332,7 @@ public class HuntController {
 
             keyField.setOnAction(f -> {
                 if(keyField.getText().length() == 1)
-                    for(HuntWindow j: windows)
+                    for(HuntWindow j: windowsList)
                         if(j.getHuntNumber() == i.getHuntNumber()) {
                             j.setKeybind(keyField.getText().charAt(0));
                             SaveData data = new SaveData();

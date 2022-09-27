@@ -71,9 +71,6 @@ class NewOrOld extends Window {
             TreeView<String> previousHuntsView = new TreeView<>();
             TreeItem<String> previousHuntsRoot = new TreeItem<>();
 
-            SaveData previousHuntData = new SaveData();
-
-
             JSONParser jsonParser = new JSONParser();
 
             try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
@@ -108,6 +105,8 @@ class NewOrOld extends Window {
             //skip selection window and go straight to hunt page
             previousHuntsView.getSelectionModel().selectedItemProperty()
                     .addListener((v, oldValue, newValue) -> {
+                        SaveData previousHuntData = new SaveData();
+
                         String line = newValue.toString().substring(18);
                         previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1, controller);
                         windowStage.close();
