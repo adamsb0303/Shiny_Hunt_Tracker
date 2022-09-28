@@ -127,8 +127,11 @@ public class HuntController {
             previousCatches.getSettingsStage().close();
 
             //save and close all currently open hunts
-            while(windowsList.size() > 0)
-                windowsList.lastElement().fireClose();
+            while(windowsList.size() > 0) {
+                windowsList.lastElement().saveHunt();
+                windowsList.lastElement().closeHuntWindow();
+                windowsList.remove(windowsList.lastElement());
+            }
 
             System.exit(0);
         });
@@ -167,13 +170,11 @@ public class HuntController {
         huntInformationHBox.setAlignment(Pos.CENTER);
         huntInformationHBox.setSpacing(10);
 
-        Button closeWindowButton = new Button("X");
-        closeWindowButton.setOnAction(e -> newWindow.fireClose());
+        Button exitHuntButton = new Button("X");
 
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
 
         Button encountersButton = new Button("+");
-        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
 
         Label encounterLabel = new Label();
         encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
@@ -191,7 +192,7 @@ public class HuntController {
 
         Button helpButton = new Button("O");
 
-        huntInformationHBox.getChildren().addAll(closeWindowButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
+        huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
         huntControlsVBox.getChildren().add(newWindow.getHuntNumber(), huntInformationHBox);
 
         //Set keybinds
@@ -211,6 +212,15 @@ public class HuntController {
             newWindow.promptPreviousEncounters();
         }
 
+        exitHuntButton.setOnAction(e -> {
+            newWindow.saveHunt();
+            newWindow.closeHuntWindow();
+            huntControlsVBox.getChildren().remove(huntInformationHBox);
+            windowsList.remove(newWindow);
+        });
+
+        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
+
         caughtButton.setOnAction(e -> {
             newWindow.pokemonCaught();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
@@ -222,13 +232,13 @@ public class HuntController {
         popOutButton.setOnAction(e -> {
             popOutButton.setVisible(false);
             windowSettingsButton.setVisible(true);
-            newWindow.createHuntWindow();
+            if(newWindow.getScene().getChildren().size() == 0)
+                newWindow.createHuntWindow();
+            else
+                newWindow.getStage().show();
         });
 
-        windowSettingsButton.setOnAction(e -> {
-            popOutButton.setVisible(true);
-            windowSettingsButton.setVisible(false);
-        });
+        windowSettingsButton.setOnAction(e -> newWindow.CustomizeHuntWindow());
 
         settingsButton.setOnAction(e -> {
 
@@ -240,10 +250,9 @@ public class HuntController {
 
         newWindow.getStage().setOnCloseRequest(e -> {
             e.consume();
-            newWindow.saveHunt();
-            newWindow.closeHunt();
-            huntControlsVBox.getChildren().remove(huntInformationHBox);
-            windowsList.remove(newWindow);
+            popOutButton.setVisible(true);
+            windowSettingsButton.setVisible(false);
+            newWindow.closeHuntWindow();
         });
     }
 

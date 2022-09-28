@@ -388,14 +388,9 @@ class HuntWindow extends Window {
     }
 
     //save hunt and it closes the window
-    public void closeHunt(){
+    public void closeHuntWindow(){
         windowStage.close();
         CustomizeHuntStage.close();
-    }
-
-    public void fireClose(){
-        windowStage.fireEvent(new WindowEvent(windowStage, WindowEvent.WINDOW_CLOSE_REQUEST));
-        CustomizeHuntStage.fireEvent(new WindowEvent(windowStage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     //changes increment
@@ -606,6 +601,8 @@ class HuntWindow extends Window {
     public IntegerProperty encounterProperty(){ return encounters; }
 
     public int getGameGeneration(){ return selectedGame.getGeneration(); }
+
+    public AnchorPane getScene() { return windowLayout; }
 
     public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
 
