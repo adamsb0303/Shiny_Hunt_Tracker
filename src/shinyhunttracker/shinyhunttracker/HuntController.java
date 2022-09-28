@@ -128,7 +128,7 @@ public class HuntController {
 
             //save and close all currently open hunts
             while(windowsList.size() > 0)
-                windowsList.lastElement().closeHunt();
+                windowsList.lastElement().fireClose();
 
             System.exit(0);
         });
@@ -168,7 +168,7 @@ public class HuntController {
         huntInformationHBox.setSpacing(10);
 
         Button closeWindowButton = new Button("X");
-        closeWindowButton.setOnAction(e -> newWindow.closeHunt());
+        closeWindowButton.setOnAction(e -> newWindow.fireClose());
 
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
 
@@ -241,6 +241,7 @@ public class HuntController {
         newWindow.getStage().setOnCloseRequest(e -> {
             e.consume();
             newWindow.saveHunt();
+            newWindow.closeHunt();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
         });

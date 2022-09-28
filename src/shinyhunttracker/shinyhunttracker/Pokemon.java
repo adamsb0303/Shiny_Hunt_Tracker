@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static shinyhunttracker.SaveData.parseJSONArray;
 
@@ -19,6 +20,7 @@ public class Pokemon{
     StringProperty name = new SimpleStringProperty();
     int generation;
     int id;
+    int evoStage;
     Boolean breedable;
     Boolean huntable = true;
     Boolean legendary;
@@ -52,11 +54,67 @@ public class Pokemon{
             legendary = (Boolean) pokemonObject.get("legendary");
 
             family = parseJSONArray((JSONArray) pokemonObject.get("family"));
+            for(int i = 0; i < family.length; i++)
+                if (name.getValue().equals(family[i])) {
+                    evoStage = i;
+                    break;
+                }
             forms = parseJSONArray((JSONArray) pokemonObject.get("forms"));
             //base = parseJSONArray((JSONArray) pokemonObject.get("base"));
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    Pokemon(String name){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("GameData/pokemon.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray gameList = (JSONArray) obj;
+
+            //parse pokemon data
+            for (Object o : gameList) {
+                JSONObject pokemonObject = (JSONObject) o;
+
+                if (Objects.equals(pokemonObject.get("name").toString(), name)) {
+                    this.name.setValue((String) pokemonObject.get("name"));
+                    generation = (int) (long)  pokemonObject.get("generation");
+                    id = (int) (long) pokemonObject.get("id");
+                    breedable = (Boolean) pokemonObject.get("breedable");
+                    legendary = (Boolean) pokemonObject.get("legendary");
+
+                    family = parseJSONArray((JSONArray) pokemonObject.get("family"));
+                    for(int i = 0; i < family.length; i++)
+                        if (this.name.getValue().equals(family[i])) {
+                            evoStage = i;
+                            break;
+                        }
+                    forms = parseJSONArray((JSONArray) pokemonObject.get("forms"));
+                    //base = parseJSONArray((JSONArray) pokemonObject.get("base"));
+                }
+            }
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String findName(int dexNum){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("GameData/pokemon.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray pokemonList = (JSONArray) obj;
+
+            //parse pokemon data
+            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum - 1);
+            return pokemonObject.get("name").toString();
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //checks to see if pokemon is in the undiscovered egg group, and that it doesn't have any evolutions
@@ -288,23 +346,6 @@ public class Pokemon{
         return name.getValue();
     }
 
-    public static String findName(int dexNum){
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("GameData/pokemon.json")){
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray pokemonList = (JSONArray) obj;
-
-            //parse pokemon data
-            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum - 1);
-            return pokemonObject.get("name").toString();
-        }catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public Boolean getBreedable(){
         return breedable;
     }
@@ -324,6 +365,10 @@ public class Pokemon{
     public int getDexNumber(){
         return this.id;
     }
+
+    public int getEvoStage(){ return this.evoStage; }
+
+    public String[] getForms(){ return this.forms; }
 
     //returns the generation of the given pokemon
     public int findGeneration(){

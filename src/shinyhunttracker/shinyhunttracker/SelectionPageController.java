@@ -122,7 +122,7 @@ public class SelectionPageController implements Initializable {
                         methodLabel.textProperty().bind(selectedMethod.getNameProperty());
                         beginHuntButton.setDisable(selectedMethod.getName() == null);//disables begin hunt button if the selected method is a pokemon name
                         helpButton.setVisible(selectedMethod.getName() != null);//displays tooltip button
-                        setToolTip(selectedMethod.getName());//creates the tool tip that appears when method is selected
+                        //setToolTip(selectedMethod.getName());//creates the tool tip that appears when method is selected
                         methodToolTip.setShowDelay(ZERO);
                         methodToolTip.setShowDuration(INDEFINITE);
                     }
@@ -328,7 +328,7 @@ public class SelectionPageController implements Initializable {
     //creates a tool tip with breif description of the selected hunting method
     public void setToolTip(String selectedMethod){
         switch (selectedMethod){
-            case "None":
+            case "Full Odds":
                 methodToolTip.setText("Base odds are being used");
                 helpButton.setTooltip(methodToolTip);
                 break;

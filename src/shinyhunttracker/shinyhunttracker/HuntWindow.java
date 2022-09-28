@@ -52,6 +52,7 @@ class HuntWindow extends Window {
 
     //creates hunt window
     public void createHuntWindow(){
+        //Initializes Labels
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
         currentGameText = new Text(selectedGame.getName());
@@ -63,6 +64,7 @@ class HuntWindow extends Window {
         previousEncountersText = new Text();
         previousEncountersText.setVisible(false);
 
+        //Sets the outlines of the labels to white
         currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
         currentHuntingMethodText.setStroke(Color.web("0x00000000"));
         currentGameText.setStroke(Color.web("0x00000000"));
@@ -71,6 +73,7 @@ class HuntWindow extends Window {
         currentComboText.setStroke(Color.web("0x00000000"));
         previousEncountersText.setStroke(Color.web("0x00000000"));
 
+        //Makes labels draggable
         quickEdit(currentHuntingPokemonText);
         quickEdit(currentHuntingMethodText);
         quickEdit(currentGameText);
@@ -79,31 +82,29 @@ class HuntWindow extends Window {
         quickEdit(currentComboText);
         quickEdit(previousEncountersText);
 
+        //Creates the pokemon's sprite
         sprite = new ImageView();
-
         setPokemonSprite(sprite, selectedPokemon.getName(), selectedGame);
         if(selectedPokemon.getForm() != null && !selectedPokemon.getForm().equals("null"))
             setAlternateSprite(selectedPokemon, selectedGame, sprite);
 
+        //Creates the pokemon's family's sprites
         Evo0 = new ImageView();
         Evo1 = new ImageView();
-        if(!selectedPokemon.getFamily()[0].equals("")) {
-            setPokemonSprite(Evo0, selectedPokemon.getFamily()[0], selectedGame);
-            if(Evo0 == null)
-                Evo0 = new ImageView();
-        }
-        if(!selectedPokemon.getFamily()[1].equals("")) {
-            setPokemonSprite(Evo1, selectedPokemon.getFamily()[1], selectedGame);
-            if(Evo1 == null)
-                Evo1 = new ImageView();
-        }
 
+        if(selectedPokemon.getEvoStage() >= 1)
+            setPokemonSprite(Evo0, selectedPokemon.getFamily()[0], selectedGame);
+        if(selectedPokemon.getEvoStage() >= 2)
+            setPokemonSprite(Evo1, selectedPokemon.getFamily()[1], selectedGame);
+
+        //Makes family sprites draggable
         quickEdit(sprite);
         quickEdit(Evo0);
         quickEdit(Evo1);
 
         windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
+        //Adds combo text and prompts user for previous encounters when needed
         switch(selectedMethod.getName()){
             case "Radar Chaining":
             case "Chain Fishing":
@@ -124,23 +125,25 @@ class HuntWindow extends Window {
         windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
         huntLayoutSize = windowLayout.getChildren().size();
 
+        //Positions the labels to the right of the sprite images
         int index = 3;
         for(int i = 3; i < windowLayout.getChildren().size(); i++){
             if(windowLayout.getChildren().get(i).isVisible()) {
                 double evo1Width = 0;
                 double evo0Width = 0;
                 double spriteWidth = sprite.getImage().getWidth() * sprite.getScaleX();
-                if(!selectedPokemon.getFamily()[0].equals(""))
-                    evo1Width = Evo1.getImage().getWidth() * Evo1.getScaleX();
-                if(!selectedPokemon.getFamily()[1].equals(""))
+                if(Evo0.getImage() != null)
                     evo0Width = Evo0.getImage().getWidth() * Evo0.getScaleX();
+                if(Evo1.getImage() != null)
+                    evo1Width = Evo1.getImage().getWidth() * Evo1.getScaleX();
                 windowLayout.getChildren().get(i).setLayoutX(evo0Width + evo1Width + spriteWidth + 5);
                 windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
                 index++;
             }
         }
 
-        if(!this.selectedPokemon.getFamily()[1].equals("")) {
+        //Positions the sprites so that they are in order of the family i.e stage 0, 1, 2
+        if(Evo1.getImage() != null) {
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
             Evo0.setLayoutY((Evo0.getImage().getHeight() * Evo0.getScaleY()));
 
@@ -149,7 +152,7 @@ class HuntWindow extends Window {
 
             sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + Evo1.getImage().getWidth()  * Evo1.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
             sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
-        }else if(!this.selectedPokemon.getFamily()[0].equals("")){
+        }else if(Evo0.getImage() != null){
             Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
             Evo0.setLayoutY(Evo0.getImage().getHeight() * Evo0.getScaleY());
 
@@ -160,13 +163,16 @@ class HuntWindow extends Window {
             sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
         }
 
+        //automatically updates encounters and combo texts
         encountersText.textProperty().bind(encounters.asString());
         currentComboText.textProperty().bind(combo.asString());
 
+        //Set scene and show screen
         Scene huntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(huntScene);
         windowStage.show();
 
+        //load layout
         SaveData data = new SaveData();
         if(currentLayout != null && currentLayout.compareTo("null") != 0) {
             data.loadLayout("Hunts/" + currentLayout, windowLayout);
@@ -262,14 +268,14 @@ class HuntWindow extends Window {
             VBox Evo1Settings;
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
-            /*if (!evo1.equals("")) {
-                Evo1Settings = createImageSettings(Evo1, new Pokemon(evo1, 0), selectedGame);
+            if (Evo1.getImage() != null) {
+                Evo1Settings = createImageSettings(Evo1, new Pokemon(selectedPokemon.getFamily()[1]), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
-            if (!evo0.equals("")) {
-                Evo0Settings = createImageSettings(Evo0, new Pokemon(evo0, 0), selectedGame);
+            if (Evo0.getImage() != null) {
+                Evo0Settings = createImageSettings(Evo0, new Pokemon(selectedPokemon.getFamily()[0]), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
-            }*/
+            }
 
             VBox comboSettings;
             VBox previousEncountersSettings;
@@ -383,6 +389,11 @@ class HuntWindow extends Window {
 
     //save hunt and it closes the window
     public void closeHunt(){
+        windowStage.close();
+        CustomizeHuntStage.close();
+    }
+
+    public void fireClose(){
         windowStage.fireEvent(new WindowEvent(windowStage, WindowEvent.WINDOW_CLOSE_REQUEST));
         CustomizeHuntStage.fireEvent(new WindowEvent(windowStage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
@@ -587,17 +598,11 @@ class HuntWindow extends Window {
 
     public Pokemon getSelectedPokemon(){ return selectedPokemon; }
 
-    public Method getMethod() {
-        return selectedMethod;
-    }
+    public Method getMethod() { return selectedMethod; }
 
-    public int getHuntNumber(){
-        return huntNumber;
-    }
+    public int getHuntNumber(){ return huntNumber; }
 
-    public char getKeyBinding(){
-        return keybind;
-    }
+    public char getKeyBinding(){ return keybind; }
 
     public IntegerProperty encounterProperty(){ return encounters; }
 
@@ -605,9 +610,7 @@ class HuntWindow extends Window {
 
     public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
 
-    public void setKeybind(char keybind){
-        this.keybind = keybind;
-    }
+    public void setKeybind(char keybind){ this.keybind = keybind; }
 
     public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }
