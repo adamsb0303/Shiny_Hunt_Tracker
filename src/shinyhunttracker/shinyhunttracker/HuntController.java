@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -99,29 +100,11 @@ public class HuntController {
                 Object obj = jsonParser.parse(reader);
                 JSONArray huntList = (JSONArray) obj;
 
-                if(huntList.size() > 0) {
-                    NewOrOld newOrOld = new NewOrOld();
-                    newOrOld.setController(this);
-                    if(windowsList.size() > 0)
-                        newOrOld.setCurrentLayout(windowsList.lastElement().getCurrentLayout());
-                    newOrOld.newOrOldHunt();
-                }else{
-                    //creates selection page window
-                    FXMLLoader selectionPageLoader = new FXMLLoader();
-                    selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
-                    Parent root = selectionPageLoader.load();
-
-                    Stage huntSelectionWindow = new Stage();
-                    huntSelectionWindow.setTitle("Shiny Hunt Tracker");
-                    huntSelectionWindow.setResizable(false);
-                    huntSelectionWindow.setScene(new Scene(root, 750, 480));
-
-                    SelectionPageController selectionPageController = selectionPageLoader.getController();
-                    selectionPageController.setController(this);
-                    if(windowsList.size() > 0)
-                        selectionPageController.setCurrentLayout(windowsList.lastElement().getCurrentLayout());
-                    huntSelectionWindow.show();
-                }
+                //If there are no previous hunts, it goes straight to selection page
+                if(huntList.size() > 0)
+                    newOrOld();
+                else
+                    createSelectionPage();
             }catch(IOException | ParseException f){
                 f.printStackTrace();
             }
@@ -261,6 +244,109 @@ public class HuntController {
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
         });
+    }
+
+    /**
+     * Prompts the user if they would like to continue an old hunt, or start a new one
+     */
+    public void newOrOld(){
+        Stage windowStage = new Stage();
+        Stage loadStage = new Stage();
+
+        Label prompt1 = new Label("Would you like to continue a previous hunt or");
+        Label prompt2 = new Label("start a new one?");
+        Button continuePrevious = new Button("Continue Previous Hunt");
+        Button newHunt = new Button("Start New Hunt");
+
+        VBox loadLayout = new VBox();
+        loadLayout.getChildren().addAll(prompt1, prompt2, continuePrevious, newHunt);
+        loadLayout.setSpacing(10);
+        loadLayout.setAlignment(Pos.CENTER);
+
+        Scene loadScene = new Scene(loadLayout, 275, 150);
+        loadStage.setTitle("Load previous save");
+        loadStage.setResizable(false);
+        loadStage.setScene(loadScene);
+        loadStage.show();
+
+        //show the previously created Selection Page Window in order of last used
+        newHunt.setOnAction(e -> {
+            //creates selection page window
+            createSelectionPage();
+
+            //closes prompt window
+            windowStage.close();
+            loadStage.close();
+        });
+
+        //if they would like to continue, show a list of the previous hunts found on the file
+        continuePrevious.setOnAction(e -> {
+            windowStage.setTitle("Select a previous hunt");
+            TreeView<String> previousHuntsView = new TreeView<>();
+            TreeItem<String> previousHuntsRoot = new TreeItem<>();
+
+            JSONParser jsonParser = new JSONParser();
+
+            try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+                //Read JSON file
+                Object obj = jsonParser.parse(reader);
+                JSONArray huntList = (JSONArray) obj;
+
+                for(int i = huntList.size() - 1; i >= 0; i--){
+                    JSONObject huntData = (JSONObject) huntList.get(i);
+                    String name = Pokemon.findName(Integer.parseInt(huntData.get("pokemon_id").toString()));
+                    String game = huntData.get("game").toString();
+                    String method = huntData.get("method").toString();
+                    String encounters = huntData.get("encounters").toString();
+
+                    TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters");
+                    previousHuntsRoot.getChildren().add(item);
+                }
+
+                //skip selection window and go straight to hunt page
+                previousHuntsView.getSelectionModel().selectedItemProperty()
+                        .addListener((v, oldValue, newValue) -> {
+                            //Reads the hunt number from the beginning of the string
+                            int index = Integer.parseInt(newValue.toString().substring(18, newValue.toString().indexOf(')')));
+                            SaveData.loadHunt(huntList.size() - index, this);
+                            windowStage.close();
+                        });
+            }catch (IOException | ParseException f) {
+                f.printStackTrace();
+            }
+
+            previousHuntsView.setRoot(previousHuntsRoot);
+            previousHuntsView.setShowRoot(false);
+
+            VBox previousHuntsLayout = new VBox();
+            previousHuntsLayout.getChildren().addAll(previousHuntsView);
+
+            Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
+            windowStage.setScene(previousHuntsScene);
+            windowStage.show();
+            loadStage.close();
+        });
+    }
+
+    public void createSelectionPage(){
+        try {
+            FXMLLoader selectionPageLoader = new FXMLLoader();
+            selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
+            Parent root = selectionPageLoader.load();
+
+            Stage huntSelectionWindow = new Stage();
+            huntSelectionWindow.setTitle("Shiny Hunt Tracker");
+            huntSelectionWindow.setResizable(false);
+            huntSelectionWindow.setScene(new Scene(root, 750, 480));
+
+            SelectionPageController selectionPageController = selectionPageLoader.getController();
+            selectionPageController.setController(this);
+            if (windowsList.size() > 0)
+                selectionPageController.setCurrentLayout(windowsList.lastElement().getCurrentLayout());
+            huntSelectionWindow.show();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void addHuntWindowSettings(HuntWindow window){
