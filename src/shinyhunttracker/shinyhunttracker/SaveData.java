@@ -103,7 +103,7 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public void loadHunt(int lineNumber, HuntController controller){
+    public static void loadHunt(int lineNumber, HuntController controller){
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
@@ -118,14 +118,15 @@ public class SaveData {
             //parse hunt data
             JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
             int generation = parseInt(huntObject.get("generation").toString());
-            selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
-            selectedGame = new Game(huntObject.get("game").toString());
-            selectedMethod = new Method(huntObject.get("method").toString(), generation);
+            Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
+            Game selectedGame = new Game(huntObject.get("game").toString());
+            Method selectedMethod = new Method(huntObject.get("method").toString(), generation);
             selectedMethod.setModifier(parseInt(huntObject.get("modifier").toString()));
-            encounters = parseInt(huntObject.get("encounters").toString());
-            combo = parseInt(huntObject.get("combo").toString());
-            increment = parseInt(huntObject.get("increment").toString());
-            huntID = parseInt(huntObject.get("huntID").toString());
+            int encounters = parseInt(huntObject.get("encounters").toString());
+            int combo = parseInt(huntObject.get("combo").toString());
+            int increment = parseInt(huntObject.get("increment").toString());
+            int huntID = parseInt(huntObject.get("huntID").toString());
+            String layout = "";
 
             //data-points that can be null
             Object formObject = huntObject.get("pokemon_form");
@@ -135,7 +136,8 @@ public class SaveData {
             if(layoutObject != null)
                 layout = layoutObject.toString();
 
-            beginHunt(controller);
+            SelectionPageController family = new SelectionPageController();
+            controller.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, increment, huntID));
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -194,13 +196,6 @@ public class SaveData {
                 g.printStackTrace();
             }
         }
-    }
-
-    //opens huntControls window
-    public void beginHunt(HuntController controller){
-        SelectionPageController family = new SelectionPageController();
-
-        controller.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, 1, huntID));
     }
 
     //saves layout

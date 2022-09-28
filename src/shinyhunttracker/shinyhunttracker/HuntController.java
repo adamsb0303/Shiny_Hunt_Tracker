@@ -60,36 +60,23 @@ public class HuntController {
 
         //Check to see if there were hunts open when the hunt controller was last closed
         JSONParser jsonParser = new JSONParser();
-        /*try (FileReader reader = new FileReader("SaveData/previousSession.txt")) {
+        try {
+            //reads the number of hunts that were open when the program was last closed
+            FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
+            DataInputStream previousSessionData = new DataInputStream(reader);
+            int previousHuntsNum = previousSessionData.read();
+
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
+            Object obj = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
             JSONArray huntList = (JSONArray) obj;
 
-            SaveData data = new SaveData();
-
-            if(huntList != null){
-                for(int i = 0; i < data.getfileLength("previousSession") - 1; i++){
-                    data.loadHunt(i, this);
-                }
-                String layout = data.getLinefromFile(data.getfileLength("previousSession") - 1, "previousSession");
-                if(layout != null && !layout.equals("null")) {
-                    previousCatches.createPreviouslyCaughtPokemonWindow();
-                    previousCatches.setCurrentLayout(layout);
-                    previousCatches.loadLayout();
-                    previousCatches.getSettingsStage().close();
-                }
-                try {
-                    File file = new File("SaveData/previousSession.txt");
-                    FileWriter fileWriter = new FileWriter(file, false);
-                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                    bufferedWriter.close();
-                }catch (IOException ignored){
-
-                }
-            }
+            //Load the last n hunts in the json
+            if(huntList != null)
+                for(int i = 1; i <= previousHuntsNum; i++)
+                    SaveData.loadHunt(huntList.size() - i, this);
         }catch (IOException | ParseException e) {
             e.printStackTrace();
-        }*/
+        }
 
         //Listener for KeyBinds
         huntControlsVBox.setOnKeyTyped(e -> {
@@ -142,28 +129,24 @@ public class HuntController {
 
         //Makes sure to save all currently open hunts before closing
         huntControls.setOnCloseRequest(e -> {
-            for(HuntWindow i: windowsList)
-                i.saveHunt();
-
-            //saves current session to open next time the program is started
+            //saves current hunts to open next time the program is started
             try {
-                File file = new File("SaveData/previousSession.txt");
-                FileWriter fileWriter = new FileWriter(file, true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(previousCatches.getCurrentLayout());
-                bufferedWriter.close();
-            }catch (IOException ignored){
-
+                OutputStream out = new FileOutputStream("SaveData/previousSession.dat");
+                out.write(windowsList.size());
+                out.close();
+            }catch (IOException f){
+                f.printStackTrace();
             }
 
             //Close all possibly open windows
             keyBindingSettingsStage.close();
             previousCatches.getStage().close();
             previousCatches.getSettingsStage().close();
-            while(windowsList.size() > 0) {
-                windowsList.elementAt(0).saveandCloseHunt();
-                windowsList.remove(0);
-            }
+
+            //save and close all currently open hunts
+            while(windowsList.size() > 0)
+                windowsList.lastElement().closeHunt();
+
             System.exit(0);
         });
     }
@@ -202,7 +185,7 @@ public class HuntController {
         huntInformationHBox.setSpacing(10);
 
         Button closeWindowButton = new Button("X");
-        closeWindowButton.setOnAction(e -> newWindow.getStage().close());
+        closeWindowButton.setOnAction(e -> newWindow.closeHunt());
 
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
 
@@ -274,7 +257,7 @@ public class HuntController {
 
         newWindow.getStage().setOnCloseRequest(e -> {
             e.consume();
-            newWindow.saveandCloseHunt();
+            newWindow.saveHunt();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
         });

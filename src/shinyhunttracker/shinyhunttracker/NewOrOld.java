@@ -18,8 +18,6 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static java.lang.Integer.parseInt;
-
 class NewOrOld extends Window {
     HuntController controller;
 
@@ -42,7 +40,7 @@ class NewOrOld extends Window {
         loadStage.setScene(loadScene);
         loadStage.show();
 
-        //show the previously created Selection Page Window
+        //show the previously created Selection Page Window in order of last used
         newHunt.setOnAction(e -> {
             //creates selection page window
             try {
@@ -78,15 +76,24 @@ class NewOrOld extends Window {
                 Object obj = jsonParser.parse(reader);
                 JSONArray huntList = (JSONArray) obj;
 
-                for(int i = 0; i < huntList.size(); i++){
+                for(int i = huntList.size() - 1; i >= 0; i--){
                     JSONObject huntData = (JSONObject) huntList.get(i);
                     String name = Pokemon.findName(Integer.parseInt(huntData.get("pokemon_id").toString()));
                     String game = huntData.get("game").toString();
                     String method = huntData.get("method").toString();
                     String encounters = huntData.get("encounters").toString();
 
-                    makeBranch((i+1) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
+                    makeBranch((huntList.size() - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previousHuntsRoot);
                 }
+
+                //skip selection window and go straight to hunt page
+                previousHuntsView.getSelectionModel().selectedItemProperty()
+                        .addListener((v, oldValue, newValue) -> {
+                            //Reads the hunt number from the beginning of the string
+                            int index = Integer.parseInt(newValue.toString().substring(18, newValue.toString().indexOf(')')));
+                            SaveData.loadHunt(huntList.size() - index, controller);
+                            windowStage.close();
+                        });
             }catch (IOException | ParseException f) {
                 f.printStackTrace();
             }
@@ -101,16 +108,6 @@ class NewOrOld extends Window {
             windowStage.setScene(previousHuntsScene);
             windowStage.show();
             loadStage.close();
-
-            //skip selection window and go straight to hunt page
-            previousHuntsView.getSelectionModel().selectedItemProperty()
-                    .addListener((v, oldValue, newValue) -> {
-                        SaveData previousHuntData = new SaveData();
-
-                        String line = newValue.toString().substring(18);
-                        previousHuntData.loadHunt(parseInt(line.substring(0, line.indexOf(')'))) - 1, controller);
-                        windowStage.close();
-                    });
         });
     }
 

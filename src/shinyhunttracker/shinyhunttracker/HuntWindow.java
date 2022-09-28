@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import static java.lang.Integer.parseInt;
 
@@ -380,12 +381,10 @@ class HuntWindow extends Window {
         data.saveHunt(huntID);
     }
 
-    //save hunt, but it asks if the user would like to save, and it closes the window
-    public void saveandCloseHunt(){
-        windowStage.close();
-        CustomizeHuntStage.close();
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.saveHunt(huntID);
+    //save hunt and it closes the window
+    public void closeHunt(){
+        windowStage.fireEvent(new WindowEvent(windowStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+        CustomizeHuntStage.fireEvent(new WindowEvent(windowStage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     //changes increment
