@@ -174,8 +174,8 @@ class HuntWindow extends Window {
 
         //load layout
         SaveData data = new SaveData();
-        if(currentLayout != null && currentLayout.compareTo("null") != 0) {
-            data.loadLayout("Hunts/" + currentLayout, windowLayout);
+        if(currentLayout.compareTo("") != 0) {
+            data.loadLayout(currentLayout, windowLayout, true);
         }
     }
 
@@ -469,7 +469,6 @@ class HuntWindow extends Window {
 
     //save layout
     public void saveLayout(){
-        SaveData data = new SaveData();
         Stage promptLayoutSaveName = new Stage();
         promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
         promptLayoutSaveName.setResizable(false);
@@ -515,7 +514,7 @@ class HuntWindow extends Window {
                     if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
                         saveNameText.setText("");
                     } else {
-                        data.saveLayout("Hunts/" + saveNameText.getText(), windowLayout, true);
+                        SaveData.saveLayout(saveNameText.getText(), windowLayout, true);
                         currentLayout = saveNameText.getText();
                         promptLayoutSaveName.close();
                     }
@@ -523,7 +522,7 @@ class HuntWindow extends Window {
             });
 
             oldSaveButton.setOnAction(f -> {
-                data.saveLayout("Hunts/" + currentLayout, windowLayout, false);
+                SaveData.saveLayout(currentLayout, windowLayout, true);
                 promptLayoutSaveName.close();
             });
         }else{
@@ -546,7 +545,7 @@ class HuntWindow extends Window {
                 if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
                     saveNameText.setText("");
                 } else {
-                    data.saveLayout("Hunts/" + saveNameText.getText(), windowLayout, true);
+                    SaveData.saveLayout(saveNameText.getText(), windowLayout, true);
                     currentLayout = saveNameText.getText();
                     promptLayoutSaveName.close();
                 }
@@ -585,7 +584,7 @@ class HuntWindow extends Window {
         savedLayouts.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                    data.loadLayout("Hunts/" + currentLayout, windowLayout);
+                    data.loadLayout(currentLayout, windowLayout, true);
                     loadSavedLayoutStage.close();
                     CustomizeHuntWindow();
                 });

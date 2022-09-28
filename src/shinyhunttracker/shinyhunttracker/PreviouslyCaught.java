@@ -124,14 +124,13 @@ class PreviouslyCaught extends Window {
 
     //refreshes previously caught pokemon window
     public void refreshPreviouslyCaughtPokemon(){
-        SaveData temp = new SaveData();
-        temp.saveLayout("Previously-Caught/layoutTransition", windowLayout, false);
+        SaveData.saveLayout("Previously-Caught/layoutTransition", windowLayout, false);
 
         previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
         windowLayout.getChildren().remove(0,windowLayout.getChildren().size());
         addPreviouslyCaughtPokemon(displayCaught);
 
-        temp.loadLayout("Previously-Caught/layoutTransition", windowLayout);
+        SaveData.loadLayout("Previously-Caught/layoutTransition", windowLayout, false);
     }
 
     //create elements of the last x previously caught pokemon
@@ -231,7 +230,6 @@ class PreviouslyCaught extends Window {
 
     //save layout
     public void saveLayout(){
-        SaveData data = new SaveData();
         Stage promptLayoutSaveName = new Stage();
         promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
         promptLayoutSaveName.setResizable(false);
@@ -277,14 +275,14 @@ class PreviouslyCaught extends Window {
                     if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
                         saveNameText.setText("");
                     } else {
-                        data.saveLayout("Previously-Caught/" + saveNameText.getText(), windowLayout, true);
+                        SaveData.saveLayout(saveNameText.getText(), windowLayout, false);
                         promptLayoutSaveName.close();
                     }
                 });
             });
 
             oldSaveButton.setOnAction(f -> {
-                data.saveLayout("Previously-Caught/" + currentLayout, windowLayout, false);
+                SaveData.saveLayout(currentLayout, windowLayout, false);
                 promptLayoutSaveName.close();
             });
         }else{
@@ -307,7 +305,7 @@ class PreviouslyCaught extends Window {
                 if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
                     saveNameText.setText("");
                 } else {
-                    data.saveLayout("Previously-Caught/" + saveNameText.getText(), windowLayout, true);
+                    SaveData.saveLayout(saveNameText.getText(), windowLayout, false);
                     promptLayoutSaveName.close();
                 }
             });
@@ -362,7 +360,7 @@ class PreviouslyCaught extends Window {
             createPreviouslyCaughtPokemonWindow();
         previouslyCaughtPokemonSettings();
         addPreviouslyCaughtPokemon(displayCaught);
-        data.loadLayout("Previously-Caught/" + currentLayout, windowLayout);
+        data.loadLayout(currentLayout, windowLayout, false);
     }
 
     public Stage getSettingsStage(){

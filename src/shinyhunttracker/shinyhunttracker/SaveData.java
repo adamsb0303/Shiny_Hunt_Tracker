@@ -28,7 +28,7 @@ public class SaveData {
     Game selectedGame;
     Method selectedMethod;
     String layout;
-    int encounters, combo, increment, huntID;
+    int encounters, combo, increment;
 
     SaveData(){
 
@@ -199,132 +199,152 @@ public class SaveData {
     }
 
     //saves layout
-    public void saveLayout(String layoutName, AnchorPane huntLayout, boolean newSave){
-        if(newSave) {
-            try {
-                File file;
-                if(layoutName.substring(0, layoutName.indexOf('/')).compareTo("Hunts") == 0)
-                    file = new File("SaveData/Layouts/Hunts/~Layouts.txt");
-                else
-                    file = new File("SaveData/Layouts/Previously-Caught/~Layouts.txt");
-                FileWriter fileWriter = new FileWriter(file, true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    public static void saveLayout(String layoutName, AnchorPane huntLayout, boolean currentHunt){
+        JSONArray layoutData = new JSONArray();
 
-                bufferedWriter.write(layoutName.substring(layoutName.indexOf('/') + 1) + '\n');
-                bufferedWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        //Layout name
+        layoutData.add(layoutName);
+
+        //Saves every element from layout to json
+        for(Node i : huntLayout.getChildren()) {
+            if(i instanceof ImageView) {
+                ImageView image = (ImageView) i;
+                JSONObject imageData = new JSONObject();
+                imageData.put("X", image.getLayoutX());
+                imageData.put("Y", image.getLayoutY());
+                imageData.put("width", image.getFitWidth());
+                imageData.put("height", image.getFitHeight());
+                imageData.put("visible", image.isVisible());
+
+                layoutData.add(imageData);
+            }else if(i instanceof Text){
+                Text text = (Text) i;
+                JSONObject textData = new JSONObject();
+                textData.put("X", text.getLayoutX());
+                textData.put("Y", text.getLayoutY());
+                textData.put("scale", text.getScaleX());
+                textData.put("font", text.getFont().getName());
+                textData.put("fill", text.getFill().toString());
+                textData.put("stroke_width", text.getStrokeWidth());
+                textData.put("stroke", text.getStroke().toString());
+                textData.put("underline", text.isUnderline());
+                textData.put("visible", text.isVisible());
+
+                layoutData.add(textData);
             }
         }
+        layoutData.add(huntLayout.getBackground().getFills().get(0).getFill().toString());
 
-        try{
-            File file = new File("SaveData/Layouts/" + layoutName + ".txt");
-            FileWriter fileWriter = new FileWriter(file, false);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        JSONParser jsonParser = new JSONParser();
 
-            for(Node i : huntLayout.getChildren()) {
-                if(i instanceof ImageView){
-                    ImageView image = (ImageView) i;
-                    bufferedWriter.write(image.getLayoutX() + "," + image.getLayoutY() + "," + image.getFitWidth() + "," + image.getFitHeight() + "," + image.isVisible() + ",\n");
-                }else if(i instanceof Text){
-                    Text text = (Text) i;
-                    bufferedWriter.write(text.getLayoutX() + "," + text.getLayoutY() + "," + text.getScaleX() + "," + text.getFont().getName() + "," + text.getFill() + "," + text.getStrokeWidth() + "," + text.getStroke() + "," + text.isUnderline() + "," + text.isVisible() + ",\n");
+        //Changes if the file is for current hunt or previously caught window
+        String filePath = "SaveData/";
+        if(currentHunt)
+            filePath += "huntLayouts.json";
+        else
+            filePath += "caughtLayouts.json";
+
+        try (FileReader reader = new FileReader(filePath)){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray layoutList = (JSONArray) obj;
+
+            //Check list for another layout with same name and remove it
+            for(int i = 0; i < layoutList.size(); i++){
+                JSONArray layoutCheck = (JSONArray) layoutList.get(i);
+                if(layoutCheck.get(0).equals(layoutName)) {
+                    layoutList.remove(layoutCheck);
+                    break;
                 }
             }
-            bufferedWriter.write(String.valueOf(huntLayout.getBackground().getFills().get(0).getFill()) + '\n');
-            if(layoutName.substring(0, layoutName.indexOf('/')).compareTo("Previously-Caught") == 0)
-                bufferedWriter.write(String.valueOf(huntLayout.getChildren().size() / 4) + '\n');
-            bufferedWriter.close();
-        }catch(IOException e){
+
+            layoutList.add(layoutData);
+
+            //Write to file
+            FileWriter file = new FileWriter(filePath);
+            file.write(layoutList.toJSONString());
+            file.close();
+        }catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException f){
+            //If the file is empty, add brackets and write to file
+            try{
+                FileWriter file = new FileWriter(filePath);
+                file.write("[" + layoutData.toJSONString() + "]");
+                file.close();
+            } catch (IOException g) {
+                g.printStackTrace();
+            }
         }
     }
 
     //load saved layout
-    public void loadLayout(String layoutName, AnchorPane huntLayout){
-        try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/Layouts/" + layoutName + ".txt"));
+    public static void loadLayout(String layoutName, AnchorPane huntLayout, boolean currentHunt){
+        JSONParser jsonParser = new JSONParser();
 
-            if(layoutName.substring(0, layoutName.indexOf('/')).compareTo("Hunts") == 0) {
-                for (int i = 0; i < getfileLength("Layouts/" + layoutName) - 1; i++) {
-                    String line = fileReader.readLine();
-                    String[] data = line.split(",");
-                    if (i < 3) {
-                        ImageView image = (ImageView) huntLayout.getChildren().get(i);
-                        image.setLayoutX(parseDouble(data[0]));
-                        image.setLayoutY(parseDouble(data[1]));
-                        double imageWidth = -parseDouble(data[2]);
-                        double imageHeight = -parseDouble(data[3]);
-                        if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight){
-                            double width = -image.getFitWidth();
-                            double height = -image.getFitHeight();
-                            double scale;
-                            if(height > width)
-                                scale = imageHeight / height;
-                            else
-                                scale = imageWidth / width;
-                            image.setScaleX(image.getScaleX() * scale);
-                            image.setScaleY(image.getScaleY() * scale);
-                            image.setTranslateX(-image.getImage().getWidth() / 2);
-                            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-                        }
-                        image.setVisible(data[4].compareTo("true") == 0);
-                    } else if (i < 10) {
-                        Text text = (Text) huntLayout.getChildren().get(i);
-                        text.setLayoutX(parseDouble(data[0]));
-                        text.setLayoutY(parseDouble(data[1]));
-                        text.setScaleX(parseDouble(data[2]));
-                        text.setScaleY(parseDouble(data[2]));
-                        text.setFont(new Font(data[3], 12));
-                        text.setFill(Color.web(data[4]));
-                        text.setStrokeWidth(parseDouble(data[5]));
-                        text.setStroke(Color.web(data[6]));
-                        text.setUnderline(data[7].compareTo("true") == 0);
-                        text.setVisible(data[8].compareTo("true") == 0);
-                    }
-                }
-                huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 1, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
-            }else{
-                for(int i = 0; i < getfileLength("Layouts/" + layoutName) - 2; i++){
-                    String line = fileReader.readLine();
-                    String[] data = line.split(",");
-                    if(i % 4 == 0){
-                        ImageView image = (ImageView) huntLayout.getChildren().get(i);
-                        image.setLayoutX(parseDouble(data[0]));
-                        image.setLayoutY(parseDouble(data[1]));
-                        double imageWidth = -parseDouble(data[2]);
-                        double imageHeight = -parseDouble(data[3]);
-                        if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight){
-                            double width = -image.getFitWidth();
-                            double height = -image.getFitHeight();
-                            double scale;
-                            if(height > width)
-                                scale = imageHeight / height;
-                            else
-                                scale = imageWidth / width;
-                            image.setScaleX(image.getScaleX() * scale);
-                            image.setScaleY(image.getScaleY() * scale);
-                            image.setTranslateX(-image.getImage().getWidth() / 2);
-                            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-                        }
-                        image.setVisible(data[4].compareTo("true") == 0);
-                    }else{
-                        Text text = (Text) huntLayout.getChildren().get(i);
-                        text.setLayoutX(parseDouble(data[0]));
-                        text.setLayoutY(parseDouble(data[1]));
-                        text.setScaleX(parseDouble(data[2]));
-                        text.setScaleY(parseDouble(data[2]));
-                        text.setFont(new Font(data[3], 12));
-                        text.setFill(Color.web(data[4]));
-                        text.setStrokeWidth(parseDouble(data[5]));
-                        text.setStroke(Color.web(data[6]));
-                        text.setUnderline(data[7].compareTo("true") == 0);
-                        text.setVisible(data[8].compareTo("true") == 0);
-                    }
-                }
-                huntLayout.setBackground(new Background(new BackgroundFill(Color.web(getLinefromFile(getfileLength("Layouts/" + layoutName) - 2, ("Layouts/" + layoutName))), CornerRadii.EMPTY, Insets.EMPTY)));
+        //Changes if the file is for current hunt or previously caught window
+        String filePath = "SaveData/";
+        if(currentHunt)
+            filePath += "huntLayouts.json";
+        else
+            filePath += "caughtLayouts.json";
+
+        try (FileReader reader = new FileReader(filePath)) {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray layoutList = (JSONArray) obj;
+
+            //set layoutData to the matching save data
+            JSONArray layoutData = new JSONArray();
+
+            for(int i = layoutList.size() - 1; i >= 0; i--) {
+                layoutData = (JSONArray) layoutList.get(i);
+                if (layoutData.get(0).toString().equals(layoutName))
+                    break;
             }
-        }catch(IOException e){
+
+            //Loads data from file onto elements of layout
+            for(int i = 1; i < layoutData.size() - 1; i++){
+                JSONObject elementData = (JSONObject) layoutData.get(i);
+                Node element = huntLayout.getChildren().get(i - 1);
+                if(element instanceof ImageView){
+                    ImageView image = (ImageView) element;
+
+                    image.setLayoutX((Double) elementData.get("X"));
+                    image.setLayoutY((Double) elementData.get("Y"));
+                    double imageWidth = -(Double) elementData.get("width");
+                    double imageHeight = -(Double) elementData.get("height");
+                    if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight && image.getImage() != null){
+                        double width = -image.getFitWidth();
+                        double height = -image.getFitHeight();
+                        double scale;
+                        if(height > width)
+                            scale = imageHeight / height;
+                        else
+                            scale = imageWidth / width;
+                        image.setScaleX(image.getScaleX() * scale);
+                        image.setScaleY(image.getScaleY() * scale);
+                        image.setTranslateX(-image.getImage().getWidth() / 2);
+                        image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
+                    }
+                    image.setVisible(elementData.get("visible").toString().compareTo("true") == 0);
+                }else{
+                    Text text = (Text) element;
+
+                    text.setLayoutX((Double) elementData.get("X"));
+                    text.setLayoutY((Double) elementData.get("Y"));
+                    text.setScaleX((Double) elementData.get("scale"));
+                    text.setScaleY((Double) elementData.get("scale"));
+                    text.setFont(new Font(elementData.get("font").toString(), 12));
+                    text.setFill(Color.web(elementData.get("fill").toString()));
+                    text.setStrokeWidth((Double) elementData.get("stroke_width"));
+                    text.setStroke(Color.web(elementData.get("stroke").toString()));
+                    text.setUnderline(elementData.get("underline").toString().compareTo("true") == 0);
+                    text.setVisible(elementData.get("visible").toString().compareTo("true") == 0);
+                }
+            }
+            huntLayout.setBackground(new Background(new BackgroundFill(Color.web(layoutData.get(layoutData.size() - 1).toString()), CornerRadii.EMPTY, Insets.EMPTY)));
+        }catch(IOException | ParseException e){
             e.printStackTrace();
         }
     }
@@ -369,29 +389,6 @@ public class SaveData {
                 String line = fileReader.readLine();
                 if (i == lineNumber) {
                     line = saveData;
-                }
-                inputBuffer.append(line);
-                inputBuffer.append('\n');
-            }
-
-            FileOutputStream fileOut = new FileOutputStream("SaveData/" + file + ".txt");
-            fileOut.write(inputBuffer.toString().getBytes());
-            fileOut.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    //deletes the given line
-    public void deleteLine(int lineNumber, String file){
-        try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
-            StringBuilder inputBuffer = new StringBuilder();
-
-            for (int i = 0; i < getfileLength(file); i++) {
-                String line = fileReader.readLine();
-                if (i == lineNumber) {
-                    continue;
                 }
                 inputBuffer.append(line);
                 inputBuffer.append('\n');

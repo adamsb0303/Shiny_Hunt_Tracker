@@ -539,8 +539,9 @@ public class Window {
         form.setSpacing(5);
         Label formLabel = new Label("Form");
         ComboBox<String> formCombo = new ComboBox<>();
-        for(String i : pokemon.getForms())
-            formCombo.getItems().add(i);
+        if(pokemon.getForms() != null)
+            for(String i : pokemon.getForms())
+                formCombo.getItems().add(i);
         formCombo.getSelectionModel().select(0);
         form.getChildren().addAll(formLabel, formCombo);
 
