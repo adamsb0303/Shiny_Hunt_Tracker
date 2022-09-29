@@ -1,24 +1,25 @@
 package shinyhunttracker;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import javafx.scene.input.MouseEvent;
 import java.io.*;
 import java.util.Vector;
 
@@ -412,37 +413,76 @@ public class HuntController {
         DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
     }
 
+    /**
+     * Pop up listing the keys that the hunts are bound too and allows the user to change them
+     */
     public void keyBindingSettings(){
         keyBindingSettingsStage.setTitle("Key Bindings");
 
+        //Setup layout
         VBox keyBindingsLayout = new VBox();
         keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
         keyBindingsLayout.setPadding(new Insets(10,0,50,75));
-        for (HuntWindow i : windowsList) {
-            HBox windowSettings = new HBox();
-            windowSettings.setAlignment(Pos.CENTER);
-            windowSettings.setSpacing(10);
-            Label huntWindowLabel = new Label("Hunt " + i.getHuntNumber());
-            TextField keyField = new TextField();
-            keyField.setPromptText(String.valueOf(i.getKeyBinding()));
-            keyField.setMaxWidth(50);
-            windowSettings.getChildren().addAll(huntWindowLabel, keyField);
-            keyBindingsLayout.getChildren().add(windowSettings);
 
-            keyField.setOnAction(f -> {
-                /*if(keyField.getText().length() == 1)
-                    for(HuntWindow j: windowsList)
-                        if(j.getHuntNumber() == i.getHuntNumber()) {
-                            j.setKeybind(keyField.getText().charAt(0));
-                            SaveData data = new SaveData();
-                            data.replaceLine(j.getHuntNumber() - 1, keyField.getText().substring(0,1), "keyBinds");
-                            keyField.setPromptText(String.valueOf(j.getKeyBinding()));
-                            break;
-                        }*/
-                keyField.setText("");
+        try(FileReader reader = new FileReader("SaveData/keyBinds.json")){
+            JSONParser jsonParser = new JSONParser();
+
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray keyBindsList = (JSONArray) obj;
+
+            //temporarily stores keys in order
+            Vector<KeyCode> keyBindsTemp = new Vector<>();
+            for (int i = 0; i < windowsList.lastElement().getHuntNumber(); i++) {
+                keyBindsTemp.add(KeyCode.valueOf((String) keyBindsList.get(i)));
+
+                //adds textfield and label to layout
+                HBox windowSettings = new HBox();
+                windowSettings.setAlignment(Pos.CENTER);
+                windowSettings.setSpacing(10);
+                Label huntWindowLabel = new Label("Hunt " + (i + 1));
+                TextField keyField = new TextField();
+                keyField.setText(String.valueOf(keyBindsList.get(i)));
+                keyField.setEditable(false);
+                keyField.setMaxWidth(100);
+                windowSettings.getChildren().addAll(huntWindowLabel, keyField);
+                keyBindingsLayout.getChildren().add(windowSettings);
+
+                //replaces the keybind in the temporary list
+                int index = i;
+                keyField.setOnKeyPressed(f -> {
+                    keyField.setText(f.getCode().toString());
+                    keyBindsTemp.set(index, f.getCode());
+                });
+            }
+
+            //Allows user to save changes and closes window
+            Button apply = new Button("Apply");
+            keyBindingsLayout.getChildren().add(apply);
+
+            apply.setOnAction(e->{
+                try {
+                    //updates the JSONArray updates the currently open hunts with the new binds
+                    for(int i = 0; i < keyBindsTemp.size(); i++) {
+                        keyBindsList.set(i, keyBindsTemp.get(i).toString());
+                        if(windowsList.get(i).getHuntNumber() == i + 1)
+                            windowsList.get(i).setKeybind(keyBindsTemp.get(i));
+                    }
+
+                    //Write to file
+                    FileWriter file = new FileWriter("SaveData/keyBinds.json");
+                    file.write(keyBindsList.toJSONString());
+                    file.close();
+                }catch(IOException f){
+                    f.printStackTrace();
+                }
+                keyBindingSettingsStage.close();
             });
+        }catch(IOException | ParseException f){
+            f.printStackTrace();
         }
+
         ScrollPane scrollPane = new ScrollPane(keyBindingsLayout);
         Scene keyBindingScene = new Scene(scrollPane, 250, 500);
         keyBindingSettingsStage.setScene(keyBindingScene);
