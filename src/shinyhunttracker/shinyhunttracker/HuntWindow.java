@@ -273,11 +273,11 @@ class HuntWindow extends Window {
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
             if (Evo1.getImage() != null) {
-                Evo1Settings = createImageSettings(Evo1, new Pokemon(selectedPokemon.getFamily()[1]), selectedGame);
+                Evo1Settings = createImageSettings(Evo1, new Pokemon(Pokemon.findDexNum(selectedPokemon.getFamily()[1])), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
             if (Evo0.getImage() != null) {
-                Evo0Settings = createImageSettings(Evo0, new Pokemon(selectedPokemon.getFamily()[0]), selectedGame);
+                Evo0Settings = createImageSettings(Evo0, new Pokemon(Pokemon.findDexNum(selectedPokemon.getFamily()[0])), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
             }
 
@@ -600,33 +600,22 @@ class HuntWindow extends Window {
         return (int)Math.round(den / num);
     }
 
-    public Pokemon getPokemon(){ return selectedPokemon; }
-
-    public Game getGame(){ return selectedGame; }
-
-    public Method getMethod() { return selectedMethod; }
-
-    public int getHuntNumber(){ return huntNumber; }
-
-    public KeyCode getKeyBinding(){ return keybind; }
-
-    public int getEncounters(){ return encounters.getValue(); }
-
     public int getCombo(){ return combo.getValue(); }
-
+    public int getEncounters(){ return encounters.getValue(); }
+    public int getGameGeneration(){ return selectedGame.getGeneration(); }
     public int getHuntID(){ return huntID; }
-
-    public IntegerProperty encounterProperty(){ return encounters; }
-
+    public int getHuntNumber(){ return huntNumber; }
     public int getIncrement(){ return increment; }
 
-    public int getGameGeneration(){ return selectedGame.getGeneration(); }
+    public Pokemon getPokemon(){ return selectedPokemon; }
+    public Game getGame(){ return selectedGame; }
+    public Method getMethod() { return selectedMethod; }
 
+    public KeyCode getKeyBinding(){ return keybind; }
     public AnchorPane getScene() { return windowLayout; }
+    public IntegerProperty encounterProperty(){ return encounters; }
 
     public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
-
     public void setKeybind(KeyCode keybind){ this.keybind = keybind; }
-
     public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }

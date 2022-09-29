@@ -20,8 +20,6 @@ class PreviouslyCaught extends Window {
     ColorPicker backgroundColorPicker = new ColorPicker();
     TextField numberCaughtField = new TextField();
 
-    Pokemon Pokedex = new Pokemon();
-
     PreviouslyCaught(int displayCaught){
         this.displayCaught = displayCaught;
         this.currentLayout = "null";

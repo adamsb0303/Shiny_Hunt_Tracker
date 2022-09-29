@@ -35,9 +35,9 @@ public class SelectionPageController implements Initializable {
     int index = 0;
 
     //selected objects
-    Game selectedGame = new Game();
-    Pokemon selectedPokemon = new Pokemon();
-    Method selectedMethod = new Method();
+    Game selectedGame;
+    Pokemon selectedPokemon;
+    Method selectedMethod;
 
     //hunt page after pokemon is caught variables
     HuntController controller;
@@ -60,9 +60,9 @@ public class SelectionPageController implements Initializable {
                         pokemonLabel.textProperty().bind(selectedPokemon.getNameProperty());
 
                         //checks if pokemon has regional variant, and resets checkbox
-                        alolanCheckBox.setDisable(!selectedPokemon.isAlolan());
+                        alolanCheckBox.setDisable(!selectedPokemon.checkRegional("Alolan"));
                         alolanCheckBox.setSelected(false);
-                        galarianCheckBox.setDisable(!selectedPokemon.isGalarian());
+                        galarianCheckBox.setDisable(!selectedPokemon.checkRegional("Galarian"));
                         galarianCheckBox.setSelected(false);
 
                         //captures old selected game generation

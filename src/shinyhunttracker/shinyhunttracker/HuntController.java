@@ -6,15 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -489,12 +482,18 @@ public class HuntController {
         keyBindingSettingsStage.show();
     }
 
+    /**
+     * Creates the window that displays the projected stats with shiny DVs
+     * @param selectedPokemon pokemon that is going to have calculated IVs
+     */
     public void generateDVTable(Pokemon selectedPokemon){
+        //Select level between 1-100
         ComboBox<Integer> levelSelect = new ComboBox<>();
         for(int i = 1; i <= 100; i++)
             levelSelect.getItems().add(i);
-        levelSelect.getSelectionModel().select(0);
+        levelSelect.getSelectionModel().select(49);
 
+        //Labels for each stat
         VBox health = new VBox();
         health.setAlignment(Pos.TOP_CENTER);
         Label healthLabel = new Label("Health");
@@ -543,34 +542,59 @@ public class HuntController {
 
         DVTableStage.show();
 
+        //Updates labels with projected stats with given level
         levelSelect.setOnAction(e -> {
             int level = levelSelect.getSelectionModel().getSelectedItem();
             updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, level, selectedPokemon);
         });
     }
 
+    /**
+     * Updates stat labels with projected shiny stats
+     * @param health Health Label
+     * @param attack Attack Label
+     * @param defense Defense Label
+     * @param speed Speed Label
+     * @param special Special Label
+     * @param level Pokemon Level
+     * @param selectedPokemon Pokemon
+     */
     public void updateStatLabels(Label health, Label attack, Label defense, Label speed, Label special, int level, Pokemon selectedPokemon){
-        health.setText(calculateShinyStat(selectedPokemon.getStats("health"), 0,level, true) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("health"), 8,level, true));
+        int speedStat = selectedPokemon.getBase()[0];
+        int healthStat = selectedPokemon.getBase()[1];
+        int specialStat = selectedPokemon.getBase()[2];
+        int attackStat = selectedPokemon.getBase()[3];
+        int defenseStat = selectedPokemon.getBase()[4];
 
-        attack.setText(calculateShinyStat(selectedPokemon.getStats("attack"), 2, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 3, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 6, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 7, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 10, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 11, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 14, level, false) + "\n"
-                     + calculateShinyStat(selectedPokemon.getStats("attack"), 15, level, false));
+        speed.setText(calculateShinyStat(speedStat, 10, level, false) + "");
 
-        defense.setText(calculateShinyStat(selectedPokemon.getStats("defense"), 10, level, false) + "");
+        health.setText(calculateShinyStat(healthStat, 0,level, true) + "\n"
+                     + calculateShinyStat(healthStat, 8,level, true));
 
-        speed.setText(calculateShinyStat(selectedPokemon.getStats("speed"), 10, level, false) + "");
+        special.setText(calculateShinyStat(specialStat, 10, level, false) + "");
 
-        special.setText(calculateShinyStat(selectedPokemon.getStats("special"), 10, level, false) + "");
+        attack.setText(calculateShinyStat(attackStat, 2, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 3, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 6, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 7, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 10, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 11, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 14, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 15, level, false));
+
+        defense.setText(calculateShinyStat(defenseStat, 10, level, false) + "");
     }
 
-    public int calculateShinyStat(int base, int iv, int level, boolean isHealth){
+    /**
+     * Calculates projected stat at given level and returns
+     * @param base Base Stat of selected pokemon
+     * @param dv Projected DV to calculate
+     * @param level Pokemon level
+     * @param isHealth Changes calculation if the stat is the health stat
+     * @return calculated Stat
+     */
+    public int calculateShinyStat(int base, int dv, int level, boolean isHealth){
         int health = isHealth ? 1 : 0;
-        return (((base + iv) * 2 * level) / 100) + (level * health) + 5 + (2 * health);
+        return (((base + dv) * 2 * level) / 100) + (level * health) + 5 + (5 * health);
     }
 }
