@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -26,7 +27,7 @@ class HuntWindow extends Window {
     IntegerProperty encounters = new SimpleIntegerProperty();
     IntegerProperty combo = new SimpleIntegerProperty();
     int previousEncounters, increment, huntNumber, huntID;
-    char keybind;
+    KeyCode keybind;
 
     //hunt settings window elements
     Stage CustomizeHuntStage = new Stage();
@@ -173,10 +174,8 @@ class HuntWindow extends Window {
         windowStage.show();
 
         //load layout
-        SaveData data = new SaveData();
-        if(currentLayout.compareTo("") != 0) {
-            data.loadLayout(currentLayout, windowLayout, true);
-        }
+        if(currentLayout.compareTo("") != 0)
+            SaveData.loadLayout(currentLayout, windowLayout, true);
     }
 
     //creates window to prompt user for search level or previous encounters
@@ -596,7 +595,7 @@ class HuntWindow extends Window {
 
     public int getHuntNumber(){ return huntNumber; }
 
-    public char getKeyBinding(){ return keybind; }
+    public KeyCode getKeyBinding(){ return keybind; }
 
     public IntegerProperty encounterProperty(){ return encounters; }
 
@@ -606,7 +605,7 @@ class HuntWindow extends Window {
 
     public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
 
-    public void setKeybind(char keybind){ this.keybind = keybind; }
+    public void setKeybind(KeyCode keybind){ this.keybind = keybind; }
 
     public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }

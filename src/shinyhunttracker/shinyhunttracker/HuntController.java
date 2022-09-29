@@ -1,11 +1,14 @@
 package shinyhunttracker;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,6 +18,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javafx.scene.input.MouseEvent;
 import java.io.*;
 import java.util.Vector;
 
@@ -41,6 +45,7 @@ public class HuntController {
         huntControlsVBox.setAlignment(Pos.CENTER);
         huntControlsVBox.setSpacing(5);
         Button addHunt = new Button("Add Hunt");
+        addHunt.setFocusTraversable(false);
         huntControlsVBox.getChildren().add(addHunt);
 
         Menu.getMenus().add(Settings);
@@ -80,11 +85,10 @@ public class HuntController {
         }
 
         //Listener for KeyBinds
-        huntControlsVBox.setOnKeyTyped(e -> {
-            for(HuntWindow i: windowsList) {
-                if (i.getKeyBinding() == e.getCharacter().toCharArray()[0])
+        huntControlsScene.setOnKeyPressed(e -> {
+            for(HuntWindow i: windowsList)
+                if (i.getKeyBinding() == e.getCode())
                     i.incrementEncounters();
-            }
         });
 
         //Popups for given menus
@@ -171,10 +175,12 @@ public class HuntController {
         huntInformationHBox.setSpacing(10);
 
         Button exitHuntButton = new Button("X");
+        exitHuntButton.setFocusTraversable(false);
 
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
 
         Button encountersButton = new Button("+");
+        encountersButton.setFocusTraversable(false);
 
         Label encounterLabel = new Label();
         encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
@@ -182,30 +188,42 @@ public class HuntController {
         Label nameLabel = new Label(newWindow.getSelectedPokemon().getName());
 
         Button caughtButton = new Button("O");
+        caughtButton.setFocusTraversable(false);
 
         Button popOutButton = new Button("O");
+        popOutButton.setFocusTraversable(false);
 
         Button windowSettingsButton = new Button("X");
+        windowSettingsButton.setFocusTraversable(false);
         windowSettingsButton.setVisible(false);
 
         Button settingsButton = new Button("O");
+        settingsButton.setFocusTraversable(false);
 
         Button helpButton = new Button("O");
+        helpButton.setFocusTraversable(false);
 
         huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
         huntControlsVBox.getChildren().add(newWindow.getHuntNumber(), huntInformationHBox);
 
         //Set keybinds
-        SaveData data = new SaveData();
-        newWindow.setKeybind(data.getLinefromFile(newWindow.getHuntNumber() - 1, "keyBinds").charAt(0));
+        try (FileReader reader = new FileReader("SaveData/keybinds.json")) {
+            JSONParser jsonParser = new JSONParser();
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray keybindList = (JSONArray) obj;
+
+            newWindow.setKeybind(KeyCode.valueOf(keybindList.get(newWindow.getHuntNumber() - 1).toString()));
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
+        }
 
         //Add new settings to settings menu
         addHuntWindowSettings(newWindow);
 
         //update keybind window if it is open
-        if(keyBindingSettingsStage.isShowing()){
+        if(keyBindingSettingsStage.isShowing())
             keyBindingSettings();
-        }
 
         //since the search level or total encounters can change between uses, this value needs to be captured after every startup
         if (newWindow.getMethod().getName().compareTo("DexNav") == 0 || newWindow.getMethod().getName().compareTo("Total Encounters") == 0) {
@@ -413,7 +431,7 @@ public class HuntController {
             keyBindingsLayout.getChildren().add(windowSettings);
 
             keyField.setOnAction(f -> {
-                if(keyField.getText().length() == 1)
+                /*if(keyField.getText().length() == 1)
                     for(HuntWindow j: windowsList)
                         if(j.getHuntNumber() == i.getHuntNumber()) {
                             j.setKeybind(keyField.getText().charAt(0));
@@ -421,7 +439,7 @@ public class HuntController {
                             data.replaceLine(j.getHuntNumber() - 1, keyField.getText().substring(0,1), "keyBinds");
                             keyField.setPromptText(String.valueOf(j.getKeyBinding()));
                             break;
-                        }
+                        }*/
                 keyField.setText("");
             });
         }
