@@ -11,13 +11,13 @@
       "Ivysaur",
       "Venusaur"
     ],
-    "base":{
-      "Speed":45,
-      "HP":45,
-      "Special":65,
-      "Attack":49,
-      "Defense":49
-    }
+    "base":[
+      45,
+      45,
+      65,
+      49,
+      49
+    ]
   },
   {
     "generation":1,
@@ -31,13 +31,13 @@
       "Ivysaur",
       "Venusaur"
     ],
-    "base":{
-      "Speed":60,
-      "HP":60,
-      "Special":80,
-      "Attack":62,
-      "Defense":63
-    }
+    "base":[
+      60,
+      60,
+      80,
+      62,
+      63
+    ]
   },
   {
     "generation":1,
@@ -57,13 +57,13 @@
       "Mega",
       "Gigantamax"
     ],
-    "base":{
-      "Speed":80,
-      "HP":80,
-      "Special":100,
-      "Attack":82,
-      "Defense":83
-    }
+    "base":[
+      80,
+      80,
+      100,
+      82,
+      83
+    ]
   },
   {
     "generation":1,
@@ -77,13 +77,13 @@
       "Charmeleon",
       "Charizard"
     ],
-    "base":{
-      "Speed":65,
-      "HP":39,
-      "Special":50,
-      "Attack":52,
-      "Defense":43
-    }
+    "base":[
+      65,
+      39,
+      50,
+      52,
+      43
+    ]
   },
   {
     "generation":1,
@@ -97,13 +97,13 @@
       "Charmeleon",
       "Charizard"
     ],
-    "base":{
-      "Speed":80,
-      "HP":58,
-      "Special":65,
-      "Attack":64,
-      "Defense":58
-    }
+    "base":[
+      80,
+      58,
+      65,
+      64,
+      58
+    ]
   },
   {
     "generation":1,
@@ -123,13 +123,13 @@
       "Mega Y",
       "Gigantamax"
     ],
-    "base":{
-      "Speed":100,
-      "HP":78,
-      "Special":85,
-      "Attack":84,
-      "Defense":78
-    }
+    "base":[
+      100,
+      78,
+      85,
+      84,
+      78
+    ]
   },
   {
     "generation":1,
@@ -143,13 +143,13 @@
       "Wartortle",
       "Blastoise"
     ],
-    "base":{
-      "Speed":43,
-      "HP":44,
-      "Special":50,
-      "Attack":48,
-      "Defense":65
-    }
+    "base":[
+      43,
+      44,
+      50,
+      48,
+      65
+    ]
   },
   {
     "generation":1,
@@ -163,13 +163,13 @@
       "Wartortle",
       "Blastoise"
     ],
-    "base":{
-      "Speed":58,
-      "HP":59,
-      "Special":65,
-      "Attack":63,
-      "Defense":80
-    }
+    "base":[
+      58,
+      59,
+      65,
+      63,
+      80
+    ]
   },
   {
     "generation":1,
@@ -187,13 +187,13 @@
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":78,
-      "HP":79,
-      "Special":85,
-      "Attack":83,
-      "Defense":100
-    }
+    "base":[
+      78,
+      79,
+      85,
+      83,
+      100
+    ]
   },
   {
     "generation":1,
@@ -207,13 +207,13 @@
       "Metapod",
       "Butterfree"
     ],
-    "base":{
-      "Speed":45,
-      "HP":45,
-      "Special":20,
-      "Attack":30,
-      "Defense":35
-    }
+    "base":[
+      45,
+      45,
+      20,
+      30,
+      35
+    ]
   },
   {
     "generation":1,
@@ -227,13 +227,13 @@
       "Metapod",
       "Butterfree"
     ],
-    "base":{
-      "Speed":30,
-      "HP":50,
-      "Special":25,
-      "Attack":20,
-      "Defense":44
-    }
+    "base":[
+      30,
+      50,
+      25,
+      20,
+      44
+    ]
   },
   {
     "generation":1,
@@ -252,13 +252,13 @@
       "Female",
       "Gigantamax"
     ],
-    "base":{
-      "Speed":70,
-      "HP":60,
-      "Special":80,
-      "Attack":45,
-      "Defense":50
-    }
+    "base":[
+      70,
+      60,
+      80,
+      45,
+      50
+    ]
   },
   {
     "generation":1,
@@ -272,13 +272,13 @@
       "Kakuna",
       "Beedrill"
     ],
-    "base":{
-      "Speed":50,
-      "HP":40,
-      "Special":20,
-      "Attack":35,
-      "Defense":30
-    }
+    "base":[
+      50,
+      40,
+      20,
+      35,
+      30
+    ]
   },
   {
     "generation":1,
@@ -292,13 +292,13 @@
       "Kakuna",
       "Beedrill"
     ],
-    "base":{
-      "Speed":35,
-      "HP":45,
-      "Special":25,
-      "Attack":25,
-      "Defense":50
-    }
+    "base":[
+      35,
+      45,
+      25,
+      25,
+      50
+    ]
   },
   {
     "generation":1,
@@ -312,13 +312,13 @@
       "Kakuna",
       "Beedrill"
     ],
-    "base":{
-      "Speed":75,
-      "HP":65,
-      "Special":45,
-      "Attack":80,
-      "Defense":40
-    }
+    "base":[
+      75,
+      65,
+      45,
+      80,
+      40
+    ]
   },
   {
     "generation":1,
@@ -332,13 +332,13 @@
       "Pidgeotto",
       "Pidgeot"
     ],
-    "base":{
-      "Speed":56,
-      "HP":40,
-      "Special":35,
-      "Attack":45,
-      "Defense":40
-    }
+    "base":[
+      56,
+      40,
+      35,
+      45,
+      40
+    ]
   },
   {
     "generation":1,
@@ -352,13 +352,13 @@
       "Pidgeotto",
       "Pidgeot"
     ],
-    "base":{
-      "Speed":71,
-      "HP":63,
-      "Special":50,
-      "Attack":60,
-      "Defense":55
-    }
+    "base":[
+      71,
+      63,
+      50,
+      60,
+      55
+    ]
   },
   {
     "generation":1,
@@ -372,13 +372,13 @@
       "Pidgeotto",
       "Pidgeot"
     ],
-    "base":{
-      "Speed":91,
-      "HP":83,
-      "Special":70,
-      "Attack":80,
-      "Defense":75
-    }
+    "base":[
+      91,
+      83,
+      70,
+      80,
+      75
+    ]
   },
   {
     "generation":1,
@@ -399,13 +399,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":71,
-      "HP":30,
-      "Special":25,
-      "Attack":56,
-      "Defense":35
-    }
+    "base":[
+      71,
+      30,
+      25,
+      56,
+      35
+    ]
   },
   {
     "generation":1,
@@ -426,13 +426,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":97,
-      "HP":55,
-      "Special":50,
-      "Attack":81,
-      "Defense":60
-    }
+    "base":[
+      97,
+      55,
+      50,
+      81,
+      60
+    ]
   },
   {
     "generation":1,
@@ -446,13 +446,13 @@
       "Fearow",
       ""
     ],
-    "base":{
-      "Speed":70,
-      "HP":40,
-      "Special":31,
-      "Attack":60,
-      "Defense":30
-    }
+    "base":[
+      70,
+      40,
+      31,
+      60,
+      30
+    ]
   },
   {
     "generation":1,
@@ -466,13 +466,13 @@
       "Fearow",
       ""
     ],
-    "base":{
-      "Speed":100,
-      "HP":65,
-      "Special":61,
-      "Attack":90,
-      "Defense":65
-    }
+    "base":[
+      100,
+      65,
+      61,
+      90,
+      65
+    ]
   },
   {
     "generation":1,
@@ -486,13 +486,13 @@
       "Arbok",
       ""
     ],
-    "base":{
-      "Speed":55,
-      "HP":35,
-      "Special":40,
-      "Attack":60,
-      "Defense":44
-    }
+    "base":[
+      55,
+      35,
+      40,
+      60,
+      44
+    ]
   },
   {
     "generation":1,
@@ -506,13 +506,13 @@
       "Arbok",
       ""
     ],
-    "base":{
-      "Speed":80,
-      "HP":60,
-      "Special":65,
-      "Attack":85,
-      "Defense":69
-    }
+    "base":[
+      80,
+      60,
+      65,
+      85,
+      69
+    ]
   },
   {
     "generation":1,
@@ -531,13 +531,13 @@
       "Female",
       "Gigantamax"
     ],
-    "base":{
-      "Speed":90,
-      "HP":35,
-      "Special":50,
-      "Attack":55,
-      "Defense":30
-    }
+    "base":[
+      90,
+      35,
+      50,
+      55,
+      30
+    ]
   },
   {
     "generation":1,
@@ -558,13 +558,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":100,
-      "HP":60,
-      "Special":90,
-      "Attack":90,
-      "Defense":55
-    }
+    "base":[
+      100,
+      60,
+      90,
+      90,
+      55
+    ]
   },
   {
     "generation":1,
@@ -581,13 +581,13 @@
       "Sandslash",
       ""
     ],
-    "base":{
-      "Speed":40,
-      "HP":50,
-      "Special":30,
-      "Attack":75,
-      "Defense":85
-    }
+    "base":[
+      40,
+      50,
+      30,
+      75,
+      85
+    ]
   },
   {
     "generation":1,
@@ -604,13 +604,13 @@
       "Sandslash",
       ""
     ],
-    "base":{
-      "Speed":65,
-      "HP":75,
-      "Special":55,
-      "Attack":100,
-      "Defense":110
-    }
+    "base":[
+      65,
+      75,
+      55,
+      100,
+      110
+    ]
   },
   {
     "generation":1,
@@ -624,13 +624,13 @@
       "Nidorina",
       "Nidoqueen"
     ],
-    "base":{
-      "Speed":41,
-      "HP":55,
-      "Special":40,
-      "Attack":47,
-      "Defense":52
-    }
+    "base":[
+      41,
+      55,
+      40,
+      47,
+      52
+    ]
   },
   {
     "generation":1,
@@ -644,13 +644,13 @@
       "Nidorina",
       "Nidoqueen"
     ],
-    "base":{
-      "Speed":56,
-      "HP":70,
-      "Special":55,
-      "Attack":62,
-      "Defense":67
-    }
+    "base":[
+      56,
+      70,
+      55,
+      62,
+      67
+    ]
   },
   {
     "generation":1,
@@ -664,13 +664,13 @@
       "Nidorina",
       "Nidoqueen"
     ],
-    "base":{
-      "Speed":76,
-      "HP":90,
-      "Special":75,
-      "Attack":82,
-      "Defense":87
-    }
+    "base":[
+      76,
+      90,
+      75,
+      82,
+      87
+    ]
   },
   {
     "generation":1,
@@ -684,13 +684,13 @@
       "Nidorino",
       "Nidoking"
     ],
-    "base":{
-      "Speed":50,
-      "HP":46,
-      "Special":40,
-      "Attack":57,
-      "Defense":40
-    }
+    "base":[
+      50,
+      46,
+      40,
+      57,
+      40
+    ]
   },
   {
     "generation":1,
@@ -704,13 +704,13 @@
       "Nidorino",
       "Nidoking"
     ],
-    "base":{
-      "Speed":65,
-      "HP":61,
-      "Special":55,
-      "Attack":72,
-      "Defense":57
-    }
+    "base":[
+      65,
+      61,
+      55,
+      72,
+      57
+    ]
   },
   {
     "generation":1,
@@ -724,13 +724,13 @@
       "Nidorino",
       "Nidoking"
     ],
-    "base":{
-      "Speed":85,
-      "HP":81,
-      "Special":75,
-      "Attack":92,
-      "Defense":77
-    }
+    "base":[
+      85,
+      81,
+      75,
+      92,
+      77
+    ]
   },
   {
     "generation":1,
@@ -744,13 +744,13 @@
       "Clefairy",
       "Clefable"
     ],
-    "base":{
-      "Speed":35,
-      "HP":70,
-      "Special":60,
-      "Attack":45,
-      "Defense":48
-    }
+    "base":[
+      35,
+      70,
+      60,
+      45,
+      48
+    ]
   },
   {
     "generation":1,
@@ -764,13 +764,13 @@
       "Clefairy",
       "Clefable"
     ],
-    "base":{
-      "Speed":60,
-      "HP":95,
-      "Special":85,
-      "Attack":70,
-      "Defense":73
-    }
+    "base":[
+      60,
+      95,
+      85,
+      70,
+      73
+    ]
   },
   {
     "generation":1,
@@ -787,13 +787,13 @@
       "Ninetales",
       ""
     ],
-    "base":{
-      "Speed":65,
-      "HP":38,
-      "Special":65,
-      "Attack":41,
-      "Defense":40
-    }
+    "base":[
+      65,
+      38,
+      65,
+      41,
+      40
+    ]
   },
   {
     "generation":1,
@@ -810,13 +810,13 @@
       "Ninetales",
       ""
     ],
-    "base":{
-      "Speed":100,
-      "HP":73,
-      "Special":100,
-      "Attack":76,
-      "Defense":75
-    }
+    "base":[
+      100,
+      73,
+      100,
+      76,
+      75
+    ]
   },
   {
     "generation":1,
@@ -830,13 +830,13 @@
       "Jigglypuff",
       "Wigglytuff"
     ],
-    "base":{
-      "Speed":20,
-      "HP":115,
-      "Special":25,
-      "Attack":45,
-      "Defense":20
-    }
+    "base":[
+      20,
+      115,
+      25,
+      45,
+      20
+    ]
   },
   {
     "generation":1,
@@ -850,13 +850,13 @@
       "Jigglypuff",
       "Wigglytuff"
     ],
-    "base":{
-      "Speed":45,
-      "HP":140,
-      "Special":50,
-      "Attack":70,
-      "Defense":45
-    }
+    "base":[
+      45,
+      140,
+      50,
+      70,
+      45
+    ]
   },
   {
     "generation":1,
@@ -870,13 +870,13 @@
       "Golbat",
       "Crobat"
     ],
-    "base":{
-      "Speed":55,
-      "HP":40,
-      "Special":40,
-      "Attack":45,
-      "Defense":35
-    }
+    "base":[
+      55,
+      40,
+      40,
+      45,
+      35
+    ]
   },
   {
     "generation":1,
@@ -894,13 +894,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":90,
-      "HP":75,
-      "Special":75,
-      "Attack":80,
-      "Defense":70
-    }
+    "base":[
+      90,
+      75,
+      75,
+      80,
+      70
+    ]
   },
   {
     "generation":1,
@@ -914,13 +914,13 @@
       "Gloom",
       "Bellossom"
     ],
-    "base":{
-      "Speed":30,
-      "HP":45,
-      "Special":75,
-      "Attack":50,
-      "Defense":55
-    }
+    "base":[
+      30,
+      45,
+      75,
+      50,
+      55
+    ]
   },
   {
     "generation":1,
@@ -938,13 +938,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":40,
-      "HP":60,
-      "Special":85,
-      "Attack":65,
-      "Defense":70
-    }
+    "base":[
+      40,
+      60,
+      85,
+      65,
+      70
+    ]
   },
   {
     "generation":1,
@@ -962,13 +962,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":50,
-      "HP":75,
-      "Special":100,
-      "Attack":80,
-      "Defense":85
-    }
+    "base":[
+      50,
+      75,
+      100,
+      80,
+      85
+    ]
   },
   {
     "generation":1,
@@ -982,13 +982,13 @@
       "Parasect",
       ""
     ],
-    "base":{
-      "Speed":25,
-      "HP":35,
-      "Special":55,
-      "Attack":70,
-      "Defense":55
-    }
+    "base":[
+      25,
+      35,
+      55,
+      70,
+      55
+    ]
   },
   {
     "generation":1,
@@ -1002,13 +1002,13 @@
       "Parasect",
       ""
     ],
-    "base":{
-      "Speed":30,
-      "HP":60,
-      "Special":80,
-      "Attack":95,
-      "Defense":80
-    }
+    "base":[
+      30,
+      60,
+      80,
+      95,
+      80
+    ]
   },
   {
     "generation":1,
@@ -1022,13 +1022,13 @@
       "Venomoth",
       ""
     ],
-    "base":{
-      "Speed":45,
-      "HP":60,
-      "Special":40,
-      "Attack":55,
-      "Defense":50
-    }
+    "base":[
+      45,
+      60,
+      40,
+      55,
+      50
+    ]
   },
   {
     "generation":1,
@@ -1042,13 +1042,13 @@
       "Venomoth",
       ""
     ],
-    "base":{
-      "Speed":90,
-      "HP":70,
-      "Special":90,
-      "Attack":65,
-      "Defense":60
-    }
+    "base":[
+      90,
+      70,
+      90,
+      65,
+      60
+    ]
   },
   {
     "generation":1,
@@ -1065,13 +1065,13 @@
       "Dugtrio",
       ""
     ],
-    "base":{
-      "Speed":95,
-      "HP":10,
-      "Special":45,
-      "Attack":55,
-      "Defense":25
-    }
+    "base":[
+      95,
+      10,
+      45,
+      55,
+      25
+    ]
   },
   {
     "generation":1,
@@ -1088,13 +1088,13 @@
       "Dugtrio",
       ""
     ],
-    "base":{
-      "Speed":120,
-      "HP":35,
-      "Special":70,
-      "Attack":80,
-      "Defense":50
-    }
+    "base":[
+      120,
+      35,
+      70,
+      80,
+      50
+    ]
   },
   {
     "generation":1,
@@ -1116,13 +1116,13 @@
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":90,
-      "HP":40,
-      "Special":40,
-      "Attack":45,
-      "Defense":35
-    }
+    "base":[
+      90,
+      40,
+      40,
+      45,
+      35
+    ]
   },
   {
     "generation":1,
@@ -1139,13 +1139,13 @@
       "Persian",
       ""
     ],
-    "base":{
-      "Speed":115,
-      "HP":65,
-      "Special":65,
-      "Attack":70,
-      "Defense":60
-    }
+    "base":[
+      115,
+      65,
+      65,
+      70,
+      60
+    ]
   },
   {
     "generation":1,
@@ -1159,13 +1159,13 @@
       "Golduck",
       ""
     ],
-    "base":{
-      "Speed":55,
-      "HP":50,
-      "Special":50,
-      "Attack":52,
-      "Defense":48
-    }
+    "base":[
+      55,
+      50,
+      50,
+      52,
+      48
+    ]
   },
   {
     "generation":1,
@@ -1179,13 +1179,13 @@
       "Golduck",
       ""
     ],
-    "base":{
-      "Speed":85,
-      "HP":80,
-      "Special":80,
-      "Attack":82,
-      "Defense":78
-    }
+    "base":[
+      85,
+      80,
+      80,
+      82,
+      78
+    ]
   },
   {
     "generation":1,
@@ -1199,13 +1199,13 @@
       "Primeape",
       ""
     ],
-    "base":{
-      "Speed":70,
-      "HP":40,
-      "Special":35,
-      "Attack":80,
-      "Defense":35
-    }
+    "base":[
+      70,
+      40,
+      35,
+      80,
+      35
+    ]
   },
   {
     "generation":1,
@@ -1219,13 +1219,13 @@
       "Primeape",
       ""
     ],
-    "base":{
-      "Speed":95,
-      "HP":65,
-      "Special":60,
-      "Attack":105,
-      "Defense":60
-    }
+    "base":[
+      95,
+      65,
+      60,
+      105,
+      60
+    ]
   },
   {
     "generation":1,
@@ -1242,13 +1242,13 @@
       "Arcanine",
       ""
     ],
-    "base":{
-      "Speed":60,
-      "HP":55,
-      "Special":50,
-      "Attack":70,
-      "Defense":45
-    }
+    "base":[
+      60,
+      55,
+      50,
+      70,
+      45
+    ]
   },
   {
     "generation":1,
@@ -1265,13 +1265,13 @@
       "Arcanine",
       ""
     ],
-    "base":{
-      "Speed":95,
-      "HP":90,
-      "Special":80,
-      "Attack":110,
-      "Defense":80
-    }
+    "base":[
+      95,
+      90,
+      80,
+      110,
+      80
+    ]
   },
   {
     "generation":1,
@@ -1285,13 +1285,13 @@
       "Poliwhirl",
       "Politoed"
     ],
-    "base":{
-      "Speed":90,
-      "HP":40,
-      "Special":40,
-      "Attack":50,
-      "Defense":40
-    }
+    "base":[
+      90,
+      40,
+      40,
+      50,
+      40
+    ]
   },
   {
     "generation":1,
@@ -1305,13 +1305,13 @@
       "Poliwhirl",
       "Politoed"
     ],
-    "base":{
-      "Speed":90,
-      "HP":65,
-      "Special":50,
-      "Attack":65,
-      "Defense":65
-    }
+    "base":[
+      90,
+      65,
+      50,
+      65,
+      65
+    ]
   },
   {
     "generation":1,
@@ -1325,13 +1325,13 @@
       "Poliwhirl",
       "Poliwrath"
     ],
-    "base":{
-      "Speed":70,
-      "HP":90,
-      "Special":70,
-      "Attack":85,
-      "Defense":95
-    }
+    "base":[
+      70,
+      90,
+      70,
+      85,
+      95
+    ]
   },
   {
     "generation":1,
@@ -1345,13 +1345,13 @@
       "Kadabra",
       "Alakazam"
     ],
-    "base":{
-      "Speed":90,
-      "HP":25,
-      "Special":105,
-      "Attack":50,
-      "Defense":15
-    }
+    "base":[
+      90,
+      25,
+      105,
+      50,
+      15
+    ]
   },
   {
     "generation":1,
@@ -1369,13 +1369,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":105,
-      "HP":40,
-      "Special":120,
-      "Attack":35,
-      "Defense":30
-    }
+    "base":[
+      105,
+      40,
+      120,
+      35,
+      30
+    ]
   },
   {
     "generation":1,
@@ -1394,13 +1394,13 @@
       "Female",
       "Mega"
     ],
-    "base":{
-      "Speed":120,
-      "HP":55,
-      "Special":135,
-      "Attack":50,
-      "Defense":45
-    }
+    "base":[
+      120,
+      55,
+      135,
+      50,
+      45
+    ]
   },
   {
     "generation":1,
@@ -1414,13 +1414,13 @@
       "Machoke",
       "Machamp"
     ],
-    "base":{
-      "Speed":35,
-      "HP":70,
-      "Special":35,
-      "Attack":80,
-      "Defense":50
-    }
+    "base":[
+      35,
+      70,
+      35,
+      80,
+      50
+    ]
   },
   {
     "generation":1,
@@ -1434,13 +1434,13 @@
       "Machoke",
       "Machamp"
     ],
-    "base":{
-      "Speed":45,
-      "HP":80,
-      "Special":50,
-      "Attack":100,
-      "Defense":70
-    }
+    "base":[
+      45,
+      80,
+      50,
+      100,
+      70
+    ]
   },
   {
     "generation":1,
@@ -1458,13 +1458,13 @@
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":55,
-      "HP":90,
-      "Special":65,
-      "Attack":130,
-      "Defense":80
-    }
+    "base":[
+      55,
+      90,
+      65,
+      130,
+      80
+    ]
   },
   {
     "generation":1,
@@ -1478,13 +1478,13 @@
       "Weepinbell",
       "Victreebel"
     ],
-    "base":{
-      "Speed":40,
-      "HP":50,
-      "Special":70,
-      "Attack":75,
-      "Defense":35
-    }
+    "base":[
+      40,
+      50,
+      70,
+      75,
+      35
+    ]
   },
   {
     "generation":1,
@@ -1498,13 +1498,13 @@
       "Weepinbell",
       "Victreebel"
     ],
-    "base":{
-      "Speed":55,
-      "HP":65,
-      "Special":85,
-      "Attack":90,
-      "Defense":50
-    }
+    "base":[
+      55,
+      65,
+      85,
+      90,
+      50
+    ]
   },
   {
     "generation":1,
@@ -1518,13 +1518,13 @@
       "Weepinbell",
       "Victreebel"
     ],
-    "base":{
-      "Speed":70,
-      "HP":80,
-      "Special":100,
-      "Attack":105,
-      "Defense":65
-    }
+    "base":[
+      70,
+      80,
+      100,
+      105,
+      65
+    ]
   },
   {
     "generation":1,
@@ -1538,13 +1538,13 @@
       "Tentacruel",
       ""
     ],
-    "base":{
-      "Speed":70,
-      "HP":40,
-      "Special":100,
-      "Attack":40,
-      "Defense":35
-    }
+    "base":[
+      70,
+      40,
+      100,
+      40,
+      35
+    ]
   },
   {
     "generation":1,
@@ -1558,13 +1558,13 @@
       "Tentacruel",
       ""
     ],
-    "base":{
-      "Speed":100,
-      "HP":80,
-      "Special":120,
-      "Attack":70,
-      "Defense":65
-    }
+    "base":[
+      100,
+      80,
+      120,
+      70,
+      65
+    ]
   },
   {
     "generation":1,
@@ -1581,13 +1581,13 @@
       "Graveler",
       "Golem"
     ],
-    "base":{
-      "Speed":20,
-      "HP":40,
-      "Special":30,
-      "Attack":80,
-      "Defense":100
-    }
+    "base":[
+      20,
+      40,
+      30,
+      80,
+      100
+    ]
   },
   {
     "generation":1,
@@ -1604,13 +1604,13 @@
       "Graveler",
       "Golem"
     ],
-    "base":{
-      "Speed":35,
-      "HP":55,
-      "Special":45,
-      "Attack":95,
-      "Defense":115
-    }
+    "base":[
+      35,
+      55,
+      45,
+      95,
+      115
+    ]
   },
   {
     "generation":1,
@@ -1627,13 +1627,13 @@
       "Graveler",
       "Golem"
     ],
-    "base":{
-      "Speed":45,
-      "HP":80,
-      "Special":55,
-      "Attack":110,
-      "Defense":130
-    }
+    "base":[
+      45,
+      80,
+      55,
+      110,
+      130
+    ]
   },
   {
     "generation":1,
@@ -1650,13 +1650,13 @@
       "Rapidash",
       ""
     ],
-    "base":{
-      "Speed":90,
-      "HP":50,
-      "Special":65,
-      "Attack":85,
-      "Defense":55
-    }
+    "base":[
+      90,
+      50,
+      65,
+      85,
+      55
+    ]
   },
   {
     "generation":1,
@@ -1673,13 +1673,13 @@
       "Rapidash",
       ""
     ],
-    "base":{
-      "Speed":105,
-      "HP":65,
-      "Special":60,
-      "Attack":100,
-      "Defense":70
-    }
+    "base":[
+      105,
+      65,
+      60,
+      100,
+      70
+    ]
   },
   {
     "generation":1,
@@ -1696,13 +1696,13 @@
       "Slowking",
       ""
     ],
-    "base":{
-      "Speed":15,
-      "HP":90,
-      "Special":40,
-      "Attack":65,
-      "Defense":65
-    }
+    "base":[
+      15,
+      90,
+      40,
+      65,
+      65
+    ]
   },
   {
     "generation":1,
@@ -1719,13 +1719,13 @@
       "Slowbro",
       ""
     ],
-    "base":{
-      "Speed":30,
-      "HP":95,
-      "Special":80,
-      "Attack":75,
-      "Defense":110
-    }
+    "base":[
+      30,
+      95,
+      80,
+      75,
+      110
+    ]
   },
   {
     "generation":1,
@@ -1739,13 +1739,13 @@
       "Magneton",
       "Magnezone"
     ],
-    "base":{
-      "Speed":45,
-      "HP":25,
-      "Special":95,
-      "Attack":35,
-      "Defense":70
-    }
+    "base":[
+      45,
+      25,
+      95,
+      35,
+      70
+    ]
   },
   {
     "generation":1,
@@ -1759,13 +1759,13 @@
       "Magneton",
       "Magnezone"
     ],
-    "base":{
-      "Speed":70,
-      "HP":50,
-      "Special":120,
-      "Attack":60,
-      "Defense":95
-    }
+    "base":[
+      70,
+      50,
+      120,
+      60,
+      95
+    ]
   },
   {
     "generation":1,
@@ -1776,13 +1776,13 @@
     "regional-forms":[
       "Galarian"
     ],
-    "base":{
-      "Speed":60,
-      "HP":52,
-      "Special":58,
-      "Attack":65,
-      "Defense":55
-    }
+    "base":[
+      60,
+      52,
+      58,
+      65,
+      55
+    ]
   },
   {
     "generation":1,
@@ -1800,13 +1800,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":75,
-      "HP":35,
-      "Special":35,
-      "Attack":85,
-      "Defense":45
-    }
+    "base":[
+      75,
+      35,
+      35,
+      85,
+      45
+    ]
   },
   {
     "generation":1,
@@ -1824,13 +1824,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":100,
-      "HP":60,
-      "Special":60,
-      "Attack":110,
-      "Defense":70
-    }
+    "base":[
+      100,
+      60,
+      60,
+      110,
+      70
+    ]
   },
   {
     "generation":1,
@@ -1844,13 +1844,13 @@
       "Dewgong",
       ""
     ],
-    "base":{
-      "Speed":45,
-      "HP":65,
-      "Special":70,
-      "Attack":45,
-      "Defense":55
-    }
+    "base":[
+      45,
+      65,
+      70,
+      45,
+      55
+    ]
   },
   {
     "generation":1,
@@ -1864,13 +1864,13 @@
       "Dewgong",
       ""
     ],
-    "base":{
-      "Speed":70,
-      "HP":90,
-      "Special":95,
-      "Attack":70,
-      "Defense":80
-    }
+    "base":[
+      70,
+      90,
+      95,
+      70,
+      80
+    ]
   },
   {
     "generation":1,
@@ -1887,13 +1887,13 @@
       "Muk",
       ""
     ],
-    "base":{
-      "Speed":25,
-      "HP":80,
-      "Special":40,
-      "Attack":80,
-      "Defense":50
-    }
+    "base":[
+      25,
+      80,
+      40,
+      80,
+      50
+    ]
   },
   {
     "generation":1,
@@ -1910,13 +1910,13 @@
       "Muk",
       ""
     ],
-    "base":{
-      "Speed":50,
-      "HP":105,
-      "Special":65,
-      "Attack":105,
-      "Defense":75
-    }
+    "base":[
+      50,
+      105,
+      65,
+      105,
+      75
+    ]
   },
   {
     "generation":1,
@@ -1930,13 +1930,13 @@
       "Cloyster",
       ""
     ],
-    "base":{
-      "Speed":40,
-      "HP":30,
-      "Special":45,
-      "Attack":65,
-      "Defense":100
-    }
+    "base":[
+      40,
+      30,
+      45,
+      65,
+      100
+    ]
   },
   {
     "generation":1,
@@ -1950,13 +1950,13 @@
       "Cloyster",
       ""
     ],
-    "base":{
-      "Speed":70,
-      "HP":50,
-      "Special":85,
-      "Attack":95,
-      "Defense":180
-    }
+    "base":[
+      70,
+      50,
+      85,
+      95,
+      180
+    ]
   },
   {
     "generation":1,
@@ -1970,13 +1970,13 @@
       "Haunter",
       "Gengar"
     ],
-    "base":{
-      "Speed":80,
-      "HP":30,
-      "Special":100,
-      "Attack":35,
-      "Defense":30
-    }
+    "base":[
+      80,
+      30,
+      100,
+      35,
+      30
+    ]
   },
   {
     "generation":1,
@@ -1990,13 +1990,13 @@
       "Haunter",
       "Gengar"
     ],
-    "base":{
-      "Speed":95,
-      "HP":45,
-      "Special":115,
-      "Attack":50,
-      "Defense":45
-    }
+    "base":[
+      95,
+      45,
+      115,
+      50,
+      45
+    ]
   },
   {
     "generation":1,
@@ -2015,13 +2015,13 @@
       "Mega",
       "Gigantamax"
     ],
-    "base":{
-      "Speed":110,
-      "HP":60,
-      "Special":130,
-      "Attack":65,
-      "Defense":60
-    }
+    "base":[
+      110,
+      60,
+      130,
+      65,
+      60
+    ]
   },
   {
     "generation":1,
@@ -2035,13 +2035,13 @@
       "Steelix",
       ""
     ],
-    "base":{
-      "Speed":70,
-      "HP":35,
-      "Special":30,
-      "Attack":45,
-      "Defense":160
-    }
+    "base":[
+      70,
+      35,
+      30,
+      45,
+      160
+    ]
   },
   {
     "generation":1,
@@ -2055,13 +2055,13 @@
       "Hypno",
       ""
     ],
-    "base":{
-      "Speed":42,
-      "HP":60,
-      "Special":90,
-      "Attack":48,
-      "Defense":45
-    }
+    "base":[
+      42,
+      60,
+      90,
+      48,
+      45
+    ]
   },
   {
     "generation":1,
@@ -2079,13 +2079,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":67,
-      "HP":85,
-      "Special":115,
-      "Attack":73,
-      "Defense":70
-    }
+    "base":[
+      67,
+      85,
+      115,
+      73,
+      70
+    ]
   },
   {
     "generation":1,
@@ -2099,13 +2099,13 @@
       "Kingler",
       ""
     ],
-    "base":{
-      "Speed":50,
-      "HP":30,
-      "Special":25,
-      "Attack":105,
-      "Defense":90
-    }
+    "base":[
+      50,
+      30,
+      25,
+      105,
+      90
+    ]
   },
   {
     "generation":1,
@@ -2123,13 +2123,13 @@
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":75,
-      "HP":55,
-      "Special":50,
-      "Attack":130,
-      "Defense":115
-    }
+    "base":[
+      75,
+      55,
+      50,
+      130,
+      115
+    ]
   },
   {
     "generation":1,
@@ -2146,13 +2146,13 @@
       "Electrode",
       ""
     ],
-    "base":{
-      "Speed":100,
-      "HP":40,
-      "Special":55,
-      "Attack":30,
-      "Defense":50
-    }
+    "base":[
+      100,
+      40,
+      55,
+      30,
+      50
+    ]
   },
   {
     "generation":1,
@@ -2169,13 +2169,13 @@
       "Electrode",
       ""
     ],
-    "base":{
-      "Speed":140,
-      "HP":60,
-      "Special":80,
-      "Attack":50,
-      "Defense":70
-    }
+    "base":[
+      140,
+      60,
+      80,
+      50,
+      70
+    ]
   },
   {
     "generation":1,
@@ -2189,13 +2189,13 @@
       "Exeggutor",
       ""
     ],
-    "base":{
-      "Speed":40,
-      "HP":60,
-      "Special":60,
-      "Attack":40,
-      "Defense":80
-    }
+    "base":[
+      40,
+      60,
+      60,
+      40,
+      80
+    ]
   },
   {
     "generation":1,
@@ -2212,13 +2212,13 @@
       "Exeggutor",
       ""
     ],
-    "base":{
-      "Speed":55,
-      "HP":95,
-      "Special":125,
-      "Attack":95,
-      "Defense":85
-    }
+    "base":[
+      55,
+      95,
+      125,
+      95,
+      85
+    ]
   },
   {
     "generation":1,
@@ -2232,13 +2232,13 @@
       "Marowak",
       ""
     ],
-    "base":{
-      "Speed":35,
-      "HP":50,
-      "Special":40,
-      "Attack":50,
-      "Defense":95
-    }
+    "base":[
+      35,
+      50,
+      40,
+      50,
+      95
+    ]
   },
   {
     "generation":1,
@@ -2255,13 +2255,13 @@
       "Marowak",
       ""
     ],
-    "base":{
-      "Speed":45,
-      "HP":60,
-      "Special":50,
-      "Attack":80,
-      "Defense":110
-    }
+    "base":[
+      45,
+      60,
+      50,
+      80,
+      110
+    ]
   },
   {
     "generation":1,
@@ -2275,13 +2275,13 @@
       "Hitmonlee",
       ""
     ],
-    "base":{
-      "Speed":87,
-      "HP":50,
-      "Special":35,
-      "Attack":120,
-      "Defense":53
-    }
+    "base":[
+      87,
+      50,
+      35,
+      120,
+      53
+    ]
   },
   {
     "generation":1,
@@ -2295,13 +2295,13 @@
       "Hitmonchan",
       ""
     ],
-    "base":{
-      "Speed":76,
-      "HP":50,
-      "Special":35,
-      "Attack":105,
-      "Defense":79
-    }
+    "base":[
+      76,
+      50,
+      35,
+      105,
+      79
+    ]
   },
   {
     "generation":1,
@@ -2315,13 +2315,13 @@
       "Lickilicky",
       ""
     ],
-    "base":{
-      "Speed":30,
-      "HP":90,
-      "Special":60,
-      "Attack":55,
-      "Defense":75
-    }
+    "base":[
+      30,
+      90,
+      60,
+      55,
+      75
+    ]
   },
   {
     "generation":1,
@@ -2335,13 +2335,13 @@
       "Weezing",
       ""
     ],
-    "base":{
-      "Speed":35,
-      "HP":40,
-      "Special":60,
-      "Attack":65,
-      "Defense":95
-    }
+    "base":[
+      35,
+      40,
+      60,
+      65,
+      95
+    ]
   },
   {
     "generation":1,
@@ -2358,13 +2358,13 @@
       "Weezing",
       ""
     ],
-    "base":{
-      "Speed":60,
-      "HP":65,
-      "Special":85,
-      "Attack":90,
-      "Defense":120
-    }
+    "base":[
+      60,
+      65,
+      85,
+      90,
+      120
+    ]
   },
   {
     "generation":1,
@@ -2382,13 +2382,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":25,
-      "HP":80,
-      "Special":30,
-      "Attack":85,
-      "Defense":95
-    }
+    "base":[
+      25,
+      80,
+      30,
+      85,
+      95
+    ]
   },
   {
     "generation":1,
@@ -2406,13 +2406,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":40,
-      "HP":105,
-      "Special":45,
-      "Attack":130,
-      "Defense":120
-    }
+    "base":[
+      40,
+      105,
+      45,
+      130,
+      120
+    ]
   },
   {
     "generation":1,
@@ -2426,13 +2426,13 @@
       "Chansey",
       "Blissey"
     ],
-    "base":{
-      "Speed":50,
-      "HP":250,
-      "Special":105,
-      "Attack":5,
-      "Defense":5
-    }
+    "base":[
+      50,
+      250,
+      105,
+      5,
+      5
+    ]
   },
   {
     "generation":1,
@@ -2446,13 +2446,13 @@
       "Tangrowth",
       ""
     ],
-    "base":{
-      "Speed":60,
-      "HP":65,
-      "Special":100,
-      "Attack":55,
-      "Defense":115
-    }
+    "base":[
+      60,
+      65,
+      100,
+      55,
+      115
+    ]
   },
   {
     "generation":1,
@@ -2464,13 +2464,13 @@
       "Mega",
       "Regular"
     ],
-    "base":{
-      "Speed":90,
-      "HP":105,
-      "Special":40,
-      "Attack":95,
-      "Defense":80
-    }
+    "base":[
+      90,
+      105,
+      40,
+      95,
+      80
+    ]
   },
   {
     "generation":1,
@@ -2484,13 +2484,13 @@
       "Seadra",
       "Kingdra"
     ],
-    "base":{
-      "Speed":60,
-      "HP":30,
-      "Special":70,
-      "Attack":40,
-      "Defense":70
-    }
+    "base":[
+      60,
+      30,
+      70,
+      40,
+      70
+    ]
   },
   {
     "generation":1,
@@ -2504,13 +2504,13 @@
       "Seadra",
       "Kingdra"
     ],
-    "base":{
-      "Speed":85,
-      "HP":55,
-      "Special":95,
-      "Attack":65,
-      "Defense":95
-    }
+    "base":[
+      85,
+      55,
+      95,
+      65,
+      95
+    ]
   },
   {
     "generation":1,
@@ -2528,13 +2528,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":63,
-      "HP":45,
-      "Special":50,
-      "Attack":67,
-      "Defense":60
-    }
+    "base":[
+      63,
+      45,
+      50,
+      67,
+      60
+    ]
   },
   {
     "generation":1,
@@ -2552,13 +2552,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":68,
-      "HP":80,
-      "Special":80,
-      "Attack":92,
-      "Defense":65
-    }
+    "base":[
+      68,
+      80,
+      80,
+      92,
+      65
+    ]
   },
   {
     "generation":1,
@@ -2572,13 +2572,13 @@
       "Starmie",
       ""
     ],
-    "base":{
-      "Speed":85,
-      "HP":30,
-      "Special":70,
-      "Attack":45,
-      "Defense":55
-    }
+    "base":[
+      85,
+      30,
+      70,
+      45,
+      55
+    ]
   },
   {
     "generation":1,
@@ -2592,13 +2592,13 @@
       "Starmie",
       ""
     ],
-    "base":{
-      "Speed":115,
-      "HP":60,
-      "Special":100,
-      "Attack":75,
-      "Defense":85
-    }
+    "base":[
+      115,
+      60,
+      100,
+      75,
+      85
+    ]
   },
   {
     "generation":1,
@@ -2615,13 +2615,13 @@
       "Mr. Mime",
       ""
     ],
-    "base":{
-      "Speed":90,
-      "HP":40,
-      "Special":100,
-      "Attack":45,
-      "Defense":65
-    }
+    "base":[
+      90,
+      40,
+      100,
+      45,
+      65
+    ]
   },
   {
     "generation":1,
@@ -2639,13 +2639,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":105,
-      "HP":70,
-      "Special":55,
-      "Attack":110,
-      "Defense":80
-    }
+    "base":[
+      105,
+      70,
+      55,
+      110,
+      80
+    ]
   },
   {
     "generation":1,
@@ -2659,13 +2659,13 @@
       "Jynx",
       ""
     ],
-    "base":{
-      "Speed":95,
-      "HP":65,
-      "Special":95,
-      "Attack":50,
-      "Defense":35
-    }
+    "base":[
+      95,
+      65,
+      95,
+      50,
+      35
+    ]
   },
   {
     "generation":1,
@@ -2679,13 +2679,13 @@
       "Electabuzz",
       "Electivire"
     ],
-    "base":{
-      "Speed":105,
-      "HP":65,
-      "Special":85,
-      "Attack":83,
-      "Defense":57
-    }
+    "base":[
+      105,
+      65,
+      85,
+      83,
+      57
+    ]
   },
   {
     "generation":1,
@@ -2699,13 +2699,13 @@
       "Magmar",
       "Magmortar"
     ],
-    "base":{
-      "Speed":93,
-      "HP":65,
-      "Special":85,
-      "Attack":95,
-      "Defense":57
-    }
+    "base":[
+      93,
+      65,
+      85,
+      95,
+      57
+    ]
   },
   {
     "generation":1,
@@ -2717,13 +2717,13 @@
       "Mega",
       "Regular"
     ],
-    "base":{
-      "Speed":85,
-      "HP":65,
-      "Special":55,
-      "Attack":125,
-      "Defense":100
-    }
+    "base":[
+      85,
+      65,
+      55,
+      125,
+      100
+    ]
   },
   {
     "generation":1,
@@ -2731,13 +2731,13 @@
     "name":"Tauros",
     "breedable":true,
     "id":128,
-    "base":{
-      "Speed":110,
-      "HP":75,
-      "Special":70,
-      "Attack":100,
-      "Defense":95
-    }
+    "base":[
+      110,
+      75,
+      70,
+      100,
+      95
+    ]
   },
   {
     "generation":1,
@@ -2755,13 +2755,13 @@
       "Male",
       "Female"
     ],
-    "base":{
-      "Speed":80,
-      "HP":20,
-      "Special":20,
-      "Attack":10,
-      "Defense":55
-    }
+    "base":[
+      80,
+      20,
+      20,
+      10,
+      55
+    ]
   },
   {
     "generation":1,
@@ -2780,13 +2780,13 @@
       "Female",
       "Mega"
     ],
-    "base":{
-      "Speed":81,
-      "HP":95,
-      "Special":100,
-      "Attack":125,
-      "Defense":79
-    }
+    "base":[
+      81,
+      95,
+      100,
+      125,
+      79
+    ]
   },
   {
     "generation":1,
@@ -2798,13 +2798,13 @@
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":60,
-      "HP":130,
-      "Special":95,
-      "Attack":85,
-      "Defense":80
-    }
+    "base":[
+      60,
+      130,
+      95,
+      85,
+      80
+    ]
   },
   {
     "generation":1,
@@ -2812,13 +2812,13 @@
     "name":"Ditto",
     "breedable":true,
     "id":132,
-    "base":{
-      "Speed":48,
-      "HP":48,
-      "Special":48,
-      "Attack":48,
-      "Defense":48
-    }
+    "base":[
+      48,
+      48,
+      48,
+      48,
+      48
+    ]
   },
   {
     "generation":1,
@@ -2829,20 +2829,20 @@
     "id":133,
     "family":[
       "Eevee",
-      "Sylveon",
+      "Vaporeon",
       ""
     ],
     "forms":[
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":55,
-      "HP":55,
-      "Special":65,
-      "Attack":55,
-      "Defense":50
-    }
+    "base":[
+      55,
+      55,
+      65,
+      55,
+      50
+    ]
   },
   {
     "generation":1,
@@ -2856,13 +2856,13 @@
       "Vaporeon",
       ""
     ],
-    "base":{
-      "Speed":65,
-      "HP":130,
-      "Special":110,
-      "Attack":65,
-      "Defense":60
-    }
+    "base":[
+      65,
+      130,
+      110,
+      65,
+      60
+    ]
   },
   {
     "generation":1,
@@ -2876,13 +2876,13 @@
       "Jolteon",
       ""
     ],
-    "base":{
-      "Speed":130,
-      "HP":65,
-      "Special":110,
-      "Attack":65,
-      "Defense":60
-    }
+    "base":[
+      130,
+      65,
+      110,
+      65,
+      60
+    ]
   },
   {
     "generation":1,
@@ -2896,13 +2896,13 @@
       "Flareon",
       ""
     ],
-    "base":{
-      "Speed":65,
-      "HP":65,
-      "Special":110,
-      "Attack":130,
-      "Defense":60
-    }
+    "base":[
+      65,
+      65,
+      110,
+      130,
+      60
+    ]
   },
   {
     "generation":1,
@@ -2916,13 +2916,13 @@
       "Porygon2",
       "Porygon-Z"
     ],
-    "base":{
-      "Speed":40,
-      "HP":65,
-      "Special":75,
-      "Attack":60,
-      "Defense":70
-    }
+    "base":[
+      40,
+      65,
+      75,
+      60,
+      70
+    ]
   },
   {
     "generation":1,
@@ -2936,13 +2936,13 @@
       "Omastar",
       ""
     ],
-    "base":{
-      "Speed":35,
-      "HP":35,
-      "Special":90,
-      "Attack":4,
-      "Defense":100
-    }
+    "base":[
+      35,
+      35,
+      90,
+      4,
+      100
+    ]
   },
   {
     "generation":1,
@@ -2956,13 +2956,13 @@
       "Omastar",
       ""
     ],
-    "base":{
-      "Speed":55,
-      "HP":70,
-      "Special":115,
-      "Attack":60,
-      "Defense":125
-    }
+    "base":[
+      55,
+      70,
+      115,
+      60,
+      125
+    ]
   },
   {
     "generation":1,
@@ -2976,13 +2976,13 @@
       "Kabutops",
       ""
     ],
-    "base":{
-      "Speed":55,
-      "HP":30,
-      "Special":45,
-      "Attack":80,
-      "Defense":90
-    }
+    "base":[
+      55,
+      30,
+      45,
+      80,
+      90
+    ]
   },
   {
     "generation":1,
@@ -2996,13 +2996,13 @@
       "Kabutops",
       ""
     ],
-    "base":{
-      "Speed":80,
-      "HP":60,
-      "Special":70,
-      "Attack":115,
-      "Defense":105
-    }
+    "base":[
+      80,
+      60,
+      70,
+      115,
+      105
+    ]
   },
   {
     "generation":1,
@@ -3010,13 +3010,13 @@
     "name":"Aerodactyl",
     "breedable":true,
     "id":142,
-    "base":{
-      "Speed":130,
-      "HP":80,
-      "Special":65,
-      "Attack":105,
-      "Defense":65
-    }
+    "base":[
+      130,
+      80,
+      65,
+      105,
+      65
+    ]
   },
   {
     "generation":1,
@@ -3034,13 +3034,13 @@
       "Gigantamax",
       "Regular"
     ],
-    "base":{
-      "Speed":30,
-      "HP":160,
-      "Special":65,
-      "Attack":110,
-      "Defense":65
-    }
+    "base":[
+      30,
+      160,
+      65,
+      110,
+      65
+    ]
   },
   {
     "generation":1,
@@ -3051,13 +3051,13 @@
     "regional-forms":[
       "Galarian"
     ],
-    "base":{
-      "Speed":85,
-      "HP":90,
-      "Special":125,
-      "Attack":85,
-      "Defense":100
-    }
+    "base":[
+      85,
+      90,
+      125,
+      85,
+      100
+    ]
   },
   {
     "generation":1,
@@ -3068,13 +3068,13 @@
     "regional-forms":[
       "Galarian"
     ],
-    "base":{
-      "Speed":100,
-      "HP":90,
-      "Special":125,
-      "Attack":90,
-      "Defense":85
-    }
+    "base":[
+      100,
+      90,
+      125,
+      90,
+      85
+    ]
   },
   {
     "generation":1,
@@ -3085,13 +3085,13 @@
     "regional-forms":[
       "Galarian"
     ],
-    "base":{
-      "Speed":90,
-      "HP":90,
-      "Special":125,
-      "Attack":100,
-      "Defense":90
-    }
+    "base":[
+      90,
+      90,
+      125,
+      100,
+      90
+    ]
   },
   {
     "generation":1,
@@ -3105,13 +3105,13 @@
       "Dragonair",
       "Dragonite"
     ],
-    "base":{
-      "Speed":50,
-      "HP":41,
-      "Special":50,
-      "Attack":64,
-      "Defense":45
-    }
+    "base":[
+      50,
+      41,
+      50,
+      64,
+      45
+    ]
   },
   {
     "generation":1,
@@ -3125,13 +3125,13 @@
       "Dragonair",
       "Dragonite"
     ],
-    "base":{
-      "Speed":70,
-      "HP":61,
-      "Special":70,
-      "Attack":84,
-      "Defense":65
-    }
+    "base":[
+      70,
+      61,
+      70,
+      84,
+      65
+    ]
   },
   {
     "generation":1,
@@ -3145,13 +3145,13 @@
       "Dragonair",
       "Dragonite"
     ],
-    "base":{
-      "Speed":80,
-      "HP":91,
-      "Special":100,
-      "Attack":134,
-      "Defense":95
-    }
+    "base":[
+      80,
+      91,
+      100,
+      134,
+      95
+    ]
   },
   {
     "generation":1,
@@ -3164,13 +3164,13 @@
       "Mega X",
       "Mega Y"
     ],
-    "base":{
-      "Speed":130,
-      "HP":106,
-      "Special":154,
-      "Attack":110,
-      "Defense":90
-    }
+    "base":[
+      130,
+      106,
+      154,
+      110,
+      90
+    ]
   },
   {
     "generation":1,
@@ -3178,13 +3178,13 @@
     "name":"Mew",
     "breedable":false,
     "id":151,
-    "base":{
-      "Speed":100,
-      "HP":100,
-      "Special":100,
-      "Attack":100,
-      "Defense":100
-    }
+    "base":[
+      100,
+      100,
+      100,
+      100,
+      100
+    ]
   },
   {
     "generation":2,
