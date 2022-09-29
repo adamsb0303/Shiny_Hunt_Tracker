@@ -18,46 +18,24 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class SaveData {
-    Pokemon selectedPokemon;
-    Game selectedGame;
-    Method selectedMethod;
-    String layout;
-    int encounters, combo, increment;
-
-    SaveData(){
-
-    }
-
-    SaveData(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, int encounters, int combo, int increment, String layout){
-        this.selectedPokemon = selectedPokemon;
-        this.selectedGame = selectedGame;
-        this.selectedMethod = selectedMethod;
-        this.encounters = encounters;
-        this.combo = combo;
-        this.increment = increment;
-        this.layout = layout;
-    }
-
     //writes information to previous hunts file
-    public void saveHunt(int huntID){
+    public static void saveHunt(HuntWindow huntData){
         JSONObject pokemonData = new JSONObject();
 
-        pokemonData.put("pokemon_id", selectedPokemon.getDexNumber());
-        pokemonData.put("pokemon_form", selectedPokemon.getForm());
-        pokemonData.put("game", selectedGame.getName());
-        pokemonData.put("generation", selectedGame.getGeneration());
-        pokemonData.put("method", selectedMethod.getName());
-        pokemonData.put("modifier", selectedMethod.getModifier());
-        pokemonData.put("encounters", encounters);
-        pokemonData.put("combo", combo);
-        pokemonData.put("increment", increment);
-        pokemonData.put("layout", layout);
+        pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
+        pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
+        pokemonData.put("game", huntData.getGame().getName());
+        pokemonData.put("generation", huntData.getGame().getGeneration());
+        pokemonData.put("method", huntData.getMethod().getName());
+        pokemonData.put("modifier", huntData.getMethod().getModifier());
+        pokemonData.put("encounters", huntData.getEncounters());
+        pokemonData.put("combo", huntData.getCombo());
+        pokemonData.put("increment", huntData.getIncrement());
+        pokemonData.put("layout", huntData.getCurrentLayout());
 
         JSONParser jsonParser = new JSONParser();
 
@@ -67,10 +45,10 @@ public class SaveData {
             JSONArray huntList = (JSONArray) obj;
 
             //Check for duplicate data
-            if(huntID == -1)
+            if(huntData.getHuntID() == -1)
                 pokemonData.put("huntID", huntList.size());
             else {
-                pokemonData.put("huntID", huntID);
+                pokemonData.put("huntID", huntData.getHuntID());
 
                 for(int i = 0; i < huntList.size(); i++){
                     JSONObject checkData = (JSONObject) huntList.get(i);
@@ -144,17 +122,17 @@ public class SaveData {
     }
 
     //writes information to caught pokemon file
-    public void pokemonCaught(int huntID){
+    public static void pokemonCaught(HuntWindow huntData){
         JSONObject pokemonData = new JSONObject();
 
-        pokemonData.put("pokemon_id", selectedPokemon.getDexNumber());
-        pokemonData.put("pokemon_form", selectedPokemon.getForm());
-        pokemonData.put("game", selectedGame.getName());
-        pokemonData.put("generation", selectedGame.getGeneration());
-        pokemonData.put("method", selectedMethod.getName());
-        pokemonData.put("modifier", selectedMethod.getModifier());
-        pokemonData.put("encounters", encounters);
-        pokemonData.put("combo", combo);
+        pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
+        pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
+        pokemonData.put("game", huntData.getGame().getName());
+        pokemonData.put("generation", huntData.getGame().getGeneration());
+        pokemonData.put("method", huntData.getMethod().getName());
+        pokemonData.put("modifier", huntData.getMethod().getModifier());
+        pokemonData.put("encounters", huntData.getEncounters());
+        pokemonData.put("combo", huntData.getCombo());
 
         JSONParser jsonParser = new JSONParser();
 
@@ -166,7 +144,7 @@ public class SaveData {
             for(int i = 0; i < huntList.size(); i++){
                 JSONObject checkData = (JSONObject) huntList.get(i);
                 int checkDataID = Integer.parseInt(checkData.get("huntID").toString());
-                if(checkDataID == huntID) {
+                if(checkDataID == huntData.getHuntID()) {
                     huntList.remove(i);
 
                     FileWriter listFile = new FileWriter("SaveData/previousHunts.json");
@@ -345,59 +323,6 @@ public class SaveData {
             }
             huntLayout.setBackground(new Background(new BackgroundFill(Color.web(layoutData.get(layoutData.size() - 1).toString()), CornerRadii.EMPTY, Insets.EMPTY)));
         }catch(IOException | ParseException e){
-            e.printStackTrace();
-        }
-    }
-
-    //returns the given line from the previous hunts file
-    public String getLinefromFile(int lineNumber, String file){
-        try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
-
-            for(int i = 0; i < getfileLength(file); i++) {
-                String line = fileReader.readLine();
-                if(i == lineNumber)
-                    return line;
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    //returns how many lines are in the previous hunts file
-    public int getfileLength(String file){
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
-            int lines = 0;
-            while(reader.readLine() != null)
-                lines++;
-            return lines;
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    //replaces the given line with the given string
-    public void replaceLine(int lineNumber, String saveData, String file){
-        try{
-            BufferedReader fileReader = new BufferedReader(new FileReader("SaveData/" + file + ".txt"));
-            StringBuilder inputBuffer = new StringBuilder();
-
-            for (int i = 0; i < getfileLength(file); i++) {
-                String line = fileReader.readLine();
-                if (i == lineNumber) {
-                    line = saveData;
-                }
-                inputBuffer.append(line);
-                inputBuffer.append('\n');
-            }
-
-            FileOutputStream fileOut = new FileOutputStream("SaveData/" + file + ".txt");
-            fileOut.write(inputBuffer.toString().getBytes());
-            fileOut.close();
-        }catch(IOException e){
             e.printStackTrace();
         }
     }

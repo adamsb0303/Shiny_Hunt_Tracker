@@ -133,7 +133,7 @@ public class HuntController {
 
             //save and close all currently open hunts
             while(windowsList.size() > 0) {
-                windowsList.lastElement().saveHunt();
+                SaveData.saveHunt(windowsList.lastElement());
                 windowsList.lastElement().closeHuntWindow();
                 windowsList.remove(windowsList.lastElement());
             }
@@ -155,7 +155,7 @@ public class HuntController {
 
             saveAll.setOnAction(e -> {
                 for (HuntWindow i : windowsList)
-                    i.saveHunt();
+                    SaveData.saveHunt(windowsList.lastElement());
             });
         }
 
@@ -186,7 +186,7 @@ public class HuntController {
         Label encounterLabel = new Label();
         encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
 
-        Label nameLabel = new Label(newWindow.getSelectedPokemon().getName());
+        Label nameLabel = new Label(newWindow.getPokemon().getName());
 
         Button caughtButton = new Button("O");
         caughtButton.setFocusTraversable(false);
@@ -232,7 +232,7 @@ public class HuntController {
         }
 
         exitHuntButton.setOnAction(e -> {
-            newWindow.saveHunt();
+            SaveData.saveHunt(windowsList.lastElement());
             newWindow.closeHuntWindow();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
@@ -409,8 +409,8 @@ public class HuntController {
             window.phaseHunt();
         });
         resetCombo.setOnAction(e -> window.resetCombo());
-        saveHunt.setOnAction(e -> window.saveHunt());
-        DVTable.setOnAction(e -> generateDVTable(window.getSelectedPokemon()));
+        saveHunt.setOnAction(e -> SaveData.saveHunt(windowsList.lastElement()));
+        DVTable.setOnAction(e -> generateDVTable(window.getPokemon()));
     }
 
     /**

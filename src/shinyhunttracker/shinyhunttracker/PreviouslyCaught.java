@@ -205,9 +205,9 @@ class PreviouslyCaught extends Window {
         TreeView<String> previouslyCaughtView = new TreeView<>();
         TreeItem<String> previoulyCaughtRoot = new TreeItem<>();
 
-        SaveData previoulyCaughtData = new SaveData();
+        //SaveData previoulyCaughtData = new SaveData();
 
-        for(int i = previoulyCaughtData.getfileLength("CaughtPokemon") - 1; i >= 0 ; i--){
+        /*for(int i = previoulyCaughtData.getfileLength("CaughtPokemon") - 1; i >= 0 ; i--){
             String line = previoulyCaughtData.getLinefromFile(i, "CaughtPokemon");
             String[] data = line.split(",");
             String name = data[0];
@@ -215,7 +215,7 @@ class PreviouslyCaught extends Window {
             String method = data[4];
             String encounters = data[6];
             makeBranch((previoulyCaughtData.getfileLength("CaughtPokemon") - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previoulyCaughtRoot);
-        }
+        }*/
 
         previouslyCaughtView.setRoot(previoulyCaughtRoot);
         previouslyCaughtView.setShowRoot(false);
@@ -314,8 +314,6 @@ class PreviouslyCaught extends Window {
 
     //load layout
     public void loadLayoutMenu(){
-        SaveData data = new SaveData();
-
         Stage loadSavedLayoutStage = new Stage();
         loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
         loadSavedLayoutStage.setResizable(false);
@@ -323,9 +321,9 @@ class PreviouslyCaught extends Window {
 
         TreeView<String> savedLayouts = new TreeView<>();
         TreeItem<String> root = new TreeItem<>();
-        for(int i = 0; i < data.getfileLength("Layouts/Previously-Caught/~Layouts"); i++){
+        /*for(int i = 0; i < data.getfileLength("Layouts/Previously-Caught/~Layouts"); i++){
             makeBranch(data.getLinefromFile(i, "Layouts/Previously-Caught/~Layouts"), root);
-        }
+        }*/
         savedLayouts.setRoot(root);
         savedLayouts.setShowRoot(false);
         savedLayouts.setPrefWidth(300);
@@ -349,9 +347,11 @@ class PreviouslyCaught extends Window {
     }
 
     public void loadLayout(){
-        SaveData data = new SaveData();
+        //SaveData data = new SaveData();
         displayPrevious = 0;
+/*
         displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
+*/
         numberCaughtField.setPromptText(String.valueOf(displayCaught));
         if(previouslyCaughtSettingsLayout.getChildren().size() > 0)
             previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
@@ -360,7 +360,7 @@ class PreviouslyCaught extends Window {
             createPreviouslyCaughtPokemonWindow();
         previouslyCaughtPokemonSettings();
         addPreviouslyCaughtPokemon(displayCaught);
-        data.loadLayout(currentLayout, windowLayout, false);
+        SaveData.loadLayout(currentLayout, windowLayout, false);
     }
 
     public Stage getSettingsStage(){

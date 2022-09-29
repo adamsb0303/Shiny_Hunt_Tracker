@@ -401,8 +401,7 @@ public class SelectionPageController implements Initializable {
         Stage selectionWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
         selectionWindow.close();
 
-        SaveData saveData = new SaveData(selectedPokemon, selectedGame, selectedMethod, 0, 0, 1, null);
-        saveData.saveHunt(-1);
+        SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
         SaveData.loadHunt(-1, controller);
     }
 

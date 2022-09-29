@@ -13,7 +13,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
 
@@ -330,8 +335,7 @@ class HuntWindow extends Window {
 
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.pokemonCaught(huntID);
+        SaveData.pokemonCaught(this);
 
         CustomizeHuntStage.close();
         windowStage.close();
@@ -378,12 +382,6 @@ class HuntWindow extends Window {
         combo.setValue(0);
         currentComboText.setText(String.valueOf(combo));
         dynamicOddsMethods();
-    }
-
-    //writes objects to previous hunts file
-    public void saveHunt(){
-        SaveData data = new SaveData(selectedPokemon, selectedGame, selectedMethod, encounters.getValue(), combo.getValue(), increment, currentLayout);
-        data.saveHunt(huntID);
     }
 
     //save hunt and it closes the window
@@ -467,7 +465,7 @@ class HuntWindow extends Window {
         promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
         promptLayoutSaveName.setResizable(false);
 
-        if(currentLayout != null) {
+        if(!currentLayout.equals("")) {
             promptLayoutSaveName.setTitle("Save Layout");
 
             VBox selectNewSaveLayout = new VBox();
@@ -549,8 +547,6 @@ class HuntWindow extends Window {
 
     //load layout
     public void loadLayout(){
-        SaveData data = new SaveData();
-
         Stage loadSavedLayoutStage = new Stage();
         loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
         loadSavedLayoutStage.setResizable(false);
@@ -558,9 +554,24 @@ class HuntWindow extends Window {
 
         TreeView<String> savedLayouts = new TreeView<>();
         TreeItem<String> root = new TreeItem<>();
-        for(int i = 0; i < data.getfileLength("Layouts/Hunts/~Layouts"); i++){
-            makeBranch(data.getLinefromFile(i, "Layouts/Hunts/~Layouts"), root);
+
+        try (FileReader reader = new FileReader("SaveData/huntLayouts.json")){
+            //Read JSON file
+            JSONParser jsonParser = new JSONParser();
+            Object obj = jsonParser.parse(reader);
+            JSONArray layoutList = (JSONArray) obj;
+
+            for(int i = layoutList.size() - 1; i >= 0; i--){
+                JSONArray layoutInfo = (JSONArray) layoutList.get(i);
+                String name = layoutInfo.get(0).toString();
+
+                TreeItem<String> item = new TreeItem<>(name);
+                root.getChildren().add(item);
+            }
+        }catch (IOException | ParseException f) {
+            f.printStackTrace();
         }
+
         savedLayouts.setRoot(root);
         savedLayouts.setShowRoot(false);
         savedLayouts.setPrefWidth(300);
@@ -578,7 +589,7 @@ class HuntWindow extends Window {
         savedLayouts.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                    data.loadLayout(currentLayout, windowLayout, true);
+                    SaveData.loadLayout(currentLayout, windowLayout, true);
                     loadSavedLayoutStage.close();
                     CustomizeHuntWindow();
                 });
@@ -589,7 +600,9 @@ class HuntWindow extends Window {
         return (int)Math.round(den / num);
     }
 
-    public Pokemon getSelectedPokemon(){ return selectedPokemon; }
+    public Pokemon getPokemon(){ return selectedPokemon; }
+
+    public Game getGame(){ return selectedGame; }
 
     public Method getMethod() { return selectedMethod; }
 
@@ -597,7 +610,15 @@ class HuntWindow extends Window {
 
     public KeyCode getKeyBinding(){ return keybind; }
 
+    public int getEncounters(){ return encounters.getValue(); }
+
+    public int getCombo(){ return combo.getValue(); }
+
+    public int getHuntID(){ return huntID; }
+
     public IntegerProperty encounterProperty(){ return encounters; }
+
+    public int getIncrement(){ return increment; }
 
     public int getGameGeneration(){ return selectedGame.getGeneration(); }
 
