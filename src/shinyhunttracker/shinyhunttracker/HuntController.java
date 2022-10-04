@@ -1,5 +1,7 @@
 package shinyhunttracker;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,10 +11,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.Vector;
 
@@ -354,7 +359,29 @@ public class HuntController {
      * Creates a selection page for the user to select the hunt information
      */
     public void createSelectionPage(){
-        try {
+        Stage selectionPageStage = new Stage();
+
+        VBox gameAndMethod = new VBox();
+        ComboBox<Game> gameComboBox = new ComboBox<>();
+
+        try(FileReader reader = new FileReader("GameData/game.json")){
+            JSONParser jsonParser = new JSONParser();
+            JSONArray gameList = (JSONArray) jsonParser.parse(reader);
+
+            for(int i = 0; i < gameList.size(); i++)
+                gameComboBox.getItems().add(new Game(i));
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
+        }
+
+        ComboBox<Method> methodComboBox = new ComboBox<>();
+
+        gameAndMethod.getChildren().addAll(gameComboBox, methodComboBox);
+
+        Scene selectionScene = new Scene(gameAndMethod, 500, 500);
+        selectionPageStage.setScene(selectionScene);
+        selectionPageStage.show();
+        /*try {
             FXMLLoader selectionPageLoader = new FXMLLoader();
             selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
             Parent root = selectionPageLoader.load();
@@ -371,7 +398,7 @@ public class HuntController {
             huntSelectionWindow.show();
         }catch(IOException e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void addHuntWindowSettings(HuntWindow window){

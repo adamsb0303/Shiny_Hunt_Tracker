@@ -72,10 +72,10 @@ class FetchImage extends Thread{
                 gameAbbreviation = "Crystal";
                 break;
             case 2:
-                gameAbbreviation = selectedGame.getName();
+                gameAbbreviation = selectedGame.toString();
                 break;
             case 3:
-                switch(selectedGame.getName()){
+                switch(selectedGame.toString()){
                     case "Ruby":
                     case "Sapphire":
                         gameAbbreviation = "RuSa";
@@ -90,7 +90,7 @@ class FetchImage extends Thread{
                 }
                 break;
             case 4:
-                switch(selectedGame.getName()){
+                switch(selectedGame.toString()){
                     case "HeartGold":
                     case "SoulSilver":
                         gameAbbreviation = "HGSS";

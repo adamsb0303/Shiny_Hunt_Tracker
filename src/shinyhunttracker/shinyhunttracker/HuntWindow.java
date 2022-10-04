@@ -61,7 +61,7 @@ class HuntWindow extends Window {
         //Initializes Labels
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
-        currentGameText = new Text(selectedGame.getName());
+        currentGameText = new Text(selectedGame.toString());
         oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
         dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));

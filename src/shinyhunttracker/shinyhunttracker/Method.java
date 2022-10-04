@@ -151,7 +151,7 @@ public class Method {
             return 5;
     }
 
-    public StringProperty getNameProperty(){return name;}
+    public StringProperty getNameProperty(){ return name; }
 
     public String getName(){
         return name.getValue();

@@ -7,10 +7,7 @@
   {
     "name": "Breeding with Shiny",
     "modifier": 128,
-    "dynamic": false,
-    "games": [
-      "Crystal"
-    ]
+    "dynamic": false
   },
   {
     "name": "Masuda",
@@ -20,116 +17,61 @@
   {
     "name": "Radar Chaining",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "Diamond",
-      "Pearl",
-      "Platinum",
-      "X",
-      "Y",
-      "Brilliant Diamond",
-      "Shining Pearl"
-    ]
+    "dynamic": true
   },
   {
     "name": "Chain Fishing",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "X",
-      "Y",
-      "Omega Ruby",
-      "Alpha Sapphire"
-    ]
+    "dynamic": true
   },
   {
     "name": "Friend Safari",
     "modifier": 6,
-    "dynamic": false,
-    "games": [
-      "X",
-      "Y"
-    ]
+    "dynamic": false
   },
   {
     "name": "DexNav",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "Omega Ruby",
-      "Alpha Sapphire"
-    ]
+    "dynamic": true
   },
   {
     "name": "SOS Chaining",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "Sun",
-      "Moon",
-      "Ultra Sun",
-      "Ultra Moon"
-    ]
+    "dynamic": true
   },
   {
     "name": "Ultra Wormholes",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "Ultra Sun",
-      "Ultra Moon"
-    ]
+    "dynamic": true
   },
   {
     "name": "Catch Combo",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "Let's Go Pikachu",
-      "Let's Go Eevee"
-    ]
+    "dynamic": true
   },
   {
-    "name": "KO",
+    "name": "Brilliant",
     "modifier": 1,
-    "dynamic": true,
-    "games": [
-      "Sword",
-      "Shield"
-    ]
+    "dynamic": true
   },
   {
     "name": "Dynamax Adventure",
     "modifier": 1,
-    "dynamic": false,
-    "games": [
-      "Sword",
-      "Shield"
-    ]
+    "dynamic": false
   },
   {
     "name": "Light Stones",
     "modifier": 3,
-    "dynamic": false,
-    "games": [
-      "Brilliant Diamond",
-      "Shining Pearl"
-    ]
+    "dynamic": false
   },
   {
     "name": "Mass Outbreak",
     "modifier": 25,
-    "dynamic": false,
-    "games": [
-      "Legends: Arceus"
-    ]
+    "dynamic": false
   },
   {
     "name": "Massive Mass Outbreak",
     "modifier": 12,
-    "dynamic": false,
-    "games": [
-      "Legends: Arceus"
-    ]
+    "dynamic": false
   }
 ]

@@ -86,7 +86,7 @@ public class SelectionPageController implements Initializable {
                         dexPerfect.setDisable(true);
 
                         String newSelectionGame = newValue.toString().substring(18, newValue.toString().length() - 2);
-                        selectedGame = new Game(newSelectionGame);//create Game object
+                        selectedGame = new Game(Game.findID(newSelectionGame));//create Game object
                         gameLabel.textProperty().bind(selectedGame.getNameProperty());
 
                         //resets shiny charm and lure checkboxes
@@ -161,7 +161,7 @@ public class SelectionPageController implements Initializable {
     public void InitializeGameList(int generation){
         if(methodRoot != null)//clears Method list
             clearMethodList();
-        selectedGame = new Game();//resets selected Game
+        //selectedGame = new Game("");//resets selected Game
 
         //resets Shiny Charm and Lure checkboxes
         shinyCharmCheckBox.setSelected(false);
@@ -206,7 +206,6 @@ public class SelectionPageController implements Initializable {
         selectedMethod = new Method();
         methodRoot = new TreeItem<>();
 
-        selectedGame.generateMethods(selectedPokemon);
         for(String i: selectedGame.getMethods())
             if (i != null)
                 makeBranch(i, methodRoot);

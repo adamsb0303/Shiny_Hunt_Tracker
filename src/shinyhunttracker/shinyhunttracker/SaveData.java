@@ -28,7 +28,7 @@ public class SaveData {
 
         pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
         pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
-        pokemonData.put("game", huntData.getGame().getName());
+        pokemonData.put("game", huntData.getGame().getId());
         pokemonData.put("generation", huntData.getGame().getGeneration());
         pokemonData.put("method", huntData.getMethod().getName());
         pokemonData.put("modifier", huntData.getMethod().getModifier());
@@ -97,7 +97,7 @@ public class SaveData {
             JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
             int generation = parseInt(huntObject.get("generation").toString());
             Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
-            Game selectedGame = new Game(huntObject.get("game").toString());
+            Game selectedGame = new Game(Integer.parseInt(huntObject.get("game").toString()));
             Method selectedMethod = new Method(huntObject.get("method").toString(), generation);
             selectedMethod.setModifier(parseInt(huntObject.get("modifier").toString()));
             int encounters = parseInt(huntObject.get("encounters").toString());
@@ -127,7 +127,7 @@ public class SaveData {
 
         pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
         pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
-        pokemonData.put("game", huntData.getGame().getName());
+        pokemonData.put("game", huntData.getGame().toString());
         pokemonData.put("generation", huntData.getGame().getGeneration());
         pokemonData.put("method", huntData.getMethod().getName());
         pokemonData.put("modifier", huntData.getMethod().getModifier());

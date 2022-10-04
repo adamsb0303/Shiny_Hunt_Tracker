@@ -34,10 +34,10 @@ public class Window {
                 filePath += "Generation 2/crystal/";
                 break;
             case 2:
-                filePath += "Generation 2/" + selectedGame.getName().toLowerCase() + "/";
+                filePath += "Generation 2/" + selectedGame.toString().toLowerCase() + "/";
                 break;
             case 3:
-                switch(selectedGame.getName()){
+                switch(selectedGame.toString()){
                     case "Ruby":
                     case "Sapphire":
                     case "Emerald":
@@ -52,7 +52,7 @@ public class Window {
                 }
                 break;
             case 4:
-                switch(selectedGame.getName()){
+                switch(selectedGame.toString()){
                     case "Diamond":
                     case "Pearl":
                         filePath += "Generation 4/diamond-pearl/";
