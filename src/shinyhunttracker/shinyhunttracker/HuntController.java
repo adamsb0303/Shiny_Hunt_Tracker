@@ -1,23 +1,26 @@
 package shinyhunttracker;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.Vector;
 
@@ -360,45 +363,84 @@ public class HuntController {
      */
     public void createSelectionPage(){
         Stage selectionPageStage = new Stage();
+        HBox selectionPageLayout = new HBox();
 
-        VBox gameAndMethod = new VBox();
+        AnchorPane huntInformation = new AnchorPane();
+        huntInformation.setMinWidth(375);
+
+        ImageView pokemonSprite = new ImageView();
+        pokemonSprite.setLayoutX(180);
+        pokemonSprite.setLayoutY(275);
+
         ComboBox<Game> gameComboBox = new ComboBox<>();
+        gameComboBox.setPromptText("---Game---");
+        gameComboBox.setMinWidth(200);
+        gameComboBox.setLayoutY(280);
+        gameComboBox.setLayoutX(87.5);
 
         try(FileReader reader = new FileReader("GameData/game.json")){
             JSONParser jsonParser = new JSONParser();
             JSONArray gameList = (JSONArray) jsonParser.parse(reader);
 
-            for(int i = 0; i < gameList.size(); i++)
-                gameComboBox.getItems().add(new Game(i));
+            for(Object i : gameList)
+                gameComboBox.getItems().add(new Game((JSONObject) i));
         }catch(IOException | ParseException e){
             e.printStackTrace();
         }
 
         ComboBox<Method> methodComboBox = new ComboBox<>();
+        methodComboBox.setPromptText("---Method---");
+        methodComboBox.setMinWidth(200);
+        methodComboBox.setLayoutY(305);
+        methodComboBox.setLayoutX(87.5);
 
-        gameAndMethod.getChildren().addAll(gameComboBox, methodComboBox);
+        try(FileReader reader = new FileReader("GameData/method.json")){
+            JSONParser jsonParser = new JSONParser();
+            JSONArray methodList = (JSONArray) jsonParser.parse(reader);
 
-        Scene selectionScene = new Scene(gameAndMethod, 500, 500);
-        selectionPageStage.setScene(selectionScene);
-        selectionPageStage.show();
-        /*try {
-            FXMLLoader selectionPageLoader = new FXMLLoader();
-            selectionPageLoader.setLocation(getClass().getResource("selectionPage.fxml"));
-            Parent root = selectionPageLoader.load();
-
-            Stage huntSelectionWindow = new Stage();
-            huntSelectionWindow.setTitle("Shiny Hunt Tracker");
-            huntSelectionWindow.setResizable(false);
-            huntSelectionWindow.setScene(new Scene(root, 750, 480));
-
-            SelectionPageController selectionPageController = selectionPageLoader.getController();
-            selectionPageController.setController(this);
-            if (windowsList.size() > 0)
-                selectionPageController.setCurrentLayout(windowsList.lastElement().getCurrentLayout());
-            huntSelectionWindow.show();
-        }catch(IOException e){
+            for(Object i : methodList)
+                methodComboBox.getItems().add(new Method((JSONObject) i));
+        }catch(IOException | ParseException e){
             e.printStackTrace();
-        }*/
+        }
+
+        huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox);
+
+        VBox pokemonSelection = new VBox();
+        pokemonSelection.setMinWidth(375);
+
+        TextField pokemonSearch = new TextField();
+
+        TreeItem<Pokemon> pokemonListRoot = new TreeItem<>();
+        TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
+        pokemonListTreeView.setMinHeight(450);
+        pokemonListTreeView.setRoot(pokemonListRoot);
+        pokemonListTreeView.setShowRoot(false);
+
+        try(FileReader reader = new FileReader("GameData/pokemon.json")){
+            JSONParser jsonParser = new JSONParser();
+            JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
+
+            for (Object i : pokemonListJSON)
+                pokemonListRoot.getChildren().add(new TreeItem<>(new Pokemon((JSONObject) i)));
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
+        }
+
+        pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView);
+
+        selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
+        Scene selectionScene = new Scene(selectionPageLayout, 750, 500);
+        selectionPageStage.setScene(selectionScene);
+        selectionPageStage.setResizable(false);
+        selectionPageStage.show();
+
+        pokemonListTreeView.getSelectionModel().selectedItemProperty()
+                .addListener((v, oldValue, newValue) -> {
+                    if(newValue != null){
+                        Window.setPokemonSprite(pokemonSprite, newValue.getValue().toString(), new Game(32));
+                    }
+                });
     }
 
     public void addHuntWindowSettings(HuntWindow window){

@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Vector;
 
 public class Pokemon{
     StringProperty name = new SimpleStringProperty(); //Pokemon name
@@ -20,9 +21,9 @@ public class Pokemon{
     Boolean huntable = true; //if the pokemon is huntable
     Boolean legendary; //if the pokemon is legendary
     String form; //current form of the pokemon
-    String[] family; //all pokemon in evolution line
-    String[] regionalForms; //all possible regional forms
-    String[] forms; //all possible forms
+    Vector<Integer> family = new Vector<>(); //all pokemon in evolution line
+    Vector<Integer> regionalForms = new Vector<>(); //all possible regional forms
+    Vector<String> forms = new Vector<>(); //all possible forms
     int[] base; //Stores Speed, HP, Special, Attack, Defense
 
     /**
@@ -30,38 +31,39 @@ public class Pokemon{
      * @param dexNum index of the given pokemon
      */
     Pokemon(int dexNum){
-        JSONParser jsonParser = new JSONParser();
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/pokemon.json", dexNum)));
+    }
 
-        try (FileReader reader = new FileReader("GameData/pokemon.json")){
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray pokemonList = (JSONArray) obj;
+    Pokemon(JSONObject pokemonObject){
+        name.setValue((String) pokemonObject.get("name"));
+        generation = (int) (long)  pokemonObject.get("generation");
+        breedable = (Boolean) pokemonObject.get("breedable");
+        legendary = (Boolean) pokemonObject.get("legendary");
 
-            //parse pokemon data
-            JSONObject pokemonObject = (JSONObject) pokemonList.get(dexNum - 1);
-            name.setValue((String) pokemonObject.get("name"));
-            generation = (int) (long)  pokemonObject.get("generation");
-            this.dexNum = (int) (long) pokemonObject.get("id");
-            breedable = (Boolean) pokemonObject.get("breedable");
-            legendary = (Boolean) pokemonObject.get("legendary");
-
-            family = SaveData.parseJSONArray((JSONArray) pokemonObject.get("family"));
-            for(int i = 0; i < family.length; i++)
-                if (name.getValue().equals(family[i])) {
-                    evoStage = i;
-                    break;
+        JSONArray tempJSONArr = (JSONArray) pokemonObject.get("family");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                if(i instanceof Long)
+                    family.add(Integer.parseInt(i.toString()));
+                else {
+                    JSONArray multipleFamilies = (JSONArray) i;
                 }
-            forms = SaveData.parseJSONArray((JSONArray) pokemonObject.get("forms"));
-            regionalForms = SaveData.parseJSONArray((JSONArray) pokemonObject.get("regional-forms"));
 
-            JSONArray baseStats = (JSONArray) pokemonObject.get("base");
-            if(baseStats != null) {
-                base = new int[5];
-                for (int i = 0; i < 5; i++)
-                    base[i] = Integer.parseInt(baseStats.get(i).toString());
-            }
-        }catch (IOException | ParseException e) {
-            e.printStackTrace();
+        tempJSONArr = (JSONArray) pokemonObject.get("forms");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                forms.add(i.toString());
+
+        tempJSONArr = (JSONArray) pokemonObject.get("regional-forms");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                regionalForms.add(Integer.parseInt(i.toString()));
+
+        JSONArray baseStats = (JSONArray) pokemonObject.get("base");
+        if(baseStats != null) {
+            base = new int[5];
+            for (int i = 0; i < 5; i++)
+                base[i] = Integer.parseInt(baseStats.get(i).toString());
         }
     }
 
@@ -117,19 +119,22 @@ public class Pokemon{
      * @return if regional form exists
      */
     public Boolean checkRegional(String region){
-        for (String regionalForm : regionalForms)
+        /*for (String regionalForm : regionalForms)
             if (region.equals(regionalForm))
                 return true;
-        return false;
+        */return false;
     }
+
+    @Override
+    public String toString(){ return name.getValue(); }
 
     public int[] getBase() { return base; }
     public int getDexNumber(){ return this.dexNum; }
     public int getEvoStage(){ return this.evoStage; }
     public int getGeneration(){ return generation; }
 
-    public String[] getFamily(){ return family; }
-    public String[] getForms(){ return this.forms; }
+    public String[] getFamily(){ return new String[]{}; }
+    public String[] getForms(){ return new String[]{}; }
     public String getForm(){ return form;}
     public String getName(){ return name.getValue(); }
     public StringProperty getNameProperty(){ return name; }

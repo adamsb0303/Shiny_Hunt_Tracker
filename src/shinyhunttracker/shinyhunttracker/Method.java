@@ -2,6 +2,14 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Method {
     StringProperty name = new SimpleStringProperty();
@@ -12,6 +20,15 @@ public class Method {
         name.setValue("");
         base = 8192;
         modifier = 0;
+    }
+
+    Method(JSONObject methodObject){
+        name.setValue(methodObject.get("name").toString());
+
+    }
+
+    Method(int id){
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/method.json", id)));
     }
 
     Method(String name, int generation){
@@ -149,6 +166,10 @@ public class Method {
             return 4;
         else
             return 5;
+    }
+
+    @Override public String toString(){
+        return name.getValue();
     }
 
     public StringProperty getNameProperty(){ return name; }

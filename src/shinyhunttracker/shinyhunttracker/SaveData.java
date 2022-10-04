@@ -335,4 +335,20 @@ public class SaveData {
             list.add((String) o);
         return list.toArray(new String[0]);
     }
+
+    public static JSONObject readJSON(String filePath, int index){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader(filePath)){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray jsonList = (JSONArray) obj;
+
+            //parse pokemon data
+            return (JSONObject) jsonList.get(index);
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

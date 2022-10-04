@@ -20,30 +20,23 @@ public class Game {
     Vector<Integer> legends = new Vector<>();
     Vector<Integer> methods = new Vector<>();
 
+    Game(JSONObject gameObject){
+        this.name.setValue((String) gameObject.get("name"));
+        generation = (int) (long)  gameObject.get("generation");
+
+        JSONArray tempJSONArr = (JSONArray) gameObject.get("method");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                legends.add(Integer.parseInt(i.toString()));
+
+        tempJSONArr = (JSONArray) gameObject.get("methods");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                methods.add(Integer.parseInt(i.toString()));
+    }
+
     Game(int id){
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("GameData/game.json")) {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray gameList = (JSONArray) obj;
-
-            JSONObject gameObject = (JSONObject) gameList.get(id);
-            this.name.setValue((String) gameObject.get("name"));
-            generation = (int) (long)  gameObject.get("generation");
-
-            JSONArray tempJSONArr = (JSONArray) gameObject.get("method");
-            if(tempJSONArr != null)
-                for(Object i : tempJSONArr)
-                    legends.add(Integer.parseInt(i.toString()));
-
-            tempJSONArr = (JSONArray) gameObject.get("methods");
-            if(tempJSONArr != null)
-                for(Object i : tempJSONArr)
-                    methods.add(Integer.parseInt(i.toString()));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
-        }
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/game.json", id)));
     }
 
     public static int findID(String name){

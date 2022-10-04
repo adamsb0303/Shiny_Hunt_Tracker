@@ -27,7 +27,7 @@ public class Window {
     String currentLayout;
 
     //create a string of the file path of the game
-    public String createGameFilePath(Game selectedGame){
+    public static String createGameFilePath(Game selectedGame){
         String filePath = "Images/Sprites/";
         switch(selectedGame.getGeneration()) {
             case 1:
@@ -79,7 +79,7 @@ public class Window {
     }
 
     //returns ImageView with the sprite of the given pokemon
-    public void setPokemonSprite(ImageView sprite, String name, Game selectedGame){
+    public static void setPokemonSprite(ImageView sprite, String name, Game selectedGame){
         String filePath = createGameFilePath(selectedGame);
 
         if(name.contains("Galarian")) {
