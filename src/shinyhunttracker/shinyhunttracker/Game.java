@@ -2,7 +2,6 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.ComboBox;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +17,7 @@ public class Game {
     int generation;
     int id;
     Vector<Integer> pokedex = new Vector<>();
-    Vector<Integer> legends = new Vector<>();
+    Vector<Integer> unbreedables = new Vector<>();
     Vector<Integer> methods = new Vector<>();
 
     Game(JSONObject gameObject){
@@ -30,10 +29,10 @@ public class Game {
             for(Object i : tempJSONArr)
                 pokedex.add(Integer.parseInt(i.toString()));
 
-        tempJSONArr = (JSONArray) gameObject.get("legends");
+        tempJSONArr = (JSONArray) gameObject.get("unbreedables");
         if(tempJSONArr != null)
             for(Object i : tempJSONArr)
-                legends.add(Integer.parseInt(i.toString()));
+                unbreedables.add(Integer.parseInt(i.toString()));
 
         tempJSONArr = (JSONArray) gameObject.get("methods");
         if(tempJSONArr != null)
@@ -66,8 +65,8 @@ public class Game {
         return -1;
     }
 
-    public boolean hasLegend(int id){
-        for (int j : legends)
+    public boolean hasUnbreedable(int id){
+        for (int j : unbreedables)
             if (id == j)
                 return true;
 
@@ -82,7 +81,7 @@ public class Game {
     public StringProperty getNameProperty(){return name;}
 
     public Vector<Integer> getPokedex() { return pokedex; }
-    public Vector<Integer> getLegends() { return legends; }
+    public Vector<Integer> getUnbreedables() { return unbreedables; }
     public int getGeneration(){
         return generation;
     }

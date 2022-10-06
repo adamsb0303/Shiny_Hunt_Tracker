@@ -20,7 +20,6 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Objects;
 
 public class HuntSelection extends Window {
     static Pokemon selectedPokemon = null;
@@ -150,8 +149,8 @@ public class HuntSelection extends Window {
 
         if(selectedGame != null){
             for(int i : selectedGame.getPokedex())
-                if(defaultPokemonList.get(i).getValue().getLegendary()) {
-                    if(selectedGame.hasLegend(i))
+                if(!defaultPokemonList.get(i).getValue().getBreedable()) {
+                    if(selectedGame.hasUnbreedable(i))
                         updatedPokemonList.add(defaultPokemonList.get(i));
                 }
                 else
@@ -160,8 +159,8 @@ public class HuntSelection extends Window {
             if(updatedPokemonList.size() == 0)
                 for(TreeItem<Pokemon> i : defaultPokemonList)
                     if(i.getValue().getGeneration() <= selectedGame.getGeneration())
-                        if(i.getValue().getLegendary()) {
-                            if(selectedGame.hasLegend(i.getValue().getDexNumber()))
+                        if(!i.getValue().getBreedable()) {
+                            if(selectedGame.hasUnbreedable(i.getValue().getDexNumber()))
                                 updatedPokemonList.add(i);
                         }
                         else
@@ -184,8 +183,8 @@ public class HuntSelection extends Window {
 
         if(selectedPokemon != null){
             for(Game i : defaultGameList) {
-                if (selectedPokemon.getLegendary()) {
-                    if(i.hasLegend(selectedPokemon.getDexNumber()))
+                if (!selectedPokemon.getBreedable()) {
+                    if(i.hasUnbreedable(selectedPokemon.getDexNumber()))
                         updatedGameList.add(i);
                     continue;
                 }
@@ -209,9 +208,6 @@ public class HuntSelection extends Window {
     }
 
     private static void updateMethodList(){
-        if(selectedMethod != null)
-            return;
-
         ObservableList<Method> updatedMethodList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){

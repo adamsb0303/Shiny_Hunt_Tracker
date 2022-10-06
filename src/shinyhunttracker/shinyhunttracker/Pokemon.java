@@ -142,7 +142,6 @@ public class Pokemon{
 
     public Boolean getBreedable(){ return breedable; }
     public Boolean getHuntable(){ return huntable; }
-    public Boolean getLegendary(){ return legendary; }
 
     public void setForm(String form){ this.form = form; }
     public void setHuntable(Boolean huntable){ this.huntable = huntable; }

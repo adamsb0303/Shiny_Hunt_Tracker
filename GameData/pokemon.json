@@ -2,7 +2,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Bulbasaur",
     "breedable":true,
     "family":[0, 1, 2],
@@ -11,7 +10,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Ivysaur",
     "breedable":true,
     "family":[0, 1, 2],
@@ -20,7 +18,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Venusaur",
     "breedable":true,
     "family":[0, 1, 2],
@@ -30,7 +27,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Charmander",
     "breedable":true,
     "family":[3, 4, 5],
@@ -39,7 +35,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Charmeleon",
     "breedable":true,
     "family":[3, 4, 5],
@@ -48,7 +43,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Charizard",
     "breedable":true,
     "family":[3, 4, 5],
@@ -58,7 +52,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Squirtle",
     "breedable":true,
     "family":[6, 7, 8],
@@ -67,7 +60,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Wartortle",
     "breedable":true,
     "family":[6, 7, 8],
@@ -76,7 +68,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Blastoise",
     "breedable":true,
     "family":[6, 7, 8],
@@ -86,7 +77,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Caterpie",
     "breedable":true,
     "family":[9, 10, 11],
@@ -95,7 +85,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Metapod",
     "breedable":true,
     "family":[9, 10, 11],
@@ -104,7 +93,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Butterfree",
     "breedable":true,
     "family":[9, 10, 11],
@@ -114,7 +102,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Weedle",
     "breedable":true,
     "family":[12, 13, 14],
@@ -123,7 +110,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Kakuna",
     "breedable":true,
     "family":[12, 13, 14],
@@ -132,7 +118,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Beedrill",
     "breedable":true,
     "family":[12, 13, 14],
@@ -141,7 +126,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Pidgey",
     "breedable":true,
     "family":[15, 16, 17],
@@ -150,7 +134,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Pidgeotto",
     "breedable":true,
     "family":[15, 16, 17],
@@ -159,7 +142,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Pidgeot",
     "breedable":true,
     "family":[15, 16, 17],
@@ -168,7 +150,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Rattata",
     "breedable":true,
     "regional-forms":[802],
@@ -179,7 +160,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Raticate",
     "breedable":true,
     "regional-forms":[803],
@@ -190,7 +170,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Spearow",
     "breedable":true,
     "family":[20, 21],
@@ -199,7 +178,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Fearow",
     "breedable":true,
     "family":[20, 21],
@@ -208,7 +186,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Ekans",
     "breedable":true,
     "family":[22, 23],
@@ -217,7 +194,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Arbok",
     "breedable":true,
     "family":[22, 23],
@@ -226,7 +202,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Pikachu",
     "breedable":true,
     "family":[171, 24, 25],
@@ -236,7 +211,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Raichu",
     "breedable":true,
     "regional-forms":[804],
@@ -247,7 +221,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Sandshrew",
     "breedable":true,
     "regional-forms":[805],
@@ -257,7 +230,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Sandslash",
     "breedable":true,
     "regional-forms":[806],
@@ -267,7 +239,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Nidoran F",
     "breedable":true,
     "family":[28, 29, 30],
@@ -276,7 +247,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Nidorina",
     "breedable":true,
     "family":[28, 29, 30],
@@ -285,7 +255,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Nidoqueen",
     "breedable":true,
     "family":[28, 29, 30],
@@ -294,7 +263,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Nidoran M",
     "breedable":true,
     "family":[31, 32, 33],
@@ -303,7 +271,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Nidorino",
     "breedable":true,
     "family":[31, 32, 33],
@@ -312,7 +279,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Nidoking",
     "breedable":true,
     "family":[31, 32, 33],
@@ -321,7 +287,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Clefairy",
     "breedable":true,
     "family":[172, 34, 35],
@@ -330,7 +295,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Clefable",
     "breedable":true,
     "family":[172, 34, 35],
@@ -339,7 +303,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Vulpix",
     "breedable":true,
     "regional-forms":[807],
@@ -349,7 +312,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Ninetales",
     "breedable":true,
     "regional-forms":[808],
@@ -359,7 +321,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Jigglypuff",
     "breedable":true,
     "family":[173, 38, 39],
@@ -368,7 +329,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Wigglytuff",
     "breedable":true,
     "family":[173, 38, 39],
@@ -377,7 +337,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Zubat",
     "breedable":true,
     "family":[40, 41, 168],
@@ -386,7 +345,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Golbat",
     "breedable":true,
     "family":[40, 41, 168],
@@ -396,7 +354,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Oddish",
     "breedable":true,
     "family":[
@@ -408,7 +365,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Gloom",
     "breedable":true,
     "family":[
@@ -421,7 +377,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Vileplume",
     "breedable":true,
     "family":[42, 43, 44],
@@ -431,7 +386,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Paras",
     "breedable":true,
     "family":[45, 46],
@@ -440,7 +394,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Parasect",
     "breedable":true,
     "family":[45, 46],
@@ -449,7 +402,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Venonat",
     "breedable":true,
     "family":[47, 48],
@@ -458,7 +410,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Venomoth",
     "breedable":true,
     "family":[47, 48],
@@ -467,7 +418,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Diglett",
     "breedable":true,
     "regional-forms":[809],
@@ -477,7 +427,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Dugtrio",
     "breedable":true,
     "regional-forms":[810],
@@ -487,7 +436,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Meowth",
     "breedable":true,
     "regional-forms":[811, 908],
@@ -498,7 +446,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Persian",
     "breedable":true,
     "regional-forms":[812],
@@ -508,7 +455,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Psyduck",
     "breedable":true,
     "family":[53, 54],
@@ -517,7 +463,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Golduck",
     "breedable":true,
     "family":[53, 54],
@@ -526,7 +471,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Mankey",
     "breedable":true,
     "family":[55, 56],
@@ -535,7 +479,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Primeape",
     "breedable":true,
     "family":[55, 56],
@@ -544,7 +487,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Growlithe",
     "breedable":true,
     "regional-forms":[941],
@@ -554,7 +496,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Arcanine",
     "breedable":true,
     "regional-forms":[942],
@@ -564,7 +505,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Poliwag",
     "breedable":true,
     "family":[
@@ -576,7 +516,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Poliwhirl",
     "breedable":true,
     "family":[
@@ -588,7 +527,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Poliwrath",
     "breedable":true,
     "family":[59, 60, 61],
@@ -597,7 +535,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Abra",
     "breedable":true,
     "family":[62, 63, 64],
@@ -606,7 +543,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Kadabra",
     "breedable":true,
     "family":[62, 63, 64],
@@ -616,7 +552,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Alakazam",
     "breedable":true,
     "family":[62, 63, 64],
@@ -626,7 +561,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Machop",
     "breedable":true,
     "family":[65, 66, 67],
@@ -635,7 +569,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Machoke",
     "breedable":true,
     "family":[65, 66, 67],
@@ -644,7 +577,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Machamp",
     "breedable":true,
     "family":[65, 66, 67],
@@ -654,7 +586,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Bellsprout",
     "breedable":true,
     "family":[68, 69, 70],
@@ -663,7 +594,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Weepinbell",
     "breedable":true,
     "family":[68, 69, 70],
@@ -672,7 +602,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Victreebel",
     "breedable":true,
     "family":[68, 69, 70],
@@ -681,7 +610,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Tentacool",
     "breedable":true,
     "family":[71, 72],
@@ -690,7 +618,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Tentacruel",
     "breedable":true,
     "family":[71, 72],
@@ -699,7 +626,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Geodude",
     "breedable":true,
     "regional-forms":[813],
@@ -709,7 +635,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Graveler",
     "breedable":true,
     "regional-forms":[814],
@@ -719,7 +644,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Golem",
     "breedable":true,
     "regional-forms":[815],
@@ -729,7 +653,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Ponyta",
     "breedable":true,
     "regional-forms":[909],
@@ -739,7 +662,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Rapidash",
     "breedable":true,
     "regional-forms":[910],
@@ -749,7 +671,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Slowpoke",
     "breedable":true,
     "regional-forms":[925],
@@ -762,7 +683,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Slowbro",
     "breedable":true,
     "regional-forms":[926],
@@ -772,7 +692,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Magnemite",
     "breedable":true,
     "family":[80, 81, 82],
@@ -781,7 +700,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Magneton",
     "breedable":true,
     "family":[80, 81, 82],
@@ -789,7 +707,6 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Farfetch'd",
     "breedable":true,
     "regional-forms":[911],
@@ -798,7 +715,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Doduo",
     "breedable":true,
     "family":[83, 84],
@@ -808,7 +724,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Dodrio",
     "breedable":true,
     "family":[83, 84],
@@ -818,7 +733,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Seel",
     "breedable":true,
     "family":[85, 86],
@@ -827,7 +741,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Dewgong",
     "breedable":true,
     "family":[85, 86],
@@ -836,7 +749,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Grimer",
     "breedable":true,
     "regional-forms":[816],
@@ -846,7 +758,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Muk",
     "breedable":true,
     "regional-forms":[817],
@@ -856,7 +767,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Shellder",
     "breedable":true,
     "family":[89, 90],
@@ -865,7 +775,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Cloyster",
     "breedable":true,
     "family":[89, 90],
@@ -874,7 +783,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Gastly",
     "breedable":true,
     "family":[91, 92, 93],
@@ -883,7 +791,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Haunter",
     "breedable":true,
     "family":[91, 92, 93],
@@ -892,7 +799,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Gengar",
     "breedable":true,
     "family":[91, 92, 93],
@@ -902,7 +808,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Onix",
     "breedable":true,
     "family":[94, 207],
@@ -911,7 +816,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Drowzee",
     "breedable":true,
     "family":[95, 96],
@@ -920,7 +824,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Hypno",
     "breedable":true,
     "family":[95, 96],
@@ -930,7 +833,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Krabby",
     "breedable":true,
     "family":[97, 98],
@@ -939,7 +841,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Kingler",
     "breedable":true,
     "family":[97, 98],
@@ -949,7 +850,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Voltorb",
     "breedable":true,
     "regional-forms":[943],
@@ -959,7 +859,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Electrode",
     "breedable":true,
     "regional-forms":[944],
@@ -969,7 +868,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Exeggcute",
     "breedable":true,
     "family":[101, 102],
@@ -978,7 +876,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Exeggutor",
     "breedable":true,
     "regional-forms":[818],
@@ -988,7 +885,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Cubone",
     "breedable":true,
     "family":[103, 104],
@@ -997,7 +893,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Marowak",
     "breedable":true,
     "regional-forms":[819],
@@ -1007,7 +902,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Hitmonlee",
     "breedable":true,
     "family":[235, 105],
@@ -1016,7 +910,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Hitmonchan",
     "breedable":true,
     "family":[235, 106],
@@ -1025,7 +918,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Lickitung",
     "breedable":true,
     "family":[107, 462],
@@ -1034,7 +926,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Koffing",
     "breedable":true,
     "family":[108, 109],
@@ -1043,7 +934,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Weezing",
     "breedable":true,
     "regional-forms":[912],
@@ -1053,7 +943,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Rhyhorn",
     "breedable":true,
     "family":[110, 111, 463],
@@ -1063,7 +952,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Rhydon",
     "breedable":true,
     "family":[110, 111, 463],
@@ -1073,7 +961,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Chansey",
     "breedable":true,
     "family":[439, 112, 241],
@@ -1082,7 +969,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Tangela",
     "breedable":true,
     "family":[113, 464],
@@ -1090,7 +976,6 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Kangaskhan",
     "breedable":true,
     "forms":["Regular", "Mega"],
@@ -1099,7 +984,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Horsea",
     "breedable":true,
     "family":[115, 116, 229],
@@ -1108,7 +992,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Seadra",
     "breedable":true,
     "family":[115, 116, 229],
@@ -1117,7 +1000,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Goldeen",
     "breedable":true,
     "family":[117, 118],
@@ -1127,7 +1009,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Seaking",
     "breedable":true,
     "family":[117, 118],
@@ -1137,7 +1018,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Staryu",
     "breedable":true,
     "family":[119, 120],
@@ -1146,7 +1026,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Starmie",
     "breedable":true,
     "family":[119, 120],
@@ -1155,7 +1034,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Mr. Mime",
     "breedable":true,
     "regional-forms":[913],
@@ -1165,7 +1043,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Scyther",
     "breedable":true,
     "family":[122, 936],
@@ -1175,7 +1052,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Jynx",
     "breedable":true,
     "family":[123, 237],
@@ -1184,7 +1060,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Electabuzz",
     "breedable":true,
     "family":[124, 238, 465],
@@ -1193,7 +1068,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Magmar",
     "breedable":true,
     "family":[125, 239, 466],
@@ -1201,7 +1075,6 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Pinsir",
     "breedable":true,
     "forms":["Regular", "Mega"],
@@ -1209,7 +1082,6 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Tauros",
     "breedable":true,
     "base":[110, 75, 70, 100, 95]
@@ -1217,7 +1089,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Magikarp",
     "breedable":true,
     "family":[128, 129],
@@ -1227,7 +1098,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Gyarados",
     "breedable":true,
     "family":[128, 129],
@@ -1236,7 +1106,6 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Lapras",
     "breedable":true,
     "forms":["Regular", "Gigantamax"],
@@ -1244,15 +1113,13 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Ditto",
-    "breedable":true,
+    "breedable":false,
     "base":[48, 48, 48, 48, 48]
   },
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Eevee",
     "breedable":true,
     "family":[
@@ -1271,7 +1138,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Vaporeon",
     "breedable":true,
     "family":[132, 133],
@@ -1280,7 +1146,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Jolteon",
     "breedable":true,
     "family":[132, 134],
@@ -1289,7 +1154,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Flareon",
     "breedable":true,
     "family":[132, 135],
@@ -1298,7 +1162,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Porygon",
     "breedable":true,
     "family":[136, 232, 473],
@@ -1307,7 +1170,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Omanyte",
     "breedable":true,
     "family":[137, 138],
@@ -1316,7 +1178,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Omastar",
     "breedable":true,
     "family":[137, 138],
@@ -1325,7 +1186,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Kabuto",
     "breedable":true,
     "family":[139, 140],
@@ -1334,7 +1194,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Kabutops",
     "breedable":true,
     "family":[139, 140],
@@ -1342,7 +1201,6 @@
   },
   {
     "generation":1,
-    "legendary":false,
     "name":"Aerodactyl",
     "breedable":true,
     "base":[130, 80, 65, 105, 65]
@@ -1350,7 +1208,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Snorlax",
     "breedable":true,
     "family":[142, 445],
@@ -1384,7 +1241,6 @@
   {
     "generation":1,
     "stage":0,
-    "legendary":false,
     "name":"Dratini",
     "breedable":true,
     "family":[146, 147, 148],
@@ -1393,7 +1249,6 @@
   {
     "generation":1,
     "stage":1,
-    "legendary":false,
     "name":"Dragonair",
     "breedable":true,
     "family":[146, 147, 148],
@@ -1402,7 +1257,6 @@
   {
     "generation":1,
     "stage":2,
-    "legendary":false,
     "name":"Dragonite",
     "breedable":true,
     "family":[146, 147, 148],
@@ -1426,7 +1280,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Chikorita",
     "breedable":true,
     "family":[151, 152, 153]
@@ -1434,7 +1287,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Bayleef",
     "breedable":true,
     "family":[151, 152, 153]
@@ -1442,7 +1294,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Meganium",
     "breedable":true,
     "family":[151, 152, 153],
@@ -1451,7 +1302,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Cyndaquil",
     "breedable":true,
     "family":[154, 155, 156]
@@ -1459,7 +1309,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Quilava",
     "breedable":true,
     "family":[154, 155, 156]
@@ -1467,7 +1316,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Typhlosion",
     "breedable":true,
     "regional-forms":[945],
@@ -1476,7 +1324,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Totodile",
     "breedable":true,
     "family":[157, 158, 159]
@@ -1484,7 +1331,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Croconaw",
     "breedable":true,
     "family":[157, 158, 159]
@@ -1492,7 +1338,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Feraligatr",
     "breedable":true,
     "family":[157, 158, 159]
@@ -1500,7 +1345,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Sentret",
     "breedable":true,
     "family":[160, 161]
@@ -1508,7 +1352,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Furret",
     "breedable":true,
     "family":[160, 161]
@@ -1516,7 +1359,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Hoothoot",
     "breedable":true,
     "family":[162, 163]
@@ -1524,7 +1366,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Noctowl",
     "breedable":true,
     "family":[162, 163]
@@ -1532,7 +1373,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Ledyba",
     "breedable":true,
     "family":[164, 165],
@@ -1541,7 +1381,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Ledian",
     "breedable":true,
     "family":[164, 165],
@@ -1550,7 +1389,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Spinarak",
     "breedable":true,
     "family":[166, 167]
@@ -1558,7 +1396,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Ariados",
     "breedable":true,
     "family":[166, 167]
@@ -1566,7 +1403,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Crobat",
     "breedable":true,
     "family":[40, 41, 168]
@@ -1574,7 +1410,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Chinchou",
     "breedable":true,
     "family":[169, 170]
@@ -1582,7 +1417,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Lanturn",
     "breedable":true,
     "family":[169, 170]
@@ -1590,7 +1424,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Pichu",
     "breedable":true,
     "family":[24, 25, 171]
@@ -1598,7 +1431,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Cleffa",
     "breedable":true,
     "family":[34, 35, 172]
@@ -1606,7 +1438,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Igglybuff",
     "breedable":true,
     "family":[38, 39, 173]
@@ -1614,7 +1445,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Togepi",
     "breedable":true,
     "family":[174, 175, 467]
@@ -1622,7 +1452,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Togetic",
     "breedable":true,
     "family":[174, 175, 467]
@@ -1630,7 +1459,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Natu",
     "breedable":true,
     "family":[176, 177]
@@ -1638,7 +1466,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Xatu",
     "breedable":true,
     "family":[176, 177]
@@ -1646,7 +1473,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Mareep",
     "breedable":true,
     "family":[178, 179, 180]
@@ -1654,7 +1480,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Flaaffy",
     "breedable":true,
     "family":[178, 179, 180]
@@ -1662,7 +1487,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Ampharos",
     "breedable":true,
     "family":[178, 179, 180],
@@ -1671,7 +1495,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Bellossom",
     "breedable":true,
     "family":[42, 43, 181]
@@ -1679,7 +1502,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Marill",
     "breedable":true,
     "family":[182, 183, 297]
@@ -1687,7 +1509,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Azumarill",
     "breedable":true,
     "family":[182, 183, 297]
@@ -1695,7 +1516,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Sudowoodo",
     "breedable":true,
     "family":[184, 437],
@@ -1704,7 +1524,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Politoed",
     "breedable":true,
     "family":[59, 60, 185],
@@ -1713,7 +1532,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Hoppip",
     "breedable":true,
     "family":[186, 187, 188]
@@ -1721,7 +1539,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Skiploom",
     "breedable":true,
     "family":[186, 187, 188]
@@ -1729,7 +1546,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Jumpluff",
     "breedable":true,
     "family":[186, 187, 188]
@@ -1737,7 +1553,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Aipom",
     "breedable":true,
     "family":[189],
@@ -1746,7 +1561,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Sunkern",
     "breedable":true,
     "family":[190, 191]
@@ -1754,7 +1568,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Sunflora",
     "breedable":true,
     "family":[190, 191]
@@ -1762,7 +1575,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Yanma",
     "breedable":true,
     "family":[192, 468]
@@ -1770,7 +1582,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Wooper",
     "breedable":true,
     "family":[193, 194]
@@ -1778,7 +1589,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Quagsire",
     "breedable":true,
     "family":[193, 194],
@@ -1787,7 +1597,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Espeon",
     "breedable":true,
     "family":[132, 195]
@@ -1795,7 +1604,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Umbreon",
     "breedable":true,
     "family":[132, 196]
@@ -1803,7 +1611,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Murkrow",
     "breedable":true,
     "family":[197, 429],
@@ -1812,7 +1619,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Slowking",
     "breedable":true,
     "regional-forms":[930],
@@ -1821,14 +1627,12 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Misdreavus",
     "breedable":true,
     "family":[199, 428]
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Unown",
     "breedable":false,
     "forms":["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "?", "!"]
@@ -1836,7 +1640,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Wobbuffet",
     "breedable":true,
     "family":[201, 359],
@@ -1844,7 +1647,6 @@
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Girafarig",
     "breedable":true,
     "forms":["Male", "Female"]
@@ -1852,7 +1654,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Pineco",
     "breedable":true,
     "family":[203, 204]
@@ -1860,21 +1661,18 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Forretress",
     "breedable":true,
     "family":[203, 204]
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Dunsparce",
     "breedable":true
   },
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Gligar",
     "breedable":true,
     "family":[206, 471],
@@ -1883,7 +1681,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Steelix",
     "breedable":true,
     "family":[94, 207],
@@ -1892,7 +1689,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Snubbull",
     "breedable":true,
     "family":[208, 209]
@@ -1900,14 +1696,12 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Granbull",
     "breedable":true,
     "family":[208, 209]
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Qwilfish",
     "breedable":true,
     "regional-forms":[946]
@@ -1915,7 +1709,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Scizor",
     "breedable":true,
     "family":[122, 211],
@@ -1923,13 +1716,11 @@
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Shuckle",
     "breedable":true
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Heracross",
     "breedable":true,
     "forms":["Male", "Female", "Mega"]
@@ -1937,7 +1728,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Sneasel",
     "breedable":true,
     "regional-forms":[947],
@@ -1947,7 +1737,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Teddiursa",
     "breedable":true,
     "family":[215, 216, 937]
@@ -1955,7 +1744,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Ursaring",
     "breedable":true,
     "family":[215, 216, 937],
@@ -1964,7 +1752,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Slugma",
     "breedable":true,
     "family":[217, 218]
@@ -1972,7 +1759,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Magcargo",
     "breedable":true,
     "family":[217, 218]
@@ -1980,7 +1766,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Swinub",
     "breedable":true,
     "family":[219, 220, 472
@@ -1989,7 +1774,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Piloswine",
     "breedable":true,
     "family":[219, 220, 472],
@@ -1997,7 +1781,6 @@
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Corsola",
     "breedable":true,
     "regional-forms":[914]
@@ -2005,7 +1788,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Remoraid",
     "breedable":true,
     "family":[222, 223]
@@ -2013,7 +1795,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Octillery",
     "breedable":true,
     "family":[222, 223],
@@ -2021,28 +1802,24 @@
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Delibird",
     "breedable":true
   },
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Mantine",
     "breedable":true,
     "family":[225, 457]
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Skarmory",
     "breedable":true
   },
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Houndour",
     "breedable":true,
     "family":[227, 228]
@@ -2050,7 +1827,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Houndoom",
     "breedable":true,
     "family":[227, 228],
@@ -2059,7 +1835,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Kingdra",
     "breedable":true,
     "family":[115, 116, 229]
@@ -2067,7 +1842,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Phanpy",
     "breedable":true,
     "family":[230, 231]
@@ -2075,7 +1849,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Donphan",
     "breedable":true,
     "family":[230, 231],
@@ -2084,7 +1857,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Porygon2",
     "breedable":true,
     "family":[136, 232, 473]
@@ -2092,21 +1864,18 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Stantler",
     "breedable":true,
     "family":[233, 935]
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Smeargle",
     "breedable":true
   },
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Tyrogue",
     "breedable":true,
     "family":[
@@ -2118,7 +1887,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Hitmontop",
     "breedable":true,
     "family":[235, 236]
@@ -2126,7 +1894,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Smoochum",
     "breedable":true,
     "family":[123, 237]
@@ -2134,7 +1901,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Elekid",
     "breedable":true,
     "family":[124, 238, 465]
@@ -2142,21 +1908,18 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Magby",
     "breedable":true,
     "family":[125, 239, 466]
   },
   {
     "generation":2,
-    "legendary":false,
     "name":"Miltank",
     "breedable":true
   },
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Blissey",
     "breedable":true,
     "family":[112, 241, 439]
@@ -2182,7 +1945,6 @@
   {
     "generation":2,
     "stage":0,
-    "legendary":false,
     "name":"Larvitar",
     "breedable":true,
     "family":[245, 246, 247]
@@ -2190,7 +1952,6 @@
   {
     "generation":2,
     "stage":1,
-    "legendary":false,
     "name":"Pupitar",
     "breedable":true,
     "family":[245, 246, 247]
@@ -2198,7 +1959,6 @@
   {
     "generation":2,
     "stage":2,
-    "legendary":false,
     "name":"Tyranitar",
     "breedable":true,
     "family":[245, 246, 247],
@@ -2225,7 +1985,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Treecko",
     "breedable":true,
     "family":[251, 252, 253]
@@ -2233,7 +1992,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Grovyle",
     "breedable":true,
     "family":[251, 252, 253]
@@ -2241,7 +1999,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Sceptile",
     "breedable":true,
     "family":[251, 252, 253]
@@ -2249,7 +2006,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Torchic",
     "breedable":true,
     "family":[254, 255, 256],
@@ -2258,7 +2014,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Combusken",
     "breedable":true,
     "family":[254, 255, 256],
@@ -2267,7 +2022,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Blaziken",
     "breedable":true,
     "family":[254, 255, 256],
@@ -2276,7 +2030,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Mudkip",
     "breedable":true,
     "family":[257, 258, 259]
@@ -2284,7 +2037,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Marshtomp",
     "breedable":true,
     "family":[257, 258, 259]
@@ -2292,7 +2044,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Swampert",
     "breedable":true,
     "family":[257, 258, 259]
@@ -2300,7 +2051,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Poochyena",
     "breedable":true,
     "family":[260, 261]
@@ -2308,7 +2058,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Mightyena",
     "breedable":true,
     "family":[260, 261]
@@ -2316,7 +2065,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Zigzagoon",
     "breedable":true,
     "regional-forms":[915],
@@ -2325,7 +2073,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Linoone",
     "breedable":true,
     "regional-forms":[916],
@@ -2334,7 +2081,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Wurmple",
     "breedable":true,
     "family":[
@@ -2345,7 +2091,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Silcoon",
     "breedable":true,
     "family":[264, 265, 266]
@@ -2353,7 +2098,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Beautifly",
     "breedable":true,
     "family":[264, 265, 266],
@@ -2362,7 +2106,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Cascoon",
     "breedable":true,
     "family":[264, 267, 268]
@@ -2370,7 +2113,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Dustox",
     "breedable":true,
     "family":[264, 267, 268],
@@ -2379,7 +2121,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Lotad",
     "breedable":true,
     "family":[269, 270, 271]
@@ -2387,7 +2128,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Lombre",
     "breedable":true,
     "family":[269, 270, 271]
@@ -2395,7 +2135,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Ludicolo",
     "breedable":true,
     "family":[269, 270, 271],
@@ -2404,7 +2143,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Seedot",
     "breedable":true,
     "family":[272, 273, 274]
@@ -2412,7 +2150,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Nuzleaf",
     "breedable":true,
     "family":[272, 273, 274],
@@ -2421,7 +2158,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Shiftry",
     "breedable":true,
     "family":[272, 273, 274],
@@ -2430,7 +2166,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Taillow",
     "breedable":true,
     "family":[275, 276]
@@ -2438,7 +2173,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Swellow",
     "breedable":true,
     "family":[275, 276]
@@ -2446,7 +2180,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Wingull",
     "breedable":true,
     "family":[277, 278]
@@ -2454,7 +2187,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Pelipper",
     "breedable":true,
     "family":[277, 278]
@@ -2462,7 +2194,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Ralts",
     "breedable":true,
     "family":[
@@ -2473,7 +2204,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Kirlia",
     "breedable":true,
     "family":[
@@ -2484,7 +2214,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Gardevoir",
     "breedable":true,
     "family":[279, 280, 281],
@@ -2493,7 +2222,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Surskit",
     "breedable":true,
     "family":[282, 283]
@@ -2501,7 +2229,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Masquerain",
     "breedable":true,
     "family":[282, 283]
@@ -2509,7 +2236,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Shroomish",
     "breedable":true,
     "family":[284, 285]
@@ -2517,7 +2243,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Breloom",
     "breedable":true,
     "family":[284, 285]
@@ -2525,7 +2250,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Slakoth",
     "breedable":true,
     "family":[286, 287, 288]
@@ -2533,7 +2257,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Vigoroth",
     "breedable":true,
     "family":[286, 287, 288]
@@ -2541,7 +2264,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Slaking",
     "breedable":true,
     "family":[286, 287, 288]
@@ -2549,7 +2271,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Nincada",
     "breedable":true,
     "family":[289, 290, 291]
@@ -2557,7 +2278,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Ninjask",
     "breedable":true,
     "family":[289, 290, 291]
@@ -2565,7 +2285,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Shedinja",
     "breedable":true,
     "family":[289, 290, 291]
@@ -2573,7 +2292,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Whismur",
     "breedable":true,
     "family":[292, 293, 294]
@@ -2581,7 +2299,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Loudred",
     "breedable":true,
     "family":[292, 293, 294]
@@ -2589,7 +2306,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Exploud",
     "breedable":true,
     "family":[292, 293, 294]
@@ -2597,7 +2313,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Makuhita",
     "breedable":true,
     "family":[295, 296]
@@ -2605,7 +2320,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Hariyama",
     "breedable":true,
     "family":[295, 296]
@@ -2613,7 +2327,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Azurill",
     "breedable":true,
     "family":[182, 183, 297]
@@ -2621,7 +2334,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Nosepass",
     "breedable":true,
     "family":[298, 475]
@@ -2629,7 +2341,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Skitty",
     "breedable":true,
     "family":[299, 300]
@@ -2637,20 +2348,17 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Delcatty",
     "breedable":true,
     "family":[299, 300]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Sableye",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Mawile",
     "breedable":true,
     "forms":["Regular","Mega"]
@@ -2658,7 +2366,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Aron",
     "breedable":true,
     "family":[303, 304, 305]
@@ -2666,7 +2373,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Lairon",
     "breedable":true,
     "family":[303, 304, 305]
@@ -2674,7 +2380,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Aggron",
     "breedable":true,
     "family":[303, 304, 305]
@@ -2682,7 +2387,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Meditite",
     "breedable":true,
     "family":[306, 307],
@@ -2691,7 +2395,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Medicham",
     "breedable":true,
     "family":[306, 307],
@@ -2700,7 +2403,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Electrike",
     "breedable":true,
     "family":[308, 309]
@@ -2708,7 +2410,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Manectric",
     "breedable":true,
     "family":[308, 309],
@@ -2716,32 +2417,27 @@
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Plusle",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Minun",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Volbeat",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Illumise",
     "breedable":true
   },
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Roselia",
     "breedable":true,
     "family":[314, 405, 406],
@@ -2750,7 +2446,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Gulpin",
     "breedable":true,
     "family":[315, 316],
@@ -2759,7 +2454,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Swalot",
     "breedable":true,
     "family":[315, 316],
@@ -2768,7 +2462,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Carvanha",
     "breedable":true,
     "family":[317, 318]
@@ -2776,7 +2469,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Sharpedo",
     "breedable":true,
     "family":[317, 318]
@@ -2784,7 +2476,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Wailmer",
     "breedable":true,
     "family":[319, 320]
@@ -2792,7 +2483,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Wailord",
     "breedable":true,
     "family":[319, 320]
@@ -2800,7 +2490,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Numel",
     "breedable":true,
     "family":[321, 322],
@@ -2809,7 +2498,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Camerupt",
     "breedable":true,
     "family":[321, 322],
@@ -2817,14 +2505,12 @@
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Torkoal",
     "breedable":true
   },
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Spoink",
     "breedable":true,
     "family":[324, 325]
@@ -2832,21 +2518,18 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Grumpig",
     "breedable":true,
     "family":[324, 325]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Spinda",
     "breedable":true
   },
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Trapinch",
     "breedable":true,
     "family":[327, 328, 329
@@ -2855,7 +2538,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Vibrava",
     "breedable":true,
     "family":[327, 328, 329
@@ -2864,7 +2546,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Flygon",
     "breedable":true,
     "family":[327, 328, 329
@@ -2873,7 +2554,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Cacnea",
     "breedable":true,
     "family":[330, 331]
@@ -2881,7 +2561,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Cacturne",
     "breedable":true,
     "family":[330, 331],
@@ -2890,7 +2569,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Swablu",
     "breedable":true,
     "family":[332, 333]
@@ -2898,39 +2576,33 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Altaria",
     "breedable":true,
     "family":[332, 333]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Zangoose",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Seviper",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Lunatone",
     "breedable":true
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Solrock",
     "breedable":true
   },
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Barboach",
     "breedable":true,
     "family":[338, 339]
@@ -2938,7 +2610,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Whiscash",
     "breedable":true,
     "family":[338, 339]
@@ -2946,7 +2617,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Corphish",
     "breedable":true,
     "family":[340, 341]
@@ -2954,7 +2624,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Crawdaunt",
     "breedable":true,
     "family":[340, 341]
@@ -2962,7 +2631,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Baltoy",
     "breedable":true,
     "family":[342, 343]
@@ -2970,7 +2638,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Claydol",
     "breedable":true,
     "family":[342, 343]
@@ -2978,7 +2645,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Lileep",
     "breedable":true,
     "family":[344, 345]
@@ -2986,7 +2652,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Cradily",
     "breedable":true,
     "family":[344, 345]
@@ -2994,7 +2659,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Anorith",
     "breedable":true,
     "family":[346, 347]
@@ -3002,7 +2666,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Armaldo",
     "breedable":true,
     "family":[346, 347]
@@ -3010,7 +2673,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Feebas",
     "breedable":true,
     "family":[348, 349]
@@ -3018,7 +2680,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Milotic",
     "breedable":true,
     "family":[348, 349],
@@ -3026,21 +2687,18 @@
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Castform",
     "breedable":true,
     "forms":["Normal", "Rainy", "Snowy", "Sunny"]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Kecleon",
     "breedable":true
   },
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Shuppet",
     "breedable":true,
     "family":[352, 353]
@@ -3048,7 +2706,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Banette",
     "breedable":true,
     "family":[352, 353],
@@ -3057,7 +2714,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Duskull",
     "breedable":true,
     "family":[354, 355, 476
@@ -3066,7 +2722,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Dusclops",
     "breedable":true,
     "family":[354, 355, 476
@@ -3074,21 +2729,18 @@
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Tropius",
     "breedable":true
   },
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Chimecho",
     "breedable":true,
     "family":[357, 432]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Absol",
     "breedable":true,
     "forms":["Regular", "Mega"]
@@ -3096,7 +2748,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Wynaut",
     "breedable":true,
     "family":[201, 359]
@@ -3104,7 +2755,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Snorunt",
     "breedable":true,
     "family":[
@@ -3115,7 +2765,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Glalie",
     "breedable":true,
     "family":[360, 361]
@@ -3123,7 +2772,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Spheal",
     "breedable":true,
     "family":[362, 363, 364]
@@ -3131,7 +2779,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Sealeo",
     "breedable":true,
     "family":[362, 363, 364]
@@ -3139,7 +2786,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Walrein",
     "breedable":true,
     "family":[362, 363, 364]
@@ -3147,7 +2793,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Clamperl",
     "breedable":true,
     "family":[
@@ -3158,7 +2803,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Huntail",
     "breedable":true,
     "family":[365, 366]
@@ -3166,28 +2810,24 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Gorebyss",
     "breedable":true,
     "family":[365, 367]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Relicanth",
     "breedable":true,
     "forms":["Male", "Female"]
   },
   {
     "generation":3,
-    "legendary":false,
     "name":"Luvdisc",
     "breedable":true
   },
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Bagon",
     "breedable":true,
     "family":[370, 371, 372]
@@ -3195,7 +2835,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Shelgon",
     "breedable":true,
     "family":[370, 371, 372]
@@ -3203,7 +2842,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Salamence",
     "breedable":true,
     "family":[370, 371, 372]
@@ -3211,7 +2849,6 @@
   {
     "generation":3,
     "stage":0,
-    "legendary":false,
     "name":"Beldum",
     "breedable":true,
     "family":[373, 374, 375]
@@ -3219,7 +2856,6 @@
   {
     "generation":3,
     "stage":1,
-    "legendary":false,
     "name":"Metang",
     "breedable":true,
     "family":[373, 374, 375]
@@ -3227,7 +2863,6 @@
   {
     "generation":3,
     "stage":2,
-    "legendary":false,
     "name":"Metagross",
     "breedable":true,
     "family":[373, 374, 375]
@@ -3298,7 +2933,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Turtwig",
     "breedable":true,
     "family":[386, 387, 388]
@@ -3306,7 +2940,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Grotle",
     "breedable":true,
     "family":[386, 387, 388]
@@ -3314,7 +2947,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Torterra",
     "breedable":true,
     "family":[386, 387, 388]
@@ -3322,7 +2954,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Chimchar",
     "breedable":true,
     "family":[389, 390, 391]
@@ -3330,7 +2961,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Monferno",
     "breedable":true,
     "family":[389, 390, 391]
@@ -3338,7 +2968,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Infernape",
     "breedable":true,
     "family":[389, 390, 391]
@@ -3346,7 +2975,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Piplup",
     "breedable":true,
     "family":[392, 393, 394]
@@ -3354,7 +2982,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Prinplup",
     "breedable":true,
     "family":[392, 393, 394]
@@ -3362,7 +2989,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Empoleon",
     "breedable":true,
     "family":[392, 393, 394]
@@ -3370,7 +2996,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Starly",
     "breedable":true,
     "family":[395, 396, 397],
@@ -3379,7 +3004,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Staravia",
     "breedable":true,
     "family":[395, 396, 397],
@@ -3388,7 +3012,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Staraptor",
     "breedable":true,
     "family":[395, 396, 397],
@@ -3397,7 +3020,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Bidoof",
     "breedable":true,
     "family":[398, 399],
@@ -3406,7 +3028,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Bibarel",
     "breedable":true,
     "family":[398, 399],
@@ -3415,7 +3036,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Kricketot",
     "breedable":true,
     "family":[400, 401],
@@ -3424,7 +3044,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Kricketune",
     "breedable":true,
     "family":[400, 401],
@@ -3433,7 +3052,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Shinx",
     "breedable":true,
     "family":[402, 403, 404],
@@ -3442,7 +3060,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Luxio",
     "breedable":true,
     "family":[402, 403, 404],
@@ -3451,7 +3068,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Luxray",
     "breedable":true,
     "family":[402, 403, 404],
@@ -3460,7 +3076,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Budew",
     "breedable":true,
     "family":[314, 405, 406]
@@ -3468,7 +3083,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Roserade",
     "breedable":true,
     "family":[314, 405, 406],
@@ -3477,7 +3091,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Cranidos",
     "breedable":true,
     "family":[407, 408]
@@ -3485,7 +3098,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Rampardos",
     "breedable":true,
     "family":[407, 408]
@@ -3493,7 +3105,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Shieldon",
     "breedable":true,
     "family":[409, 410]
@@ -3501,7 +3112,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Bastiodon",
     "breedable":true,
     "family":[409, 410]
@@ -3509,7 +3119,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Burmy",
     "breedable":true,
     "family":[
@@ -3521,7 +3130,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Wormadam",
     "breedable":true,
     "family":[411, 412],
@@ -3530,7 +3138,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Mothim",
     "breedable":true,
     "family":[411, 413]
@@ -3538,7 +3145,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Combee",
     "breedable":true,
     "family":[414, 415],
@@ -3547,14 +3153,12 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Vespiquen",
     "breedable":true,
     "family":[414, 415]
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Pachirisu",
     "breedable":true,
     "forms":["Male", "Female"]
@@ -3562,7 +3166,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Buizel",
     "breedable":true,
     "family":[417, 418],
@@ -3571,7 +3174,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Floatzel",
     "breedable":true,
     "family":[417, 418],
@@ -3580,7 +3182,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Cherubi",
     "breedable":true,
     "family":[419, 420]
@@ -3588,7 +3189,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Cherrim",
     "breedable":true,
     "family":[419, 420],
@@ -3597,7 +3197,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Shellos",
     "breedable":true,
     "family":[421, 422],
@@ -3606,7 +3205,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Gastrodon",
     "breedable":true,
     "family":[421, 422],
@@ -3614,7 +3212,6 @@
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Ambipom",
     "breedable":true,
     "forms":["Male", "Female"]
@@ -3622,7 +3219,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Drifloon",
     "breedable":true,
     "family":[424, 425]
@@ -3630,7 +3226,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Drifblim",
     "breedable":true,
     "family":[424, 425]
@@ -3638,7 +3233,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Buneary",
     "breedable":true,
     "family":[426, 427]
@@ -3646,7 +3240,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Lopunny",
     "breedable":true,
     "family":[426, 427]
@@ -3654,7 +3247,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Mismagius",
     "breedable":true,
     "family":[199, 428]
@@ -3662,7 +3254,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Honchkrow",
     "breedable":true,
     "family":[197, 429]
@@ -3670,7 +3261,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Glameow",
     "breedable":true,
     "family":[430, 431]
@@ -3678,7 +3268,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Purugly",
     "breedable":true,
     "family":[430, 431]
@@ -3686,7 +3275,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Chingling",
     "breedable":true,
     "family":[357, 432]
@@ -3694,7 +3282,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Stunky",
     "breedable":true,
     "family":[433, 434]
@@ -3702,7 +3289,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Skuntank",
     "breedable":true,
     "family":[433, 434]
@@ -3710,7 +3296,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Bronzor",
     "breedable":true,
     "family":[435, 436]
@@ -3718,7 +3303,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Bronzong",
     "breedable":true,
     "family":[435, 436]
@@ -3726,7 +3310,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Bonsly",
     "breedable":true,
     "family":[184, 437]
@@ -3734,7 +3317,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Mime Jr.",
     "breedable":true,
     "family":[438, 883, 913]
@@ -3742,27 +3324,23 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Happiny",
     "breedable":true,
     "family":[112, 241, 439]
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Chatot",
     "breedable":true
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Spiritomb",
     "breedable":true
   },
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Gible",
     "breedable":true,
     "family":[442, 443, 444],
@@ -3771,7 +3349,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Gabite",
     "breedable":true,
     "family":[442, 443, 444],
@@ -3780,7 +3357,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Garchomp",
     "breedable":true,
     "family":[442, 443, 444],
@@ -3789,7 +3365,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Munchlax",
     "breedable":true,
     "family":[142, 445]
@@ -3797,7 +3372,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Riolu",
     "breedable":true,
     "family":[446, 447]
@@ -3805,7 +3379,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Lucario",
     "breedable":true,
     "family":[446, 447],
@@ -3814,7 +3387,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Hippopotas",
     "breedable":true,
     "family":[448, 449],
@@ -3823,7 +3395,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Hippowdon",
     "breedable":true,
     "family":[448, 449],
@@ -3832,7 +3403,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Skorupi",
     "breedable":true,
     "family":[450, 451]
@@ -3840,7 +3410,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Drapion",
     "breedable":true,
     "family":[450, 451]
@@ -3848,7 +3417,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Croagunk",
     "breedable":true,
     "family":[452, 453],
@@ -3857,7 +3425,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Toxicroak",
     "breedable":true,
     "family":[452, 453],
@@ -3865,14 +3432,12 @@
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Carnivine",
     "breedable":true
   },
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Finneon",
     "breedable":true,
     "family":[455, 456],
@@ -3881,7 +3446,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Lumineon",
     "breedable":true,
     "family":[455, 456],
@@ -3890,7 +3454,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Mantyke",
     "breedable":true,
     "family":[225, 457]
@@ -3898,7 +3461,6 @@
   {
     "generation":4,
     "stage":0,
-    "legendary":false,
     "name":"Snover",
     "breedable":true,
     "family":[458, 459],
@@ -3907,7 +3469,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Abomasnow",
     "breedable":true,
     "family":[458, 459],
@@ -3916,7 +3477,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Weavile",
     "breedable":true,
     "family":[214, 460],
@@ -3925,7 +3485,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Magnezone",
     "breedable":true,
     "family":[80, 81, 461]
@@ -3933,7 +3492,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Lickilicky",
     "breedable":true,
     "family":[107, 462]
@@ -3941,7 +3499,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Rhyperior",
     "breedable":true,
     "family":[110, 111, 463],
@@ -3950,7 +3507,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Tangrowth",
     "breedable":true,
     "family":[113, 464],
@@ -3959,7 +3515,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Electivire",
     "breedable":true,
     "family":[124, 238, 465]
@@ -3967,7 +3522,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Magmortar",
     "breedable":true,
     "family":[125, 239, 466]
@@ -3975,7 +3529,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Togekiss",
     "breedable":true,
     "family":[174, 175, 467]
@@ -3983,7 +3536,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Yanmega",
     "breedable":true,
     "family":[192, 468]
@@ -3991,7 +3543,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Leafeon",
     "breedable":true,
     "family":[132, 469]
@@ -3999,7 +3550,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Glaceon",
     "breedable":true,
     "family":[132, 470]
@@ -4007,7 +3557,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Gliscor",
     "breedable":true,
     "family":[206, 471]
@@ -4015,7 +3564,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Mamoswine",
     "breedable":true,
     "family":[219, 220, 472],
@@ -4024,7 +3572,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Porygon-Z",
     "breedable":true,
     "family":[136, 232, 473]
@@ -4032,7 +3579,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Gallade",
     "breedable":true,
     "family":[279, 280, 474]
@@ -4040,7 +3586,6 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Probopass",
     "breedable":true,
     "family":[298, 475]
@@ -4048,7 +3593,6 @@
   {
     "generation":4,
     "stage":2,
-    "legendary":false,
     "name":"Dusknoir",
     "breedable":true,
     "family":[354, 355, 476]
@@ -4056,14 +3600,12 @@
   {
     "generation":4,
     "stage":1,
-    "legendary":false,
     "name":"Froslass",
     "breedable":true,
     "family":[360, 477]
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Rotom",
     "breedable":true,
     "forms":["Rotom", "Fan", "Frost", "Heat", "Mow", "Wash"]
@@ -4125,7 +3667,6 @@
   },
   {
     "generation":4,
-    "legendary":false,
     "name":"Phione",
     "breedable":true
   },
@@ -4163,7 +3704,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Snivy",
     "breedable":true,
     "family":[494, 495, 496]
@@ -4171,7 +3711,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Servine",
     "breedable":true,
     "family":[494, 495, 496]
@@ -4179,7 +3718,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Serperior",
     "breedable":true,
     "family":[494, 495, 496]
@@ -4187,7 +3725,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Tepig",
     "breedable":true,
     "family":[497, 498, 499]
@@ -4195,7 +3732,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Pignite",
     "breedable":true,
     "family":[497, 498, 499]
@@ -4203,7 +3739,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Emboar",
     "breedable":true,
     "family":[497, 498, 499]
@@ -4211,7 +3746,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Oshawott",
     "breedable":true,
     "family":[500, 501, 502]
@@ -4219,7 +3753,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Dewott",
     "breedable":true,
     "family":[500, 501, 502]
@@ -4227,7 +3760,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Samurott",
     "breedable":true,
     "regional-forms":[948],
@@ -4236,7 +3768,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Patrat",
     "breedable":true,
     "family":[503, 504]
@@ -4244,7 +3775,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Watchog",
     "breedable":true,
     "family":[503, 504]
@@ -4252,7 +3782,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Lillipup",
     "breedable":true,
     "family":[505, 506, 507]
@@ -4260,7 +3789,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Herdier",
     "breedable":true,
     "family":[505, 506, 507]
@@ -4268,7 +3796,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Stoutland",
     "breedable":true,
     "family":[505, 506, 507]
@@ -4276,7 +3803,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Purrloin",
     "breedable":true,
     "family":[508, 509]
@@ -4284,7 +3810,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Liepard",
     "breedable":true,
     "family":[508, 509]
@@ -4292,7 +3817,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Pansage",
     "breedable":true,
     "family":[510, 511]
@@ -4300,7 +3824,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Simisage",
     "breedable":true,
     "family":[510, 511]
@@ -4308,7 +3831,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Pansear",
     "breedable":true,
     "family":[512, 513]
@@ -4316,7 +3838,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Simisear",
     "breedable":true,
     "family":[512, 513]
@@ -4324,7 +3845,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Panpour",
     "breedable":true,
     "family":[514, 515]
@@ -4332,7 +3852,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Simipour",
     "breedable":true,
     "family":[514, 515]
@@ -4340,7 +3859,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Munna",
     "breedable":true,
     "family":[516, 517]
@@ -4348,7 +3866,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Musharna",
     "breedable":true,
     "family":[516, 517]
@@ -4356,7 +3873,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Pidove",
     "breedable":true,
     "family":[518, 519, 520]
@@ -4364,7 +3880,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Tranquill",
     "breedable":true,
     "family":[518, 519, 520]
@@ -4372,7 +3887,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Unfezant",
     "breedable":true,
     "family":[518, 519, 520
@@ -4381,7 +3895,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Blitzle",
     "breedable":true,
     "family":[521, 522]
@@ -4389,7 +3902,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Zebstrika",
     "breedable":true,
     "family":[521, 522]
@@ -4397,7 +3909,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Roggenrola",
     "breedable":true,
     "family":[523, 524, 525]
@@ -4405,7 +3916,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Boldore",
     "breedable":true,
     "family":[523, 524, 525]
@@ -4413,7 +3923,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Gigalith",
     "breedable":true,
     "family":[523, 524, 525]
@@ -4421,7 +3930,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Woobat",
     "breedable":true,
     "family":[526, 527]
@@ -4429,7 +3937,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Swoobat",
     "breedable":true,
     "family":[526, 527]
@@ -4437,7 +3944,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Drilbur",
     "breedable":true,
     "family":[528, 529]
@@ -4445,21 +3951,18 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Excadrill",
     "breedable":true,
     "family":[528, 529]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Audino",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Timburr",
     "breedable":true,
     "family":[531, 532, 533]
@@ -4467,7 +3970,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Gurdurr",
     "breedable":true,
     "family":[531, 532, 533]
@@ -4475,7 +3977,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Conkeldurr",
     "breedable":true,
     "family":[531, 532, 533]
@@ -4483,7 +3984,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Tympole",
     "breedable":true,
     "family":[534, 535, 536]
@@ -4491,7 +3991,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Palpitoad",
     "breedable":true,
     "family":[534, 535, 536]
@@ -4499,27 +3998,23 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Seismitoad",
     "breedable":true,
     "family":[534, 535, 536]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Throh",
     "breedable":true
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Sawk",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Sewaddle",
     "breedable":true,
     "family":[539, 540, 541]
@@ -4527,7 +4022,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Swadloon",
     "breedable":true,
     "family":[539, 540, 541]
@@ -4535,7 +4029,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Leavanny",
     "breedable":true,
     "family":[539, 540, 541]
@@ -4543,7 +4036,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Venipede",
     "breedable":true,
     "family":[542, 543, 544]
@@ -4551,7 +4043,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Whirlipede",
     "breedable":true,
     "family":[542, 543, 544]
@@ -4559,7 +4050,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Scolipede",
     "breedable":true,
     "family":[542, 543, 544]
@@ -4567,7 +4057,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Cottonee",
     "breedable":true,
     "family":[545, 546]
@@ -4575,7 +4064,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Whimsicott",
     "breedable":true,
     "family":[545, 546]
@@ -4583,7 +4071,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Petilil",
     "breedable":true,
     "family":[547, 548]
@@ -4591,7 +4078,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Lilligant",
     "breedable":true,
     "regional-forms":[949],
@@ -4600,7 +4086,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Basculin",
     "breedable":true,
     "regional-forms": [958],
@@ -4609,7 +4094,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Sandile",
     "breedable":true,
     "family":[550, 551, 552]
@@ -4617,7 +4101,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Krokorok",
     "breedable":true,
     "family":[550, 551, 552]
@@ -4625,7 +4108,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Krookodile",
     "breedable":true,
     "family":[550, 551, 552]
@@ -4633,7 +4115,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Darumaka",
     "breedable":true,
     "regional-forms":[917],
@@ -4642,7 +4123,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Darmanitan",
     "breedable":true,
     "regional-forms":[918],
@@ -4651,14 +4131,12 @@
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Maractus",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Dwebble",
     "breedable":true,
     "family":[556, 557]
@@ -4666,7 +4144,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Crustle",
     "breedable":true,
     "family":[556, 557]
@@ -4674,7 +4151,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Scraggy",
     "breedable":true,
     "family":[558, 559]
@@ -4682,21 +4158,18 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Scrafty",
     "breedable":true,
     "family":[558, 559]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Sigilyph",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Yamask",
     "breedable":true,
     "regional-forms":[919],
@@ -4705,7 +4178,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Cofagrigus",
     "breedable":true,
     "family":[561, 562]
@@ -4713,7 +4185,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Tirtouga",
     "breedable":true,
     "family":[563, 564]
@@ -4721,7 +4192,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Carracosta",
     "breedable":true,
     "family":[563, 564]
@@ -4729,7 +4199,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Archen",
     "breedable":true,
     "family":[565, 566]
@@ -4737,7 +4206,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Archeops",
     "breedable":true,
     "family":[565, 566]
@@ -4745,7 +4213,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Trubbish",
     "breedable":true,
     "family":[567, 568]
@@ -4753,7 +4220,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Garbodor",
     "breedable":true,
     "family":[567, 568],
@@ -4762,7 +4228,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Zorua",
     "breedable":true,
     "regional-forms":[950],
@@ -4771,7 +4236,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Zoroark",
     "breedable":true,
     "regional-forms":[951],
@@ -4780,7 +4244,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Minccino",
     "breedable":true,
     "family":[571, 572]
@@ -4788,7 +4251,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Cinccino",
     "breedable":true,
     "family":[571, 572]
@@ -4796,7 +4258,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Gothita",
     "breedable":true,
     "family":[573, 574, 575]
@@ -4804,7 +4265,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Gothorita",
     "breedable":true,
     "family":[573, 574, 575]
@@ -4812,7 +4272,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Gothitelle",
     "breedable":true,
     "family":[573, 574, 575]
@@ -4820,7 +4279,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Solosis",
     "breedable":true,
     "family":[576, 577, 578]
@@ -4828,7 +4286,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Duosion",
     "breedable":true,
     "family":[576, 577, 578]
@@ -4836,7 +4293,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Reuniclus",
     "breedable":true,
     "family":[576, 577, 578]
@@ -4844,7 +4300,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Ducklett",
     "breedable":true,
     "family":[579, 580]
@@ -4852,7 +4307,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Swanna",
     "breedable":true,
     "family":[579, 580]
@@ -4860,7 +4314,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Vanillite",
     "breedable":true,
     "family":[581, 582, 583]
@@ -4868,7 +4321,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Vanillish",
     "breedable":true,
     "family":[581, 582, 583]
@@ -4876,7 +4328,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Vanilluxe",
     "breedable":true,
     "family":[581, 582, 583]
@@ -4884,7 +4335,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Deerling",
     "breedable":true,
     "family":[584, 585],
@@ -4893,7 +4343,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Sawsbuck",
     "breedable":true,
     "family":[584, 585],
@@ -4901,14 +4350,12 @@
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Emolga",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Karrablast",
     "breedable":true,
     "family":[587, 588]
@@ -4916,7 +4363,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Escavalier",
     "breedable":true,
     "family":[587, 588]
@@ -4924,7 +4370,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Foongus",
     "breedable":true,
     "family":[589, 590]
@@ -4932,7 +4377,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Amoonguss",
     "breedable":true,
     "family":[589, 590]
@@ -4940,7 +4384,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Frillish",
     "breedable":true,
     "family":[591, 592],
@@ -4949,7 +4392,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Jellicent",
     "breedable":true,
     "family":[591, 592],
@@ -4957,14 +4399,12 @@
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Alomomola",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Joltik",
     "breedable":true,
     "family":[594, 595]
@@ -4972,7 +4412,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Galvantula",
     "breedable":true,
     "family":[594, 595]
@@ -4980,7 +4419,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Ferroseed",
     "breedable":true,
     "family":[596, 597]
@@ -4988,7 +4426,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Ferrothorn",
     "breedable":true,
     "family":[596, 597]
@@ -4996,7 +4433,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Klink",
     "breedable":true,
     "family":[598, 599, 600]
@@ -5004,7 +4440,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Klang",
     "breedable":true,
     "family":[598, 599, 600]
@@ -5012,7 +4447,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Klinklang",
     "breedable":true,
     "family":[598, 599, 600]
@@ -5020,7 +4454,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Tynamo",
     "breedable":true,
     "family":[601, 602, 603]
@@ -5028,7 +4461,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Eelektrik",
     "breedable":true,
     "family":[601, 602, 603]
@@ -5036,7 +4468,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Eelektross",
     "breedable":true,
     "family":[601, 602, 603]
@@ -5044,7 +4475,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Elgyem",
     "breedable":true,
     "family":[604, 605]
@@ -5052,7 +4482,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Beheeyem",
     "breedable":true,
     "family":[604, 605]
@@ -5060,7 +4489,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Litwick",
     "breedable":true,
     "family":[606, 607, 608]
@@ -5068,7 +4496,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Lampent",
     "breedable":true,
     "family":[606, 607, 608]
@@ -5076,7 +4503,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Chandelure",
     "breedable":true,
     "family":[606, 607, 608]
@@ -5084,7 +4510,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Axew",
     "breedable":true,
     "family":[609, 610, 611]
@@ -5092,7 +4517,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Fraxure",
     "breedable":true,
     "family":[609, 610, 611]
@@ -5100,7 +4524,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Haxorus",
     "breedable":true,
     "family":[609, 610, 611]
@@ -5108,7 +4531,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Cubchoo",
     "breedable":true,
     "family":[612, 613]
@@ -5116,21 +4538,18 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Beartic",
     "breedable":true,
     "family":[612, 613]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Cryogonal",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Shelmet",
     "breedable":true,
     "family":[615, 616]
@@ -5138,14 +4557,12 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Accelgor",
     "breedable":true,
     "family":[615, 616]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Stunfisk",
     "breedable":true,
     "regional-forms":[920]
@@ -5153,7 +4570,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Mienfoo",
     "breedable":true,
     "family":[618, 619]
@@ -5161,21 +4577,18 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Mienshao",
     "breedable":true,
     "family":[618, 619]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Druddigon",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Golett",
     "breedable":true,
     "family":[621, 622]
@@ -5183,7 +4596,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Golurk",
     "breedable":true,
     "family":[621, 622]
@@ -5191,7 +4603,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Pawniard",
     "breedable":true,
     "family":[623, 624]
@@ -5199,21 +4610,18 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Bisharp",
     "breedable":true,
     "family":[623, 624]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Bouffalant",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Rufflet",
     "breedable":true,
     "family":[626, 627]
@@ -5221,7 +4629,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Braviary",
     "breedable":true,
     "regional-forms":[952],
@@ -5230,7 +4637,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Vullaby",
     "breedable":true,
     "family":[628, 629]
@@ -5238,27 +4644,23 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Mandibuzz",
     "breedable":true,
     "family":[628, 629]
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Heatmor",
     "breedable":true
   },
   {
     "generation":5,
-    "legendary":false,
     "name":"Durant",
     "breedable":true
   },
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Deino",
     "breedable":true,
     "family":[632, 633, 634]
@@ -5266,7 +4668,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Zweilous",
     "breedable":true,
     "family":[632, 633, 634]
@@ -5274,7 +4675,6 @@
   {
     "generation":5,
     "stage":2,
-    "legendary":false,
     "name":"Hydreigon",
     "breedable":true,
     "family":[632, 633, 634]
@@ -5282,7 +4682,6 @@
   {
     "generation":5,
     "stage":0,
-    "legendary":false,
     "name":"Larvesta",
     "breedable":true,
     "family":[635, 636]
@@ -5290,7 +4689,6 @@
   {
     "generation":5,
     "stage":1,
-    "legendary":false,
     "name":"Volcarona",
     "breedable":true,
     "family":[635, 636]
@@ -5376,7 +4774,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Chespin",
     "breedable":true,
     "family":[649, 650, 651
@@ -5385,7 +4782,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Quilladin",
     "breedable":true,
     "family":[649, 650, 651]
@@ -5393,7 +4789,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Chesnaught",
     "breedable":true,
     "family":[649, 650, 651]
@@ -5401,7 +4796,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Fennekin",
     "breedable":true,
     "family":[652, 653, 654]
@@ -5409,7 +4803,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Braixen",
     "breedable":true,
     "family":[652, 653, 654]
@@ -5417,7 +4810,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Delphox",
     "breedable":true,
     "family":[652, 653, 654]
@@ -5425,7 +4817,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Froakie",
     "breedable":true,
     "family":[655, 656, 657]
@@ -5433,7 +4824,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Frogadier",
     "breedable":true,
     "family":[655, 656, 657]
@@ -5441,7 +4831,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Greninja",
     "breedable":true,
     "family":[655, 656, 657]
@@ -5449,7 +4838,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Bunnelby",
     "breedable":true,
     "family":[658, 659]
@@ -5457,7 +4845,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Diggersby",
     "breedable":true,
     "family":[658, 659]
@@ -5465,7 +4852,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Fletchling",
     "breedable":true,
     "family":[660, 661, 662]
@@ -5473,7 +4859,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Fletchinder",
     "breedable":true,
     "family":[660, 661, 662]
@@ -5481,7 +4866,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Talonflame",
     "breedable":true,
     "family":[660, 661, 662]
@@ -5489,7 +4873,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Scatterbug",
     "breedable":true,
     "family":[663, 664, 665]
@@ -5497,7 +4880,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Spewpa",
     "breedable":true,
     "family":[663, 664, 665]
@@ -5505,7 +4887,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Vivillon",
     "breedable":true,
     "family":[663, 664, 665],
@@ -5514,7 +4895,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Litleo",
     "breedable":true,
     "family":[666, 667]
@@ -5522,7 +4902,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Pyroar",
     "breedable":true,
     "family":[666, 667],
@@ -5531,7 +4910,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Flabebe",
     "breedable":true,
     "family":[668, 669, 670],
@@ -5540,7 +4918,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Floette",
     "breedable":true,
     "family":[668, 669, 670],
@@ -5549,7 +4926,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Florges",
     "breedable":true,
     "family":[668, 669, 670],
@@ -5558,7 +4934,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Skiddo",
     "breedable":true,
     "family":[671, 672]
@@ -5566,7 +4941,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Gogoat",
     "breedable":true,
     "family":[671, 672]
@@ -5574,7 +4948,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Pancham",
     "breedable":true,
     "family":[673, 674]
@@ -5582,21 +4955,18 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Pangoro",
     "breedable":true,
     "family":[673, 674]
   },
   {
     "generation":6,
-    "legendary":false,
     "name":"Furfrou",
     "breedable":true
   },
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Espurr",
     "breedable":true,
     "family":[676, 677]
@@ -5604,7 +4974,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Meowstic",
     "breedable":true,
     "family":[676, 677],
@@ -5613,7 +4982,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Honedge",
     "breedable":true,
     "family":[678, 679, 680],
@@ -5622,7 +4990,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Doublade",
     "breedable":true,
     "family":[678, 679, 680]
@@ -5630,7 +4997,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Aegislash",
     "breedable":true,
     "family":[678, 679, 680]
@@ -5638,7 +5004,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Spritzee",
     "breedable":true,
     "family":[681, 682]
@@ -5646,7 +5011,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Aromatisse",
     "breedable":true,
     "family":[681, 682]
@@ -5654,7 +5018,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Swirlix",
     "breedable":true,
     "family":[683, 684]
@@ -5662,7 +5025,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Slurpuff",
     "breedable":true,
     "family":[683, 684]
@@ -5670,7 +5032,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Inkay",
     "breedable":true,
     "family":[685, 686]
@@ -5678,7 +5039,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Malamar",
     "breedable":true,
     "family":[685, 686]
@@ -5686,7 +5046,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Binacle",
     "breedable":true,
     "family":[687, 688]
@@ -5694,7 +5053,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Barbaracle",
     "breedable":true,
     "family":[687, 688]
@@ -5702,7 +5060,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Skrelp",
     "breedable":true,
     "family":[689, 690]
@@ -5710,7 +5067,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Dragalge",
     "breedable":true,
     "family":[689, 690]
@@ -5718,7 +5074,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Clauncher",
     "breedable":true,
     "family":[691, 692]
@@ -5726,7 +5081,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Clawitzer",
     "breedable":true,
     "family":[691, 692]
@@ -5734,7 +5088,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Helioptile",
     "breedable":true,
     "family":[693, 694]
@@ -5742,7 +5095,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Heliolisk",
     "breedable":true,
     "family":[693, 694]
@@ -5750,7 +5102,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Tyrunt",
     "breedable":true,
     "family":[695, 696]
@@ -5758,7 +5109,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Tyrantrum",
     "breedable":true,
     "family":[695, 696]
@@ -5766,7 +5116,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Amaura",
     "breedable":true,
     "family":[697, 698]
@@ -5774,7 +5123,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Aurorus",
     "breedable":true,
     "family":[697, 698]
@@ -5782,33 +5130,28 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Sylveon",
     "breedable":true,
     "family":[132, 699]
   },
   {
     "generation":6,
-    "legendary":false,
     "name":"Hawlucha",
     "breedable":true
   },
   {
     "generation":6,
-    "legendary":false,
     "name":"Dedenne",
     "breedable":true
   },
   {
     "generation":6,
-    "legendary":false,
     "name":"Carbink",
     "breedable":true
   },
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Goomy",
     "breedable":true,
     "family":[703, 704, 705]
@@ -5816,7 +5159,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Sliggoo",
     "breedable":true,
     "regional-forms":[953],
@@ -5825,7 +5167,6 @@
   {
     "generation":6,
     "stage":2,
-    "legendary":false,
     "name":"Goodra",
     "breedable":true,
     "regional-forms":[954],
@@ -5833,14 +5174,12 @@
   },
   {
     "generation":6,
-    "legendary":false,
     "name":"Klefki",
     "breedable":true
   },
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Phantump",
     "breedable":true,
     "family":[707, 708]
@@ -5848,7 +5187,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Trevenant",
     "breedable":true,
     "family":[707, 708]
@@ -5856,7 +5194,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Pumpkaboo",
     "breedable":true,
     "family":[709, 710]
@@ -5864,7 +5201,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Gourgeist",
     "breedable":true,
     "family":[709, 710]
@@ -5872,7 +5208,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Bergmite",
     "breedable":true,
     "family":[711, 712]
@@ -5880,7 +5215,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Avalugg",
     "breedable":true,
     "regional-forms":[955],
@@ -5889,7 +5223,6 @@
   {
     "generation":6,
     "stage":0,
-    "legendary":false,
     "name":"Noibat",
     "breedable":true,
     "family":[713, 714]
@@ -5897,7 +5230,6 @@
   {
     "generation":6,
     "stage":1,
-    "legendary":false,
     "name":"Noivern",
     "breedable":true,
     "family":[713, 714]
@@ -5943,7 +5275,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Rowlet",
     "breedable":true,
     "family":[721, 722, 723]
@@ -5951,7 +5282,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Dartrix",
     "breedable":true,
     "family":[721, 722, 723]
@@ -5959,7 +5289,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Decidueye",
     "breedable":true,
     "regional-forms":[956],
@@ -5968,7 +5297,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Litten",
     "breedable":true,
     "family":[724, 725, 726]
@@ -5976,7 +5304,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Torracat",
     "breedable":true,
     "family":[724, 725, 726]
@@ -5984,7 +5311,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Incineroar",
     "breedable":true,
     "family":[724, 725, 726]
@@ -5992,7 +5318,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Popplio",
     "breedable":true,
     "family":[727, 728, 729]
@@ -6000,7 +5325,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Brionne",
     "breedable":true,
     "family":[727, 728, 729]
@@ -6008,7 +5332,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Primarina",
     "breedable":true,
     "family":[727, 728, 729]
@@ -6016,7 +5339,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Pikipek",
     "breedable":true,
     "family":[730, 731, 732]
@@ -6024,7 +5346,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Trumbeak",
     "breedable":true,
     "family":[730, 731, 732]
@@ -6032,7 +5353,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Toucannon",
     "breedable":true,
     "family":[730, 731, 732]
@@ -6040,7 +5360,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Yungoos",
     "breedable":true,
     "family":[733, 734]
@@ -6048,7 +5367,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Gumshoos",
     "breedable":true,
     "family":[733, 734]
@@ -6056,7 +5374,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Grubbin",
     "breedable":true,
     "family":[735, 736, 737]
@@ -6064,7 +5381,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Charjabug",
     "breedable":true,
     "family":[735, 736, 737]
@@ -6072,7 +5388,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Vikavolt",
     "breedable":true,
     "family":[735, 736, 737]
@@ -6080,7 +5395,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Crabrawler",
     "breedable":true,
     "family":[738, 739]
@@ -6088,14 +5402,12 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Crabominable",
     "breedable":true,
     "family":[738, 739]
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Oricorio",
     "breedable":true,
     "forms":["Baile", "Pom-Pom", "Pa'u", "Sensu"]
@@ -6103,7 +5415,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Cutiefly",
     "breedable":true,
     "family":[741, 742]
@@ -6111,7 +5422,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Ribombee",
     "breedable":true,
     "family":[741, 742]
@@ -6119,7 +5429,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Rockruff",
     "breedable":true,
     "family":[743, 744]
@@ -6127,7 +5436,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Lycanroc",
     "breedable":true,
     "family":[743, 744],
@@ -6135,7 +5443,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Wishiwashi",
     "breedable":true,
     "forms":["Solo", "School"]
@@ -6143,7 +5450,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Mareanie",
     "breedable":true,
     "family":[746, 747]
@@ -6151,7 +5457,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Toxapex",
     "breedable":true,
     "family":[746, 747]
@@ -6159,7 +5464,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Mudbray",
     "breedable":true,
     "family":[748, 749]
@@ -6167,7 +5471,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Mudsdale",
     "breedable":true,
     "family":[748, 749]
@@ -6175,7 +5478,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Dewpider",
     "breedable":true,
     "family":[750, 751]
@@ -6183,7 +5485,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Araquanid",
     "breedable":true,
     "family":[750, 751]
@@ -6191,7 +5492,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Fomantis",
     "breedable":true,
     "family":[752, 753]
@@ -6199,7 +5499,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Lurantis",
     "breedable":true,
     "family":[752, 753]
@@ -6207,7 +5506,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Morelull",
     "breedable":true,
     "family":[754, 755]
@@ -6215,7 +5513,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Shiinotic",
     "breedable":true,
     "family":[754, 755]
@@ -6223,7 +5520,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Salandit",
     "breedable":true,
     "family":[756, 757]
@@ -6231,7 +5527,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Salazzle",
     "breedable":true,
     "family":[756, 757]
@@ -6239,7 +5534,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Stufful",
     "breedable":true,
     "family":[758, 759]
@@ -6247,7 +5541,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Bewear",
     "breedable":true,
     "family":[758, 759]
@@ -6255,7 +5548,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Bounsweet",
     "breedable":true,
     "family":[760, 761, 762]
@@ -6263,7 +5555,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Steenee",
     "breedable":true,
     "family":[760, 761, 762]
@@ -6271,33 +5562,28 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Tsareena",
     "breedable":true,
     "family":[760, 761, 762]
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Comfey",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Oranguru",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Passimian",
     "breedable":true
   },
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Wimpod",
     "breedable":true,
     "family":[766, 767]
@@ -6305,7 +5591,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Golisopod",
     "breedable":true,
     "family":[766, 767]
@@ -6313,7 +5598,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Sandygast",
     "breedable":true,
     "family":[768, 769]
@@ -6321,14 +5605,12 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Palossand",
     "breedable":true,
     "family":[768, 769]
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Pyukumuku",
     "breedable":true
   },
@@ -6350,57 +5632,48 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Minior",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Komala",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Turtonator",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Togedemaru",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Mimikyu",
     "breedable":true,
     "forms":["Disguised", "Busted"]
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Bruxish",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Drampa",
     "breedable":true
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Dhelmise",
     "breedable":true
   },
   {
     "generation":7,
     "stage":0,
-    "legendary":false,
     "name":"Jangmo-o",
     "breedable":true,
     "family":[781, 782, 783]
@@ -6408,7 +5681,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":false,
     "name":"Hakamo-o",
     "breedable":true,
     "family":[781, 782, 783]
@@ -6416,7 +5688,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":false,
     "name":"Kommo-o",
     "breedable":true,
     "family":[781, 782, 783]
@@ -6503,7 +5774,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Xurkitree",
     "breedable":true
   },
@@ -6546,7 +5816,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Rattata",
     "breedable":true,
     "regional-forms":[18],
@@ -6554,7 +5823,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Raticate",
     "breedable":true,
     "regional-forms":[19],
@@ -6562,7 +5830,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Raichu",
     "breedable":true,
     "regional-forms":[25],
@@ -6571,7 +5838,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Sandshrew",
     "breedable":true,
     "regional-forms":[26],
@@ -6579,7 +5845,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Sandslash",
     "breedable":true,
     "regional-forms":[27],
@@ -6587,7 +5852,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Vulpix",
     "breedable":true,
     "regional-forms":[36],
@@ -6595,7 +5859,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Ninetales",
     "breedable":true,
     "regional-forms":[36],
@@ -6603,7 +5866,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Diglett",
     "breedable":true,
     "regional-forms":[49],
@@ -6611,7 +5873,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Dugtrio",
     "breedable":true,
     "regional-forms":[50],
@@ -6619,7 +5880,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Meowth",
     "breedable":true,
     "regional-forms":[51, 908],
@@ -6627,7 +5887,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Persian",
     "breedable":true,
     "regional-forms":[52],
@@ -6635,7 +5894,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Geodude",
     "breedable":true,
     "regional-forms":[73],
@@ -6643,7 +5901,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Graveler",
     "breedable":true,
     "regional-forms":[74],
@@ -6651,7 +5908,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Golem",
     "breedable":true,
     "regional-forms":[75],
@@ -6659,7 +5915,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Grimer",
     "breedable":true,
     "regional-forms":[87],
@@ -6667,7 +5922,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Muk",
     "breedable":true,
     "regional-forms":[88],
@@ -6675,7 +5929,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Exeggutor",
     "breedable":true,
     "regional-forms":[102],
@@ -6683,7 +5936,6 @@
   },
   {
     "generation":7,
-    "legendary":false,
     "name":"Alolan Marowak",
     "breedable":true,
     "regional-forms":[104],
@@ -6739,7 +5991,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Grookey",
     "breedable":true,
     "family":[827, 828, 829]
@@ -6747,7 +5998,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Thwackey",
     "breedable":true,
     "family":[827, 828, 829]
@@ -6755,7 +6005,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Rillaboom",
     "breedable":true,
     "family":[827, 828, 829],
@@ -6764,7 +6013,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Scorbunny",
     "breedable":true,
     "family":[830, 831, 832]
@@ -6772,7 +6020,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Raboot",
     "breedable":true,
     "family":[830, 831, 832]
@@ -6780,7 +6027,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Cinderace",
     "breedable":true,
     "family":[830, 831, 832],
@@ -6789,7 +6035,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Sobble",
     "breedable":true,
     "family":[833, 834, 835]
@@ -6797,7 +6042,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Drizzile",
     "breedable":true,
     "family":[833, 834, 835]
@@ -6805,7 +6049,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Inteleon",
     "breedable":true,
     "family":[833, 834, 835],
@@ -6814,7 +6057,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Skwovet",
     "breedable":true,
     "family":[836, 837]
@@ -6822,7 +6064,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Greedent",
     "breedable":true,
     "family":[836, 837]
@@ -6830,7 +6071,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Rookidee",
     "breedable":true,
     "family":[838, 839, 840]
@@ -6838,7 +6078,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Corvisquire",
     "breedable":true,
     "family":[838, 839, 840]
@@ -6846,7 +6085,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Corviknight",
     "breedable":true,
     "family":[838, 839, 840],
@@ -6855,7 +6093,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Blipbug",
     "breedable":true,
     "family":[841, 842, 843]
@@ -6863,7 +6100,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Dottler",
     "breedable":true,
     "family":[841, 842, 843]
@@ -6871,7 +6107,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Orbeetle",
     "breedable":true,
     "family":[841, 842, 843],
@@ -6880,7 +6115,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Nickit",
     "breedable":true,
     "family":[844, 845]
@@ -6888,7 +6122,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Thievul",
     "breedable":true,
     "family":[844, 845]
@@ -6896,7 +6129,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Gossifleur",
     "breedable":true,
     "family":[846, 847]
@@ -6904,7 +6136,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Eldegoss",
     "breedable":true,
     "family":[846, 847]
@@ -6912,7 +6143,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Wooloo",
     "breedable":true,
     "family":[848, 849]
@@ -6920,7 +6150,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Dubwool",
     "breedable":true,
     "family":[848, 849]
@@ -6928,7 +6157,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Chewtle",
     "breedable":true,
     "family":[850, 851]
@@ -6936,7 +6164,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Drednaw",
     "breedable":true,
     "family":[850, 851],
@@ -6945,7 +6172,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Yamper",
     "breedable":true,
     "family":[852, 853]
@@ -6953,7 +6179,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Boltund",
     "breedable":true,
     "family":[852, 853]
@@ -6961,7 +6186,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Rolycoly",
     "breedable":true,
     "family":[854, 855, 856]
@@ -6969,7 +6193,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Carkol",
     "breedable":true,
     "family":[854, 855, 856]
@@ -6977,7 +6200,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Coalossal",
     "breedable":true,
     "family":[854, 855, 856],
@@ -6986,7 +6208,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Applin",
     "breedable":true,
     "family":[
@@ -6997,7 +6218,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Flapple",
     "breedable":true,
     "family":[857, 858],
@@ -7006,7 +6226,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Appletun",
     "breedable":true,
     "family":[857, 859],
@@ -7015,7 +6234,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Silicobra",
     "breedable":true,
     "family":[860, 861]
@@ -7023,7 +6241,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Sandaconda",
     "breedable":true,
     "family":[860, 861],
@@ -7031,14 +6248,12 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Cramorant",
     "breedable":true
   },
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Arrokuda",
     "breedable":true,
     "family":[863, 864]
@@ -7046,7 +6261,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Barraskewda",
     "breedable":true,
     "family":[863, 864]
@@ -7054,7 +6268,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Toxel",
     "breedable":true,
     "family":[865, 866]
@@ -7062,7 +6275,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Toxtricity",
     "breedable":true,
     "family":[865, 866],
@@ -7071,7 +6283,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Sizzlipede",
     "breedable":true,
     "family":[867, 868]
@@ -7079,7 +6290,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Centiskorch",
     "breedable":true,
     "family":[867, 868],
@@ -7088,7 +6298,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Clobbopus",
     "breedable":true,
     "family":[869, 870]
@@ -7096,7 +6305,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Grapploct",
     "breedable":true,
     "family":[869, 870]
@@ -7104,20 +6312,17 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Sinistea",
     "breedable":true,
     "family":[871]},
   {
     "generation":8,
-    "legendary":false,
     "name":"Polteageist",
     "breedable":true
   },
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Hatenna",
     "breedable":true,
     "family":[873, 874, 875]
@@ -7125,7 +6330,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Hattrem",
     "breedable":true,
     "family":[873, 874, 875]
@@ -7133,7 +6337,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Hatterene",
     "breedable":true,
     "family":[873, 874, 875],
@@ -7142,7 +6345,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Impidimp",
     "breedable":true,
     "family":[876, 877, 878]
@@ -7150,7 +6352,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Morgrem",
     "breedable":true,
     "family":[876, 877, 878]
@@ -7158,7 +6359,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Grimmsnarl",
     "breedable":true,
     "family":[876, 877, 878],
@@ -7167,7 +6367,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Obstagoon",
     "breedable":true,
     "family":[879, 915, 916]
@@ -7175,7 +6374,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Perrserker",
     "breedable":true,
     "family":[880, 908]
@@ -7183,7 +6381,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Cursola",
     "breedable":true,
     "family":[881, 914]
@@ -7191,7 +6388,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Sirfetch'd",
     "breedable":true,
     "family":[882, 911]
@@ -7199,7 +6395,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Mr. Rime",
     "breedable":true,
     "family":[438, 883, 913]
@@ -7207,7 +6402,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Runerigus",
     "breedable":true,
     "family":[884, 919]
@@ -7215,7 +6409,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Milcery",
     "breedable":true,
     "family":[885, 886]
@@ -7223,7 +6416,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Alcremie",
     "breedable":true,
     "family":[885, 886],
@@ -7231,20 +6423,17 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Falinks",
     "breedable":true
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Pincurchin",
     "breedable":true
   },
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Snom",
     "breedable":true,
     "family":[889, 890]
@@ -7252,34 +6441,29 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Frosmoth",
     "breedable":true,
     "family":[889, 890]
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Stonjourner",
     "breedable":true
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Eiscue",
     "breedable":true,
     "forms":["Ice", "No Ice"]
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Indeedee",
     "breedable":true,
     "forms":["Male", "Female"]
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Morpeko",
     "breedable":true,
     "forms":["Full Belly", "Hangry"]
@@ -7287,7 +6471,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Cufant",
     "breedable":true,
     "family":[895, 896]
@@ -7295,7 +6478,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Copperajah",
     "breedable":true,
     "family":[895, 896],
@@ -7303,31 +6485,26 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Dracozolt",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Arctozolt",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Dracovish",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Arctovish",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Duraludon",
     "breedable":true,
     "forms":["Regular", "Gigantamax"]
@@ -7335,7 +6512,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":false,
     "name":"Dreepy",
     "breedable":true,
     "family":[902, 903, 904]
@@ -7343,7 +6519,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Drakloak",
     "breedable":true,
     "family":[902, 903, 904]
@@ -7351,7 +6526,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Dragapult",
     "breedable":true,
     "family":[902, 903, 904]
@@ -7378,7 +6552,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Meowth",
     "breedable":true,
     "regional-forms":[51, 811],
@@ -7386,7 +6559,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Ponyta",
     "breedable":true,
     "regional-forms":[76],
@@ -7394,7 +6566,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Rapidash",
     "breedable":true,
     "regional-forms":[77],
@@ -7402,7 +6573,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Farfetch'd",
     "breedable":true,
     "regional-forms":[82],
@@ -7410,7 +6580,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Weezing",
     "breedable":true,
     "regional-forms":[109],
@@ -7418,7 +6587,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Mr. Mime",
     "breedable":true,
     "regional-forms":[121],
@@ -7426,7 +6594,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Corsola",
     "breedable":true,
     "regional-forms":[221],
@@ -7434,7 +6601,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Zigzagoon",
     "breedable":true,
     "regional-forms":[262],
@@ -7442,7 +6608,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Linoone",
     "breedable":true,
     "regional-forms":[263],
@@ -7450,7 +6615,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Darumaka",
     "breedable":true,
     "regional-forms":[553],
@@ -7458,7 +6622,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Darmanitan",
     "breedable":true,
     "regional-forms":[554],
@@ -7466,7 +6629,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Yamask",
     "breedable":true,
     "regional-forms":[561],
@@ -7474,7 +6636,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Stunfisk",
     "breedable":true,
     "regional-forms":[617]
@@ -7517,7 +6678,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Slowpoke",
     "breedable":true,
     "regional-forms":[78],
@@ -7525,7 +6685,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Slowbro",
     "breedable":true,
     "regional-forms":[79],
@@ -7551,7 +6710,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Galarian Slowking",
     "breedable":true,
     "regional-forms":[198],
@@ -7581,7 +6739,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Wyrdeer",
     "breedable":true,
     "family":[233, 935]
@@ -7589,7 +6746,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Kleavor",
     "breedable":true,
     "family":[122, 936]
@@ -7597,7 +6753,6 @@
   {
     "generation":8,
     "stage":2,
-    "legendary":false,
     "name":"Ursaluna",
     "breedable":true,
     "family":[215, 216, 937]
@@ -7605,7 +6760,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Basculegion",
     "breedable":true,
     "family":[958, 938]
@@ -7613,7 +6767,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Sneasler",
     "breedable":true,
     "family":[939, 948]
@@ -7621,7 +6774,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":false,
     "name":"Overqwil",
     "breedable":true,
     "family":[940, 947]
@@ -7635,7 +6787,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Growlithe",
     "breedable":true,
     "regional-forms":[57],
@@ -7643,7 +6794,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Arcanine",
     "breedable":true,
     "regional-forms":[58],
@@ -7651,7 +6801,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Voltorb",
     "breedable":true,
     "regional-forms":[99],
@@ -7659,7 +6808,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Electrode",
     "breedable":true,
     "regional-forms":[100],
@@ -7667,7 +6815,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Typhlosion",
     "breedable":true,
     "regional-forms":[156],
@@ -7675,7 +6822,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Qwilfish",
     "breedable":true,
     "regional-forms":[210],
@@ -7683,7 +6829,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Sneasel",
     "breedable":true,
     "regional-forms":[214],
@@ -7691,7 +6836,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Samurott",
     "breedable":true,
     "regional-forms":[502],
@@ -7699,7 +6843,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Lilligant",
     "breedable":true,
     "regional-forms":[548],
@@ -7707,7 +6850,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Zorua",
     "breedable":true,
     "regional-forms":[569],
@@ -7715,7 +6857,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Zoroark",
     "breedable":true,
     "regional-forms":[570],
@@ -7723,7 +6864,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Braviary",
     "breedable":true,
     "regional-forms":[627],
@@ -7731,7 +6871,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Sliggoo",
     "breedable":true,
     "regional-forms":[704],
@@ -7739,7 +6878,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Goodra",
     "breedable":true,
     "regional-forms":[705],
@@ -7747,7 +6885,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Avalugg",
     "breedable":true,
     "regional-forms":[712],
@@ -7755,7 +6892,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Decidueye",
     "breedable":true,
     "regional-forms":[723],
@@ -7763,7 +6899,6 @@
   },
   {
     "generation":8,
-    "legendary":false,
     "name":"Hisuian Basculin",
     "breedable":true,
     "regional-forms":[549],
