@@ -11,10 +11,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -110,7 +108,7 @@ public class HuntController {
                 if(huntList.size() > 0)
                     newOrOld();
                 else
-                    createSelectionPage();
+                    HuntSelection.createHuntSelection(this);
             }catch(IOException | ParseException f){
                 f.printStackTrace();
             }
@@ -302,7 +300,7 @@ public class HuntController {
         //show the previously created Selection Page Window in order of last used
         newHunt.setOnAction(e -> {
             //creates selection page window
-            createSelectionPage();
+            HuntSelection.createHuntSelection(this);
 
             //closes prompt window
             windowStage.close();
@@ -356,91 +354,6 @@ public class HuntController {
             windowStage.show();
             loadStage.close();
         });
-    }
-
-    /**
-     * Creates a selection page for the user to select the hunt information
-     */
-    public void createSelectionPage(){
-        Stage selectionPageStage = new Stage();
-        HBox selectionPageLayout = new HBox();
-
-        AnchorPane huntInformation = new AnchorPane();
-        huntInformation.setMinWidth(375);
-
-        ImageView pokemonSprite = new ImageView();
-        pokemonSprite.setLayoutX(180);
-        pokemonSprite.setLayoutY(275);
-
-        ComboBox<Game> gameComboBox = new ComboBox<>();
-        gameComboBox.setPromptText("---Game---");
-        gameComboBox.setMinWidth(200);
-        gameComboBox.setLayoutY(280);
-        gameComboBox.setLayoutX(87.5);
-
-        try(FileReader reader = new FileReader("GameData/game.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray gameList = (JSONArray) jsonParser.parse(reader);
-
-            for(Object i : gameList)
-                gameComboBox.getItems().add(new Game((JSONObject) i));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
-        }
-
-        ComboBox<Method> methodComboBox = new ComboBox<>();
-        methodComboBox.setPromptText("---Method---");
-        methodComboBox.setMinWidth(200);
-        methodComboBox.setLayoutY(305);
-        methodComboBox.setLayoutX(87.5);
-
-        try(FileReader reader = new FileReader("GameData/method.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray methodList = (JSONArray) jsonParser.parse(reader);
-
-            for(Object i : methodList)
-                methodComboBox.getItems().add(new Method((JSONObject) i));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
-        }
-
-        huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox);
-
-        VBox pokemonSelection = new VBox();
-        pokemonSelection.setMinWidth(375);
-
-        TextField pokemonSearch = new TextField();
-
-        TreeItem<Pokemon> pokemonListRoot = new TreeItem<>();
-        TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
-        pokemonListTreeView.setMinHeight(450);
-        pokemonListTreeView.setRoot(pokemonListRoot);
-        pokemonListTreeView.setShowRoot(false);
-
-        try(FileReader reader = new FileReader("GameData/pokemon.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
-
-            for (Object i : pokemonListJSON)
-                pokemonListRoot.getChildren().add(new TreeItem<>(new Pokemon((JSONObject) i)));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
-        }
-
-        pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView);
-
-        selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
-        Scene selectionScene = new Scene(selectionPageLayout, 750, 500);
-        selectionPageStage.setScene(selectionScene);
-        selectionPageStage.setResizable(false);
-        selectionPageStage.show();
-
-        pokemonListTreeView.getSelectionModel().selectedItemProperty()
-                .addListener((v, oldValue, newValue) -> {
-                    if(newValue != null){
-                        Window.setPokemonSprite(pokemonSprite, newValue.getValue().toString(), new Game(32));
-                    }
-                });
     }
 
     public void addHuntWindowSettings(HuntWindow window){

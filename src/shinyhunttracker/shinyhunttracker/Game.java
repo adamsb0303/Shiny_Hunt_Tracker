@@ -17,6 +17,7 @@ public class Game {
     StringProperty name = new SimpleStringProperty();
     int generation;
     int id;
+    Vector<Integer> pokedex = new Vector<>();
     Vector<Integer> legends = new Vector<>();
     Vector<Integer> methods = new Vector<>();
 
@@ -24,7 +25,12 @@ public class Game {
         this.name.setValue((String) gameObject.get("name"));
         generation = (int) (long)  gameObject.get("generation");
 
-        JSONArray tempJSONArr = (JSONArray) gameObject.get("method");
+        JSONArray tempJSONArr = (JSONArray) gameObject.get("pokedex");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                pokedex.add(Integer.parseInt(i.toString()));
+
+        tempJSONArr = (JSONArray) gameObject.get("legends");
         if(tempJSONArr != null)
             for(Object i : tempJSONArr)
                 legends.add(Integer.parseInt(i.toString()));
@@ -63,14 +69,15 @@ public class Game {
     @Override
     public String toString(){ return name.getValue(); }
 
+    public String[] getMethods(){ return null; }
     public String getName() { return name.getValue(); }
     public StringProperty getNameProperty(){return name;}
 
+    public Vector<Integer> getPokedex() { return pokedex; }
     public int getGeneration(){
         return generation;
     }
     public int getId(){ return id; }
-    public String[] getMethods(){ return null; }
 
     public void setGeneration(int generation){
         this.generation = generation;

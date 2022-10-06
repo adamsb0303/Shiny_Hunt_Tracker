@@ -15,7 +15,7 @@ import java.util.Vector;
 public class Pokemon{
     StringProperty name = new SimpleStringProperty(); //Pokemon name
     int generation; //Generation of pokemon debut
-    int dexNum; //dex number - 1
+    int id; //dex number - 1
     int evoStage; //evolution stage of pokemon
     Boolean breedable; //if the pokemon can breed
     Boolean huntable = true; //if the pokemon is huntable
@@ -28,17 +28,18 @@ public class Pokemon{
 
     /**
      * Parses pokemon.json and initializes variables with data from given index
-     * @param dexNum index of the given pokemon
+     * @param id index of the given pokemon
      */
-    Pokemon(int dexNum){
-        this(Objects.requireNonNull(SaveData.readJSON("GameData/pokemon.json", dexNum)));
+    Pokemon(int id){
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/pokemon.json", id)), id);
     }
 
-    Pokemon(JSONObject pokemonObject){
+    Pokemon(JSONObject pokemonObject, int id){
         name.setValue((String) pokemonObject.get("name"));
         generation = (int) (long)  pokemonObject.get("generation");
         breedable = (Boolean) pokemonObject.get("breedable");
         legendary = (Boolean) pokemonObject.get("legendary");
+        this.id = id;
 
         JSONArray tempJSONArr = (JSONArray) pokemonObject.get("family");
         if(tempJSONArr != null)
@@ -129,7 +130,7 @@ public class Pokemon{
     public String toString(){ return name.getValue(); }
 
     public int[] getBase() { return base; }
-    public int getDexNumber(){ return this.dexNum; }
+    public int getDexNumber(){ return this.id; }
     public int getEvoStage(){ return this.evoStage; }
     public int getGeneration(){ return generation; }
 

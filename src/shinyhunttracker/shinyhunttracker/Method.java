@@ -15,6 +15,7 @@ public class Method {
     StringProperty name = new SimpleStringProperty();
     int base;
     int modifier;
+    boolean limited;
 
     Method(){
         name.setValue("");
@@ -24,7 +25,7 @@ public class Method {
 
     Method(JSONObject methodObject){
         name.setValue(methodObject.get("name").toString());
-
+        limited = methodObject.get("limited").equals("true");
     }
 
     Method(int id){
@@ -189,4 +190,6 @@ public class Method {
     public void setModifier(int modifier){
         this.modifier = modifier;
     }
+
+    public boolean getLimited(){ return limited; }
 }

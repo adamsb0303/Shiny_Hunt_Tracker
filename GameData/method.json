@@ -2,76 +2,76 @@
   {
     "name": "Full Odds",
     "modifier": 1,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "Breeding with Shiny",
     "modifier": 128,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "Masuda",
     "modifier": 6,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "Radar Chaining",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "Chain Fishing",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "Friend Safari",
     "modifier": 6,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "DexNav",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "SOS Chaining",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "Ultra Wormholes",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "Catch Combo",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "Brilliant",
     "modifier": 1,
-    "dynamic": true
+    "limited": true
   },
   {
     "name": "Dynamax Adventure",
     "modifier": 1,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "Light Stones",
     "modifier": 3,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "Mass Outbreak",
     "modifier": 25,
-    "dynamic": false
+    "limited": false
   },
   {
     "name": "Massive Mass Outbreak",
     "modifier": 12,
-    "dynamic": false
+    "limited": false
   }
 ]
