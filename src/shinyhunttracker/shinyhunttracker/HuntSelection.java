@@ -160,7 +160,12 @@ public class HuntSelection extends Window {
             if(updatedPokemonList.size() == 0)
                 for(TreeItem<Pokemon> i : defaultPokemonList)
                     if(i.getValue().getGeneration() <= selectedGame.getGeneration())
-                        updatedPokemonList.add(i);
+                        if(i.getValue().getLegendary()) {
+                            if(selectedGame.hasLegend(i.getValue().getDexNumber()))
+                                updatedPokemonList.add(i);
+                        }
+                        else
+                            updatedPokemonList.add(i);
             pokemonListRoot.getChildren().addAll(updatedPokemonList);
             if(selectedPokemon != null)
                 pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
@@ -178,14 +183,20 @@ public class HuntSelection extends Window {
         ObservableList<Game> updatedGameList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){
-            for(Game i : defaultGameList)
-                if(i.getPokedex().size() == 0) {
-                    if(i.getGeneration() >= selectedPokemon.getGeneration())
+            for(Game i : defaultGameList) {
+                if (selectedPokemon.getLegendary()) {
+                    if(i.hasLegend(selectedPokemon.getDexNumber()))
                         updatedGameList.add(i);
-                }else{
+                    continue;
+                }
+                if (i.getPokedex().size() == 0) {
+                    if (i.getGeneration() >= selectedPokemon.getGeneration())
+                        updatedGameList.add(i);
+                } else {
                     if (Collections.binarySearch(i.getPokedex(), selectedPokemon.getDexNumber()) > 0)
                         updatedGameList.add(i);
                 }
+            }
             gameComboBox.getItems().addAll(updatedGameList);
             if(selectedGame != null)
                 gameComboBox.getSelectionModel().select(selectedGame);
