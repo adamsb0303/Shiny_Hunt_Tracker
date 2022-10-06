@@ -66,6 +66,14 @@ public class Game {
         return -1;
     }
 
+    public boolean hasLegend(int id){
+        for (int j : legends)
+            if (id == j)
+                return true;
+
+        return false;
+    }
+
     @Override
     public String toString(){ return name.getValue(); }
 
@@ -74,6 +82,7 @@ public class Game {
     public StringProperty getNameProperty(){return name;}
 
     public Vector<Integer> getPokedex() { return pokedex; }
+    public Vector<Integer> getLegends() { return legends; }
     public int getGeneration(){
         return generation;
     }

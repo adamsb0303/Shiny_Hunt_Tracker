@@ -24,6 +24,7 @@ import java.util.Objects;
 
 public class HuntSelection extends Window {
     static Pokemon selectedPokemon = null;
+    static TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
     static ObservableList<TreeItem<Pokemon>> defaultPokemonList = FXCollections.observableArrayList();
     static TreeItem<Pokemon> pokemonListRoot = new TreeItem<>();
 
@@ -86,7 +87,6 @@ public class HuntSelection extends Window {
 
         TextField pokemonSearch = new TextField();
 
-        TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
         pokemonListTreeView.setMinHeight(450);
         pokemonListTreeView.setRoot(pokemonListRoot);
         pokemonListTreeView.setShowRoot(false);
@@ -115,20 +115,27 @@ public class HuntSelection extends Window {
 
         pokemonListTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
-                    if(newValue != null){
+                    if(newValue != null && newValue.getValue() != selectedPokemon){
                         selectedPokemon = newValue.getValue();
                         setPokemonSprite(pokemonSprite, newValue.getValue().toString(), new Game(32));
                         updateGameList();
+                        updateMethodList();
                     }
                 });
 
-        gameComboBox.setOnAction(e -> {
-            selectedGame = gameComboBox.getSelectionModel().getSelectedItem();
-            updatePokemonList();
-        });
+        gameComboBox.getSelectionModel().selectedItemProperty()
+                .addListener((v, oldValue, newValue) -> {
+                    if(newValue != null && newValue != selectedGame) {
+                        selectedGame = newValue;
+                        updatePokemonList();
+                        updateMethodList();
+                    }
+                });
 
         methodComboBox.setOnAction(e -> {
             selectedMethod = methodComboBox.getSelectionModel().getSelectedItem();
+            updatePokemonList();
+            updateGameList();
         });
 
         beginHunt.setOnAction(e ->{
@@ -138,21 +145,25 @@ public class HuntSelection extends Window {
     }
 
     private static void updatePokemonList(){
-        if(selectedPokemon != null)
-            return;
-
         pokemonListRoot.getChildren().clear();
         ObservableList<TreeItem<Pokemon>> updatedPokemonList = FXCollections.observableArrayList();
 
         if(selectedGame != null){
             for(int i : selectedGame.getPokedex())
-                updatedPokemonList.add(defaultPokemonList.get(i));
+                if(defaultPokemonList.get(i).getValue().getLegendary()) {
+                    if(selectedGame.hasLegend(i))
+                        updatedPokemonList.add(defaultPokemonList.get(i));
+                }
+                else
+                    updatedPokemonList.add(defaultPokemonList.get(i));
 
             if(updatedPokemonList.size() == 0)
                 for(TreeItem<Pokemon> i : defaultPokemonList)
                     if(i.getValue().getGeneration() <= selectedGame.getGeneration())
                         updatedPokemonList.add(i);
             pokemonListRoot.getChildren().addAll(updatedPokemonList);
+            if(selectedPokemon != null)
+                pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
             return;
         }
 
@@ -163,9 +174,6 @@ public class HuntSelection extends Window {
     }
 
     private static void updateGameList(){
-        if(selectedGame != null)
-            return;
-
         gameComboBox.getItems().clear();
         ObservableList<Game> updatedGameList = FXCollections.observableArrayList();
 
@@ -179,6 +187,8 @@ public class HuntSelection extends Window {
                         updatedGameList.add(i);
                 }
             gameComboBox.getItems().addAll(updatedGameList);
+            if(selectedGame != null)
+                gameComboBox.getSelectionModel().select(selectedGame);
             return;
         }
 
