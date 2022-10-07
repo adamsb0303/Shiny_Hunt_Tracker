@@ -10,12 +10,16 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Vector;
 
 public class Method {
     StringProperty name = new SimpleStringProperty();
+    int id;
     int base;
     int modifier;
-    boolean limited;
+    boolean breeding;
+    Vector<Integer> games = new Vector<>();
+    Vector<Integer> pokemon = new Vector<>();
 
     Method(){
         name.setValue("");
@@ -23,13 +27,24 @@ public class Method {
         modifier = 0;
     }
 
-    Method(JSONObject methodObject){
+    Method(JSONObject methodObject, int id){
         name.setValue(methodObject.get("name").toString());
-        limited = methodObject.get("limited").equals("true");
+        breeding = (Boolean) methodObject.get("breeding");
+        this.id = id;
+
+        JSONArray tempJSONArr = (JSONArray) methodObject.get("games");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                games.add(Integer.parseInt(i.toString()));
+
+        tempJSONArr = (JSONArray) methodObject.get("pokemon");
+        if(tempJSONArr != null)
+            for(Object i : tempJSONArr)
+                pokemon.add(Integer.parseInt(i.toString()));
     }
 
     Method(int id){
-        this(Objects.requireNonNull(SaveData.readJSON("GameData/method.json", id)));
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/method.json", id)), id);
     }
 
     Method(String name, int generation){
@@ -175,6 +190,8 @@ public class Method {
 
     public StringProperty getNameProperty(){ return name; }
 
+    public int getId(){ return id; }
+
     public String getName(){
         return name.getValue();
     }
@@ -191,5 +208,9 @@ public class Method {
         this.modifier = modifier;
     }
 
-    public boolean getLimited(){ return limited; }
+    public Vector<Integer> getGames(){ return games; }
+
+    public Vector<Integer> getPokemon(){ return pokemon; }
+
+    public Boolean getBreeding(){ return breeding; }
 }

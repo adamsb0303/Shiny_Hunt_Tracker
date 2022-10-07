@@ -34,7 +34,7 @@ public class Game {
             for(Object i : tempJSONArr)
                 unbreedables.add(Integer.parseInt(i.toString()));
 
-        tempJSONArr = (JSONArray) gameObject.get("methods");
+        tempJSONArr = (JSONArray) gameObject.get("method");
         if(tempJSONArr != null)
             for(Object i : tempJSONArr)
                 methods.add(Integer.parseInt(i.toString()));
@@ -76,12 +76,12 @@ public class Game {
     @Override
     public String toString(){ return name.getValue(); }
 
-    public String[] getMethods(){ return null; }
     public String getName() { return name.getValue(); }
     public StringProperty getNameProperty(){return name;}
 
     public Vector<Integer> getPokedex() { return pokedex; }
-    public Vector<Integer> getUnbreedables() { return unbreedables; }
+    public Vector<Integer> getMethods() { return methods; }
+
     public int getGeneration(){
         return generation;
     }

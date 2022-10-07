@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
@@ -71,8 +72,8 @@ public class HuntSelection extends Window {
             JSONParser jsonParser = new JSONParser();
             JSONArray methodList = (JSONArray) jsonParser.parse(reader);
 
-            for(Object i : methodList)
-                defaultMethodList.add(new Method((JSONObject) i));
+            for(int i = 0; i < methodList.size(); i++)
+                defaultMethodList.add(new Method((JSONObject) methodList.get(i), i));
         }catch(IOException | ParseException e){
             e.printStackTrace();
         }
@@ -131,11 +132,14 @@ public class HuntSelection extends Window {
                     }
                 });
 
-        methodComboBox.setOnAction(e -> {
-            selectedMethod = methodComboBox.getSelectionModel().getSelectedItem();
-            updatePokemonList();
-            updateGameList();
-        });
+        methodComboBox.getSelectionModel().selectedItemProperty()
+                .addListener((v, oldValue, newValue) -> {
+                    if(newValue != null && newValue != selectedMethod) {
+                        selectedMethod = newValue;
+                        updatePokemonList();
+                        updateGameList();
+                    }
+                });
 
         beginHunt.setOnAction(e ->{
             SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
@@ -165,16 +169,53 @@ public class HuntSelection extends Window {
                         }
                         else
                             updatedPokemonList.add(i);
-            pokemonListRoot.getChildren().addAll(updatedPokemonList);
-            if(selectedPokemon != null)
-                pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
-            return;
+        }
+        else if(selectedMethod != null){
+            for(int i : selectedMethod.getPokemon())
+                updatedPokemonList.add(defaultPokemonList.get(i));
+
+            if(updatedPokemonList.size() == 0){
+                for(TreeItem<Pokemon> i : defaultPokemonList) {
+                    Game oldestGame = defaultGameList.get(selectedMethod.getGames().lastElement());
+                    if (i.getValue().getGeneration() <= oldestGame.getGeneration()) {
+                        if (!i.getValue().getBreedable()) {
+                            for (int j : selectedMethod.getGames()) {
+                                if (defaultGameList.get(j).hasUnbreedable(i.getValue().getDexNumber()) && !selectedMethod.getBreeding())
+                                    updatedPokemonList.add(i);
+                                break;
+                            }
+                        } else
+                            updatedPokemonList.add(i);
+                    }
+                }
+            }
         }
 
-        if(selectedMethod != null){
-
-            return;
+        if(selectedGame != null && selectedMethod != null){
+            if(selectedMethod.getPokemon().size() != 0){
+                for(int i = 0; i < updatedPokemonList.size(); i++){
+                    if(i == selectedMethod.getPokemon().size() || updatedPokemonList.get(i).getValue().getDexNumber() != selectedMethod.getPokemon().get(i)) {
+                        updatedPokemonList.remove(i);
+                        i--;
+                    }
+                }
+            }
+            else{
+                if(selectedMethod.getBreeding())
+                    for(int i = 0; i < updatedPokemonList.size(); i++){
+                        if (updatedPokemonList.get(i).getValue().getGeneration() <= selectedGame.getGeneration()) {
+                            if(!updatedPokemonList.get(i).getValue().getBreedable()) {
+                                updatedPokemonList.remove(i);
+                                i--;
+                            }
+                        }
+                    }
+            }
         }
+
+        pokemonListRoot.getChildren().addAll(updatedPokemonList);
+        if(selectedPokemon != null)
+            pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
     }
 
     private static void updateGameList(){
@@ -196,26 +237,53 @@ public class HuntSelection extends Window {
                         updatedGameList.add(i);
                 }
             }
-            gameComboBox.getItems().addAll(updatedGameList);
-            if(selectedGame != null)
-                gameComboBox.getSelectionModel().select(selectedGame);
-            return;
+        }
+        else if(selectedMethod != null){
+            for(int i : selectedMethod.getGames())
+                updatedGameList.add(defaultGameList.get(i));
         }
 
-        if(selectedMethod != null){
-
+        if(selectedPokemon != null && selectedMethod != null){
+            for(int i = 0; i < updatedGameList.size(); i++){
+                if(!updatedGameList.get(i).getMethods().contains(selectedMethod.getId())) {
+                    updatedGameList.remove(i);
+                    i--;
+                }
+            }
         }
+
+        gameComboBox.getItems().addAll(updatedGameList);
+        if(selectedGame != null)
+            gameComboBox.getSelectionModel().select(selectedGame);
     }
 
     private static void updateMethodList(){
+        methodComboBox.getItems().clear();
         ObservableList<Method> updatedMethodList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){
-
+            for(Game i : gameComboBox.getItems())
+                for(int j : i.getMethods())
+                    if(!updatedMethodList.contains(defaultMethodList.get(j)))
+                        updatedMethodList.add(defaultMethodList.get(j));
+        }
+        else if(selectedGame != null){
+            for(int i : selectedGame.getMethods())
+                updatedMethodList.add(defaultMethodList.get(i));
         }
 
-        if(selectedGame != null){
-
+        if(selectedPokemon != null && selectedGame != null){
+            for(int i = 0; i < updatedMethodList.size(); i++){
+                if(i == selectedGame.getMethods().size() || updatedMethodList.get(i).getId() != selectedGame.getMethods().get(i) ||
+                        (defaultMethodList.get(selectedGame.getMethods().get(i)).getBreeding() && !selectedPokemon.getBreedable())) {
+                    updatedMethodList.remove(i);
+                    i--;
+                }
+            }
         }
+
+        methodComboBox.getItems().addAll(updatedMethodList);
+        if(selectedMethod != null)
+            methodComboBox.getSelectionModel().select(selectedMethod);
     }
 }
