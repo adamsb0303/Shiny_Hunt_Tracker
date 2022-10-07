@@ -2,6 +2,7 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -9,6 +10,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -20,9 +22,10 @@ public class Game {
     Vector<Integer> unbreedables = new Vector<>();
     Vector<Integer> methods = new Vector<>();
 
-    Game(JSONObject gameObject){
+    Game(JSONObject gameObject, int id){
         this.name.setValue((String) gameObject.get("name"));
         generation = (int) (long)  gameObject.get("generation");
+        this.id = id;
 
         JSONArray tempJSONArr = (JSONArray) gameObject.get("pokedex");
         if(tempJSONArr != null)
@@ -41,7 +44,7 @@ public class Game {
     }
 
     Game(int id){
-        this(Objects.requireNonNull(SaveData.readJSON("GameData/game.json", id)));
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/game.json", id)), id);
     }
 
     public static int findID(String name){
@@ -71,6 +74,19 @@ public class Game {
                 return true;
 
         return false;
+    }
+
+    public Vector<Integer> getMethodTable(int method){
+        Vector<Integer> methodVector = new Vector<>();
+        JSONObject jsonObject = SaveData.readJSON("GameData/game.json", id);
+        if(jsonObject != null) {
+            JSONArray methodTable = (JSONArray) jsonObject.get("table-" + method);
+            if(methodTable != null)
+                for(Object i : methodTable)
+                    methodVector.add(Integer.parseInt(i.toString()));
+        }
+
+        return methodVector;
     }
 
     @Override

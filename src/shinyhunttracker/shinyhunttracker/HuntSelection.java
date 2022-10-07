@@ -1,9 +1,7 @@
 package shinyhunttracker;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,10 +15,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Vector;
 
 public class HuntSelection extends Window {
     static Pokemon selectedPokemon = null;
@@ -37,6 +35,8 @@ public class HuntSelection extends Window {
     static ComboBox<Method> methodComboBox = new ComboBox<>();
 
     public static void createHuntSelection(HuntController controller){
+        resetVariables();
+
         Stage selectionPageStage = new Stage();
         HBox selectionPageLayout = new HBox();
 
@@ -52,14 +52,16 @@ public class HuntSelection extends Window {
         gameComboBox.setLayoutY(280);
         gameComboBox.setLayoutX(87.5);
 
-        try(FileReader reader = new FileReader("GameData/game.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray gameList = (JSONArray) jsonParser.parse(reader);
+        if(defaultGameList.size() == 0) {
+            try (FileReader reader = new FileReader("GameData/game.json")) {
+                JSONParser jsonParser = new JSONParser();
+                JSONArray gameList = (JSONArray) jsonParser.parse(reader);
 
-            for(Object i : gameList)
-                defaultGameList.add(new Game((JSONObject) i));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
+                for (int i = 0; i < gameList.size(); i++)
+                    defaultGameList.add(new Game((JSONObject) gameList.get(i), i));
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
         }
         gameComboBox.getItems().setAll(defaultGameList);
 
@@ -68,14 +70,16 @@ public class HuntSelection extends Window {
         methodComboBox.setLayoutY(305);
         methodComboBox.setLayoutX(87.5);
 
-        try(FileReader reader = new FileReader("GameData/method.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray methodList = (JSONArray) jsonParser.parse(reader);
+        if(defaultMethodList.size() == 0) {
+            try (FileReader reader = new FileReader("GameData/method.json")) {
+                JSONParser jsonParser = new JSONParser();
+                JSONArray methodList = (JSONArray) jsonParser.parse(reader);
 
-            for(int i = 0; i < methodList.size(); i++)
-                defaultMethodList.add(new Method((JSONObject) methodList.get(i), i));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
+                for (int i = 0; i < methodList.size(); i++)
+                    defaultMethodList.add(new Method((JSONObject) methodList.get(i), i));
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
         }
         methodComboBox.getItems().setAll(defaultMethodList);
 
@@ -94,14 +98,16 @@ public class HuntSelection extends Window {
         Button beginHunt = new Button("Start >");
         beginHunt.setDisable(true);
 
-        try(FileReader reader = new FileReader("GameData/pokemon.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
+        if(defaultPokemonList.size() == 0) {
+            try (FileReader reader = new FileReader("GameData/pokemon.json")) {
+                JSONParser jsonParser = new JSONParser();
+                JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
 
-            for (int i = 0; i < pokemonListJSON.size(); i++)
-                defaultPokemonList.add(new TreeItem<>(new Pokemon((JSONObject) pokemonListJSON.get(i), i)));
-        }catch(IOException | ParseException e){
-            e.printStackTrace();
+                for (int i = 0; i < pokemonListJSON.size(); i++)
+                    defaultPokemonList.add(new TreeItem<>(new Pokemon((JSONObject) pokemonListJSON.get(i), i)));
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
         }
         pokemonListRoot.getChildren().setAll(defaultPokemonList);
 
@@ -136,8 +142,8 @@ public class HuntSelection extends Window {
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null && newValue != selectedMethod) {
                         selectedMethod = newValue;
-                        updatePokemonList();
                         updateGameList();
+                        updatePokemonList();
                     }
                 });
 
@@ -176,7 +182,7 @@ public class HuntSelection extends Window {
 
             if(updatedPokemonList.size() == 0){
                 for(TreeItem<Pokemon> i : defaultPokemonList) {
-                    Game oldestGame = defaultGameList.get(selectedMethod.getGames().lastElement());
+                    Game oldestGame = gameComboBox.getItems().get(gameComboBox.getItems().size() - 1);
                     if (i.getValue().getGeneration() <= oldestGame.getGeneration()) {
                         if (!i.getValue().getBreedable()) {
                             for (int j : selectedMethod.getGames()) {
@@ -192,9 +198,10 @@ public class HuntSelection extends Window {
         }
 
         if(selectedGame != null && selectedMethod != null){
-            if(selectedMethod.getPokemon().size() != 0){
+            Vector<Integer> huntablePokemon = selectedGame.getMethodTable(selectedMethod.getId());
+            if(huntablePokemon.size() != 0){
                 for(int i = 0; i < updatedPokemonList.size(); i++){
-                    if(i == selectedMethod.getPokemon().size() || updatedPokemonList.get(i).getValue().getDexNumber() != selectedMethod.getPokemon().get(i)) {
+                    if(i == huntablePokemon.size() || huntablePokemon.get(i) != updatedPokemonList.get(i).getValue().getDexNumber()) {
                         updatedPokemonList.remove(i);
                         i--;
                     }
@@ -233,7 +240,7 @@ public class HuntSelection extends Window {
                     if (i.getGeneration() >= selectedPokemon.getGeneration())
                         updatedGameList.add(i);
                 } else {
-                    if (Collections.binarySearch(i.getPokedex(), selectedPokemon.getDexNumber()) > 0)
+                    if (Collections.binarySearch(i.getPokedex(), selectedPokemon.getDexNumber()) >= 0)
                         updatedGameList.add(i);
                 }
             }
@@ -241,11 +248,15 @@ public class HuntSelection extends Window {
         else if(selectedMethod != null){
             for(int i : selectedMethod.getGames())
                 updatedGameList.add(defaultGameList.get(i));
+
+            if(updatedGameList.size() == 0)
+                updatedGameList.addAll(defaultGameList);
         }
 
         if(selectedPokemon != null && selectedMethod != null){
             for(int i = 0; i < updatedGameList.size(); i++){
-                if(!updatedGameList.get(i).getMethods().contains(selectedMethod.getId())) {
+                Vector<Integer> huntablePokemon = updatedGameList.get(i).getMethodTable(selectedMethod.getId());
+                if ((!selectedMethod.getBreeding() && huntablePokemon.size() == 0) || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) < 0) {
                     updatedGameList.remove(i);
                     i--;
                 }
@@ -263,9 +274,12 @@ public class HuntSelection extends Window {
 
         if(selectedPokemon != null){
             for(Game i : gameComboBox.getItems())
-                for(int j : i.getMethods())
-                    if(!updatedMethodList.contains(defaultMethodList.get(j)))
-                        updatedMethodList.add(defaultMethodList.get(j));
+                for (int j : i.getMethods()) {
+                    Vector<Integer> huntablePokemon = i.getMethodTable(j);
+                    if (!updatedMethodList.contains(defaultMethodList.get(j)))
+                        if(huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) >= 0)
+                            updatedMethodList.add(defaultMethodList.get(j));
+                }
         }
         else if(selectedGame != null){
             for(int i : selectedGame.getMethods())
@@ -285,5 +299,17 @@ public class HuntSelection extends Window {
         methodComboBox.getItems().addAll(updatedMethodList);
         if(selectedMethod != null)
             methodComboBox.getSelectionModel().select(selectedMethod);
+    }
+
+    private static void resetVariables(){
+        selectedPokemon = null;
+        pokemonListTreeView = new TreeView<>();
+        pokemonListRoot = new TreeItem<>();
+
+         selectedGame = null;
+         gameComboBox = new ComboBox<>();
+
+         selectedMethod = null;
+         methodComboBox = new ComboBox<>();
     }
 }
