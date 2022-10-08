@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.Vector;
 
 public class HuntSelection extends Window {
+    static Stage selectionPageStage = new Stage();
+
     static Pokemon selectedPokemon = null;
     static TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
     static ObservableList<TreeItem<Pokemon>> defaultPokemonList = FXCollections.observableArrayList();
@@ -35,10 +37,19 @@ public class HuntSelection extends Window {
     static ObservableList<Method> defaultMethodList = FXCollections.observableArrayList();
     static ComboBox<Method> methodComboBox = new ComboBox<>();
 
+    /**
+     * Opens a selection page for the user to select the information for the hunt they want to do
+     * @param controller huntController to pass back hunt information
+     */
     public static void createHuntSelection(HuntController controller){
+        //makes sure to not open a new window when one is open
+        if(selectionPageStage.isShowing())
+            return;
+
+        //resets variables for when the window is reopened
         resetVariables();
 
-        Stage selectionPageStage = new Stage();
+        //setup selection window layout & initialize default info lists
         HBox selectionPageLayout = new HBox();
 
         AnchorPane huntInformation = new AnchorPane();
@@ -120,6 +131,7 @@ public class HuntSelection extends Window {
         selectionPageStage.setResizable(false);
         selectionPageStage.show();
 
+        //Listeners for when selection tools are changed
         pokemonListTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null && newValue.getValue() != selectedPokemon){
@@ -157,6 +169,7 @@ public class HuntSelection extends Window {
                     }
                 });
 
+        //opens new hunt and closes the selection window
         beginHunt.setOnAction(e ->{
             SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
             SaveData.loadHunt(-1, controller);
@@ -164,11 +177,16 @@ public class HuntSelection extends Window {
         });
     }
 
+    /**
+     * updates pokemonListTreeView when either the game or the method boxes are updated
+     */
     private static void updatePokemonList(){
+        //clears current pokemon list
         pokemonListRoot.getChildren().clear();
         ObservableList<TreeItem<Pokemon>> updatedPokemonList = FXCollections.observableArrayList();
 
         if(selectedGame != null){
+            //Adds all pokemon from game n's pokedex and makes sure that non-breedable pokemon can be caught
             for(int i : selectedGame.getPokedex())
                 if(!defaultPokemonList.get(i).getValue().getBreedable()) {
                     if(selectedGame.hasUnbreedable(i))
@@ -177,6 +195,8 @@ public class HuntSelection extends Window {
                 else
                     updatedPokemonList.add(defaultPokemonList.get(i));
 
+            //All games since before Let's Go Pikachu & Eevee didn't have restriced pokedexes.
+            //In this case, all pokemon with a generation lower than the game are added while removing unobtainable non-breedable pokemon
             if(updatedPokemonList.size() == 0)
                 for(TreeItem<Pokemon> i : defaultPokemonList)
                     if(i.getValue().getGeneration() <= selectedGame.getGeneration())
@@ -188,27 +208,24 @@ public class HuntSelection extends Window {
                             updatedPokemonList.add(i);
         }
         else if(selectedMethod != null){
+            //Most methods have restricted lists attached, so just add those to the list
             for(int i : selectedMethod.getPokemon())
                 updatedPokemonList.add(defaultPokemonList.get(i));
 
             if(updatedPokemonList.size() == 0){
                 for(TreeItem<Pokemon> i : defaultPokemonList) {
-                    Game oldestGame = gameComboBox.getItems().get(gameComboBox.getItems().size() - 1);
-                    if (i.getValue().getGeneration() <= oldestGame.getGeneration()) {
-                        if (!i.getValue().getBreedable() && selectedMethod.getBreeding()) {
-                            for (int j : selectedMethod.getGames()) {
-                                if (defaultGameList.get(j).hasUnbreedable(i.getValue().getDexNumber()) && !selectedMethod.getBreeding())
-                                    updatedPokemonList.add(i);
-                                break;
-                            }
-                        } else
+                    //Finds the newest generation and excludes all older games
+                    Game newestGame = gameComboBox.getItems().get(gameComboBox.getItems().size() - 1);
+                    if (i.getValue().getGeneration() <= newestGame.getGeneration())
+                        if (i.getValue().getBreedable() || !selectedMethod.getBreeding())//If its a breeding method, we need to filter out non-breedable pokemon
                             updatedPokemonList.add(i);
-                    }
                 }
             }
         }
 
+        //takes already made game list and removes the ones that aren't in the method list
         if(selectedGame != null && selectedMethod != null){
+            //removes pokemon that aren't listed in the method table
             Vector<Integer> huntablePokemon = selectedGame.getMethodTable(selectedMethod.getId());
             if(huntablePokemon.size() != 0){
                 for(int i = 0; i < updatedPokemonList.size(); i++){
@@ -219,6 +236,7 @@ public class HuntSelection extends Window {
                 }
             }
             else{
+                //removes non-breedable pokemon if its a breeding method
                 if(selectedMethod.getBreeding())
                     for(int i = 0; i < updatedPokemonList.size(); i++){
                         if (updatedPokemonList.get(i).getValue().getGeneration() <= selectedGame.getGeneration()) {
@@ -236,17 +254,22 @@ public class HuntSelection extends Window {
             pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
     }
 
+    /**
+     * updates gameComboBox when either the or the method box are updated
+     */
     private static void updateGameList(){
+        //resets current game box
         gameComboBox.getItems().clear();
         ObservableList<Game> updatedGameList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){
             for(Game i : defaultGameList) {
-                if (!selectedPokemon.getBreedable()) {
-                    if(i.hasUnbreedable(selectedPokemon.getDexNumber()))
-                        updatedGameList.add(i);
+                //if its unbreedable, its makes sure its catchable in n game
+                if (!selectedPokemon.getBreedable() && i.hasUnbreedable(selectedPokemon.getDexNumber())) {
+                    updatedGameList.add(i);
                     continue;
                 }
+                //for unrestricted gens, add all. for restricted add only if they are listed in the pokedex of n game
                 if (i.getPokedex().size() == 0) {
                     if (i.getGeneration() >= selectedPokemon.getGeneration())
                         updatedGameList.add(i);
@@ -257,6 +280,7 @@ public class HuntSelection extends Window {
             }
         }
         else if(selectedMethod != null){
+            //the only method that is in every game is full odds, so add all listed games of each
             for(int i : selectedMethod.getGames())
                 updatedGameList.add(defaultGameList.get(i));
 
@@ -264,17 +288,17 @@ public class HuntSelection extends Window {
                 updatedGameList.addAll(defaultGameList);
         }
 
+        //removes from list if they aren't listed in method's list
         if(selectedPokemon != null && selectedMethod != null){
             if(selectedMethod.getGames().size() != 0) {
                 for (int i = 0; i < updatedGameList.size(); i++) {
-                    if (selectedMethod.getBreeding()) {
-                        if (!selectedMethod.getGames().contains(updatedGameList.get(i).getId())) {
-                            updatedGameList.remove(i);
-                            i--;
-                        }
+                    if (selectedMethod.getBreeding() && !selectedMethod.getGames().contains(updatedGameList.get(i).getId())) { //makes sure that a breeding method is in n game
+                        updatedGameList.remove(i);
+                        i--;
                         continue;
                     }
 
+                    //removes from list if it's not in the game method's list
                     Vector<Integer> huntablePokemon = updatedGameList.get(i).getMethodTable(selectedMethod.getId());
                     if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) < 0) {
                         updatedGameList.remove(i);
@@ -289,20 +313,24 @@ public class HuntSelection extends Window {
             gameComboBox.getSelectionModel().select(selectedGame);
     }
 
+    /**
+     * updates methodComboBox when either the pokemon list or the game box are updated
+     */
     private static void updateMethodList(){
+        //resets current method box
         methodComboBox.getItems().clear();
         ObservableList<Method> updatedMethodList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){
             for(Game i : defaultGameList) {
                 for (int j : i.getMethods()) {
-                    if (!updatedMethodList.contains(defaultMethodList.get(j))) {
+                    if (!updatedMethodList.contains(defaultMethodList.get(j))) { //don't add method twice
                         if (defaultMethodList.get(j).getBreeding()) {
-                            if (selectedPokemon.getBreedable())
+                            if (selectedPokemon.getBreedable()) //adds breedable methods if pokemon n can breed
                                 updatedMethodList.add(defaultMethodList.get(j));
                         } else {
                             Vector<Integer> huntablePokemon = i.getMethodTable(j);
-                            if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) >= 0)
+                            if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) >= 0)//full odds or method lists pokemon n
                                 updatedMethodList.add(defaultMethodList.get(j));
                         }
                     }
@@ -310,10 +338,11 @@ public class HuntSelection extends Window {
             }
         }
         else if(selectedGame != null){
-            for(int i : selectedGame.getMethods())
+            for(int i : selectedGame.getMethods())//adds every method listed in game n
                 updatedMethodList.add(defaultMethodList.get(i));
         }
 
+        //removes if not in game list if pokemon list is already made
         if(selectedPokemon != null && selectedGame != null){
             for(int i = 0; i < updatedMethodList.size(); i++){
                 if(i == selectedGame.getMethods().size() || updatedMethodList.get(i).getId() != selectedGame.getMethods().get(i) ||
@@ -329,15 +358,18 @@ public class HuntSelection extends Window {
             methodComboBox.getSelectionModel().select(selectedMethod);
     }
 
+    /**
+     * resets all variables when opening a new window
+     */
     private static void resetVariables(){
         selectedPokemon = null;
         pokemonListTreeView = new TreeView<>();
         pokemonListRoot = new TreeItem<>();
 
-         selectedGame = null;
-         gameComboBox = new ComboBox<>();
+        selectedGame = null;
+        gameComboBox = new ComboBox<>();
 
-         selectedMethod = null;
-         methodComboBox = new ComboBox<>();
+        selectedMethod = null;
+        methodComboBox = new ComboBox<>();
     }
 }
