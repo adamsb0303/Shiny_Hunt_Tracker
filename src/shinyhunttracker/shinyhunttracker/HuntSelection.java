@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -123,9 +124,12 @@ public class HuntSelection extends Window {
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null && newValue.getValue() != selectedPokemon){
                         selectedPokemon = newValue.getValue();
-                        setPokemonSprite(pokemonSprite, newValue.getValue().toString(), new Game(32));
+                        setPokemonSprite(pokemonSprite, newValue.getValue().toString(), new Game(21));
                         updateGameList();
                         updateMethodList();
+
+                        if(selectedGame != null & selectedMethod != null)
+                            beginHunt.setDisable(false);
                     }
                 });
 
@@ -135,6 +139,9 @@ public class HuntSelection extends Window {
                         selectedGame = newValue;
                         updatePokemonList();
                         updateMethodList();
+
+                        if(selectedPokemon != null & selectedGame != null)
+                            beginHunt.setDisable(false);
                     }
                 });
 
@@ -144,6 +151,9 @@ public class HuntSelection extends Window {
                         selectedMethod = newValue;
                         updateGameList();
                         updatePokemonList();
+
+                        if(selectedPokemon != null & selectedGame != null)
+                            beginHunt.setDisable(false);
                     }
                 });
 
@@ -184,7 +194,7 @@ public class HuntSelection extends Window {
                 for(TreeItem<Pokemon> i : defaultPokemonList) {
                     Game oldestGame = gameComboBox.getItems().get(gameComboBox.getItems().size() - 1);
                     if (i.getValue().getGeneration() <= oldestGame.getGeneration()) {
-                        if (!i.getValue().getBreedable()) {
+                        if (!i.getValue().getBreedable() && selectedMethod.getBreeding()) {
                             for (int j : selectedMethod.getGames()) {
                                 if (defaultGameList.get(j).hasUnbreedable(i.getValue().getDexNumber()) && !selectedMethod.getBreeding())
                                     updatedPokemonList.add(i);
@@ -254,11 +264,21 @@ public class HuntSelection extends Window {
         }
 
         if(selectedPokemon != null && selectedMethod != null){
-            for(int i = 0; i < updatedGameList.size(); i++){
-                Vector<Integer> huntablePokemon = updatedGameList.get(i).getMethodTable(selectedMethod.getId());
-                if ((!selectedMethod.getBreeding() && huntablePokemon.size() == 0) || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) < 0) {
-                    updatedGameList.remove(i);
-                    i--;
+            if(selectedMethod.getGames().size() != 0) {
+                for (int i = 0; i < updatedGameList.size(); i++) {
+                    if (selectedMethod.getBreeding()) {
+                        if (!selectedMethod.getGames().contains(updatedGameList.get(i).getId())) {
+                            updatedGameList.remove(i);
+                            i--;
+                        }
+                        continue;
+                    }
+
+                    Vector<Integer> huntablePokemon = updatedGameList.get(i).getMethodTable(selectedMethod.getId());
+                    if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) < 0) {
+                        updatedGameList.remove(i);
+                        i--;
+                    }
                 }
             }
         }
@@ -273,13 +293,20 @@ public class HuntSelection extends Window {
         ObservableList<Method> updatedMethodList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){
-            for(Game i : gameComboBox.getItems())
+            for(Game i : defaultGameList) {
                 for (int j : i.getMethods()) {
-                    Vector<Integer> huntablePokemon = i.getMethodTable(j);
-                    if (!updatedMethodList.contains(defaultMethodList.get(j)))
-                        if(huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) >= 0)
-                            updatedMethodList.add(defaultMethodList.get(j));
+                    if (!updatedMethodList.contains(defaultMethodList.get(j))) {
+                        if (defaultMethodList.get(j).getBreeding()) {
+                            if (selectedPokemon.getBreedable())
+                                updatedMethodList.add(defaultMethodList.get(j));
+                        } else {
+                            Vector<Integer> huntablePokemon = i.getMethodTable(j);
+                            if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) >= 0)
+                                updatedMethodList.add(defaultMethodList.get(j));
+                        }
+                    }
                 }
+            }
         }
         else if(selectedGame != null){
             for(int i : selectedGame.getMethods())
