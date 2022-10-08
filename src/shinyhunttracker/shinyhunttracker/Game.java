@@ -98,12 +98,8 @@ public class Game {
     public Vector<Integer> getPokedex() { return pokedex; }
     public Vector<Integer> getMethods() { return methods; }
 
-    public int getGeneration(){
-        return generation;
-    }
+    public int getGeneration(){ return generation; }
     public int getId(){ return id; }
 
-    public void setGeneration(int generation){
-        this.generation = generation;
-    }
+    public void setGeneration(int generation){ this.generation = generation; }
 }

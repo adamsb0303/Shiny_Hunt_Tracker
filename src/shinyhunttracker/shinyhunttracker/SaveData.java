@@ -29,8 +29,7 @@ public class SaveData {
         pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
         pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
         pokemonData.put("game", huntData.getGame().getId());
-        pokemonData.put("generation", huntData.getGame().getGeneration());
-        pokemonData.put("method", huntData.getMethod().getName());
+        pokemonData.put("method", huntData.getMethod().getId());
         pokemonData.put("modifier", huntData.getMethod().getModifier());
         pokemonData.put("encounters", huntData.getEncounters());
         pokemonData.put("combo", huntData.getCombo());
@@ -95,10 +94,9 @@ public class SaveData {
 
             //parse hunt data
             JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
-            int generation = parseInt(huntObject.get("generation").toString());
             Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
             Game selectedGame = new Game(Integer.parseInt(huntObject.get("game").toString()));
-            Method selectedMethod = new Method(huntObject.get("method").toString(), generation);
+            Method selectedMethod = new Method(Integer.parseInt(huntObject.get("method").toString()));
             selectedMethod.setModifier(parseInt(huntObject.get("modifier").toString()));
             int encounters = parseInt(huntObject.get("encounters").toString());
             int combo = parseInt(huntObject.get("combo").toString());
@@ -114,7 +112,6 @@ public class SaveData {
             if(layoutObject != null)
                 layout = layoutObject.toString();
 
-            SelectionPageController family = new SelectionPageController();
             controller.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, increment, huntID));
         }catch (IOException | ParseException e) {
             e.printStackTrace();

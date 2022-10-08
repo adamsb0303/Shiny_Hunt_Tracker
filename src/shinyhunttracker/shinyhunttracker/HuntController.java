@@ -80,8 +80,8 @@ public class HuntController {
             if(huntList != null)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.size() - i, this);
-        }catch (IOException | ParseException e) {
-            e.printStackTrace();
+        }catch (IOException | ParseException ignored) {
+
         }
 
         //Listener for KeyBinds
@@ -107,10 +107,8 @@ public class HuntController {
                 //If there are no previous hunts, it goes straight to selection page
                 if(huntList.size() > 0)
                     newOrOld();
-                else
-                    HuntSelection.createHuntSelection(this);
             }catch(IOException | ParseException f){
-                f.printStackTrace();
+                HuntSelection.createHuntSelection(this);
             }
         });
 
@@ -322,12 +320,12 @@ public class HuntController {
 
                 for(int i = huntList.size() - 1; i >= 0; i--){
                     JSONObject huntData = (JSONObject) huntList.get(i);
-                    String name = Pokemon.findName(Integer.parseInt(huntData.get("pokemon_id").toString()));
-                    String game = huntData.get("game").toString();
-                    String method = huntData.get("method").toString();
+                    Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon_id").toString()));
+                    Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
+                    Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
                     String encounters = huntData.get("encounters").toString();
 
-                    TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters");
+                    TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
                     previousHuntsRoot.getChildren().add(item);
                 }
 

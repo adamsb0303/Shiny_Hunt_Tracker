@@ -160,6 +160,7 @@ public class HuntSelection extends Window {
         beginHunt.setOnAction(e ->{
             SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
             SaveData.loadHunt(-1, controller);
+            selectionPageStage.close();
         });
     }
 
