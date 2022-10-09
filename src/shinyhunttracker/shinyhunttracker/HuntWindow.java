@@ -392,7 +392,8 @@ class HuntWindow extends Window {
 
     //changes increment
     public void changeIncrement(){
-        Stage changeIncrementStage = new Stage();
+        TextInputDialog changeIncrementText = new TextInputDialog(String.valueOf(increment));
+        /*Stage changeIncrementStage = new Stage();
         changeIncrementStage.setResizable(false);
         changeIncrementStage.initModality(Modality.APPLICATION_MODAL);
         VBox changeIncrementsLayout = new VBox();
@@ -412,7 +413,7 @@ class HuntWindow extends Window {
             }catch (NumberFormatException f){
                 changeIncrementsText.setText("");
             }
-        });
+        });*/
     }
 
     //reset encounters
@@ -617,5 +618,6 @@ class HuntWindow extends Window {
 
     public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
     public void setKeybind(KeyCode keybind){ this.keybind = keybind; }
+    public void setIncrement(int increment){ this.increment = increment; }
     public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }

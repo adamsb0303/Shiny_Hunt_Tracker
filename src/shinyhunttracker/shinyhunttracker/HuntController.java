@@ -267,7 +267,18 @@ public class HuntController {
                 newWindow.getStage().show();
         });
 
-        increment.setOnAction(e -> newWindow.changeIncrement());
+        increment.setOnAction(e -> {
+            TextInputDialog changeIncrementDialog = new TextInputDialog(String.valueOf(newWindow.getIncrement()));
+            changeIncrementDialog.setTitle("Increment Settings");
+            changeIncrementDialog.setHeaderText("Increment encounters by: ");
+            changeIncrementDialog.showAndWait().ifPresent(response -> {
+                try{
+                    newWindow.setIncrement(Integer.parseInt(response));
+                }catch(NumberFormatException ignored){
+
+                }
+            });
+        });
         resetEncounters.setOnAction(e -> newWindow.resetEncounters());
         phaseHunt.setOnAction(e -> {
             //newWindow.setPreviouslyCaughtWindow(previousCatches);
