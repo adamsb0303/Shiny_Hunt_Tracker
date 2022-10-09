@@ -18,6 +18,7 @@ public class Game {
     StringProperty name = new SimpleStringProperty();
     int generation;
     int id;
+    int odds;
     Vector<Integer> pokedex = new Vector<>();
     Vector<Integer> unbreedables = new Vector<>();
     Vector<Integer> methods = new Vector<>();
@@ -25,6 +26,7 @@ public class Game {
     Game(JSONObject gameObject, int id){
         this.name.setValue((String) gameObject.get("name"));
         generation = (int) (long)  gameObject.get("generation");
+        odds = (int) (long) gameObject.get("odds");
         this.id = id;
 
         JSONArray tempJSONArr = (JSONArray) gameObject.get("pokedex");
@@ -45,27 +47,6 @@ public class Game {
 
     Game(int id){
         this(Objects.requireNonNull(SaveData.readJSON("GameData/game.json", id)), id);
-    }
-
-    public static int findID(String name){
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("GameData/game.json")){
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray gameList = (JSONArray) obj;
-
-            //parse pokemon data
-            for (int i = 0; i < gameList.size(); i++) {
-                JSONObject gameObject = (JSONObject) gameList.get(i);
-
-                if (Objects.equals(gameObject.get("name").toString(), name))
-                    return i;
-            }
-        }catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return -1;
     }
 
     public boolean hasUnbreedable(int id){
@@ -93,7 +74,7 @@ public class Game {
     public String toString(){ return name.getValue(); }
 
     public String getName() { return name.getValue(); }
-    public StringProperty getNameProperty(){return name;}
+    public StringProperty getNameProperty(){ return name; }
 
     public Vector<Integer> getPokedex() { return pokedex; }
     public Vector<Integer> getMethods() { return methods; }

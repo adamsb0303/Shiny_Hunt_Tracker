@@ -21,12 +21,6 @@ public class Method {
     Vector<Integer> games = new Vector<>();
     Vector<Integer> pokemon = new Vector<>();
 
-    Method(){
-        name.setValue("");
-        base = 8192;
-        modifier = 0;
-    }
-
     Method(JSONObject methodObject, int id){
         name.setValue(methodObject.get("name").toString());
         breeding = (Boolean) methodObject.get("breeding");
@@ -45,54 +39,6 @@ public class Method {
 
     Method(int id){
         this(Objects.requireNonNull(SaveData.readJSON("GameData/method.json", id)), id);
-    }
-
-    Method(String name, int generation){
-        //determines the initial base and modifier with the selected game and method
-        if(generation >= 5)
-            base = 4096;
-        else
-            base = 8192;
-        switch(name){
-            case "None":
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "DexNav":
-            case "SOS Chaining":
-            case "Ultra Wormholes":
-            case "Catch Combo":
-            case "Total Encounters":
-                this.name.setValue(name);
-                modifier = 1;
-                break;
-            case "Breeding with Shiny":
-                this.name.setValue(name);
-                modifier += 128;
-                break;
-            case "Masuda":
-                this.name.setValue(name);
-                if(generation == 4)
-                    modifier = 5;
-                else
-                    modifier = 6;
-                break;
-            case "Friend Safari":
-                this.name.setValue(name);
-                modifier = 6;
-                break;
-            case "Dynamax Adventure":
-                this.name.setValue(name);
-                base = 300;
-                modifier = 1;
-            case "Underground":
-                this.name.setValue(name);
-                modifier = 1;
-            case "Mass Outbreak":
-                this.name.setValue(name);
-                modifier = 26;
-            default:
-                break;
-        }
     }
 
     //returns modifier to added to the base modifier by selected method with given encounters
@@ -188,29 +134,27 @@ public class Method {
         return name.getValue();
     }
 
+    public Boolean getBreeding(){ return breeding; }
+
     public StringProperty getNameProperty(){ return name; }
-
-    public int getId(){ return id; }
-
     public String getName(){
         return name.getValue();
-    }
-
-    public int getModifier(){
-        return modifier;
     }
 
     public int getBase(){
         return base;
     }
+    public int getId(){ return id; }
+    public int getModifier(){
+        return modifier;
+    }
+
+    public Vector<Integer> getPokemon(){ return pokemon; }
+    public Vector<Integer> getGames(){ return games; }
 
     public void setModifier(int modifier){
         this.modifier = modifier;
     }
 
-    public Vector<Integer> getGames(){ return games; }
 
-    public Vector<Integer> getPokemon(){ return pokemon; }
-
-    public Boolean getBreeding(){ return breeding; }
 }

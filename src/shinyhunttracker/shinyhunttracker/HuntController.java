@@ -6,14 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,10 +24,9 @@ import java.util.Vector;
 
 public class HuntController {
     Stage huntControls = new Stage();
-    MenuBar Menu = new MenuBar();
-    Menu Settings = new Menu("Settings");
-    VBox huntControlsVBox;
+    VBox huntControlsVBox = new VBox();
     PreviouslyCaught previousCatches = new PreviouslyCaught(0);
+    double xOffset, yOffset;
 
     Vector<HuntWindow> windowsList = new Vector<>();
 
@@ -40,27 +39,38 @@ public class HuntController {
     public HuntController(){
         //Initial Hunt Controller setup
         huntControls.setTitle("Hunt Controller");
-
-        huntControlsVBox = new VBox();
+        huntControls.initStyle(StageStyle.UNDECORATED);
+        huntControls.setResizable(false);
         huntControlsVBox.setAlignment(Pos.CENTER);
         huntControlsVBox.setSpacing(5);
-        Button addHunt = new Button("Add Hunt");
-        addHunt.setFocusTraversable(false);
-        huntControlsVBox.getChildren().add(addHunt);
 
-        Menu.getMenus().add(Settings);
+        //replacement for normal window control buttons, exit and minimize
+        HBox windowControls = new HBox();
+        Button exit = new Button("X");
+        Button minimize = new Button("_");
+        windowControls.getChildren().addAll(minimize, exit);
+        windowControls.setAlignment(Pos.CENTER_RIGHT);
+        windowControls.setSpacing(5);
+        windowControls.setPadding(new Insets(5,5,0,5));
 
-        MenuItem keyBinding = new MenuItem("Key Binding");
-        Settings.getItems().add(keyBinding);
+        //add hunt and general settings buttons
+        Button addHunt = new Button("+");
+        MenuButton masterSettings = new MenuButton("O");
+        MenuItem keyBinding = new MenuItem("Key Bind Settings");
+        MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
+        masterSettings.getItems().addAll(keyBinding, previouslyCaught);
 
-        MenuItem previouslyCaught = new MenuItem("Previously Caught Settings");
-        Settings.getItems().add(previouslyCaught);
+        BorderPane masterButtonsPane = new BorderPane();
+        masterButtonsPane.setRight(addHunt);
+        masterButtonsPane.setLeft(masterSettings);
+        masterButtonsPane.setPadding(new Insets(0,5,5,5));
 
         BorderPane huntControlsLayout = new BorderPane();
-        huntControlsLayout.setTop(Menu);
+        huntControlsLayout.setTop(windowControls);
         huntControlsLayout.setCenter(huntControlsVBox);
+        huntControlsLayout.setBottom(masterButtonsPane);
 
-        Scene huntControlsScene = new Scene(huntControlsLayout, 350, 100);
+        Scene huntControlsScene = new Scene(huntControlsLayout, 350, 75);
         huntControls.setScene(huntControlsScene);
         huntControls.show();
 
@@ -84,16 +94,18 @@ public class HuntController {
 
         }
 
+        exit.setOnAction(e -> huntControls.fireEvent(new WindowEvent(huntControls, WindowEvent.WINDOW_CLOSE_REQUEST)));
+        minimize.setOnAction(e -> huntControls.setIconified(true));
+
+        keyBinding.setOnAction(e -> keyBindingSettings());
+        previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
+
         //Listener for KeyBinds
         huntControlsScene.setOnKeyPressed(e -> {
             for(HuntWindow i: windowsList)
                 if (i.getKeyBinding() == e.getCode())
                     i.incrementEncounters();
         });
-
-        //Popups for given menus
-        keyBinding.setOnAction(e -> keyBindingSettings());
-        previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
         //Opens pop up for Selection Window
         addHunt.setOnAction(e -> {
@@ -110,6 +122,16 @@ public class HuntController {
             }catch(IOException | ParseException f){
                 HuntSelection.createHuntSelection(this);
             }
+        });
+
+        //Make window draggable
+        huntControlsScene.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        huntControlsScene.setOnMouseDragged(e -> {
+            huntControls.setX(e.getScreenX() - xOffset);
+            huntControls.setY(e.getScreenY() - yOffset);
         });
 
         //Makes sure to save all currently open hunts before closing
@@ -145,17 +167,6 @@ public class HuntController {
      * @param newWindow HuntWindow with new hunt information
      */
     public void addHunt(HuntWindow newWindow){
-        //Add "Save All" button to menu
-        if(windowsList.size() == 0){
-            MenuItem saveAll = new MenuItem("Save All");
-            Settings.getItems().add(saveAll);
-
-            saveAll.setOnAction(e -> {
-                for (HuntWindow i : windowsList)
-                    SaveData.saveHunt(windowsList.lastElement());
-            });
-        }
-
         //Set huntNum to first available
         int huntNum = 0;
         for(; huntNum < windowsList.size(); ++huntNum)
@@ -178,31 +189,36 @@ public class HuntController {
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
 
         Button encountersButton = new Button("+");
-        encountersButton.setFocusTraversable(false);
 
         Label encounterLabel = new Label();
         encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
 
         Label nameLabel = new Label(newWindow.getPokemon().getName());
 
-        Button caughtButton = new Button("O");
-        caughtButton.setFocusTraversable(false);
+        Button caughtButton = new Button("C");
 
-        Button popOutButton = new Button("O");
-        popOutButton.setFocusTraversable(false);
-
+        StackPane windowPopout = new StackPane();
+        Button popOutButton = new Button("P");
         Button windowSettingsButton = new Button("X");
-        windowSettingsButton.setFocusTraversable(false);
         windowSettingsButton.setVisible(false);
+        windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
 
-        Button settingsButton = new Button("O");
-        settingsButton.setFocusTraversable(false);
+        MenuButton settingsButton = new MenuButton("O");
+        MenuItem increment= new MenuItem("Change Increment");
+        MenuItem resetEncounters = new MenuItem("Fail");
+        MenuItem phaseHunt = new MenuItem("Phase");
+        MenuItem resetCombo = new MenuItem("Reset Combo");
+        MenuItem saveHunt = new MenuItem("Save Hunt");
+        MenuItem DVTable = new MenuItem("DV Table");
+        settingsButton.getItems().addAll(increment, resetEncounters, phaseHunt, resetCombo, saveHunt);
+        if(newWindow.getGame().getGeneration() == 1)
+            settingsButton.getItems().add(DVTable);
 
-        Button helpButton = new Button("O");
-        helpButton.setFocusTraversable(false);
+        Button helpButton = new Button("H");
 
-        huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, popOutButton, windowSettingsButton, settingsButton, helpButton);
-        huntControlsVBox.getChildren().add(newWindow.getHuntNumber(), huntInformationHBox);
+        huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, windowPopout, settingsButton, helpButton);
+        huntControlsVBox.getChildren().add(newWindow.getHuntNumber() - 1, huntInformationHBox);
+        huntControls.setHeight(huntControls.getHeight() + 25);
 
         //Set keybinds
         try (FileReader reader = new FileReader("SaveData/keybinds.json")) {
@@ -215,9 +231,6 @@ public class HuntController {
         }catch(IOException | ParseException e){
             e.printStackTrace();
         }
-
-        //Add new settings to settings menu
-        addHuntWindowSettings(newWindow);
 
         //update keybind window if it is open
         if(keyBindingSettingsStage.isShowing())
@@ -254,11 +267,17 @@ public class HuntController {
                 newWindow.getStage().show();
         });
 
-        windowSettingsButton.setOnAction(e -> newWindow.CustomizeHuntWindow());
-
-        settingsButton.setOnAction(e -> {
-
+        increment.setOnAction(e -> newWindow.changeIncrement());
+        resetEncounters.setOnAction(e -> newWindow.resetEncounters());
+        phaseHunt.setOnAction(e -> {
+            //newWindow.setPreviouslyCaughtWindow(previousCatches);
+            newWindow.phaseHunt();
         });
+        resetCombo.setOnAction(e -> newWindow.resetCombo());
+        saveHunt.setOnAction(e -> SaveData.saveHunt(newWindow));
+        DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
+
+        windowSettingsButton.setOnAction(e -> newWindow.CustomizeHuntWindow());
 
         helpButton.setOnAction(e -> {
 
@@ -354,38 +373,6 @@ public class HuntController {
         });
     }
 
-    public void addHuntWindowSettings(HuntWindow window){
-        Menu newHuntSettings = new Menu("Hunt " + window.getHuntNumber() + " Settings");
-
-        MenuItem customizeHuntLayout= new MenuItem("Layout Settings");
-
-        Menu huntSettings = new Menu("Hunt Settings");
-        MenuItem increment= new MenuItem("Change Increment");
-        MenuItem resetEncounters = new MenuItem("Fail");
-        MenuItem phaseHunt = new MenuItem("Phase");
-        MenuItem resetCombo = new MenuItem("Reset Combo");
-        MenuItem saveHunt = new MenuItem("Save Hunt");
-        MenuItem DVTable = new MenuItem("DV Table");
-        huntSettings.getItems().addAll(increment, resetEncounters, phaseHunt, resetCombo, saveHunt);
-
-        if(window.getGameGeneration() == 1)
-            huntSettings.getItems().add(DVTable);
-
-        newHuntSettings.getItems().addAll(customizeHuntLayout, huntSettings);
-        Settings.getItems().add(newHuntSettings);
-
-        customizeHuntLayout.setOnAction(e -> window.CustomizeHuntWindow());
-        increment.setOnAction(e -> window.changeIncrement());
-        resetEncounters.setOnAction(e -> window.resetEncounters());
-        phaseHunt.setOnAction(e -> {
-            window.setPreviouslyCaughtWindow(previousCatches);
-            window.phaseHunt();
-        });
-        resetCombo.setOnAction(e -> window.resetCombo());
-        saveHunt.setOnAction(e -> SaveData.saveHunt(windowsList.lastElement()));
-        DVTable.setOnAction(e -> generateDVTable(window.getPokemon()));
-    }
-
     /**
      * Pop up listing the keys that the hunts are bound too and allows the user to change them
      */
@@ -410,7 +397,7 @@ public class HuntController {
             for (int i = 0; i < windowsList.lastElement().getHuntNumber(); i++) {
                 keyBindsTemp.add(KeyCode.valueOf((String) keyBindsList.get(i)));
 
-                //adds textfield and label to layout
+                //adds text-field and label to layout
                 HBox windowSettings = new HBox();
                 windowSettings.setAlignment(Pos.CENTER);
                 windowSettings.setSpacing(10);

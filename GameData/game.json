@@ -1,6 +1,7 @@
 [
   {
     "generation":1,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -17,6 +18,7 @@
   },
   {
     "generation":1,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -33,6 +35,7 @@
   },
   {
     "generation":1,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -49,6 +52,7 @@
   },
   {
     "generation":1,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -65,6 +69,7 @@
   },
   {
     "generation":2,
+    "odds": 8192,
     "unbreedables":[
       131,
       242,
@@ -83,6 +88,7 @@
   },
   {
     "generation":2,
+    "odds": 8192,
     "unbreedables":[
       131,
       242,
@@ -101,6 +107,7 @@
   },
   {
     "generation":2,
+    "odds": 8192,
     "unbreedables":[
       131,
       200,
@@ -120,6 +127,7 @@
   },
   {
     "generation":3,
+    "odds": 8192,
     "unbreedables":[
       376,
       377,
@@ -138,6 +146,7 @@
   },
   {
     "generation":3,
+    "odds": 8192,
     "unbreedables":[
       376,
       377,
@@ -156,6 +165,7 @@
   },
   {
     "generation":3,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -178,6 +188,7 @@
   },
   {
     "generation":3,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -200,6 +211,7 @@
   },
   {
     "generation":3,
+    "odds": 8192,
     "unbreedables":[
       131,
       150,
@@ -223,6 +235,7 @@
   },
   {
     "generation":4,
+    "odds": 8192,
     "unbreedables":[
       131,
       200,
@@ -427,6 +440,7 @@
   },
   {
     "generation":4,
+    "odds": 8192,
     "unbreedables":[
       131,
       200,
@@ -632,6 +646,7 @@
   },
   {
     "generation":4,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -851,6 +866,7 @@
   },
   {
     "generation":4,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -879,6 +895,7 @@
   },
   {
     "generation":4,
+    "odds": 8192,
     "unbreedables":[
       131,
       143,
@@ -907,6 +924,7 @@
   },
   {
     "generation":5,
+    "odds": 8192,
     "unbreedables":[
       131,
       493,
@@ -927,6 +945,7 @@
   },
   {
     "generation":5,
+    "odds": 8192,
     "unbreedables":[
       131,
       493,
@@ -947,6 +966,7 @@
   },
   {
     "generation":5,
+    "odds": 8192,
     "unbreedables":[
       131,
       376,
@@ -974,6 +994,7 @@
   },
   {
     "generation":5,
+    "odds": 8192,
     "unbreedables":[
       131,
       376,
@@ -1001,6 +1022,7 @@
   },
   {
     "generation":6,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -1344,6 +1366,7 @@
   },
   {
     "generation":6,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -1687,6 +1710,7 @@
   },
   {
     "generation":6,
+    "odds": 4096,
     "unbreedables":[
       131,
       200,
@@ -1916,6 +1940,7 @@
   },
   {
     "generation":6,
+    "odds": 4096,
     "unbreedables":[
       131,
       200,
@@ -2145,6 +2170,7 @@
   },
   {
     "generation":7,
+    "odds": 4096,
     "unbreedables":[
       131,
       717,
@@ -2345,6 +2371,7 @@
   },
   {
     "generation":7,
+    "odds": 4096,
     "unbreedables":[
       131,
       717,
@@ -2546,6 +2573,7 @@
   },
   {
     "generation":7,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -2873,6 +2901,7 @@
   },
   {
     "generation":7,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -3201,6 +3230,7 @@
   },
   {
     "generation":7,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -3501,6 +3531,7 @@
   },
   {
     "generation":7,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -3801,6 +3832,7 @@
   },
   {
     "generation":8,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -5102,6 +5134,7 @@
   },
   {
     "generation":8,
+    "odds": 4096,
     "unbreedables":[
       131,
       143,
@@ -6389,6 +6422,7 @@
   },
   {
     "generation":8,
+    "odds": 4096,
     "table-12":[
       0,
       3,
@@ -7250,6 +7284,7 @@
   },
   {
     "generation":8,
+    "odds": 4096,
     "table-12":[
       0,
       3,
@@ -8114,6 +8149,7 @@
   },
   {
     "generation":8,
+    "odds": 4096,
     "table-13":[
       24,
       34,
