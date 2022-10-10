@@ -121,8 +121,10 @@ public class HuntController {
                 JSONArray huntList = (JSONArray) obj;
 
                 //If there are no previous hunts, it goes straight to selection page
-                if(huntList.size() > 0)
+                if(huntList.size() > 0 && windowsList.size() < huntList.size())
                     newOrOld();
+                else
+                    HuntSelection.createHuntSelection(this);
             }catch(IOException | ParseException f){
                 HuntSelection.createHuntSelection(this);
             }
@@ -369,13 +371,20 @@ public class HuntController {
 
                 for(int i = huntList.size() - 1; i >= 0; i--){
                     JSONObject huntData = (JSONObject) huntList.get(i);
-                    Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon_id").toString()));
-                    Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
-                    Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
-                    String encounters = huntData.get("encounters").toString();
+                    boolean newData = true;
+                    for(HuntWindow j : windowsList)
+                        if(Integer.parseInt(huntData.get("huntID").toString()) == j.getHuntID())
+                            newData = false;
 
-                    TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
-                    previousHuntsRoot.getChildren().add(item);
+                    if(newData) {
+                        Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon_id").toString()));
+                        Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
+                        Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
+                        String encounters = huntData.get("encounters").toString();
+
+                        TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
+                        previousHuntsRoot.getChildren().add(item);
+                    }
                 }
 
                 //skip selection window and go straight to hunt page
