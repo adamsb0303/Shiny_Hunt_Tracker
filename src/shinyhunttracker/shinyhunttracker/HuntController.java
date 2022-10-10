@@ -1,5 +1,7 @@
 package shinyhunttracker;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,6 +29,8 @@ public class HuntController {
     VBox huntControlsVBox = new VBox();
     PreviouslyCaught previousCatches = new PreviouslyCaught(0);
     double xOffset, yOffset;
+
+    ObservableList<Pokemon> pokedex = FXCollections.observableArrayList();
 
     Vector<HuntWindow> windowsList = new Vector<>();
 
@@ -282,7 +286,22 @@ public class HuntController {
         resetEncounters.setOnAction(e -> newWindow.resetEncounters());
         phaseHunt.setOnAction(e -> {
             //newWindow.setPreviouslyCaughtWindow(previousCatches);
-            newWindow.phaseHunt();
+            //newWindow.phaseHunt();
+            if(pokedex.size() == 0) {
+                try (FileReader reader = new FileReader("GameData/pokemon.json")) {
+                    JSONParser jsonParser = new JSONParser();
+                    JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
+
+                    for (int i = 0; i < pokemonListJSON.size(); i++)
+                        pokedex.add(new Pokemon((JSONObject) pokemonListJSON.get(i), i));
+                } catch (IOException | ParseException f) {
+                    f.printStackTrace();
+                }
+            }
+            ChoiceDialog<Pokemon> phaseDialog = new ChoiceDialog<>(pokedex.get(0), pokedex);
+            phaseDialog.setTitle("Phase Hunt");
+            phaseDialog.setHeaderText("Phased Pokemon: ");
+            phaseDialog.showAndWait().ifPresent(response -> newWindow.phaseHunt(response.getDexNumber()));
         });
         resetCombo.setOnAction(e -> newWindow.resetCombo());
         saveHunt.setOnAction(e -> SaveData.saveHunt(newWindow));

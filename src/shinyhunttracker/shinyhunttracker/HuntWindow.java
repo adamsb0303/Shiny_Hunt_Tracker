@@ -342,39 +342,12 @@ class HuntWindow extends Window {
     }
 
     //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
-    public void phaseHunt(){
-        Stage phaseStage = new Stage();
-        phaseStage.initModality(Modality.APPLICATION_MODAL);
-        phaseStage.setResizable(false);
-        phaseStage.setTitle("Phase");
-
-        VBox phaseLayout = new VBox();
-        phaseLayout.setAlignment(Pos.CENTER);
-        phaseLayout.setSpacing(10);
-
-        Label phaseLabel = new Label("Please enter the phase pokemon");
-        TextField phasePokemon = new TextField();
-        phaseLayout.getChildren().addAll(phaseLabel, phasePokemon);
-
-        Scene phaseScene = new Scene(phaseLayout, 200,100);
-        phaseStage.setScene(phaseScene);
-        phaseStage.show();
-
-        phasePokemon.setOnAction(e -> {
-            /*String userInput = phasePokemon.getText().toLowerCase();
-            userInput = userInput.substring(0,1).toUpperCase() + userInput.substring(1);
-            if(new Pokemon(userInput).getGeneration() == 0)
-                phasePokemon.setText("");
-            else{
-                SaveData data = new SaveData(new Pokemon(userInput, 0), selectedGame, selectedMethod, encounters, combo, increment, currentLayout);
-                data.pokemonCaught();
-                resetCombo();
-                resetEncounters();
-                if(previouslyCaughtWindow.getStage().isShowing())
-                    previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();
-                phaseStage.close();
-            }*/
-        });
+    public void phaseHunt(int pokemonID){
+        SaveData.pokemonCaught(new HuntWindow(new Pokemon(pokemonID), selectedGame, selectedMethod, currentLayout, encounters.getValue(), combo.getValue(), increment, 0));
+        resetCombo();
+        resetEncounters();
+        /*if(previouslyCaughtWindow.getStage().isShowing())
+            previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();*/
     }
 
     //resets encounters
