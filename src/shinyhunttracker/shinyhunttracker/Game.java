@@ -22,6 +22,7 @@ public class Game {
     Vector<Integer> pokedex = new Vector<>();
     Vector<Integer> unbreedables = new Vector<>();
     Vector<Integer> methods = new Vector<>();
+    JSONArray oddModifiers = new JSONArray();
 
     Game(JSONObject gameObject, int id){
         this.name.setValue((String) gameObject.get("name"));
@@ -43,6 +44,10 @@ public class Game {
         if(tempJSONArr != null)
             for(Object i : tempJSONArr)
                 methods.add(Integer.parseInt(i.toString()));
+
+        tempJSONArr = (JSONArray) gameObject.get("modifiers");
+        if(tempJSONArr != null)
+            oddModifiers = tempJSONArr;
     }
 
     Game(int id){

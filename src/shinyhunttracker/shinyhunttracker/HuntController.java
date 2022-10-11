@@ -210,13 +210,13 @@ public class HuntController {
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
 
         MenuButton settingsButton = new MenuButton("O");
+        MenuItem saveHunt = new MenuItem("Save Hunt");
         MenuItem increment= new MenuItem("Change Increment");
+        MenuItem changeOdds = new MenuItem("Change Odds");
         MenuItem resetEncounters = new MenuItem("Fail");
         MenuItem phaseHunt = new MenuItem("Phase");
-        MenuItem resetCombo = new MenuItem("Reset Combo");
-        MenuItem saveHunt = new MenuItem("Save Hunt");
         MenuItem DVTable = new MenuItem("DV Table");
-        settingsButton.getItems().addAll(increment, resetEncounters, phaseHunt, resetCombo, saveHunt);
+        settingsButton.getItems().addAll(saveHunt, increment, changeOdds, resetEncounters, phaseHunt);
         if(newWindow.getGame().getGeneration() == 1)
             settingsButton.getItems().add(DVTable);
 
@@ -241,11 +241,6 @@ public class HuntController {
         //update keybind window if it is open
         if(keyBindingSettingsStage.isShowing())
             keyBindingSettings();
-
-        //since the search level or total encounters can change between uses, this value needs to be captured after every startup
-        if (newWindow.getMethod().getName().compareTo("DexNav") == 0 || newWindow.getMethod().getName().compareTo("Total Encounters") == 0) {
-            newWindow.promptPreviousEncounters();
-        }
 
         exitHuntButton.setOnAction(e -> {
             SaveData.saveHunt(windowsList.lastElement());
@@ -305,11 +300,11 @@ public class HuntController {
             phaseDialog.setHeaderText("Phased Pokemon: ");
             phaseDialog.showAndWait().ifPresent(response -> newWindow.phaseHunt(response.getDexNumber()));
         });
-        resetCombo.setOnAction(e -> newWindow.resetCombo());
+        changeOdds.setOnAction(e -> newWindow.resetCombo());
         saveHunt.setOnAction(e -> SaveData.saveHunt(newWindow));
         DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
 
-        windowSettingsButton.setOnAction(e -> newWindow.CustomizeHuntWindow());
+        windowSettingsButton.setOnAction(e -> newWindow.customizeHuntWindow());
 
         helpButton.setOnAction(e -> {
 

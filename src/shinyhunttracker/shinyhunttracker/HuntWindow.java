@@ -98,10 +98,10 @@ class HuntWindow extends Window {
         Evo0 = new ImageView();
         Evo1 = new ImageView();
 
-        if(selectedPokemon.getEvoStage() >= 1)
-            setPokemonSprite(Evo0, selectedPokemon.getFamily()[0], selectedGame);
+        /*if(selectedPokemon.getEvoStage() >= 1)
+            setPokemonSprite(Evo0, selectedPokemon.getFamily().get(0), selectedGame);
         if(selectedPokemon.getEvoStage() >= 2)
-            setPokemonSprite(Evo1, selectedPokemon.getFamily()[1], selectedGame);
+            setPokemonSprite(Evo1, selectedPokemon.getFamily().get(1), selectedGame);*/
 
         //Makes family sprites draggable
         quickEdit(sprite);
@@ -183,52 +183,8 @@ class HuntWindow extends Window {
             SaveData.loadLayout(currentLayout, windowLayout, true);
     }
 
-    //creates window to prompt user for search level or previous encounters
-    public void promptPreviousEncounters(){
-        Stage promptWindow = new Stage();
-        promptWindow.setResizable(false);
-        promptWindow.initModality(Modality.APPLICATION_MODAL);
-
-        Label promptLabel = new Label();
-        if(selectedMethod.getName().compareTo("DexNav") == 0) {
-            promptWindow.setTitle("Enter Search Level");
-            promptLabel.setText("Please enter the current Search Level for " + selectedPokemon.getName());
-        }
-        else if(selectedMethod.getName().compareTo("Total Encounters") == 0) {
-            promptWindow.setTitle("Enter Number Battled");
-            promptLabel.setText("Please enter the current Number Battled for " + selectedPokemon.getName());
-        }
-
-        TextField previousInput = new TextField();
-
-        previousInput.setOnAction(e-> {
-            try{
-                previousEncounters = parseInt(previousInput.getText());
-                previousEncountersText.setText(String.valueOf(previousEncounters));
-                if(selectedMethod.getName().compareTo("DexNav") == 0)
-                    oddFractionText.setText("1/" + selectedMethod.dexNav(encounters.getValue(), previousEncounters));
-                else
-                    oddFractionText.setText("1/" + simplifyFraction((selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters)), methodBase));
-                promptWindow.close();
-            }catch (NumberFormatException f){
-                previousInput.setText("");
-            }
-        });
-
-        VBox promptLayout = new VBox();
-        promptLayout.setSpacing(10);
-        promptLayout.setAlignment(Pos.CENTER);
-        promptLayout.getChildren().addAll(promptLabel, previousInput);
-
-        Scene promptScene = new Scene(promptLayout, 275, 75);
-        promptWindow.setScene(promptScene);
-        promptWindow.show();
-
-        promptWindow.setOnCloseRequest(e -> windowStage.close());
-    }
-
     //creates window for the hunt window settings
-    public void CustomizeHuntWindow(){
+    public void customizeHuntWindow(){
         if(CustomizeHuntVBox.getChildren().size() == 0) {
             CustomizeHuntStage.setTitle("Settings");
             CustomizeHuntStage.setResizable(false);
@@ -273,11 +229,11 @@ class HuntWindow extends Window {
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
             if (Evo1.getImage() != null) {
-                Evo1Settings = createImageSettings(Evo1, new Pokemon(Pokemon.findDexNum(selectedPokemon.getFamily()[1])), selectedGame);
+                Evo1Settings = createImageSettings(Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
             if (Evo0.getImage() != null) {
-                Evo0Settings = createImageSettings(Evo0, new Pokemon(Pokemon.findDexNum(selectedPokemon.getFamily()[0])), selectedGame);
+                Evo0Settings = createImageSettings(Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
             }
 
@@ -361,32 +317,6 @@ class HuntWindow extends Window {
     public void closeHuntWindow(){
         windowStage.close();
         CustomizeHuntStage.close();
-    }
-
-    //changes increment
-    public void changeIncrement(){
-        TextInputDialog changeIncrementText = new TextInputDialog(String.valueOf(increment));
-        /*Stage changeIncrementStage = new Stage();
-        changeIncrementStage.setResizable(false);
-        changeIncrementStage.initModality(Modality.APPLICATION_MODAL);
-        VBox changeIncrementsLayout = new VBox();
-        changeIncrementsLayout.setAlignment(Pos.CENTER);
-        changeIncrementsLayout.setSpacing(10);
-        Label changeIncrementsLabel = new Label("Enter the number by which the encounters increase for every button press");
-        TextField changeIncrementsText = new TextField();
-        changeIncrementsLayout.getChildren().addAll(changeIncrementsLabel, changeIncrementsText);
-        Scene changeIncrementsScene = new Scene(changeIncrementsLayout, 400, 100);
-        changeIncrementStage.setScene(changeIncrementsScene);
-        changeIncrementStage.show();
-
-        changeIncrementsText.setOnAction(e -> {
-            try{
-                increment = parseInt(changeIncrementsText.getText());
-                changeIncrementStage.close();
-            }catch (NumberFormatException f){
-                changeIncrementsText.setText("");
-            }
-        });*/
     }
 
     //reset encounters
@@ -565,7 +495,7 @@ class HuntWindow extends Window {
                     currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
                     SaveData.loadLayout(currentLayout, windowLayout, true);
                     loadSavedLayoutStage.close();
-                    CustomizeHuntWindow();
+                    customizeHuntWindow();
                 });
     }
 

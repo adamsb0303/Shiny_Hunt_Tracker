@@ -21,7 +21,7 @@ public class Pokemon{
     Boolean huntable = true; //if the pokemon is huntable
     Boolean legendary; //if the pokemon is legendary
     String form; //current form of the pokemon
-    Vector<Integer> family = new Vector<>(); //all pokemon in evolution line
+    Vector<Vector<Integer>> family = new Vector<>(); //all pokemon in evolution line
     Vector<Integer> regionalForms = new Vector<>(); //all possible regional forms
     Vector<String> forms = new Vector<>(); //all possible forms
     int[] base; //Stores Speed, HP, Special, Attack, Defense
@@ -43,11 +43,16 @@ public class Pokemon{
 
         JSONArray tempJSONArr = (JSONArray) pokemonObject.get("family");
         if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
-                if(i instanceof Long)
-                    family.add(Integer.parseInt(i.toString()));
+            for (int i = 0; i < tempJSONArr.size(); i++)
+                if (tempJSONArr.get(i) instanceof Long) {
+                    family.add(new Vector<>());
+                    family.get(0).add(Integer.parseInt(tempJSONArr.get(i).toString()));
+                }
                 else {
-                    JSONArray multipleFamilies = (JSONArray) i;
+                    JSONArray multipleFamilies = (JSONArray) tempJSONArr.get(i);
+                    family.add(new Vector<>());
+                    for(Object j : multipleFamilies)
+                        family.get(i).add(Integer.parseInt(j.toString()));
                 }
 
         tempJSONArr = (JSONArray) pokemonObject.get("forms");
@@ -90,41 +95,6 @@ public class Pokemon{
         return null;
     }
 
-    /**
-     * Finds the dex number of given pokemon name
-     * @param name Pokemon name
-     * @return Dex Number of given pokemon
-     */
-    public static int findDexNum(String name){
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("GameData/pokemon.json")){
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray pokemonList = (JSONArray) obj;
-
-            for(int i = 0; i < pokemonList.size(); i++){
-                JSONObject pokemonObject = (JSONObject) pokemonList.get(i);
-                if (Objects.equals(pokemonObject.get("name").toString(), name))
-                    return i;
-            }
-        }catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    /**
-     * Returns whether pokemon has a regional form of the given region
-     * @param region Regional form name
-     * @return if regional form exists
-     */
-    public Boolean checkRegional(String region){
-        /*for (String regionalForm : regionalForms)
-            if (region.equals(regionalForm))
-                return true;
-        */return false;
-    }
 
     @Override
     public String toString(){ return name.getValue(); }
@@ -134,7 +104,7 @@ public class Pokemon{
     public int getEvoStage(){ return this.evoStage; }
     public int getGeneration(){ return generation; }
 
-    public String[] getFamily(){ return new String[]{}; }
+    public Vector<Vector<Integer>> getFamily(){ return family; }
     public String[] getForms(){ return new String[]{}; }
     public String getForm(){ return form;}
     public String getName(){ return name.getValue(); }

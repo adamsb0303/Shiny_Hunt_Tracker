@@ -1,6 +1,5 @@
 package shinyhunttracker;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -45,6 +44,8 @@ public class HuntSelection extends Window {
         //makes sure to not open a new window when one is open
         if(selectionPageStage.isShowing())
             return;
+
+        selectionPageStage.setTitle("Hunt Selection");
 
         //resets variables for when the window is reopened
         resetVariables();
@@ -140,7 +141,7 @@ public class HuntSelection extends Window {
                         updateGameList();
                         updateMethodList();
 
-                        if(selectedGame != null & selectedMethod != null)
+                        if (selectedGame != null & selectedMethod != null)
                             beginHunt.setDisable(false);
                     }
                 });
@@ -222,6 +223,8 @@ public class HuntSelection extends Window {
                 }
             }
         }
+        else
+            updatedPokemonList = defaultPokemonList;
 
         //takes already made game list and removes the ones that aren't in the method list
         if(selectedGame != null && selectedMethod != null){
@@ -287,6 +290,8 @@ public class HuntSelection extends Window {
             if(updatedGameList.size() == 0)
                 updatedGameList.addAll(defaultGameList);
         }
+        else
+            updatedGameList = defaultGameList;
 
         //removes from list if they aren't listed in method's list
         if(selectedPokemon != null && selectedMethod != null){
@@ -341,6 +346,8 @@ public class HuntSelection extends Window {
             for(int i : selectedGame.getMethods())//adds every method listed in game n
                 updatedMethodList.add(defaultMethodList.get(i));
         }
+        else
+            updatedMethodList = defaultMethodList;
 
         //removes if not in game list if pokemon list is already made
         if(selectedPokemon != null && selectedGame != null){
