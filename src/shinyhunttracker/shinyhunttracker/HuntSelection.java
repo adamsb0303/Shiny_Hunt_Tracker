@@ -96,7 +96,13 @@ public class HuntSelection extends Window {
         }
         methodComboBox.getItems().setAll(defaultMethodList);
 
-        huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox);
+        Button beginHunt = new Button("Start");
+        beginHunt.setMinWidth(50);
+        beginHunt.setLayoutY(330);
+        beginHunt.setLayoutX(162.5);
+        beginHunt.setDisable(true);
+
+        huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox, beginHunt);
 
         VBox pokemonSelection = new VBox();
         pokemonSelection.setAlignment(Pos.CENTER_RIGHT);
@@ -104,12 +110,9 @@ public class HuntSelection extends Window {
 
         TextField pokemonSearch = new TextField();
 
-        pokemonListTreeView.setMinHeight(450);
+        pokemonListTreeView.setMinHeight(475);
         pokemonListTreeView.setRoot(pokemonListRoot);
         pokemonListTreeView.setShowRoot(false);
-
-        Button beginHunt = new Button("Start >");
-        beginHunt.setDisable(true);
 
         if(defaultPokemonList.size() == 0) {
             try (FileReader reader = new FileReader("GameData/pokemon.json")) {
@@ -124,7 +127,7 @@ public class HuntSelection extends Window {
         }
         pokemonListRoot.getChildren().setAll(defaultPokemonList);
 
-        pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView, beginHunt);
+        pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView);
 
         selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
         Scene selectionScene = new Scene(selectionPageLayout, 750, 500);
@@ -169,6 +172,16 @@ public class HuntSelection extends Window {
                             beginHunt.setDisable(false);
                     }
                 });
+
+        pokemonSearch.setOnKeyReleased(e -> {
+            pokemonListRoot.getChildren().clear();
+            for (TreeItem<Pokemon> pokemonTreeItem : defaultPokemonList) {
+                if (pokemonTreeItem.getValue().getName().toLowerCase().contains(pokemonSearch.getCharacters())) {
+                    pokemonListRoot.getChildren().add(pokemonTreeItem);
+                }
+            }
+            pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
+        });
 
         //opens new hunt and closes the selection window
         beginHunt.setOnAction(e ->{
