@@ -26,6 +26,7 @@ public class HuntSelection extends Window {
     static Pokemon selectedPokemon = null;
     static TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
     static ObservableList<TreeItem<Pokemon>> defaultPokemonList = FXCollections.observableArrayList();
+    static ObservableList<TreeItem<Pokemon>> searchPokemonList = FXCollections.observableArrayList();
     static TreeItem<Pokemon> pokemonListRoot = new TreeItem<>();
 
     static Game selectedGame = null;
@@ -125,7 +126,7 @@ public class HuntSelection extends Window {
                 e.printStackTrace();
             }
         }
-        pokemonListRoot.getChildren().setAll(defaultPokemonList);
+        pokemonListRoot.getChildren().addAll(defaultPokemonList);
 
         pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView);
 
@@ -174,14 +175,12 @@ public class HuntSelection extends Window {
                 });
 
         pokemonSearch.setOnKeyReleased(e -> {
-            pokemonListRoot.getChildren().clear();
-            for (TreeItem<Pokemon> pokemonTreeItem : defaultPokemonList) {
-                if (pokemonTreeItem.getValue().getName().toLowerCase().contains(pokemonSearch.getCharacters())) {
-                    pokemonListRoot.getChildren().add(pokemonTreeItem);
-                }
-            }
-            if(selectedPokemon != null)
-                pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
+            searchPokemonList.clear();
+            for (TreeItem<Pokemon> pokemonTreeItem : defaultPokemonList)
+                if (pokemonTreeItem.getValue().getName().toLowerCase().contains(pokemonSearch.getCharacters()))
+                    searchPokemonList.add(pokemonTreeItem);
+
+            updatePokemonList();
         });
 
         //opens new hunt and closes the selection window
@@ -202,18 +201,21 @@ public class HuntSelection extends Window {
 
         if(selectedGame != null){
             //Adds all pokemon from game n's pokedex and makes sure that non-breedable pokemon can be caught
-            for(int i : selectedGame.getPokedex())
-                if(!defaultPokemonList.get(i).getValue().getBreedable()) {
-                    if(selectedGame.hasUnbreedable(i))
-                        updatedPokemonList.add(defaultPokemonList.get(i));
-                }
-                else
-                    updatedPokemonList.add(defaultPokemonList.get(i));
+            for(int i : selectedGame.getPokedex()) {
+                if(!searchPokemonList.contains(defaultPokemonList.get(i)))
+                    continue;
 
-            //All games since before Let's Go Pikachu & Eevee didn't have restriced pokedexes.
+                if (!defaultPokemonList.get(i).getValue().getBreedable()) {
+                    if (selectedGame.hasUnbreedable(i))
+                        updatedPokemonList.add(defaultPokemonList.get(i));
+                } else
+                    updatedPokemonList.add(defaultPokemonList.get(i));
+            }
+
+            //All games since before Let's Go Pikachu & Eevee didn't have restricted pokedexes.
             //In this case, all pokemon with a generation lower than the game are added while removing unobtainable non-breedable pokemon
             if(updatedPokemonList.size() == 0)
-                for(TreeItem<Pokemon> i : defaultPokemonList)
+                for(TreeItem<Pokemon> i : searchPokemonList)
                     if(i.getValue().getGeneration() <= selectedGame.getGeneration())
                         if(!i.getValue().getBreedable()) {
                             if(selectedGame.hasUnbreedable(i.getValue().getDexNumber()))
@@ -224,11 +226,15 @@ public class HuntSelection extends Window {
         }
         else if(selectedMethod != null){
             //Most methods have restricted lists attached, so just add those to the list
-            for(int i : selectedMethod.getPokemon())
+            for(int i : selectedMethod.getPokemon()) {
+                if(!searchPokemonList.contains(defaultPokemonList.get(i)))
+                    continue;
+
                 updatedPokemonList.add(defaultPokemonList.get(i));
+            }
 
             if(updatedPokemonList.size() == 0){
-                for(TreeItem<Pokemon> i : defaultPokemonList) {
+                for(TreeItem<Pokemon> i : searchPokemonList) {
                     //Finds the newest generation and excludes all older games
                     Game newestGame = gameComboBox.getItems().get(gameComboBox.getItems().size() - 1);
                     if (i.getValue().getGeneration() <= newestGame.getGeneration())
@@ -238,7 +244,7 @@ public class HuntSelection extends Window {
             }
         }
         else
-            updatedPokemonList = defaultPokemonList;
+            updatedPokemonList = searchPokemonList;
 
         //takes already made game list and removes the ones that aren't in the method list
         if(selectedGame != null && selectedMethod != null){
@@ -246,7 +252,7 @@ public class HuntSelection extends Window {
             Vector<Integer> huntablePokemon = selectedGame.getMethodTable(selectedMethod.getId());
             if(huntablePokemon.size() != 0){
                 for(int i = 0; i < updatedPokemonList.size(); i++){
-                    if(i == huntablePokemon.size() || huntablePokemon.get(i) != updatedPokemonList.get(i).getValue().getDexNumber()) {
+                    if(i == huntablePokemon.size() || Collections.binarySearch(huntablePokemon, updatedPokemonList.get(i).getValue().getDexNumber()) < 0) {
                         updatedPokemonList.remove(i);
                         i--;
                     }
