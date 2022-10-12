@@ -60,9 +60,10 @@ public class HuntController {
         //add hunt and general settings buttons
         Button addHunt = new Button("+");
         MenuButton masterSettings = new MenuButton("O");
+        MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
         MenuItem keyBinding = new MenuItem("Key Bind Settings");
         MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
-        masterSettings.getItems().addAll(keyBinding, previouslyCaught);
+        masterSettings.getItems().addAll(editSavedHunts, keyBinding, previouslyCaught);
 
         BorderPane masterButtonsPane = new BorderPane();
         masterButtonsPane.setRight(addHunt);
@@ -101,6 +102,7 @@ public class HuntController {
         exit.setOnAction(e -> huntControls.fireEvent(new WindowEvent(huntControls, WindowEvent.WINDOW_CLOSE_REQUEST)));
         minimize.setOnAction(e -> huntControls.setIconified(true));
 
+        editSavedHunts.setOnAction(e -> {});
         keyBinding.setOnAction(e -> keyBindingSettings());
         previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
 
@@ -220,7 +222,7 @@ public class HuntController {
         if(newWindow.getGame().getGeneration() == 1)
             settingsButton.getItems().add(DVTable);
 
-        Button helpButton = new Button("H");
+        Button helpButton = new Button("?");
 
         huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, windowPopout, settingsButton, helpButton);
         huntControlsVBox.getChildren().add(newWindow.getHuntNumber() - 1, huntInformationHBox);
@@ -247,6 +249,7 @@ public class HuntController {
             newWindow.closeHuntWindow();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
+            huntControls.setHeight(huntControls.getHeight() - 25);
         });
 
         encountersButton.setOnAction(e -> newWindow.incrementEncounters());
@@ -307,7 +310,14 @@ public class HuntController {
         windowSettingsButton.setOnAction(e -> newWindow.customizeHuntWindow());
 
         helpButton.setOnAction(e -> {
-
+            Alert huntInformation = new Alert(Alert.AlertType.INFORMATION);
+            huntInformation.setTitle("Hunt Information");
+            huntInformation.setHeaderText(null);
+            huntInformation.setContentText( "Pokemon: " + newWindow.getPokemon().getName() + "\n" +
+                                            "Game: " + newWindow.getGame().getName() + "\n" +
+                                            "Method: " + newWindow.getMethod().getName() + "\n\n" +
+                                            "Method Info: \n" + newWindow.getMethod().getMethodInfo());
+            huntInformation.show();
         });
 
         newWindow.getStage().setOnCloseRequest(e -> {

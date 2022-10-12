@@ -2,19 +2,22 @@
   {
     "name": "Full Odds",
     "breeding": false,
-    "modifier": 1
+    "modifier": 1,
+    "method-info": "Shiny chance is base odds for selected game.\nGeneration 1-5: 1/8192\nGeneration 6- : 1/4096"
   },
   {
     "name": "Breeding with Shiny",
     "breeding": true,
     "modifier": 128,
-    "games": [4, 5, 6]
+    "games": [4, 5, 6],
+    "method-info": "Shiny Pokemon can pass down shiny DVs. If the pokemon isn't a ditto, only the babies of the opposite gender of the shiny pokemon can be shiny.\nDitto: 1/64\nEverything else: 1/64*chance to be opposite gender"
   },
   {
     "name": "Masuda",
     "breeding": true,
     "modifier": 6,
-    "games": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34]
+    "games": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34],
+    "method-info": "Breeding pokemon from different languages have boosted shiny odds.\nGeneration 4:  1/1,638\nGeneration 5:  1/1,365\nGeneration 6-: 1/683"
   },
   {
     "name": "Radar Chaining",
@@ -274,7 +277,8 @@
       707,
       708,
       709
-    ]
+    ],
+    "method-info": "Finding the same pokemon multiple times in a row increases odds. Caps at combo of 40\nHighest Combo Odds:\nGeneration 4:  1/200\nGeneration 6-: 1/100"
   },
   {
     "name": "Chain Fishing",
@@ -324,7 +328,8 @@
       690,
       691,
       692
-    ]
+    ],
+    "method-info": "Fishing multiple times in a row without missing a bite increases odds. Caps at combo of 20\nHighest Combo Odds: 1/100"
   },
   {
     "name": "Friend Safari",
@@ -509,7 +514,8 @@
       709,
       711,
       713
-    ]
+    ],
+    "method-info": "All pokemon found in the Friend Safari have higher shiny odds.\nGeneration 6: 1/819"
   },
   {
     "name": "DexNav",
@@ -688,7 +694,8 @@
       691,
       706,
       707
-    ]
+    ],
+    "method-info": ""
   },
   {
     "name": "SOS Chaining",
@@ -960,7 +967,8 @@
       814,
       816,
       818
-    ]
+    ],
+    "method-info": "Everytime a pokemon successfully calls for help, the shiny odds increase. Caps at combo of 31\nHighest Combo Odds: 1/315"
   },
   {
     "name": "Ultra Wormholes",
@@ -988,7 +996,8 @@
       617,
       688,
       694
-    ]
+    ],
+    "method-info": "Pokemon found in ultra wormholes have a higher shiny chance.\nHighest Odds: 36%"
   },
   {
     "name": "Catch Combo",
@@ -1116,7 +1125,8 @@
       146,
       147,
       148
-    ]
+    ],
+    "method-info": "Every catch of the same pokemon increases chance for next spawn to be shiny. Caps at combo of 31\nHighest Combo Odds: 1/341"
   },
   {
     "name": "Brilliant",
@@ -1405,7 +1415,8 @@
       917,
       919,
       926
-    ]
+    ],
+    "method-info": "Pokemon with a yellow aura have increased shiny chance depending number battled in pokedex.\nHighest Chance: 1/585"
   },
   {
     "name": "Dynamax Adventure",
@@ -1678,7 +1689,8 @@
       913,
       916,
       920
-    ]
+    ],
+    "method-info": "All pokemon found in Dynamax Adventures have a higher shiny chance.\nGeneration 8: 1/300"
   },
   {
     "name": "Grand Underground",
@@ -1889,7 +1901,8 @@
       457,
       458,
       464
-    ]
+    ],
+    "method-info": "For 4 minutes after collecting 40 points, shiny odds increase.\nGeneration 8: 1/2048"
   },
   {
     "name": "Mass Outbreak",
@@ -2045,7 +2058,8 @@
       953,
       956,
       958
-    ]
+    ],
+    "method-info": "All pokemon found in Mass Outbreaks have a higher shiny chance.\nGeneration 8: 1/157"
   },
   {
     "name": "Massive Mass Outbreak",
@@ -2247,6 +2261,7 @@
       956,
       957,
       958
-    ]
+    ],
+    "method-info": "All pokemon found in Mass Outbreaks have a higher shiny chance.\nGeneration 8: 1/315"
   }
 ]

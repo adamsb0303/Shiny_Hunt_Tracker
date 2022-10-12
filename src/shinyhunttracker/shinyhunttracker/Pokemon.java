@@ -42,18 +42,22 @@ public class Pokemon{
         this.id = id;
 
         JSONArray tempJSONArr = (JSONArray) pokemonObject.get("family");
-        if(tempJSONArr != null)
+        if(tempJSONArr != null) {
+            family.add(new Vector<>());
             for (int i = 0; i < tempJSONArr.size(); i++)
                 if (tempJSONArr.get(i) instanceof Long) {
-                    family.add(new Vector<>());
                     family.get(0).add(Integer.parseInt(tempJSONArr.get(i).toString()));
-                }
-                else {
+                    if (Integer.parseInt(tempJSONArr.get(i).toString()) == this.id)
+                        evoStage = i;
+                } else {
                     JSONArray multipleFamilies = (JSONArray) tempJSONArr.get(i);
-                    family.add(new Vector<>());
-                    for(Object j : multipleFamilies)
+                    if(family.size() <= i)
+                        family.add(new Vector<>());
+
+                    for (Object j : multipleFamilies)
                         family.get(i).add(Integer.parseInt(j.toString()));
                 }
+        }
 
         tempJSONArr = (JSONArray) pokemonObject.get("forms");
         if(tempJSONArr != null)

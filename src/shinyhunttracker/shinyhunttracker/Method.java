@@ -18,12 +18,14 @@ public class Method {
     int base;
     int modifier;
     boolean breeding;
+    String methodInfo;
     Vector<Integer> games = new Vector<>();
     Vector<Integer> pokemon = new Vector<>();
 
     Method(JSONObject methodObject, int id){
         name.setValue(methodObject.get("name").toString());
         breeding = (Boolean) methodObject.get("breeding");
+        methodInfo = methodObject.get("method-info").toString();
         this.id = id;
 
         JSONArray tempJSONArr = (JSONArray) methodObject.get("games");
@@ -130,31 +132,20 @@ public class Method {
             return 5;
     }
 
-    @Override public String toString(){
-        return name.getValue();
-    }
+    @Override public String toString(){ return name.getValue(); }
 
     public Boolean getBreeding(){ return breeding; }
 
     public StringProperty getNameProperty(){ return name; }
-    public String getName(){
-        return name.getValue();
-    }
+    public String getMethodInfo(){ return methodInfo; }
+    public String getName(){ return name.getValue(); }
 
-    public int getBase(){
-        return base;
-    }
+    public int getBase(){ return base; }
     public int getId(){ return id; }
-    public int getModifier(){
-        return modifier;
-    }
+    public int getModifier(){ return modifier; }
 
     public Vector<Integer> getPokemon(){ return pokemon; }
     public Vector<Integer> getGames(){ return games; }
 
-    public void setModifier(int modifier){
-        this.modifier = modifier;
-    }
-
-
+    public void setModifier(int modifier){ this.modifier = modifier; }
 }

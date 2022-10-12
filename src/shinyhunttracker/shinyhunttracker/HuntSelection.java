@@ -180,7 +180,8 @@ public class HuntSelection extends Window {
                     pokemonListRoot.getChildren().add(pokemonTreeItem);
                 }
             }
-            pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
+            if(selectedPokemon != null)
+                pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
         });
 
         //opens new hunt and closes the selection window
@@ -310,17 +311,18 @@ public class HuntSelection extends Window {
         if(selectedPokemon != null && selectedMethod != null){
             if(selectedMethod.getGames().size() != 0) {
                 for (int i = 0; i < updatedGameList.size(); i++) {
-                    if (selectedMethod.getBreeding() && !selectedMethod.getGames().contains(updatedGameList.get(i).getId())) { //makes sure that a breeding method is in n game
-                        updatedGameList.remove(i);
-                        i--;
-                        continue;
-                    }
-
-                    //removes from list if it's not in the game method's list
-                    Vector<Integer> huntablePokemon = updatedGameList.get(i).getMethodTable(selectedMethod.getId());
-                    if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) < 0) {
-                        updatedGameList.remove(i);
-                        i--;
+                    if(selectedMethod.getBreeding()) {
+                        if (!selectedMethod.getGames().contains(updatedGameList.get(i).getId())) { //makes sure that a breeding method is in n game
+                            updatedGameList.remove(i);
+                            i--;
+                        }
+                    }else {
+                        //removes from list if it's not in the game method's list
+                        Vector<Integer> huntablePokemon = updatedGameList.get(i).getMethodTable(selectedMethod.getId());
+                        if (huntablePokemon.size() == 0 || Collections.binarySearch(huntablePokemon, selectedPokemon.getDexNumber()) < 0) {
+                            updatedGameList.remove(i);
+                            i--;
+                        }
                     }
                 }
             }
@@ -340,7 +342,7 @@ public class HuntSelection extends Window {
         ObservableList<Method> updatedMethodList = FXCollections.observableArrayList();
 
         if(selectedPokemon != null){
-            for(Game i : defaultGameList) {
+            for(Game i : gameComboBox.getItems()) {
                 for (int j : i.getMethods()) {
                     if (!updatedMethodList.contains(defaultMethodList.get(j))) { //don't add method twice
                         if (defaultMethodList.get(j).getBreeding()) {
