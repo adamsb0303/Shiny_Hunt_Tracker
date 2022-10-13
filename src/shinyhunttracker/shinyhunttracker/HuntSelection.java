@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,6 +20,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Vector;
+
+import static javafx.util.Duration.INDEFINITE;
+import static javafx.util.Duration.ZERO;
 
 public class HuntSelection extends Window {
     static Stage selectionPageStage = new Stage();
@@ -103,7 +107,16 @@ public class HuntSelection extends Window {
         beginHunt.setLayoutX(162.5);
         beginHunt.setDisable(true);
 
-        huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox, beginHunt);
+        Button methodHelp = new Button("?");
+        methodHelp.setLayoutY(305);
+        methodHelp.setLayoutX(287.5);
+        Tooltip methodToolTip = new Tooltip();
+        methodToolTip.setShowDelay(ZERO);
+        methodToolTip.setShowDuration(INDEFINITE);
+        Tooltip.install(methodHelp, methodToolTip);
+        methodHelp.visibleProperty().bind(methodComboBox.valueProperty().isNotNull());
+
+        huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox, methodHelp, beginHunt);
 
         VBox pokemonSelection = new VBox();
         pokemonSelection.setAlignment(Pos.CENTER_RIGHT);
@@ -120,8 +133,10 @@ public class HuntSelection extends Window {
                 JSONParser jsonParser = new JSONParser();
                 JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
 
-                for (int i = 0; i < pokemonListJSON.size(); i++)
+                for (int i = 0; i < pokemonListJSON.size(); i++) {
                     defaultPokemonList.add(new TreeItem<>(new Pokemon((JSONObject) pokemonListJSON.get(i), i)));
+                    searchPokemonList.add(defaultPokemonList.get(i));
+                }
             } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
@@ -168,6 +183,7 @@ public class HuntSelection extends Window {
                         selectedMethod = newValue;
                         updateGameList();
                         updatePokemonList();
+                        methodToolTip.setText(selectedMethod.getMethodInfo());
 
                         if(selectedPokemon != null & selectedGame != null)
                             beginHunt.setDisable(false);
@@ -226,12 +242,9 @@ public class HuntSelection extends Window {
         }
         else if(selectedMethod != null){
             //Most methods have restricted lists attached, so just add those to the list
-            for(int i : selectedMethod.getPokemon()) {
-                if(!searchPokemonList.contains(defaultPokemonList.get(i)))
-                    continue;
-
-                updatedPokemonList.add(defaultPokemonList.get(i));
-            }
+            for(int i : selectedMethod.getPokemon())
+                if(searchPokemonList.contains(defaultPokemonList.get(i)))
+                    updatedPokemonList.add(defaultPokemonList.get(i));
 
             if(updatedPokemonList.size() == 0){
                 for(TreeItem<Pokemon> i : searchPokemonList) {
