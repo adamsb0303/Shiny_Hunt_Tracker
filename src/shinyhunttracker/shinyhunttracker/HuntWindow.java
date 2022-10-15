@@ -90,9 +90,7 @@ class HuntWindow extends Window {
 
         //Creates the pokemon's sprite
         sprite = new ImageView();
-        setPokemonSprite(sprite, selectedPokemon.getName(), selectedGame);
-        if(selectedPokemon.getForm() != null && !selectedPokemon.getForm().equals("null"))
-            setAlternateSprite(selectedPokemon, selectedGame, sprite);
+        FetchImage.setImage(sprite, selectedPokemon, selectedGame);
 
         //Creates the pokemon's family's sprites
         Evo0 = new ImageView();

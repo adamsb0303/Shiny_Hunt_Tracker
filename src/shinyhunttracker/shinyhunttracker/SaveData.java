@@ -108,7 +108,7 @@ public class SaveData {
             Object formObject = huntObject.get("pokemon_form");
             Object layoutObject = huntObject.get("layout");
             if(formObject != null)
-                selectedPokemon.setForm(formObject.toString());
+                selectedPokemon.setForm(Integer.parseInt(formObject.toString()));
             if(layoutObject != null)
                 layout = layoutObject.toString();
 

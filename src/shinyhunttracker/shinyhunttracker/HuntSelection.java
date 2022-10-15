@@ -156,7 +156,7 @@ public class HuntSelection extends Window {
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null && newValue.getValue() != selectedPokemon){
                         selectedPokemon = newValue.getValue();
-                        setPokemonSprite(pokemonSprite, newValue.getValue().toString(), new Game(21));
+                        FetchImage.setImage(pokemonSprite, newValue.getValue(), new Game(21));
                         updateGameList();
                         updateMethodList();
 

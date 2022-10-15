@@ -20,7 +20,7 @@ public class Pokemon{
     Boolean breedable; //if the pokemon can breed
     Boolean huntable = true; //if the pokemon is huntable
     Boolean legendary; //if the pokemon is legendary
-    String form; //current form of the pokemon
+    int form; //current form of the pokemon
     Vector<Vector<Integer>> family = new Vector<>(); //all pokemon in evolution line
     Vector<Integer> regionalForms = new Vector<>(); //all possible regional forms
     Vector<String> forms = new Vector<>(); //all possible forms
@@ -106,18 +106,19 @@ public class Pokemon{
     public int[] getBase() { return base; }
     public int getDexNumber(){ return this.id; }
     public int getEvoStage(){ return this.evoStage; }
+    public int getFormId(){ return this.form; }
     public int getGeneration(){ return generation; }
 
     public Vector<Vector<Integer>> getFamily(){ return family; }
     public String[] getForms(){ return new String[]{}; }
-    public String getForm(){ return form;}
+    public String getForm(){ return forms.get(form);}
     public String getName(){ return name.getValue(); }
     public StringProperty getNameProperty(){ return name; }
 
     public Boolean getBreedable(){ return breedable; }
     public Boolean getHuntable(){ return huntable; }
 
-    public void setForm(String form){ this.form = form; }
+    public void setForm(int form){ this.form = form; }
     public void setHuntable(Boolean huntable){ this.huntable = huntable; }
     public void setName(String name){ this.name.setValue(name); }
 }

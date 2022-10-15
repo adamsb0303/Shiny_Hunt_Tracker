@@ -2,15 +2,9 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -19,6 +13,7 @@ public class Game {
     int generation;
     int id;
     int odds;
+    String imagePath;
     Vector<Integer> pokedex = new Vector<>();
     Vector<Integer> unbreedables = new Vector<>();
     Vector<Integer> methods = new Vector<>();
@@ -29,6 +24,7 @@ public class Game {
         generation = (int) (long)  gameObject.get("generation");
         odds = (int) (long) gameObject.get("odds");
         this.id = id;
+        imagePath = String.valueOf(gameObject.get("imagePath"));
 
         JSONArray tempJSONArr = (JSONArray) gameObject.get("pokedex");
         if(tempJSONArr != null)
@@ -78,6 +74,7 @@ public class Game {
     @Override
     public String toString(){ return name.getValue(); }
 
+    public String getImagePath() { return imagePath; }
     public String getName() { return name.getValue(); }
     public StringProperty getNameProperty(){ return name; }
 

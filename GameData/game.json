@@ -14,6 +14,7 @@
       0
     ],
     "name":"Red",
+    "imagePath": "gold",
     "breeding":false
   },
   {
@@ -30,6 +31,7 @@
     "method":[
       0
     ],
+    "imagePath": "gold",
     "name":"Blue",
     "breeding":false
   },
@@ -47,6 +49,7 @@
     "method":[
       0
     ],
+    "imagePath": "gold",
     "name":"Green",
     "breeding":false
   },
@@ -64,6 +67,7 @@
     "method":[
       0
     ],
+    "imagePath": "gold",
     "name":"Yellow",
     "breeding":false
   },
@@ -83,6 +87,7 @@
       0,
       1
     ],
+    "imagePath": "gold",
     "name":"Gold",
     "breeding":true
   },
@@ -102,6 +107,7 @@
       0,
       1
     ],
+    "imagePath": "silver",
     "name":"Silver",
     "breeding":true
   },
@@ -122,6 +128,7 @@
       0,
       1
     ],
+    "imagePath": "crystal",
     "name":"Crystal",
     "breeding":true
   },
@@ -141,6 +148,7 @@
     "method":[
       0
     ],
+    "imagePath": "rse",
     "name":"Ruby",
     "breeding":true
   },
@@ -160,6 +168,7 @@
     "method":[
       0
     ],
+    "imagePath": "rse",
     "name":"Sapphire",
     "breeding":true
   },
@@ -183,6 +192,7 @@
     "method":[
       0
     ],
+    "imagePath": "frlg",
     "name":"FireRed",
     "breeding":true
   },
@@ -206,6 +216,7 @@
     "method":[
       0
     ],
+    "imagePath": "frlg",
     "name":"LeafGreen",
     "breeding":true
   },
@@ -230,6 +241,7 @@
     "method":[
       0
     ],
+    "imagePath": "rse",
     "name":"Emerald",
     "breeding":true
   },
@@ -435,6 +447,7 @@
       458,
       459
     ],
+    "imagePath": "dp",
     "name":"Diamond",
     "breeding":true
   },
@@ -641,6 +654,7 @@
       458,
       459
     ],
+    "imagePath": "dp",
     "name":"Pearl",
     "breeding":true
   },
@@ -861,6 +875,7 @@
       458,
       459
     ],
+    "imagePath": "platinum",
     "name":"Platinum",
     "breeding":true
   },
@@ -890,6 +905,7 @@
       0,
       2
     ],
+    "imagePath": "hgss",
     "name":"HeartGold",
     "breeding":true
   },
@@ -919,6 +935,7 @@
       0,
       2
     ],
+    "imagePath": "hgss",
     "name":"SoulSilver",
     "breeding":true
   },
@@ -940,6 +957,7 @@
       0,
       2
     ],
+    "imagePath": "bw-bw2",
     "name":"Black",
     "breeding":true
   },
@@ -961,6 +979,7 @@
       0,
       2
     ],
+    "imagePath": "bw-bw2",
     "name":"White",
     "breeding":true
   },
@@ -999,6 +1018,7 @@
         "extra-rolls": 1
       }
     ],
+    "imagePath": "bw-bw2",
     "name":"Black 2",
     "breeding":true
   },
@@ -1037,6 +1057,7 @@
         "extra-rolls": 1
       }
     ],
+    "imagePath": "bw-bw2",
     "name":"White 2",
     "breeding":true
   },
@@ -1387,6 +1408,7 @@
       711,
       713
     ],
+    "imagePath": "3d",
     "name":"X",
     "breeding":true
   },
@@ -1737,6 +1759,7 @@
       711,
       713
     ],
+    "imagePath": "3d",
     "name":"Y",
     "breeding":true
   },
@@ -1973,6 +1996,7 @@
       706,
       707
     ],
+    "imagePath": "3d",
     "name":"Omega Ruby",
     "breeding":true
   },
@@ -2209,6 +2233,7 @@
       706,
       707
     ],
+    "imagePath": "3d",
     "name":"Alpha Sapphire",
     "breeding":true
   },
@@ -2243,6 +2268,7 @@
         "extra-rolls": 2
       }
     ],
+    "imagePath": "3d",
     "name":"Sun",
     "table-7":[
       9,
@@ -2450,6 +2476,7 @@
         "extra-rolls": 2
       }
     ],
+    "imagePath": "3d",
     "name":"Moon",
     "table-7":[
       9,
@@ -2686,6 +2713,7 @@
         "extra-rolls": 2
       }
     ],
+    "imagePath": "3d",
     "name":"Ultra Sun",
     "table-7":[
       9,
@@ -3020,6 +3048,7 @@
         "extra-rolls": 2
       }
     ],
+    "imagePath": "3d",
     "name":"Ultra Moon",
     "table-7":[
       9,
@@ -3320,6 +3349,7 @@
         "extra-rolls": 1
       }
     ],
+    "imagePath": "3d",
     "name":"Let's Go Pikachu",
     "pokedex":[
       0,
@@ -3631,6 +3661,7 @@
         "extra-rolls": 1
       }
     ],
+    "imagePath": "3d",
     "name":"Let's Go Eevee",
     "pokedex":[
       0,
@@ -4009,6 +4040,7 @@
         "extra-rolls": 2
       }
     ],
+    "imagePath": "3d",
     "name":"Sword",
     "pokedex":[
       0,
@@ -5317,6 +5349,7 @@
         "extra-rolls": 2
       }
     ],
+    "imagePath": "3d",
     "name":"Shield",
     "pokedex":[
       0,
@@ -6895,6 +6928,7 @@
       458,
       464
     ],
+    "imagePath": "3d",
     "name":"Brilliant Diamond",
     "pokedex":[
       0,
@@ -7766,6 +7800,7 @@
       458,
       464
     ],
+    "imagePath": "3d",
     "name":"Shining Pearl",
     "pokedex":[
       0,
@@ -8648,6 +8683,7 @@
       957,
       958
     ],
+    "imagePath": "3d",
     "name":"Legends: Arceus",
     "pokedex":[
       24,
