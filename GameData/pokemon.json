@@ -71,7 +71,7 @@
     "name":"Blastoise",
     "breedable":true,
     "family":[6, 7, 8],
-    "forms":["Regular", "Gigantamax"],
+    "forms":["Regular", "Mega", "Gigantamax"],
     "base":[78, 79, 85, 83, 100]
   },
   {
@@ -121,6 +121,7 @@
     "name":"Beedrill",
     "breedable":true,
     "family":[12, 13, 14],
+    "forms": ["Regular", "Mega"],
     "base":[75, 65, 45, 80, 40]
   },
   {
@@ -145,6 +146,7 @@
     "name":"Pidgeot",
     "breedable":true,
     "family":[15, 16, 17],
+    "forms": ["Regular", "Mega"],
     "base":[91, 83, 70, 80, 75]
   },
   {
@@ -340,6 +342,7 @@
     "name":"Zubat",
     "breedable":true,
     "family":[40, 41, 168],
+    "forms": ["Male", "Female"],
     "base":[55, 40, 40, 45, 35]
   },
   {
@@ -687,6 +690,7 @@
     "breedable":true,
     "regional-forms":[926],
     "family":[78, 79],
+    "forms": ["Regular", "Mega"],
     "base":[30, 95, 80, 75, 110]
   },
   {
@@ -1132,7 +1136,7 @@
       [132, 470],
       [132, 699]
     ],
-    "forms":["Regular", "Gigantamax"],
+    "forms":["Male", "Female", "Gigantamax"],
     "base":[55, 55, 65, 55, 50]
   },
   {
@@ -1203,6 +1207,7 @@
     "generation":1,
     "name":"Aerodactyl",
     "breedable":true,
+    "forms": ["Regular", "Mega"],
     "base":[130, 80, 65, 105, 65]
   },
   {
@@ -1468,7 +1473,8 @@
     "stage":1,
     "name":"Xatu",
     "breedable":true,
-    "family":[176, 177]
+    "family":[176, 177],
+    "forms": ["Male", "Female"]
   },
   {
     "generation":2,
@@ -1584,7 +1590,8 @@
     "stage":0,
     "name":"Wooper",
     "breedable":true,
-    "family":[193, 194]
+    "family":[193, 194],
+    "forms": ["Male", "Female"]
   },
   {
     "generation":2,
@@ -1684,7 +1691,7 @@
     "name":"Steelix",
     "breedable":true,
     "family":[94, 207],
-    "forms":["Male", "Female"]
+    "forms":["Male", "Female", "Mega"]
   },
   {
     "generation":2,
@@ -2001,15 +2008,15 @@
     "stage":2,
     "name":"Sceptile",
     "breedable":true,
-    "family":[251, 252, 253]
+    "family":[251, 252, 253],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
     "stage":0,
     "name":"Torchic",
     "breedable":true,
-    "family":[254, 255, 256],
-    "forms":["Male", "Female"]
+    "family":[254, 255, 256]
   },
   {
     "generation":3,
@@ -2046,7 +2053,8 @@
     "stage":2,
     "name":"Swampert",
     "breedable":true,
-    "family":[257, 258, 259]
+    "family":[257, 258, 259],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2217,7 +2225,7 @@
     "name":"Gardevoir",
     "breedable":true,
     "family":[279, 280, 281],
-    "forms":["Regular","Mega"]
+    "forms":["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2355,13 +2363,14 @@
   {
     "generation":3,
     "name":"Sableye",
-    "breedable":true
+    "breedable":true,
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
     "name":"Mawile",
     "breedable":true,
-    "forms":["Regular","Mega"]
+    "forms":["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2382,7 +2391,8 @@
     "stage":2,
     "name":"Aggron",
     "breedable":true,
-    "family":[303, 304, 305]
+    "family":[303, 304, 305],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2471,7 +2481,8 @@
     "stage":1,
     "name":"Sharpedo",
     "breedable":true,
-    "family":[317, 318]
+    "family":[317, 318],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2501,7 +2512,7 @@
     "name":"Camerupt",
     "breedable":true,
     "family":[321, 322],
-    "forms":["Male", "Female"]
+    "forms":["Male", "Female", "Mega"]
   },
   {
     "generation":3,
@@ -2578,7 +2589,8 @@
     "stage":1,
     "name":"Altaria",
     "breedable":true,
-    "family":[332, 333]
+    "family":[332, 333],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2767,7 +2779,8 @@
     "stage":1,
     "name":"Glalie",
     "breedable":true,
-    "family":[360, 361]
+    "family":[360, 361],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2844,7 +2857,8 @@
     "stage":2,
     "name":"Salamence",
     "breedable":true,
-    "family":[370, 371, 372]
+    "family":[370, 371, 372],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2865,7 +2879,8 @@
     "stage":2,
     "name":"Metagross",
     "breedable":true,
-    "family":[373, 374, 375]
+    "family":[373, 374, 375],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -2915,7 +2930,8 @@
     "generation":3,
     "legendary":true,
     "name":"Rayquaza",
-    "breedable":false
+    "breedable":false,
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
@@ -3022,8 +3038,7 @@
     "stage":0,
     "name":"Bidoof",
     "breedable":true,
-    "family":[398, 399],
-    "forms":["Male", "Female"]
+    "family":[398, 399]
   },
   {
     "generation":4,
@@ -3168,16 +3183,14 @@
     "stage":0,
     "name":"Buizel",
     "breedable":true,
-    "family":[417, 418],
-    "forms":["Male", "Female"]
+    "family":[417, 418]
   },
   {
     "generation":4,
     "stage":1,
     "name":"Floatzel",
     "breedable":true,
-    "family":[417, 418],
-    "forms":["Male", "Female"]
+    "family":[417, 418]
   },
   {
     "generation":4,
@@ -3242,7 +3255,8 @@
     "stage":1,
     "name":"Lopunny",
     "breedable":true,
-    "family":[426, 427]
+    "family":[426, 427],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":4,
@@ -3581,7 +3595,8 @@
     "stage":2,
     "name":"Gallade",
     "breedable":true,
-    "family":[279, 280, 474]
+    "family":[279, 280, 474],
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":4,
@@ -3889,8 +3904,8 @@
     "stage":2,
     "name":"Unfezant",
     "breedable":true,
-    "family":[518, 519, 520
-    ]
+    "family":[518, 519, 520],
+    "forms": ["Male", "Female"]
   },
   {
     "generation":5,
@@ -3958,7 +3973,8 @@
   {
     "generation":5,
     "name":"Audino",
-    "breedable":true
+    "breedable":true,
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":5,
@@ -4984,8 +5000,7 @@
     "stage":0,
     "name":"Honedge",
     "breedable":true,
-    "family":[678, 679, 680],
-    "forms":["Shield", "Sword"]
+    "family":[678, 679, 680]
   },
   {
     "generation":6,
@@ -4999,7 +5014,8 @@
     "stage":2,
     "name":"Aegislash",
     "breedable":true,
-    "family":[678, 679, 680]
+    "family":[678, 679, 680],
+    "forms":["Shield", "Sword"]
   },
   {
     "generation":6,
@@ -5258,7 +5274,8 @@
     "generation":6,
     "legendary":true,
     "name":"Diancie",
-    "breedable":false
+    "breedable":false,
+    "forms": ["Regular", "Mega"]
   },
   {
     "generation":6,
@@ -6625,7 +6642,8 @@
     "name":"Galarian Darmanitan",
     "breedable":true,
     "regional-forms":[554],
-    "family":[917, 918]
+    "family":[917, 918],
+    "forms": ["Standard", "Zen"]
   },
   {
     "generation":8,
@@ -6706,7 +6724,8 @@
     "generation":8,
     "legendary":true,
     "name":"Calyrex",
-    "breedable":false
+    "breedable":false,
+    "forms": ["Solo", "Ice Rider", "Shadow Rider"]
   },
   {
     "generation":8,
