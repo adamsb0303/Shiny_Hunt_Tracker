@@ -150,7 +150,9 @@ class PreviouslyCaught {
         if(displayCaught < displayPrevious){
             windowLayout.getChildren().remove(displayCaught * 4, windowLayout.getChildren().size());
             previouslyCaughtSettingsLayout.getChildren().remove(displayCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
+            return;
         }
+
         try(FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
             JSONParser jsonParser = new JSONParser();
             JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
@@ -159,7 +161,7 @@ class PreviouslyCaught {
             if (caughtListSize < displayCaught)
                 displayCaught = caughtListSize;
             double widthTotal = 0;
-            for (int i = caughtListSize - 1; i >= (caughtListSize - displayCaught); i--) {
+            for (int i = caughtListSize - displayPrevious - 1; i >= (caughtListSize - displayCaught); i--) {
                 JSONObject caughtData = (JSONObject) caughtPokemonList.get(i);
 
                 Game caughtGame = new Game(Integer.parseInt(caughtData.get("game").toString()));
