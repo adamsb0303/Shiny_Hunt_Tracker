@@ -4,12 +4,22 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
+import static shinyhunttracker.ElementSettings.*;
 
 class PreviouslyCaught {
     static Stage windowStage = new Stage();
@@ -27,7 +37,6 @@ class PreviouslyCaught {
     public static void previouslyCaughtPokemonSettings(){
         if(previouslyCaughtSettingsLayout.getChildren().size() != 0) {
             previouslyCaughtSettingsStage.show();
-            previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
             return;
         }
 
@@ -71,7 +80,7 @@ class PreviouslyCaught {
 
         ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
 
-        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
+        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 300, 500);
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
 
         numberCaughtField.setOnAction(e ->{
@@ -87,7 +96,7 @@ class PreviouslyCaught {
                 }
                 else {
                     windowStage.show();
-                    addPreviouslyCaughtPokemon(displayCaught);
+                    addPreviouslyCaughtPokemon();
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
@@ -109,6 +118,8 @@ class PreviouslyCaught {
         saveLayout.setOnAction(e -> saveLayout());
         loadLayout.setOnAction(e -> loadLayoutMenu());
 
+        previouslyCaughtSettingsStage.show();
+        previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
     }
 
     //creates window with previously caught pokemon
@@ -127,40 +138,38 @@ class PreviouslyCaught {
 
         previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
         windowLayout.getChildren().remove(0,windowLayout.getChildren().size());
-        addPreviouslyCaughtPokemon(displayCaught);
+        addPreviouslyCaughtPokemon();
 
         SaveData.loadLayout("Previously-Caught/layoutTransition", windowLayout, false);
     }
 
     //create elements of the last x previously caught pokemon
-    public static void addPreviouslyCaughtPokemon(int previouslyCaught){
-/*
-        if(previouslyCaught < displayPrevious){
-            windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
-            previouslyCaughtSettingsLayout.getChildren().remove(previouslyCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
+    public static void addPreviouslyCaughtPokemon(){
+        if(displayCaught < displayPrevious){
+            windowLayout.getChildren().remove(displayCaught * 4, windowLayout.getChildren().size());
+            previouslyCaughtSettingsLayout.getChildren().remove(displayCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
         }
-        SaveData SaveData = new SaveData();
-        int numberCaught = SaveData.getfileLength("CaughtPokemon");
-        if(numberCaught < previouslyCaught)
-            previouslyCaught = numberCaught;
-        double widthTotal = 0;
-        for(int i = numberCaught - 1; i >= (numberCaught - previouslyCaught); i--){
-            if((i - numberCaught) * -1 > displayPrevious) {
-                String line = SaveData.getLinefromFile(i, "CaughtPokemon");
-                String[] data = line.split(",");
-                Game caughtGame = new Game(data[2], parseInt(data[3]));
-                int selectedPokemonGeneration = new Pokemon (data[0], Pokedex.getPokedex()).getGeneration();
-                if (caughtGame.getGeneration() < selectedPokemonGeneration)
-                    caughtGame.setGeneration(selectedPokemonGeneration);
-                Pokemon previouslyCaughtPokemon = new Pokemon(data[0], Pokedex.getPokedex());
-                previouslyCaughtPokemon.setForm(data[1]);
+        try(FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
+
+            int caughtListSize = caughtPokemonList.size();
+            if (caughtListSize < displayCaught)
+                displayCaught = caughtListSize;
+            double widthTotal = 0;
+            for (int i = caughtListSize - 1; i >= (caughtListSize - displayCaught); i--) {
+                JSONObject caughtData = (JSONObject) caughtPokemonList.get(i);
+
+                Game caughtGame = new Game(Integer.parseInt(caughtData.get("game").toString()));
+
+                Pokemon previouslyCaughtPokemon = new Pokemon(Integer.parseInt(caughtData.get("pokemon").toString()));
+                previouslyCaughtPokemon.setForm(Integer.parseInt(caughtData.get("form").toString()));
                 ImageView sprite = new ImageView();
-                setPokemonSprite(sprite, previouslyCaughtPokemon, caughtGame);
-                if(previouslyCaughtPokemon.getForm() != null && !previouslyCaughtPokemon.getForm().equals("null"))
-                    setAlternateSprite(previouslyCaughtPokemon, caughtGame, sprite);
-                Text pokemon = new Text(data[0]);
-                Text method = new Text(data[4]);
-                Text encounters = new Text(data[6]);
+                FetchImage.setImage(sprite, previouslyCaughtPokemon, caughtGame);
+
+                Text pokemon = new Text(previouslyCaughtPokemon.getName());
+                Text method = new Text(caughtGame.getName());
+                Text encounters = new Text(caughtData.get("encounters").toString());
 
                 windowLayout.getChildren().addAll(sprite, pokemon, method, encounters);
 
@@ -188,14 +197,15 @@ class PreviouslyCaught {
                 quickEdit(pokemon);
                 quickEdit(method);
                 quickEdit(encounters);
-                VBox spriteSettings = createImageSettings(sprite, new Pokemon(data[0], 0), caughtGame);
+                VBox spriteSettings = createImageSettings(windowLayout, sprite, previouslyCaughtPokemon, caughtGame);
                 VBox pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
                 VBox methodLabelSettings = createLabelSettings(method, "Method");
                 VBox encountersLabelSettings = createLabelSettings(encounters, "Encounters");
                 previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
             }
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
         }
-*/
     }
 
     public static void displayPreviouslyCaughtList(){
@@ -204,17 +214,21 @@ class PreviouslyCaught {
         TreeView<String> previouslyCaughtView = new TreeView<>();
         TreeItem<String> previoulyCaughtRoot = new TreeItem<>();
 
-        //SaveData previoulyCaughtData = new SaveData();
+        try(FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
+            JSONParser jsonParser = new JSONParser();
+            JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
 
-        /*for(int i = previoulyCaughtData.getfileLength("CaughtPokemon") - 1; i >= 0 ; i--){
-            String line = previoulyCaughtData.getLinefromFile(i, "CaughtPokemon");
-            String[] data = line.split(",");
-            String name = data[0];
-            String game = data[2];
-            String method = data[4];
-            String encounters = data[6];
-            makeBranch((previoulyCaughtData.getfileLength("CaughtPokemon") - i) + ") " + name + " | " + game + " | " + method + " | " + encounters + " encounters", previoulyCaughtRoot);
-        }*/
+            for(Object i : caughtPokemonList){
+                JSONObject caughtData = (JSONObject) i;
+                Pokemon caughtPokemon = new Pokemon(Integer.parseInt(caughtData.get("pokemon").toString()));
+                Game caughtGame = new Game(Integer.parseInt(caughtData.get("game").toString()));
+                Method caughtMethod = new Method(Integer.parseInt(caughtData.get("method").toString()));
+                TreeItem<String> item = new TreeItem<>(caughtPokemon.getName() + " | " + caughtGame.getName() + " | " + caughtMethod.getName() + " | " + caughtData.get("encounters").toString() + " encounters");
+                previoulyCaughtRoot.getChildren().add(item);
+            }
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
+        }
 
         previouslyCaughtView.setRoot(previoulyCaughtRoot);
         previouslyCaughtView.setShowRoot(false);
@@ -363,19 +377,7 @@ class PreviouslyCaught {
         if(!windowStage.isShowing())
             createPreviouslyCaughtPokemonWindow();
         previouslyCaughtPokemonSettings();
-        addPreviouslyCaughtPokemon(displayCaught);
+        addPreviouslyCaughtPokemon();
         SaveData.loadLayout(currentLayout, windowLayout, false);
-    }
-
-    public Stage getSettingsStage(){
-        return previouslyCaughtSettingsStage;
-    }
-
-    public String getCurrentLayout(){
-        return currentLayout;
-    }
-
-    public void setCurrentLayout(String currentLayout){
-        this.currentLayout = currentLayout;
     }
 }

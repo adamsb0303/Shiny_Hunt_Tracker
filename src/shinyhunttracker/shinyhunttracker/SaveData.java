@@ -122,11 +122,11 @@ public class SaveData {
     public static void pokemonCaught(HuntWindow huntData){
         JSONObject pokemonData = new JSONObject();
 
-        pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
-        pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
-        pokemonData.put("game", huntData.getGame().toString());
+        pokemonData.put("pokemon", huntData.getPokemon().getDexNumber());
+        pokemonData.put("form", huntData.getPokemon().getFormId());
+        pokemonData.put("game", huntData.getGame().getId());
         pokemonData.put("generation", huntData.getGame().getGeneration());
-        pokemonData.put("method", huntData.getMethod().getName());
+        pokemonData.put("method", huntData.getMethod().getId());
         pokemonData.put("modifier", huntData.getMethod().getModifier());
         pokemonData.put("encounters", huntData.getEncounters());
         pokemonData.put("combo", huntData.getCombo());
