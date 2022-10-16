@@ -64,7 +64,7 @@ class HuntWindow {
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
         currentGameText = new Text(selectedGame.toString());
-        oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedMethod.getBase()));
+        oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
         dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));
         currentComboText = new Text(String.valueOf(combo));

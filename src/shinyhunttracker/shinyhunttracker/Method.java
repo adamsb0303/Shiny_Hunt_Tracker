@@ -26,6 +26,7 @@ public class Method {
         name.setValue(methodObject.get("name").toString());
         breeding = (Boolean) methodObject.get("breeding");
         methodInfo = methodObject.get("method-info").toString();
+        modifier = Integer.parseInt(methodObject.get("modifier").toString());
         this.id = id;
 
         JSONArray tempJSONArr = (JSONArray) methodObject.get("games");

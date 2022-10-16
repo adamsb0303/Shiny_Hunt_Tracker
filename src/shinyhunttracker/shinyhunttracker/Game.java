@@ -83,6 +83,7 @@ public class Game {
 
     public int getGeneration(){ return generation; }
     public int getId(){ return id; }
+    public int getOdds() { return odds; }
 
     public void setGeneration(int generation){ this.generation = generation; }
 }
