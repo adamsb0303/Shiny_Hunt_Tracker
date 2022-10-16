@@ -246,6 +246,8 @@ class PreviouslyCaught {
         previouslyCaughtSettingsStage.close();
     }
 
+    public static boolean isShowing() { return windowStage.isShowing(); }
+
     //save layout
     public static void saveLayout(){
         Stage promptLayoutSaveName = new Stage();

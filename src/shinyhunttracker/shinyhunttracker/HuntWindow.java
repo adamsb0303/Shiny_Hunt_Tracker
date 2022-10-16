@@ -20,7 +20,6 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static java.lang.Integer.parseInt;
 import static shinyhunttracker.ElementSettings.*;
 
 class HuntWindow {
@@ -100,10 +99,10 @@ class HuntWindow {
         Evo0 = new ImageView();
         Evo1 = new ImageView();
 
-        /*if(selectedPokemon.getEvoStage() >= 1)
-            setPokemonSprite(Evo0, selectedPokemon.getFamily().get(0), selectedGame);
+        if(selectedPokemon.getEvoStage() >= 1)
+            FetchImage.setImage(Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame);
         if(selectedPokemon.getEvoStage() >= 2)
-            setPokemonSprite(Evo1, selectedPokemon.getFamily().get(1), selectedGame);*/
+            FetchImage.setImage(Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame);
 
         //Makes family sprites draggable
         quickEdit(sprite);
@@ -304,8 +303,8 @@ class HuntWindow {
         SaveData.pokemonCaught(new HuntWindow(new Pokemon(pokemonID), selectedGame, selectedMethod, currentLayout, encounters.getValue(), combo.getValue(), increment, 0));
         resetCombo();
         resetEncounters();
-        /*if(previouslyCaughtWindow.getStage().isShowing())
-            previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();*/
+        if(PreviouslyCaught.isShowing())
+            previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();
     }
 
     //resets encounters
@@ -508,7 +507,6 @@ class HuntWindow {
 
     public int getCombo(){ return combo.getValue(); }
     public int getEncounters(){ return encounters.getValue(); }
-    public int getGameGeneration(){ return selectedGame.getGeneration(); }
     public int getHuntID(){ return huntID; }
     public int getHuntNumber(){ return huntNumber; }
     public int getIncrement(){ return increment; }
@@ -523,8 +521,7 @@ class HuntWindow {
     public String getCurrentLayout() { return currentLayout; }
     public IntegerProperty encounterProperty(){ return encounters; }
 
-    public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };
+    public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; }
     public void setKeybind(KeyCode keybind){ this.keybind = keybind; }
     public void setIncrement(int increment){ this.increment = increment; }
-    public void setPreviouslyCaughtWindow(PreviouslyCaught previouslyCaughtWindow) { this.previouslyCaughtWindow = previouslyCaughtWindow; }
 }
