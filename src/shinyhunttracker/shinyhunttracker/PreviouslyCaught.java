@@ -181,10 +181,10 @@ class PreviouslyCaught {
                 method.setStroke(Color.web("0x00000000"));
                 encounters.setStroke(Color.web("0x00000000"));
 
-                double currentImageWidth = sprite.getImage().getWidth() * sprite.getScaleX();
+                double currentImageWidth = 200;
 
                 sprite.setLayoutX(widthTotal + currentImageWidth / 2);
-                sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
+                sprite.setLayoutY(200);
 
                 pokemon.setLayoutX(widthTotal + currentImageWidth / 2);
                 pokemon.setLayoutY(75);
@@ -195,7 +195,7 @@ class PreviouslyCaught {
                 encounters.setLayoutX(widthTotal + currentImageWidth / 2);
                 encounters.setLayoutY(105);
 
-                widthTotal += sprite.getImage().getWidth() * sprite.getScaleX();
+                widthTotal += currentImageWidth;
 
                 quickEdit(sprite);
                 quickEdit(pokemon);

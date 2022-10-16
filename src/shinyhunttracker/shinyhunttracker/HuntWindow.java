@@ -137,11 +137,11 @@ class HuntWindow {
             if(windowLayout.getChildren().get(i).isVisible()) {
                 double evo1Width = 0;
                 double evo0Width = 0;
-                double spriteWidth = sprite.getImage().getWidth() * sprite.getScaleX();
+                double spriteWidth = 200;
                 if(Evo0.getImage() != null)
-                    evo0Width = Evo0.getImage().getWidth() * Evo0.getScaleX();
+                    evo0Width = 200;
                 if(Evo1.getImage() != null)
-                    evo1Width = Evo1.getImage().getWidth() * Evo1.getScaleX();
+                    evo1Width = 200;
                 windowLayout.getChildren().get(i).setLayoutX(evo0Width + evo1Width + spriteWidth + 5);
                 windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
                 index++;
@@ -149,24 +149,24 @@ class HuntWindow {
         }
 
         //Positions the sprites so that they are in order of the family i.e stage 0, 1, 2
-        if(Evo1.getImage() != null) {
-            Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
-            Evo0.setLayoutY((Evo0.getImage().getHeight() * Evo0.getScaleY()));
+        if(selectedPokemon.getEvoStage() == 2) {
+            Evo0.setLayoutX(100);
+            Evo0.setLayoutY(200);
 
-            Evo1.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + (Evo1.getImage().getWidth() * Evo1.getScaleX()/2));
-            Evo1.setLayoutY(Evo1.getImage().getHeight() * Evo1.getScaleY());
+            Evo1.setLayoutX(200 + 100);
+            Evo1.setLayoutY(200);
 
-            sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + Evo1.getImage().getWidth()  * Evo1.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
-            sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
-        }else if(Evo0.getImage() != null){
-            Evo0.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX()/2);
-            Evo0.setLayoutY(Evo0.getImage().getHeight() * Evo0.getScaleY());
+            sprite.setLayoutX(200 + 200 + 100);
+            sprite.setLayoutY(200);
+        }else if(selectedPokemon.getEvoStage() == 1){
+            Evo0.setLayoutX(100);
+            Evo0.setLayoutY(200);
 
-            sprite.setLayoutX(Evo0.getImage().getWidth() * Evo0.getScaleX() + (sprite.getImage().getWidth() * sprite.getScaleX()/2));
-            sprite.setLayoutY(sprite.getImage().getHeight() * sprite.getScaleY());
+            sprite.setLayoutX(200 + 100);
+            sprite.setLayoutY(200);
         }else {
-            sprite.setLayoutX((sprite.getImage().getWidth() * sprite.getScaleX())/2);
-            sprite.setLayoutY((sprite.getImage().getHeight() * sprite.getScaleY()));
+            sprite.setLayoutX(100);
+            sprite.setLayoutY(200);
         }
 
         //automatically updates encounters and combo texts
