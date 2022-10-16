@@ -31,7 +31,6 @@ class HuntWindow {
     ImageView Evo0, Evo1, sprite;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
     Text previousEncountersText = new Text();
-    PreviouslyCaught previouslyCaughtWindow;
     IntegerProperty encounters = new SimpleIntegerProperty();
     IntegerProperty combo = new SimpleIntegerProperty();
     int previousEncounters, increment, huntNumber, huntID;
@@ -293,6 +292,8 @@ class HuntWindow {
     //adds current pokemon to the caught pokemon file
     public void pokemonCaught() {
         SaveData.pokemonCaught(this);
+        if(PreviouslyCaught.isShowing())
+            PreviouslyCaught.refreshPreviouslyCaughtPokemon();
 
         CustomizeHuntStage.close();
         windowStage.close();
@@ -304,7 +305,7 @@ class HuntWindow {
         resetCombo();
         resetEncounters();
         if(PreviouslyCaught.isShowing())
-            previouslyCaughtWindow.refreshPreviouslyCaughtPokemon();
+            PreviouslyCaught.refreshPreviouslyCaughtPokemon();
     }
 
     //resets encounters

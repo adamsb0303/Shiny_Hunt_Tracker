@@ -2,6 +2,7 @@ package shinyhunttracker;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -133,14 +134,15 @@ class PreviouslyCaught {
     }
 
     //refreshes previously caught pokemon window
-    public void refreshPreviouslyCaughtPokemon(){
-        SaveData.saveLayout("Previously-Caught/layoutTransition", windowLayout, false);
+    public static void refreshPreviouslyCaughtPokemon(){
+        SaveData.saveLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
 
         previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
         windowLayout.getChildren().remove(0,windowLayout.getChildren().size());
         addPreviouslyCaughtPokemon();
 
-        SaveData.loadLayout("Previously-Caught/layoutTransition", windowLayout, false);
+        SaveData.loadLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
+        SaveData.removeLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", false);
     }
 
     //create elements of the last x previously caught pokemon

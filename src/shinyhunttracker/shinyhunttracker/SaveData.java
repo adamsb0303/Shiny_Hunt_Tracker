@@ -80,7 +80,7 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public static void loadHunt(int lineNumber, HuntController controller){
+    public static void loadHunt(int index, HuntController controller){
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
@@ -89,11 +89,11 @@ public class SaveData {
             JSONArray huntList = (JSONArray) obj;
 
             //for loading the last entry in the list
-            if(lineNumber == -1)
-                lineNumber = huntList.size() - 1;
+            if(index == -1)
+                index = huntList.size() - 1;
 
             //parse hunt data
-            JSONObject huntObject = (JSONObject) huntList.get(lineNumber);
+            JSONObject huntObject = (JSONObject) huntList.get(index);
             Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
             Game selectedGame = new Game(Integer.parseInt(huntObject.get("game").toString()));
             Method selectedMethod = new Method(Integer.parseInt(huntObject.get("method").toString()));
@@ -324,13 +324,34 @@ public class SaveData {
         }
     }
 
-    public static String[] parseJSONArray(JSONArray json){
-        if(json == null)
-            return null;
-        List<String> list = new ArrayList<>();
-        for (Object o : json)
-            list.add((String) o);
-        return list.toArray(new String[0]);
+    public static void removeLayout(String layoutName, boolean currentHunt){
+        //Changes if the file is for current hunt or previously caught window
+        String filePath = "SaveData/";
+        if(currentHunt)
+            filePath += "huntLayouts.json";
+        else
+            filePath += "caughtLayouts.json";
+
+        try(FileReader reader = new FileReader(filePath)){
+            JSONParser jsonParser = new JSONParser();
+
+            JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
+            for(int i = 0; i < layoutList.size(); i++){
+                JSONArray layoutData = (JSONArray) layoutList.get(i);
+                if(!layoutData.get(0).toString().equals(layoutName))
+                    continue;
+
+                layoutList.remove(i);
+                break;
+            }
+
+            //Write to file
+            FileWriter file = new FileWriter(filePath);
+            file.write(layoutList.toJSONString());
+            file.close();
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
+        }
     }
 
     public static JSONObject readJSON(String filePath, int index){
