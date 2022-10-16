@@ -99,7 +99,6 @@ public class Pokemon{
         return null;
     }
 
-
     @Override
     public String toString(){ return name.getValue(); }
 
@@ -110,7 +109,7 @@ public class Pokemon{
     public int getGeneration(){ return generation; }
 
     public Vector<Vector<Integer>> getFamily(){ return family; }
-    public String[] getForms(){ return new String[]{}; }
+    public Vector<String> getForms(){ return forms; }
     public String getForm(){ return forms.get(form);}
     public String getName(){ return name.getValue(); }
     public StringProperty getNameProperty(){ return name; }

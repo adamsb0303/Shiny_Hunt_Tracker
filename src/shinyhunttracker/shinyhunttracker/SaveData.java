@@ -27,7 +27,7 @@ public class SaveData {
         JSONObject pokemonData = new JSONObject();
 
         pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
-        pokemonData.put("pokemon_form", huntData.getPokemon().getForm());
+        pokemonData.put("pokemon_form", huntData.getPokemon().getFormId());
         pokemonData.put("game", huntData.getGame().getId());
         pokemonData.put("method", huntData.getMethod().getId());
         pokemonData.put("modifier", huntData.getMethod().getModifier());
