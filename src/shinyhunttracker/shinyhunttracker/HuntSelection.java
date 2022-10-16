@@ -301,10 +301,9 @@ public class HuntSelection{
         if(selectedPokemon != null){
             for(Game i : defaultGameList) {
                 //if its unbreedable, its makes sure its catchable in n game
-                if (!selectedPokemon.getBreedable() && i.hasUnbreedable(selectedPokemon.getDexNumber())) {
-                    updatedGameList.add(i);
+                if (!selectedPokemon.getBreedable() && !i.hasUnbreedable(selectedPokemon.getDexNumber()))
                     continue;
-                }
+
                 //for unrestricted gens, add all. for restricted add only if they are listed in the pokedex of n game
                 if (i.getPokedex().size() == 0) {
                     if (i.getGeneration() >= selectedPokemon.getGeneration())
@@ -386,7 +385,7 @@ public class HuntSelection{
         //removes if not in game list if pokemon list is already made
         if(selectedPokemon != null && selectedGame != null){
             for(int i = 0; i < updatedMethodList.size(); i++){
-                if(i == selectedGame.getMethods().size() || updatedMethodList.get(i).getId() != selectedGame.getMethods().get(i) ||
+                if(i == selectedGame.getMethods().size() ||  !selectedGame.getMethods().contains(updatedMethodList.get(i).getId()) ||
                         (defaultMethodList.get(selectedGame.getMethods().get(i)).getBreeding() && !selectedPokemon.getBreedable())) {
                     updatedMethodList.remove(i);
                     i--;
