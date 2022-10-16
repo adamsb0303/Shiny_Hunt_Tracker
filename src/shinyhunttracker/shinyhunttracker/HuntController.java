@@ -27,7 +27,6 @@ import java.util.Vector;
 public class HuntController {
     Stage huntControls = new Stage();
     VBox huntControlsVBox = new VBox();
-    PreviouslyCaught previousCatches = new PreviouslyCaught(0);
     double xOffset, yOffset;
 
     ObservableList<Pokemon> pokedex = FXCollections.observableArrayList();
@@ -104,7 +103,7 @@ public class HuntController {
 
         editSavedHunts.setOnAction(e -> {});
         keyBinding.setOnAction(e -> keyBindingSettings());
-        previouslyCaught.setOnAction(e -> previousCatches.previouslyCaughtPokemonSettings());
+        previouslyCaught.setOnAction(e -> PreviouslyCaught.previouslyCaughtPokemonSettings());
 
         //Listener for KeyBinds
         huntControlsScene.setOnKeyPressed(e -> {
@@ -155,8 +154,7 @@ public class HuntController {
 
             //Close all possibly open windows
             keyBindingSettingsStage.close();
-            previousCatches.getStage().close();
-            previousCatches.getSettingsStage().close();
+            PreviouslyCaught.close();
 
             //save and close all currently open hunts
             while(windowsList.size() > 0) {

@@ -24,7 +24,7 @@ import java.util.Vector;
 import static javafx.util.Duration.INDEFINITE;
 import static javafx.util.Duration.ZERO;
 
-public class HuntSelection extends Window {
+public class HuntSelection{
     static Stage selectionPageStage = new Stage();
 
     static Pokemon selectedPokemon = null;

@@ -21,9 +21,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
+import static shinyhunttracker.ElementSettings.*;
 
-class HuntWindow extends Window {
+class HuntWindow {
     //hunt window elements
+    Stage windowStage = new Stage();
+    AnchorPane windowLayout = new AnchorPane();
+    String currentLayout;
     int huntLayoutSize = 0;
     ImageView Evo0, Evo1, sprite;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
@@ -186,7 +190,7 @@ class HuntWindow extends Window {
         if(CustomizeHuntVBox.getChildren().size() == 0) {
             CustomizeHuntStage.setTitle("Settings");
             CustomizeHuntStage.setResizable(false);
-            VBox spriteSettings = createImageSettings(sprite, selectedPokemon, selectedGame);
+            VBox spriteSettings = createImageSettings(windowLayout, sprite, selectedPokemon, selectedGame);
             VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
             VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
             VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
@@ -227,11 +231,11 @@ class HuntWindow extends Window {
 
             CustomizeHuntVBox.getChildren().add(spriteSettings);
             if (Evo1.getImage() != null) {
-                Evo1Settings = createImageSettings(Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame);
+                Evo1Settings = createImageSettings(windowLayout, Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame);
                 CustomizeHuntVBox.getChildren().add(Evo1Settings);
             }
             if (Evo0.getImage() != null) {
-                Evo0Settings = createImageSettings(Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame);
+                Evo0Settings = createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame);
                 CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
             }
 
@@ -515,6 +519,8 @@ class HuntWindow extends Window {
 
     public KeyCode getKeyBinding(){ return keybind; }
     public AnchorPane getScene() { return windowLayout; }
+    public Stage getStage() { return windowStage; }
+    public String getCurrentLayout() { return currentLayout; }
     public IntegerProperty encounterProperty(){ return encounters; }
 
     public void setHuntNumber(int huntNumber){ this.huntNumber = huntNumber; };

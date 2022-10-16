@@ -20,14 +20,11 @@ import java.awt.*;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-public class Window {
-    Stage windowStage = new Stage();
-    AnchorPane windowLayout = new AnchorPane();
-    String[] fonts = generateFonts();
-    String currentLayout;
+public class ElementSettings {
+    static String[] fonts = generateFonts();
 
     //creates ImageView settings VBox
-    public VBox createImageSettings(ImageView image, Pokemon pokemon, Game selectedGame){
+    public static VBox createImageSettings(AnchorPane windowLayout, ImageView image, Pokemon pokemon, Game selectedGame){
         HBox groupLabel = new HBox();
         Label Group = new Label(pokemon.getName() + " Sprite:");
         Group.setUnderline(true);
@@ -134,7 +131,7 @@ public class Window {
             double originalScale = image.getScaleX();
 
             Rectangle square = new Rectangle();
-            drawBoundaryGuide(image, square);
+            drawBoundaryGuide(windowLayout, image, square);
             imageFit.getChildren().remove(0);
 
             Button saveImageFit = new Button("Save Boundaries");
@@ -165,7 +162,7 @@ public class Window {
     }
 
     //draws square that shows where the fit width and length are
-    public void drawBoundaryGuide(ImageView image, Rectangle square){
+    public static void drawBoundaryGuide(AnchorPane windowLayout, ImageView image, Rectangle square){
         square.setHeight(-image.getFitHeight());
         square.setWidth(-image.getFitWidth());
         square.setTranslateX(-square.getWidth() / 2);
@@ -356,7 +353,7 @@ public class Window {
     }
 
     //adjusts boundary Y
-    public void adjustY(Rectangle square, double oldHeight, double mouseLocation, ImageView image){
+    public static void adjustY(Rectangle square, double oldHeight, double mouseLocation, ImageView image){
         if(square.getHeight() * (square.getLayoutY() - mouseLocation) / square.getHeight() >= 20) {
             square.setScaleY((square.getLayoutY() - mouseLocation) / square.getHeight());
             square.setTranslateY(-(square.getHeight() * square.getScaleY() / 2) - oldHeight / 2);
@@ -373,7 +370,7 @@ public class Window {
     }
 
     //adjusts boundary X
-    public void adjustX(Rectangle square, double oldWidth, double mouseLocation, ImageView image){
+    public static void adjustX(Rectangle square, double oldWidth, double mouseLocation, ImageView image){
         if(square.getWidth() * (square.getLayoutX() - mouseLocation) / square.getWidth() * 2 >= 20) {
             square.setScaleX((square.getLayoutX() - mouseLocation) / square.getWidth() * 2);
             square.setTranslateX(-oldWidth / 2);
@@ -391,7 +388,7 @@ public class Window {
     }
 
     //creates Label settings VBox
-    public VBox createLabelSettings(Text label, String labelName){
+    public static VBox createLabelSettings(Text label, String labelName){
         HBox groupLabel = new HBox();
         Label Group = new Label(labelName + " Label");
         Group.setUnderline(true);
@@ -608,7 +605,7 @@ public class Window {
 
     //change location of Text when dragged
     //change scale of Text when scrolled
-    public void quickEdit(Text element){
+    public static void quickEdit(Text element){
         element.setOnScroll(e -> {
             element.setScaleX(element.getScaleX() + (e.getDeltaY() / 1000));
             element.setScaleY(element.getScaleY() + (e.getDeltaY() / 1000));
@@ -625,7 +622,7 @@ public class Window {
 
     //change location of ImageView when dragged
     //change scale of ImageView when scrolled
-    public void quickEdit(ImageView element){
+    public static void quickEdit(ImageView element){
         element.setOnScroll(e -> {
             double scale = element.getScaleX() + (e.getDeltaY() / 1000);
             if(element.getImage().getWidth() * scale > -element.getFitWidth())
@@ -648,11 +645,11 @@ public class Window {
     }
 
     //creates string array of available fonts
-    private String[] generateFonts(){
+    private static String[] generateFonts(){
         String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         int fontArraySize = 0;
         for (String avaliableFont : avaliableFonts) {
-            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
+            if (sanitizeAvailableFontStrings(avaliableFont) != null) {
                 fontArraySize++;
             }
         }
@@ -660,7 +657,7 @@ public class Window {
         String[] temp = new String[fontArraySize];
         int index = 0;
         for (String avaliableFont : avaliableFonts) {
-            if (sanitizeAvaliableFontStrings(avaliableFont) != null) {
+            if (sanitizeAvailableFontStrings(avaliableFont) != null) {
                 temp[index] = avaliableFont;
                 index++;
             }
@@ -670,7 +667,7 @@ public class Window {
     }
 
     //removes "Bold", "Italics", and "Regular" from given string
-    public String sanitizeFontName(String name){
+    public static String sanitizeFontName(String name){
         int index = 0;
         if(name.contains("Bold"))
             index += 5;
@@ -682,7 +679,7 @@ public class Window {
     }
 
     //checks to see if using a given font returns the system default font
-    public String sanitizeAvaliableFontStrings(String name){
+    public static String sanitizeAvailableFontStrings(String name){
         Font test = new Font(name, 12);
         if(test.getName().compareTo("System Regular") == 0){
             return null;
@@ -691,7 +688,7 @@ public class Window {
     }
 
     //checks to see if bolding and unbolding a font returns system default
-    public boolean canBold(String name){
+    public static boolean canBold(String name){
         Font test;
         test = Font.font(name,  FontWeight.BOLD, 12);
         if(test.getName().compareTo(name) == 0)
@@ -702,7 +699,7 @@ public class Window {
     }
 
     //checks to see if italicizing and unitalicizing a font returns system default
-    public boolean canItalic(String name){
+    public static boolean canItalic(String name){
         Font test;
         test = Font.font(name,  FontPosture.ITALIC, 12);
         if(test.getName().compareTo(name) == 0)
@@ -716,17 +713,5 @@ public class Window {
     public void makeBranch(String title, TreeItem<String> parent){
         TreeItem<String> item = new TreeItem<>(title);
         parent.getChildren().add(item);
-    }
-
-    public Stage getStage(){
-        return windowStage;
-    }
-
-    public String getCurrentLayout(){
-        return currentLayout;
-    }
-
-    public void setCurrentLayout(String currentLayout){
-        this.currentLayout = currentLayout;
     }
 }

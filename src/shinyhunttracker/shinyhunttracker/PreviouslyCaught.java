@@ -11,113 +11,114 @@ import javafx.stage.Stage;
 
 import static java.lang.Integer.parseInt;
 
-class PreviouslyCaught extends Window {
-    int displayCaught;
-    int displayPrevious = 0;
+class PreviouslyCaught {
+    static Stage windowStage = new Stage();
+    static AnchorPane windowLayout = new AnchorPane();
+    static int displayCaught = 0;
+    static int displayPrevious = 0;
+    static String currentLayout;
 
-    Stage previouslyCaughtSettingsStage = new Stage();
-    VBox previouslyCaughtSettingsLayout = new VBox();
-    ColorPicker backgroundColorPicker = new ColorPicker();
-    TextField numberCaughtField = new TextField();
+    static Stage previouslyCaughtSettingsStage = new Stage();
+    static VBox previouslyCaughtSettingsLayout = new VBox();
+    static ColorPicker backgroundColorPicker = new ColorPicker();
+    static TextField numberCaughtField = new TextField();
 
-    PreviouslyCaught(int displayCaught){
-        this.displayCaught = displayCaught;
-        this.currentLayout = "null";
-        windowStage.setTitle("Previously Caught Pokemon");
+    //creates elements for previously caught element settings
+    public static void previouslyCaughtPokemonSettings(){
+        if(previouslyCaughtSettingsLayout.getChildren().size() != 0) {
+            previouslyCaughtSettingsStage.show();
+            previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
+            return;
+        }
+
+        previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
+
+        Label numberCaught = new Label("Display Previously Caught: ");
+        numberCaughtField.setMaxWidth(50);
+        numberCaughtField.setPromptText(String.valueOf(displayCaught));
+        Button previouslyCaughtList = new Button("List");
+        HBox numberPreviouslyCaught = new HBox();
+        numberPreviouslyCaught.setAlignment(Pos.CENTER);
+        numberPreviouslyCaught.setSpacing(5);
+        numberPreviouslyCaught.setPadding(new Insets(10, 0, 0, 10));
+        numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
+
+        Label backgroundColorLabel = new Label("Background: ");
+        backgroundColorPicker.setDisable(!windowStage.isShowing());
+        if (windowLayout.getBackground() != null)
+            backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
+
+        HBox backgroundColor = new HBox();
+        backgroundColor.setAlignment(Pos.CENTER);
+        backgroundColor.setSpacing(5);
+        backgroundColor.setPadding(new Insets(10, 0, 0, 10));
+        backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+
+        Label layoutLabel = new Label("Layout: ");
+        Button loadLayout = new Button("Load");
+        Button saveLayout = new Button("Save");
+        saveLayout.disableProperty().bind(windowStage.showingProperty().not());
+
+        HBox layoutSettings = new HBox();
+        layoutSettings.setAlignment(Pos.CENTER);
+        layoutSettings.setSpacing(5);
+        layoutSettings.setPadding(new Insets(10, 0, 0, 10));
+        layoutSettings.getChildren().addAll(layoutLabel, saveLayout, loadLayout);
+
+        previouslyCaughtSettingsLayout = new VBox();
+        previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
+        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
+
+        ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
+
+        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
+        previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
+
+        numberCaughtField.setOnAction(e ->{
+            try{
+                if(displayCaught == 0)
+                    createPreviouslyCaughtPokemonWindow();
+                displayPrevious = displayCaught;
+                displayCaught = parseInt(numberCaughtField.getText());
+                if(displayCaught == 0) {
+                    windowStage.close();
+                    backgroundColorPicker.setDisable(true);
+                    previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+                }
+                else {
+                    windowStage.show();
+                    addPreviouslyCaughtPokemon(displayCaught);
+                }
+                numberCaughtField.setText("");
+                numberCaughtField.setPromptText(String.valueOf(displayCaught));
+            }catch(NumberFormatException f){
+                numberCaughtField.setText("");
+            }
+        });
+
+        previouslyCaughtList.setOnAction(e -> displayPreviouslyCaughtList());
+
+        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+
+        windowStage.setOnCloseRequest(e -> {
+            displayCaught = 0;
+            numberCaughtField.setPromptText("0");
+            previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+        });
+
+        saveLayout.setOnAction(e -> saveLayout());
+        loadLayout.setOnAction(e -> loadLayoutMenu());
+
     }
 
     //creates window with previously caught pokemon
-    public void createPreviouslyCaughtPokemonWindow(){
+    public static void createPreviouslyCaughtPokemonWindow(){
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(previousHuntScene);
+        windowStage.setTitle("Previously Caught Pokemon");
         backgroundColorPicker.setDisable(false);
         windowStage.show();
-    }
-
-    //creates elements for previously caught element settings
-    public void previouslyCaughtPokemonSettings(){
-        if(previouslyCaughtSettingsLayout.getChildren().size() == 0) {
-            previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
-
-            Label numberCaught = new Label("Display Previously Caught: ");
-            numberCaughtField.setMaxWidth(50);
-            numberCaughtField.setPromptText(String.valueOf(displayCaught));
-            Button previouslyCaughtList = new Button("List");
-            HBox numberPreviouslyCaught = new HBox();
-            numberPreviouslyCaught.setAlignment(Pos.CENTER);
-            numberPreviouslyCaught.setSpacing(5);
-            numberPreviouslyCaught.setPadding(new Insets(10, 0, 0, 10));
-            numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
-
-            Label backgroundColorLabel = new Label("Background: ");
-            backgroundColorPicker.setDisable(!windowStage.isShowing());
-            if (windowLayout.getBackground() != null)
-                backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
-
-            HBox backgroundColor = new HBox();
-            backgroundColor.setAlignment(Pos.CENTER);
-            backgroundColor.setSpacing(5);
-            backgroundColor.setPadding(new Insets(10, 0, 0, 10));
-            backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-
-            Label layoutLabel = new Label("Layout: ");
-            Button loadLayout = new Button("Load");
-            Button saveLayout = new Button("Save");
-            saveLayout.disableProperty().bind(windowStage.showingProperty().not());
-
-            HBox layoutSettings = new HBox();
-            layoutSettings.setAlignment(Pos.CENTER);
-            layoutSettings.setSpacing(5);
-            layoutSettings.setPadding(new Insets(10, 0, 0, 10));
-            layoutSettings.getChildren().addAll(layoutLabel, saveLayout, loadLayout);
-
-            previouslyCaughtSettingsLayout = new VBox();
-            previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
-            previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
-
-            ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
-
-            Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 263, 500);
-            previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
-
-            numberCaughtField.setOnAction(e ->{
-                try{
-                    if(displayCaught == 0)
-                        createPreviouslyCaughtPokemonWindow();
-                    displayPrevious = displayCaught;
-                    displayCaught = parseInt(numberCaughtField.getText());
-                    if(displayCaught == 0) {
-                        windowStage.close();
-                        backgroundColorPicker.setDisable(true);
-                        previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-                    }
-                    else {
-                        windowStage.show();
-                        addPreviouslyCaughtPokemon(displayCaught);
-                    }
-                    numberCaughtField.setText("");
-                    numberCaughtField.setPromptText(String.valueOf(displayCaught));
-                }catch(NumberFormatException f){
-                    numberCaughtField.setText("");
-                }
-            });
-
-            previouslyCaughtList.setOnAction(e -> displayPreviouslyCaughtList());
-
-            backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
-
-            windowStage.setOnCloseRequest(e -> {
-                displayCaught = 0;
-                numberCaughtField.setPromptText("0");
-                previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-            });
-
-            saveLayout.setOnAction(e -> saveLayout());
-            loadLayout.setOnAction(e -> loadLayoutMenu());
-        }
-        previouslyCaughtSettingsStage.show();
-        previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
     }
 
     //refreshes previously caught pokemon window
@@ -132,7 +133,7 @@ class PreviouslyCaught extends Window {
     }
 
     //create elements of the last x previously caught pokemon
-    public void addPreviouslyCaughtPokemon(int previouslyCaught){
+    public static void addPreviouslyCaughtPokemon(int previouslyCaught){
 /*
         if(previouslyCaught < displayPrevious){
             windowLayout.getChildren().remove(previouslyCaught * 4, windowLayout.getChildren().size());
@@ -197,7 +198,7 @@ class PreviouslyCaught extends Window {
 */
     }
 
-    public void displayPreviouslyCaughtList(){
+    public static void displayPreviouslyCaughtList(){
         Stage displayCaughtListStage = new Stage();
         displayCaughtListStage.setTitle("Previously Caught Pokemon");
         TreeView<String> previouslyCaughtView = new TreeView<>();
@@ -226,8 +227,13 @@ class PreviouslyCaught extends Window {
         displayCaughtListStage.show();
     }
 
+    public static void close(){
+        windowStage.close();
+        previouslyCaughtSettingsStage.close();
+    }
+
     //save layout
-    public void saveLayout(){
+    public static void saveLayout(){
         Stage promptLayoutSaveName = new Stage();
         promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
         promptLayoutSaveName.setResizable(false);
@@ -311,7 +317,7 @@ class PreviouslyCaught extends Window {
     }
 
     //load layout
-    public void loadLayoutMenu(){
+    public static void loadLayoutMenu(){
         Stage loadSavedLayoutStage = new Stage();
         loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
         loadSavedLayoutStage.setResizable(false);
@@ -344,7 +350,7 @@ class PreviouslyCaught extends Window {
                 });
     }
 
-    public void loadLayout(){
+    public static void loadLayout(){
         //SaveData data = new SaveData();
         displayPrevious = 0;
 /*
