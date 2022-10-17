@@ -67,10 +67,12 @@ public class ElementSettings {
         form.setSpacing(5);
         Label formLabel = new Label("Form");
         ComboBox<String> formCombo = new ComboBox<>();
-        if(pokemon.getForms() != null)
-            for(String i : pokemon.getForms())
+        if(pokemon.getForms().size() != 0) {
+            for (String i : pokemon.getForms())
                 formCombo.getItems().add(i);
-        formCombo.getSelectionModel().select(0);
+            formCombo.getSelectionModel().select(pokemon.getForm());
+        }else
+            formCombo.getSelectionModel().select(0);
         form.getChildren().addAll(formLabel, formCombo);
 
         VBox imageVBox = new VBox();
