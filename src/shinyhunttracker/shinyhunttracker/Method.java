@@ -161,6 +161,7 @@ public class Method {
 
     public Vector<Integer> getPokemon(){ return pokemon; }
     public Vector<Integer> getGames(){ return games; }
+    public Vector<String> getGameMods(){ return gameMods; }
 
     public void setModifier(int modifier){ this.modifier = modifier; }
 }

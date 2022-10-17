@@ -30,6 +30,7 @@ public class SaveData {
         pokemonData.put("pokemon_form", huntData.getPokemon().getFormId());
         pokemonData.put("game", huntData.getGame().getId());
         pokemonData.put("method", huntData.getMethod().getId());
+        pokemonData.put("game_mods", huntData.getMethod().getGameMods());
         pokemonData.put("encounters", huntData.getEncounters());
         pokemonData.put("combo", huntData.getCombo());
         pokemonData.put("increment", huntData.getIncrement());
@@ -96,6 +97,15 @@ public class SaveData {
             Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
             Game selectedGame = new Game(Integer.parseInt(huntObject.get("game").toString()));
             Method selectedMethod = new Method(Integer.parseInt(huntObject.get("method").toString()));
+            for(Object i : (JSONArray) huntObject.get("game_mods")){
+                for(int j = 0; j < selectedGame.getOddModifiers().size(); j++) {
+                    JSONObject checkMod = (JSONObject) selectedGame.getOddModifiers().get(j);
+                    if (checkMod.get("name").toString().equals(i.toString())){
+                        selectedMethod.addGameMod(i.toString(), Integer.parseInt(checkMod.get("extra-rolls").toString()));
+                        break;
+                    }
+                }
+            }
             int encounters = parseInt(huntObject.get("encounters").toString());
             int combo = parseInt(huntObject.get("combo").toString());
             int increment = parseInt(huntObject.get("increment").toString());

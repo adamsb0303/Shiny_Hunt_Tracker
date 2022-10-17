@@ -194,7 +194,7 @@ class HuntWindow {
             VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
             VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
-            if(selectedGame.getOddModifiers() != null) {
+            if(selectedGame.getOddModifiers().size() != 0) {
                 VBox gameModifierSettings = new VBox();
                 gameModifierSettings.setSpacing(10);
 
@@ -207,6 +207,7 @@ class HuntWindow {
                 for(Object i : selectedGame.getOddModifiers()){
                     JSONObject gameMod = (JSONObject) i;
                     CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
+                    checkBox.setSelected(selectedMethod.getGameMods().contains(gameMod.get("name").toString()));
                     gameModifierSettings.getChildren().add(checkBox);
 
                     checkBox.selectedProperty().addListener(e -> {
