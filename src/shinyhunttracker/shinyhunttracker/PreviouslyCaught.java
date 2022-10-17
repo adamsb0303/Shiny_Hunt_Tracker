@@ -27,7 +27,6 @@ class PreviouslyCaught {
     static AnchorPane windowLayout = new AnchorPane();
     static int displayCaught = 0;
     static int displayPrevious = 0;
-    static String currentLayout;
 
     static Stage previouslyCaughtSettingsStage = new Stage();
     static VBox previouslyCaughtSettingsLayout = new VBox();
@@ -66,7 +65,6 @@ class PreviouslyCaught {
 
         Label layoutLabel = new Label("Layout: ");
         Button layoutSettingsButton = new Button("Layouts");
-        layoutSettingsButton.disableProperty().bind(windowStage.showingProperty().not());
 
         HBox layoutSettings = new HBox();
         layoutSettings.setAlignment(Pos.CENTER);
@@ -94,8 +92,8 @@ class PreviouslyCaught {
                     backgroundColorPicker.setDisable(true);
                     previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
                 } else {
-                    windowStage.show();
                     addPreviouslyCaughtPokemon();
+                    windowStage.show();
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
@@ -114,7 +112,7 @@ class PreviouslyCaught {
             previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
         });
 
-        layoutSettingsButton.setOnAction(e -> showLayoutList(windowLayout));
+        layoutSettingsButton.setOnAction(e -> showLayoutList());
 
         previouslyCaughtSettingsStage.show();
         previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
@@ -253,7 +251,7 @@ class PreviouslyCaught {
 
     static Stage layoutListStage = new Stage();
     static VBox layoutListLayout;
-    public static void showLayoutList(AnchorPane layout) {
+    public static void showLayoutList() {
         layoutListLayout = new VBox();
         //Changes if the file is for current hunt or previously caught window
         String filePath = "SaveData/caughtLayouts.json";
@@ -268,22 +266,32 @@ class PreviouslyCaught {
                 Button updateButton = new Button("Update");
                 Button loadButton = new Button("Load");
                 Button removeButton = new Button("Delete");
+                updateButton.disableProperty().bind(windowStage.showingProperty().not());
 
                 HBox layoutInformation = new HBox();
                 layoutInformation.getChildren().addAll(layoutNameLabel, removeButton, loadButton, updateButton);
                 layoutListLayout.getChildren().addAll(layoutInformation);
 
                 updateButton.setOnAction(e -> {
-                    SaveData.saveLayout(layoutObject.get(0).toString(), layout, false);
-                    showLayoutList(layout);
+                    SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, false);
+                    showLayoutList();
                 });
                 loadButton.setOnAction(e -> {
-                    SaveData.loadLayout(layoutObject.get(0).toString(), layout, false);
-                    currentLayout = layoutObject.get(0).toString();
+                    if (displayCaught == 0) {
+                        createPreviouslyCaughtPokemonWindow();
+                        displayPrevious = displayCaught;
+                        displayCaught = (layoutObject.size() - 2) / 4;
+                        addPreviouslyCaughtPokemon();
+                        windowStage.show();
+                        numberCaughtField.setPromptText(String.valueOf(displayCaught));
+                    }
+
+                    SaveData.loadLayout(layoutObject.get(0).toString(), windowLayout, false);
+                    System.out.println(layoutObject.get(0) + " " + windowLayout.getChildren().size());
                 });
                 removeButton.setOnAction(e -> {
                     SaveData.removeLayout(layoutObject.get(0).toString(), false);
-                    showLayoutList(layout);
+                    showLayoutList();
                 });
             }
         } catch (IOException | ParseException e) {
@@ -304,8 +312,8 @@ class PreviouslyCaught {
             newNameDialog.setTitle("New Layout Name");
             newNameDialog.setHeaderText("Enter name of new layout.");
             newNameDialog.showAndWait().ifPresent(f -> {
-                SaveData.saveLayout(newNameDialog.getEditor().getText(), layout, false);
-                showLayoutList(layout);
+                SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, false);
+                showLayoutList();
             });
         });
     }
