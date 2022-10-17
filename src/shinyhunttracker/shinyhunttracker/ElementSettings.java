@@ -440,9 +440,8 @@ public class ElementSettings {
         strokeWidth.setSpacing(5);
         Label strokeWidthLabel = new Label("Stroke Width:");
         TextField strokeWidthField = new TextField();
-        strokeWidthField.setPromptText(String.valueOf(label.getStrokeWidth()));
-        strokeWidthLabel.setDisable(true);
-        strokeWidthField.setDisable(true);
+        strokeWidthField.promptTextProperty().bind(label.strokeWidthProperty().asString());
+        strokeWidthField.disableProperty().bind(strokeCheckbox.selectedProperty());
         strokeWidth.getChildren().addAll(strokeWidthLabel, strokeWidthField);
 
         HBox strokeColor = new HBox();
@@ -476,7 +475,7 @@ public class ElementSettings {
 
         VBox labelVBox = new VBox();
         labelVBox.setSpacing(10);
-        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, textProperties, visablility);
+        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, /*font,*/ color, stroke, /*strokeWidth, strokeColor,*/ textProperties, visablility);
 
         Accordion accordion = new Accordion();
         TitledPane labelTitledPane = new TitledPane(labelName, labelVBox);
