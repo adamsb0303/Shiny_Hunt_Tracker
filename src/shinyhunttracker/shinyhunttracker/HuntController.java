@@ -107,9 +107,11 @@ public class HuntController {
 
         //Listener for KeyBinds
         huntControlsScene.setOnKeyPressed(e -> {
-            for(HuntWindow i: windowsList)
-                if (i.getKeyBinding() == e.getCode())
-                    i.incrementEncounters();
+            for(int i = windowsList.size() - 1; i >= 0 ; i--){
+                if (windowsList.get(i).getKeyBinding() == e.getCode())
+                    windowsList.get(i).incrementEncounters();
+                SaveData.saveHunt(windowsList.get(i));
+            }
         });
 
         //Opens pop up for Selection Window
@@ -143,25 +145,12 @@ public class HuntController {
 
         //Makes sure to save all currently open hunts before closing
         huntControls.setOnCloseRequest(e -> {
-            //saves current hunts to open next time the program is started
-            try {
-                OutputStream out = new FileOutputStream("SaveData/previousSession.dat");
-                out.write(windowsList.size());
-                out.close();
-            }catch (IOException f){
-                f.printStackTrace();
-            }
+            while(windowsList.size() > 0)
+                windowsList.remove(windowsList.lastElement());
 
             //Close all possibly open windows
             keyBindingSettingsStage.close();
             PreviouslyCaught.close();
-
-            //save and close all currently open hunts
-            while(windowsList.size() > 0) {
-                SaveData.saveHunt(windowsList.lastElement());
-                windowsList.lastElement().closeHuntWindow();
-                windowsList.remove(windowsList.lastElement());
-            }
 
             System.exit(0);
         });
@@ -210,13 +199,12 @@ public class HuntController {
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
 
         MenuButton settingsButton = new MenuButton("O");
-        MenuItem saveHunt = new MenuItem("Save Hunt");
         MenuItem increment= new MenuItem("Change Increment");
         MenuItem resetEncounters = new MenuItem("Fail");
         MenuItem phaseHunt = new MenuItem("Phase");
         MenuItem DVTable = new MenuItem("DV Table");
 
-        settingsButton.getItems().addAll(saveHunt, increment, resetEncounters, phaseHunt);
+        settingsButton.getItems().addAll(increment, resetEncounters, phaseHunt);
         if(newWindow.getGame().getGeneration() == 1)
             settingsButton.getItems().add(DVTable);
 
@@ -243,11 +231,14 @@ public class HuntController {
             keyBindingSettings();
 
         exitHuntButton.setOnAction(e -> {
-            SaveData.saveHunt(windowsList.lastElement());
+            updatePreviousSessionDat(-1);
             newWindow.closeHuntWindow();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
             huntControls.setHeight(huntControls.getHeight() - 25);
+
+            for(int i = windowsList.size() - 1; i >= 0 ; i--)
+                SaveData.saveHunt(windowsList.get(i));
         });
 
         encountersButton.setOnAction(e -> newWindow.incrementEncounters());
@@ -256,8 +247,6 @@ public class HuntController {
             newWindow.pokemonCaught();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
-            /*if(previousCatches.getStage().isShowing())
-                previousCatches.refreshPreviouslyCaughtPokemon();*/
         });
 
         popOutButton.setOnAction(e -> {
@@ -283,8 +272,6 @@ public class HuntController {
         });
         resetEncounters.setOnAction(e -> newWindow.resetEncounters());
         phaseHunt.setOnAction(e -> {
-            //newWindow.setPreviouslyCaughtWindow(previousCatches);
-            //newWindow.phaseHunt();
             if(pokedex.size() == 0) {
                 try (FileReader reader = new FileReader("GameData/pokemon.json")) {
                     JSONParser jsonParser = new JSONParser();
@@ -301,7 +288,6 @@ public class HuntController {
             phaseDialog.setHeaderText("Phased Pokemon: ");
             phaseDialog.showAndWait().ifPresent(response -> newWindow.phaseHunt(response.getDexNumber()));
         });
-        saveHunt.setOnAction(e -> SaveData.saveHunt(newWindow));
         DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
 
         windowSettingsButton.setOnAction(e -> newWindow.customizeHuntWindow());
@@ -604,5 +590,16 @@ public class HuntController {
     public int calculateShinyStat(int base, int dv, int level, boolean isHealth){
         int health = isHealth ? 1 : 0;
         return (((base + dv) * 2 * level) / 100) + (level * health) + 5 + (5 * health);
+    }
+
+    public void updatePreviousSessionDat(int change){
+        //saves current hunts to open next time the program is started
+        try {
+            OutputStream out = new FileOutputStream("SaveData/previousSession.dat");
+            out.write(windowsList.size() + change);
+            out.close();
+        }catch (IOException f){
+            f.printStackTrace();
+        }
     }
 }

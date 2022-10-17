@@ -316,7 +316,8 @@ class HuntWindow {
     public void incrementEncounters(){
         encounters.setValue(encounters.getValue() + increment);
         combo.setValue(combo.getValue() + increment);
-        dynamicOddsMethods();
+        if(oddFractionText != null)
+            dynamicOddsMethods();
     }
 
     //adds current pokemon to the caught pokemon file
