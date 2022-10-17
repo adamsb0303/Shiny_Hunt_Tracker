@@ -1422,6 +1422,7 @@
     "name": "Dynamax Adventure",
     "breeding": false,
     "modifier": 1,
+    "base": 300,
     "games": [31, 32],
     "pokemon":[
       1,

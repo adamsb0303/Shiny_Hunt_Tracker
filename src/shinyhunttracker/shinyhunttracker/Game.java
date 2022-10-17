@@ -74,6 +74,8 @@ public class Game {
     @Override
     public String toString(){ return name.getValue(); }
 
+    public JSONArray getOddModifiers(){ return oddModifiers; }
+
     public String getImagePath() { return imagePath; }
     public String getName() { return name.getValue(); }
     public StringProperty getNameProperty(){ return name; }
@@ -85,5 +87,5 @@ public class Game {
     public int getId(){ return id; }
     public int getOdds() { return odds; }
 
-    public void setGeneration(int generation){ this.generation = generation; }
+    public void setOdds(int odds){ this.odds = odds; }
 }

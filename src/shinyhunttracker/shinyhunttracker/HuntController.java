@@ -212,11 +212,11 @@ public class HuntController {
         MenuButton settingsButton = new MenuButton("O");
         MenuItem saveHunt = new MenuItem("Save Hunt");
         MenuItem increment= new MenuItem("Change Increment");
-        MenuItem changeOdds = new MenuItem("Change Odds");
         MenuItem resetEncounters = new MenuItem("Fail");
         MenuItem phaseHunt = new MenuItem("Phase");
         MenuItem DVTable = new MenuItem("DV Table");
-        settingsButton.getItems().addAll(saveHunt, increment, changeOdds, resetEncounters, phaseHunt);
+
+        settingsButton.getItems().addAll(saveHunt, increment, resetEncounters, phaseHunt);
         if(newWindow.getGame().getGeneration() == 1)
             settingsButton.getItems().add(DVTable);
 
@@ -301,7 +301,6 @@ public class HuntController {
             phaseDialog.setHeaderText("Phased Pokemon: ");
             phaseDialog.showAndWait().ifPresent(response -> newWindow.phaseHunt(response.getDexNumber()));
         });
-        changeOdds.setOnAction(e -> newWindow.resetCombo());
         saveHunt.setOnAction(e -> SaveData.saveHunt(newWindow));
         DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
 

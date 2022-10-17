@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -27,7 +28,6 @@ class HuntWindow {
     Stage windowStage = new Stage();
     AnchorPane windowLayout = new AnchorPane();
     String currentLayout;
-    int huntLayoutSize = 0;
     ImageView Evo0, Evo1, sprite;
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
     Text previousEncountersText = new Text();
@@ -44,13 +44,13 @@ class HuntWindow {
     Pokemon selectedPokemon;
     Game selectedGame;
     Method selectedMethod;
-    int methodBase;
 
     public HuntWindow(Pokemon selectedPokemon, Game selectedGame, Method selectedMethod, String layout, int encounters, int combo, int increment, int huntID){
         this.selectedPokemon = selectedPokemon;
         this.selectedGame = selectedGame;
         this.selectedMethod = selectedMethod;
-        methodBase = selectedMethod.getBase();
+        if(selectedMethod.getBase() != 0)
+            selectedGame.setOdds(selectedMethod.getBase());
         this.currentLayout = layout;
         this.encounters.setValue(encounters);
         this.combo.setValue(combo);
@@ -64,7 +64,7 @@ class HuntWindow {
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
         currentHuntingMethodText= new Text(selectedMethod.getName());
         currentGameText = new Text(selectedGame.toString());
-        oddFractionText= new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
+        oddFractionText = new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
         dynamicOddsMethods();
         encountersText= new Text(String.valueOf(encounters));
         currentComboText = new Text(String.valueOf(combo));
@@ -129,7 +129,6 @@ class HuntWindow {
                 break;
         }
         windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
-        huntLayoutSize = windowLayout.getChildren().size();
 
         //Positions the labels to the right of the sprite images
         int index = 3;
@@ -194,6 +193,36 @@ class HuntWindow {
             VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
             VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
             VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
+
+            if(selectedGame.getOddModifiers() != null) {
+                VBox gameModifierSettings = new VBox();
+                gameModifierSettings.setSpacing(10);
+
+                HBox groupLabel = new HBox();
+                Label Group = new Label("Game Odd Modifiers");
+                Group.setUnderline(true);
+                groupLabel.getChildren().add(Group);
+
+                gameModifierSettings.getChildren().add(groupLabel);
+                for(Object i : selectedGame.getOddModifiers()){
+                    JSONObject gameMod = (JSONObject) i;
+                    CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
+                    gameModifierSettings.getChildren().add(checkBox);
+
+                    checkBox.selectedProperty().addListener(e -> {
+                        if(checkBox.isSelected())
+                            selectedMethod.addGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
+                        else
+                            selectedMethod.removeGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
+
+                        oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
+                    });
+                }
+                Accordion accordion = (Accordion) oddsFraction.getChildren().get(0);
+                TitledPane pane = accordion.getPanes().get(0);
+                VBox oddPaneSettings = (VBox) pane.getContent();
+                oddPaneSettings.getChildren().add(0, gameModifierSettings);
+            }
 
             VBox backgroundVBox = new VBox();
             Label backgroundGroup = new Label("Background");
@@ -336,10 +365,10 @@ class HuntWindow {
                     tempEncounters = 39;
                 else
                     tempEncounters = combo.getValue();
-                oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(methodBase - 8196) / 4096)))));
+                oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(selectedGame.getOdds() - 8196) / 4096)))));
                 break;
             case "Chain Fishing":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo.getValue()), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo.getValue()), selectedGame.getOdds()));
                 break;
             case "DexNav":
                 if (previousEncounters < 999) {
@@ -350,15 +379,15 @@ class HuntWindow {
                 oddFractionText.setText("1/" + selectedMethod.dexNav(combo.getValue(), previousEncounters));
                 break;
             case "SOS Chaining":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo.getValue()), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo.getValue()), selectedGame.getOdds()));
                 break;
             case "Catch Combo":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo.getValue()), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo.getValue()), selectedGame.getOdds()));
                 break;
             case "Total Encounters":
                 previousEncounters++;
                 previousEncountersText.setText(String.valueOf(previousEncounters));
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), methodBase));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), selectedGame.getOdds()));
                 break;
             default:
                 break;

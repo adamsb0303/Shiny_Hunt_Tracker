@@ -20,6 +20,7 @@ public class Method {
     boolean breeding;
     String methodInfo;
     Vector<Integer> games = new Vector<>();
+    Vector<String> gameMods = new Vector<>();
     Vector<Integer> pokemon = new Vector<>();
 
     Method(JSONObject methodObject, int id){
@@ -28,6 +29,9 @@ public class Method {
         methodInfo = methodObject.get("method-info").toString();
         modifier = Integer.parseInt(methodObject.get("modifier").toString());
         this.id = id;
+
+        if(methodObject.get("base") != null)
+            base = Integer.parseInt(methodObject.get("base").toString());
 
         JSONArray tempJSONArr = (JSONArray) methodObject.get("games");
         if(tempJSONArr != null)
@@ -131,6 +135,16 @@ public class Method {
             return 4;
         else
             return 5;
+    }
+
+    public void addGameMod(String name, int modifier){
+        gameMods.add(name);
+        this.modifier += modifier;
+    }
+
+    public void removeGameMod(String name, int modifier){
+        gameMods.remove(name);
+        this.modifier -= modifier;
     }
 
     @Override public String toString(){ return name.getValue(); }
