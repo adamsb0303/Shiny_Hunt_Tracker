@@ -183,7 +183,7 @@ class HuntWindow {
     }
 
     //creates window for the hunt window settings
-    public void customizeHuntWindow(){
+    public void customizeHuntWindowSettings(){
         if(CustomizeHuntVBox.getChildren().size() == 0) {
             CustomizeHuntStage.setTitle("Settings");
             CustomizeHuntStage.setResizable(false);
@@ -247,12 +247,7 @@ class HuntWindow {
             VBox backgroundSettings = new VBox();
             backgroundSettings.getChildren().add(accordion);
 
-            HBox saveClose = new HBox();
-            saveClose.setPadding(new Insets(10, 10, 10, 10));
-            saveClose.setSpacing(5);
-            Button Save = new Button("Save");
-            Button Load = new Button("Load");
-            saveClose.getChildren().addAll(Save, Load);
+            Button layoutSettings = new Button("Layouts");
 
             VBox Evo0Settings;
             VBox Evo1Settings;
@@ -276,19 +271,19 @@ class HuntWindow {
                 case "SOS Chaining":
                 case "Catch Combo":
                     comboSettings = createLabelSettings(currentComboText, "Combo");
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, saveClose);
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, layoutSettings);
                     break;
                 case "DexNav":
                     comboSettings = createLabelSettings(currentComboText, "Combo");
                     previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, saveClose);
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, layoutSettings);
                     break;
                 case "Total Encounters":
                     previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, saveClose);
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, layoutSettings);
                     break;
                 default:
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, saveClose);
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, layoutSettings);
                     break;
             }
 
@@ -304,9 +299,7 @@ class HuntWindow {
 
             backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
 
-            Save.setOnAction(e -> saveLayout());
-
-            Load.setOnAction(e -> loadLayout());
+            layoutSettings.setOnAction(e -> showLayoutList());
         }
         CustomizeHuntStage.show();
         CustomizeHuntStage.setOnCloseRequest(e -> CustomizeHuntStage.hide());
@@ -396,140 +389,63 @@ class HuntWindow {
         }
     }
 
-    //save layout
-    public void saveLayout(){
-        Stage promptLayoutSaveName = new Stage();
-        promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
-        promptLayoutSaveName.setResizable(false);
+    Stage layoutListStage = new Stage();
+    VBox layoutListLayout;
+    public void showLayoutList(){
+        layoutListLayout = new VBox();
+        //Changes if the file is for current hunt or previously caught window
+        String filePath = "SaveData/huntLayouts.json";
 
-        if(!currentLayout.equals("")) {
-            promptLayoutSaveName.setTitle("Save Layout");
-
-            VBox selectNewSaveLayout = new VBox();
-            selectNewSaveLayout.setAlignment(Pos.CENTER);
-            selectNewSaveLayout.setSpacing(5);
-            Label newNameLabel = new Label("Would you like to save this layout to a new name?");
-
-            HBox buttons = new HBox();
-            buttons.setSpacing(10);
-            buttons.setAlignment(Pos.CENTER);
-            Button newSaveButton = new Button("New");
-            Button oldSaveButton = new Button("Update");
-            buttons.getChildren().addAll(newSaveButton, oldSaveButton);
-
-            selectNewSaveLayout.getChildren().addAll(newNameLabel, buttons);
-
-            Scene selectNewSaveScene = new Scene(selectNewSaveLayout, 275, 75);
-            promptLayoutSaveName.setScene(selectNewSaveScene);
-            promptLayoutSaveName.show();
-
-            newSaveButton.setOnAction(f -> {
-                promptLayoutSaveName.setTitle("Select Layout Name");
-
-                VBox saveLayoutNameLayout = new VBox();
-                saveLayoutNameLayout.setSpacing(10);
-                saveLayoutNameLayout.setAlignment(Pos.CENTER);
-
-                Label saveNameLabel = new Label("What would you like this layout to be called?");
-                TextField saveNameText = new TextField();
-
-                saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-                Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-                promptLayoutSaveName.setScene(saveLayoutNameScene);
-                promptLayoutSaveName.show();
-
-                saveNameText.setOnAction(g -> {
-                    String text = saveNameText.getText();
-                    if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
-                        saveNameText.setText("");
-                    } else {
-                        SaveData.saveLayout(saveNameText.getText(), windowLayout, true);
-                        currentLayout = saveNameText.getText();
-                        promptLayoutSaveName.close();
-                    }
-                });
-            });
-
-            oldSaveButton.setOnAction(f -> {
-                SaveData.saveLayout(currentLayout, windowLayout, true);
-                promptLayoutSaveName.close();
-            });
-        }else{
-            promptLayoutSaveName.setTitle("Select Layout Name");
-
-            VBox saveLayoutNameLayout = new VBox();
-            saveLayoutNameLayout.setSpacing(10);
-            saveLayoutNameLayout.setAlignment(Pos.CENTER);
-
-            Label saveNameLabel = new Label("What would you like this layout to be called?");
-            TextField saveNameText = new TextField();
-
-            saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-            Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-            promptLayoutSaveName.setScene(saveLayoutNameScene);
-            promptLayoutSaveName.show();
-
-            saveNameText.setOnAction(g -> {
-                String text = saveNameText.getText();
-                if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
-                    saveNameText.setText("");
-                } else {
-                    SaveData.saveLayout(saveNameText.getText(), windowLayout, true);
-                    currentLayout = saveNameText.getText();
-                    promptLayoutSaveName.close();
-                }
-            });
-        }
-    }
-
-    //load layout
-    public void loadLayout(){
-        Stage loadSavedLayoutStage = new Stage();
-        loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
-        loadSavedLayoutStage.setResizable(false);
-        loadSavedLayoutStage.setTitle("Select Layout Name");
-
-        TreeView<String> savedLayouts = new TreeView<>();
-        TreeItem<String> root = new TreeItem<>();
-
-        try (FileReader reader = new FileReader("SaveData/huntLayouts.json")){
-            //Read JSON file
+        try(FileReader reader = new FileReader(filePath)){
             JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray layoutList = (JSONArray) obj;
+            JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
 
-            for(int i = layoutList.size() - 1; i >= 0; i--){
-                JSONArray layoutInfo = (JSONArray) layoutList.get(i);
-                String name = layoutInfo.get(0).toString();
+            for(Object i : layoutList){
+                JSONArray layoutObject = (JSONArray) i;
+                Label layoutNameLabel = new Label(layoutObject.get(0).toString());
+                Button updateButton = new Button("Update");
+                Button loadButton = new Button("Load");
+                Button removeButton = new Button("Delete");
 
-                TreeItem<String> item = new TreeItem<>(name);
-                root.getChildren().add(item);
+                HBox layoutInformation = new HBox();
+                layoutInformation.getChildren().addAll(layoutNameLabel, removeButton, loadButton, updateButton);
+                layoutListLayout.getChildren().addAll(layoutInformation);
+
+                updateButton.setOnAction(e -> {
+                    SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, true);
+                    showLayoutList();
+                });
+                loadButton.setOnAction(e -> {
+                    SaveData.loadLayout(layoutObject.get(0).toString(), windowLayout, true);
+                    currentLayout = layoutObject.get(0).toString();
+                });
+                removeButton.setOnAction(e -> {
+                    SaveData.removeLayout(layoutObject.get(0).toString(), true);
+                    showLayoutList();
+                });
             }
-        }catch (IOException | ParseException f) {
-            f.printStackTrace();
+        }catch(IOException | ParseException e){
+            e.printStackTrace();
         }
 
-        savedLayouts.setRoot(root);
-        savedLayouts.setShowRoot(false);
-        savedLayouts.setPrefWidth(300);
-        savedLayouts.setPrefWidth(500);
+        Button newLayoutButton = new Button("Add Layout");
+        layoutListLayout.getChildren().add(newLayoutButton);
 
-        VBox savedLayoutsLayout = new VBox();
-        savedLayoutsLayout.setSpacing(10);
-        savedLayoutsLayout.setAlignment(Pos.CENTER);
-        savedLayoutsLayout.getChildren().add(savedLayouts);
+        Scene layoutListScene = new Scene(layoutListLayout, 250, 400);
+        layoutListStage.setTitle("Layouts");
+        layoutListStage.setScene(layoutListScene);
+        if(!layoutListStage.isShowing())
+            layoutListStage.show();
 
-        Scene savedLayoutsScene = new Scene(savedLayoutsLayout, 300, 400);
-        loadSavedLayoutStage.setScene(savedLayoutsScene);
-        loadSavedLayoutStage.show();
-
-        savedLayouts.getSelectionModel().selectedItemProperty()
-                .addListener((v, oldValue, newValue) -> {
-                    currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                    SaveData.loadLayout(currentLayout, windowLayout, true);
-                    loadSavedLayoutStage.close();
-                    customizeHuntWindow();
-                });
+        newLayoutButton.setOnAction(e -> {
+            TextInputDialog newNameDialog = new TextInputDialog();
+            newNameDialog.setTitle("New Layout Name");
+            newNameDialog.setHeaderText("Enter name of new layout.");
+            newNameDialog.showAndWait().ifPresent(f -> {
+                SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, true);
+                showLayoutList();
+            });
+        });
     }
 
     //simplifies odds fraction for easier reading

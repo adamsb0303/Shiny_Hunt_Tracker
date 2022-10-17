@@ -241,9 +241,14 @@ public class HuntController {
                 SaveData.saveHunt(windowsList.get(i));
         });
 
-        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
+        encountersButton.setOnAction(e -> {
+            newWindow.incrementEncounters();
+            for(int i = windowsList.size() - 1; i >= 0 ; i--)
+                SaveData.saveHunt(windowsList.get(i));
+        });
 
         caughtButton.setOnAction(e -> {
+            updatePreviousSessionDat(-1);
             newWindow.pokemonCaught();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
@@ -290,7 +295,7 @@ public class HuntController {
         });
         DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
 
-        windowSettingsButton.setOnAction(e -> newWindow.customizeHuntWindow());
+        windowSettingsButton.setOnAction(e -> newWindow.customizeHuntWindowSettings());
 
         helpButton.setOnAction(e -> {
             Alert huntInformation = new Alert(Alert.AlertType.INFORMATION);
@@ -380,6 +385,7 @@ public class HuntController {
                         .addListener((v, oldValue, newValue) -> {
                             //Reads the hunt number from the beginning of the string
                             int index = Integer.parseInt(newValue.toString().substring(18, newValue.toString().indexOf(')')));
+                            updatePreviousSessionDat(1);
                             SaveData.loadHunt(huntList.size() - index, this);
                             windowStage.close();
                         });

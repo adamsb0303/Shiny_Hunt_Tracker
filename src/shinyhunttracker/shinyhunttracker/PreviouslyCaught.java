@@ -35,8 +35,8 @@ class PreviouslyCaught {
     static TextField numberCaughtField = new TextField();
 
     //creates elements for previously caught element settings
-    public static void previouslyCaughtPokemonSettings(){
-        if(previouslyCaughtSettingsLayout.getChildren().size() != 0) {
+    public static void previouslyCaughtPokemonSettings() {
+        if (previouslyCaughtSettingsLayout.getChildren().size() != 0) {
             previouslyCaughtSettingsStage.show();
             return;
         }
@@ -65,15 +65,14 @@ class PreviouslyCaught {
         backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
 
         Label layoutLabel = new Label("Layout: ");
-        Button loadLayout = new Button("Load");
-        Button saveLayout = new Button("Save");
-        saveLayout.disableProperty().bind(windowStage.showingProperty().not());
+        Button layoutSettingsButton = new Button("Layouts");
+        layoutSettingsButton.disableProperty().bind(windowStage.showingProperty().not());
 
         HBox layoutSettings = new HBox();
         layoutSettings.setAlignment(Pos.CENTER);
         layoutSettings.setSpacing(5);
         layoutSettings.setPadding(new Insets(10, 0, 0, 10));
-        layoutSettings.getChildren().addAll(layoutLabel, saveLayout, loadLayout);
+        layoutSettings.getChildren().addAll(layoutLabel, layoutSettingsButton);
 
         previouslyCaughtSettingsLayout = new VBox();
         previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
@@ -84,24 +83,23 @@ class PreviouslyCaught {
         Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 300, 500);
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
 
-        numberCaughtField.setOnAction(e ->{
-            try{
-                if(displayCaught == 0)
+        numberCaughtField.setOnAction(e -> {
+            try {
+                if (displayCaught == 0)
                     createPreviouslyCaughtPokemonWindow();
                 displayPrevious = displayCaught;
                 displayCaught = parseInt(numberCaughtField.getText());
-                if(displayCaught == 0) {
+                if (displayCaught == 0) {
                     windowStage.close();
                     backgroundColorPicker.setDisable(true);
                     previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-                }
-                else {
+                } else {
                     windowStage.show();
                     addPreviouslyCaughtPokemon();
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
-            }catch(NumberFormatException f){
+            } catch (NumberFormatException f) {
                 numberCaughtField.setText("");
             }
         });
@@ -116,15 +114,14 @@ class PreviouslyCaught {
             previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
         });
 
-        saveLayout.setOnAction(e -> saveLayout());
-        loadLayout.setOnAction(e -> loadLayoutMenu());
+        layoutSettingsButton.setOnAction(e -> showLayoutList(windowLayout));
 
         previouslyCaughtSettingsStage.show();
         previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
     }
 
     //creates window with previously caught pokemon
-    public static void createPreviouslyCaughtPokemonWindow(){
+    public static void createPreviouslyCaughtPokemonWindow() {
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(previousHuntScene);
@@ -134,11 +131,11 @@ class PreviouslyCaught {
     }
 
     //refreshes previously caught pokemon window
-    public static void refreshPreviouslyCaughtPokemon(){
+    public static void refreshPreviouslyCaughtPokemon() {
         SaveData.saveLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
 
         previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-        windowLayout.getChildren().remove(0,windowLayout.getChildren().size());
+        windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
         addPreviouslyCaughtPokemon();
 
         SaveData.loadLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
@@ -146,14 +143,14 @@ class PreviouslyCaught {
     }
 
     //create elements of the last x previously caught pokemon
-    public static void addPreviouslyCaughtPokemon(){
-        if(displayCaught < displayPrevious){
+    public static void addPreviouslyCaughtPokemon() {
+        if (displayCaught < displayPrevious) {
             windowLayout.getChildren().remove(displayCaught * 4, windowLayout.getChildren().size());
             previouslyCaughtSettingsLayout.getChildren().remove(displayCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
             return;
         }
 
-        try(FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
+        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
             JSONParser jsonParser = new JSONParser();
             JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
 
@@ -207,22 +204,22 @@ class PreviouslyCaught {
                 VBox encountersLabelSettings = createLabelSettings(encounters, "Encounters");
                 previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
             }
-        }catch(IOException | ParseException e){
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
 
-    public static void displayPreviouslyCaughtList(){
+    public static void displayPreviouslyCaughtList() {
         Stage displayCaughtListStage = new Stage();
         displayCaughtListStage.setTitle("Previously Caught Pokemon");
         TreeView<String> previouslyCaughtView = new TreeView<>();
         TreeItem<String> previoulyCaughtRoot = new TreeItem<>();
 
-        try(FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
+        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
             JSONParser jsonParser = new JSONParser();
             JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
 
-            for(Object i : caughtPokemonList){
+            for (Object i : caughtPokemonList) {
                 JSONObject caughtData = (JSONObject) i;
                 Pokemon caughtPokemon = new Pokemon(Integer.parseInt(caughtData.get("pokemon").toString()));
                 Game caughtGame = new Game(Integer.parseInt(caughtData.get("game").toString()));
@@ -230,7 +227,7 @@ class PreviouslyCaught {
                 TreeItem<String> item = new TreeItem<>(caughtPokemon.getName() + " | " + caughtGame.getName() + " | " + caughtMethod.getName() + " | " + caughtData.get("encounters").toString() + " encounters");
                 previoulyCaughtRoot.getChildren().add(item);
             }
-        }catch(IOException | ParseException e){
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 
@@ -245,145 +242,71 @@ class PreviouslyCaught {
         displayCaughtListStage.show();
     }
 
-    public static void close(){
+    public static void close() {
         windowStage.close();
         previouslyCaughtSettingsStage.close();
     }
 
-    public static boolean isShowing() { return windowStage.isShowing(); }
+    public static boolean isShowing() {
+        return windowStage.isShowing();
+    }
 
-    //save layout
-    public static void saveLayout(){
-        Stage promptLayoutSaveName = new Stage();
-        promptLayoutSaveName.initModality(Modality.APPLICATION_MODAL);
-        promptLayoutSaveName.setResizable(false);
+    static Stage layoutListStage = new Stage();
+    static VBox layoutListLayout;
+    public static void showLayoutList(AnchorPane layout) {
+        layoutListLayout = new VBox();
+        //Changes if the file is for current hunt or previously caught window
+        String filePath = "SaveData/caughtLayouts.json";
 
-        if(currentLayout != null) {
-            promptLayoutSaveName.setTitle("Save Layout");
+        try (FileReader reader = new FileReader(filePath)) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
 
-            VBox selectNewSaveLayout = new VBox();
-            selectNewSaveLayout.setAlignment(Pos.CENTER);
-            selectNewSaveLayout.setSpacing(5);
-            Label newNameLabel = new Label("Would you like to save this layout to a new name?");
+            for (Object i : layoutList) {
+                JSONArray layoutObject = (JSONArray) i;
+                Label layoutNameLabel = new Label(layoutObject.get(0).toString());
+                Button updateButton = new Button("Update");
+                Button loadButton = new Button("Load");
+                Button removeButton = new Button("Delete");
 
-            HBox buttons = new HBox();
-            buttons.setSpacing(10);
-            buttons.setAlignment(Pos.CENTER);
-            Button newSaveButton = new Button("New");
-            Button oldSaveButton = new Button("Update");
-            buttons.getChildren().addAll(newSaveButton, oldSaveButton);
+                HBox layoutInformation = new HBox();
+                layoutInformation.getChildren().addAll(layoutNameLabel, removeButton, loadButton, updateButton);
+                layoutListLayout.getChildren().addAll(layoutInformation);
 
-            selectNewSaveLayout.getChildren().addAll(newNameLabel, buttons);
-
-            Scene selectNewSaveScene = new Scene(selectNewSaveLayout, 275, 75);
-            promptLayoutSaveName.setScene(selectNewSaveScene);
-            promptLayoutSaveName.show();
-
-            newSaveButton.setOnAction(f -> {
-                promptLayoutSaveName.setTitle("Select Layout Name");
-
-                VBox saveLayoutNameLayout = new VBox();
-                saveLayoutNameLayout.setSpacing(10);
-                saveLayoutNameLayout.setAlignment(Pos.CENTER);
-
-                Label saveNameLabel = new Label("What would you like this layout to be called?");
-                TextField saveNameText = new TextField();
-
-                saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-                Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-                promptLayoutSaveName.setScene(saveLayoutNameScene);
-                promptLayoutSaveName.show();
-
-                saveNameText.setOnAction(g -> {
-                    String text = saveNameText.getText();
-                    if (text.contains("\\") || text.contains("/") || text.contains(":") || text.contains("*") || text.contains("?") || text.contains("\"") || text.contains("<") || text.contains(">") || text.contains("|") || text.contains(".")) {
-                        saveNameText.setText("");
-                    } else {
-                        SaveData.saveLayout(saveNameText.getText(), windowLayout, false);
-                        promptLayoutSaveName.close();
-                    }
+                updateButton.setOnAction(e -> {
+                    SaveData.saveLayout(layoutObject.get(0).toString(), layout, false);
+                    showLayoutList(layout);
                 });
-            });
-
-            oldSaveButton.setOnAction(f -> {
-                SaveData.saveLayout(currentLayout, windowLayout, false);
-                promptLayoutSaveName.close();
-            });
-        }else{
-            promptLayoutSaveName.setTitle("Select Layout Name");
-
-            VBox saveLayoutNameLayout = new VBox();
-            saveLayoutNameLayout.setSpacing(10);
-            saveLayoutNameLayout.setAlignment(Pos.CENTER);
-
-            Label saveNameLabel = new Label("What would you like this layout to be called?");
-            TextField saveNameText = new TextField();
-
-            saveLayoutNameLayout.getChildren().addAll(saveNameLabel, saveNameText);
-            Scene saveLayoutNameScene = new Scene(saveLayoutNameLayout, 275, 75);
-            promptLayoutSaveName.setScene(saveLayoutNameScene);
-            promptLayoutSaveName.show();
-
-            saveNameText.setOnAction(g -> {
-                String text = saveNameText.getText();
-                if (text.indexOf('\\') > -1 || text.indexOf('/') > -1 || text.indexOf(':') > -1 || text.indexOf('*') > -1 || text.indexOf('?') > -1 || text.indexOf('\"') > -1 || text.indexOf('<') > -1 || text.indexOf('>') > -1 || text.indexOf('|') > -1 || text.indexOf('.') > -1) {
-                    saveNameText.setText("");
-                } else {
-                    SaveData.saveLayout(saveNameText.getText(), windowLayout, false);
-                    promptLayoutSaveName.close();
-                }
-            });
+                loadButton.setOnAction(e -> {
+                    SaveData.loadLayout(layoutObject.get(0).toString(), layout, false);
+                    currentLayout = layoutObject.get(0).toString();
+                });
+                removeButton.setOnAction(e -> {
+                    SaveData.removeLayout(layoutObject.get(0).toString(), false);
+                    showLayoutList(layout);
+                });
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-    }
 
-    //load layout
-    public static void loadLayoutMenu(){
-        Stage loadSavedLayoutStage = new Stage();
-        loadSavedLayoutStage.initModality(Modality.APPLICATION_MODAL);
-        loadSavedLayoutStage.setResizable(false);
-        loadSavedLayoutStage.setTitle("Select Layout Name");
+        Button newLayoutButton = new Button("Add Layout");
+        layoutListLayout.getChildren().add(newLayoutButton);
 
-        TreeView<String> savedLayouts = new TreeView<>();
-        TreeItem<String> root = new TreeItem<>();
-        /*for(int i = 0; i < data.getfileLength("Layouts/Previously-Caught/~Layouts"); i++){
-            makeBranch(data.getLinefromFile(i, "Layouts/Previously-Caught/~Layouts"), root);
-        }*/
-        savedLayouts.setRoot(root);
-        savedLayouts.setShowRoot(false);
-        savedLayouts.setPrefWidth(300);
-        savedLayouts.setPrefWidth(500);
+        Scene layoutListScene = new Scene(layoutListLayout, 250, 400);
+        layoutListStage.setTitle("Layouts");
+        layoutListStage.setScene(layoutListScene);
+        if (!layoutListStage.isShowing())
+            layoutListStage.show();
 
-        VBox savedLayoutsLayout = new VBox();
-        savedLayoutsLayout.setSpacing(10);
-        savedLayoutsLayout.setAlignment(Pos.CENTER);
-        savedLayoutsLayout.getChildren().add(savedLayouts);
-
-        Scene savedLayoutsScene = new Scene(savedLayoutsLayout, 300, 400);
-        loadSavedLayoutStage.setScene(savedLayoutsScene);
-        loadSavedLayoutStage.show();
-
-        savedLayouts.getSelectionModel().selectedItemProperty()
-                .addListener((v, oldValue, newValue) -> {
-                    currentLayout = newValue.toString().substring(18, String.valueOf(newValue).length() - 2);
-                    loadSavedLayoutStage.close();
-                    loadLayout();
-                });
-    }
-
-    public static void loadLayout(){
-        //SaveData data = new SaveData();
-        displayPrevious = 0;
-/*
-        displayCaught = parseInt(data.getLinefromFile(data.getfileLength("Layouts/Previously-Caught/" + currentLayout) - 1, "Layouts/Previously-Caught/" + currentLayout));
-*/
-        numberCaughtField.setPromptText(String.valueOf(displayCaught));
-        if(previouslyCaughtSettingsLayout.getChildren().size() > 0)
-            previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
-        windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
-        if(!windowStage.isShowing())
-            createPreviouslyCaughtPokemonWindow();
-        previouslyCaughtPokemonSettings();
-        addPreviouslyCaughtPokemon();
-        SaveData.loadLayout(currentLayout, windowLayout, false);
+        newLayoutButton.setOnAction(e -> {
+            TextInputDialog newNameDialog = new TextInputDialog();
+            newNameDialog.setTitle("New Layout Name");
+            newNameDialog.setHeaderText("Enter name of new layout.");
+            newNameDialog.showAndWait().ifPresent(f -> {
+                SaveData.saveLayout(newNameDialog.getEditor().getText(), layout, false);
+                showLayoutList(layout);
+            });
+        });
     }
 }

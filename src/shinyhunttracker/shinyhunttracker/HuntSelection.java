@@ -202,8 +202,8 @@ public class HuntSelection{
         //opens new hunt and closes the selection window
         beginHunt.setOnAction(e ->{
             SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
-            SaveData.loadHunt(-1, controller);
             controller.updatePreviousSessionDat(1);
+            SaveData.loadHunt(-1, controller);
             selectionPageStage.close();
         });
     }

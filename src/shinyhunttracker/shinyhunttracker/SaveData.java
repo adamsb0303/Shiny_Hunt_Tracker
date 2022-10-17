@@ -2,14 +2,16 @@ package shinyhunttracker;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -287,7 +289,7 @@ public class SaveData {
             }
 
             //Loads data from file onto elements of layout
-            for(int i = 1; i < layoutData.size() - 1; i++){
+            for(int i = 1; i <= huntLayout.getChildren().size(); i++){
                 JSONObject elementData = (JSONObject) layoutData.get(i);
                 Node element = huntLayout.getChildren().get(i - 1);
                 if(element instanceof ImageView){
