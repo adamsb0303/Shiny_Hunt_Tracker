@@ -28,7 +28,7 @@ public class SaveData {
     public static void saveHunt(HuntWindow huntData){
         JSONObject pokemonData = new JSONObject();
 
-        pokemonData.put("pokemon_id", huntData.getPokemon().getDexNumber());
+        pokemonData.put("pokemon", huntData.getPokemon().getDexNumber());
         pokemonData.put("pokemon_form", huntData.getPokemon().getFormId());
         pokemonData.put("game", huntData.getGame().getId());
         pokemonData.put("method", huntData.getMethod().getId());
@@ -82,7 +82,7 @@ public class SaveData {
     }
 
     //pulls information from previous hunts file
-    public static void loadHunt(int index, HuntController controller){
+    public static void loadHunt(int index){
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
@@ -96,7 +96,7 @@ public class SaveData {
 
             //parse hunt data
             JSONObject huntObject = (JSONObject) huntList.get(index);
-            Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon_id").toString()));
+            Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon").toString()));
             Game selectedGame = new Game(Integer.parseInt(huntObject.get("game").toString()));
             Method selectedMethod = new Method(Integer.parseInt(huntObject.get("method").toString()));
             for(Object i : (JSONArray) huntObject.get("game_mods")){
@@ -122,7 +122,43 @@ public class SaveData {
             if(layoutObject != null)
                 layout = layoutObject.toString();
 
-            controller.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, increment, huntID));
+            HuntController.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, increment, huntID));
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeHunt(int index){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            huntList.remove(index);
+
+            FileWriter file = new FileWriter("SaveData/previousHunts.json");
+            file.write(huntList.toJSONString());
+            file.close();
+        }catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateHunt(int index, JSONObject data){
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            huntList.remove(index);
+            huntList.add(index, data);
+
+            FileWriter file = new FileWriter("SaveData/previousHunts.json");
+            file.write(huntList.toJSONString());
+            file.close();
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }

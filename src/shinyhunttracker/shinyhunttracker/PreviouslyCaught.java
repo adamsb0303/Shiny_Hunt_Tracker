@@ -287,7 +287,6 @@ class PreviouslyCaught {
                     }
 
                     SaveData.loadLayout(layoutObject.get(0).toString(), windowLayout, false);
-                    System.out.println(layoutObject.get(0) + " " + windowLayout.getChildren().size());
                 });
                 removeButton.setOnAction(e -> {
                     SaveData.removeLayout(layoutObject.get(0).toString(), false);

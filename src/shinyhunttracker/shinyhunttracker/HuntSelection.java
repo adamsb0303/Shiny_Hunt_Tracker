@@ -43,9 +43,8 @@ public class HuntSelection{
 
     /**
      * Opens a selection page for the user to select the information for the hunt they want to do
-     * @param controller huntController to pass back hunt information
      */
-    public static void createHuntSelection(HuntController controller){
+    public static void createHuntSelection(){
         //makes sure to not open a new window when one is open
         if(selectionPageStage.isShowing())
             return;
@@ -202,8 +201,8 @@ public class HuntSelection{
         //opens new hunt and closes the selection window
         beginHunt.setOnAction(e ->{
             SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
-            controller.updatePreviousSessionDat(1);
-            SaveData.loadHunt(-1, controller);
+            HuntController.updatePreviousSessionDat(1);
+            SaveData.loadHunt(-1);
             selectionPageStage.close();
         });
     }
