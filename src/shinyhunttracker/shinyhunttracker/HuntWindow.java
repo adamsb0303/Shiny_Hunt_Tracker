@@ -194,8 +194,8 @@ class HuntWindow {
             VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
             VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
+            VBox gameModifierSettings = new VBox();
             if(selectedGame.getOddModifiers().size() != 0) {
-                VBox gameModifierSettings = new VBox();
                 gameModifierSettings.setSpacing(10);
 
                 HBox groupLabel = new HBox();
@@ -219,8 +219,8 @@ class HuntWindow {
                         oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
                     });
                 }
-                Accordion accordion = (Accordion) oddsFraction.getChildren().get(0);
-                TitledPane pane = accordion.getPanes().get(0);
+                Accordion oddsAccordion = (Accordion) oddsFraction.getChildren().get(0);
+                TitledPane pane = oddsAccordion.getPanes().get(0);
                 VBox oddPaneSettings = (VBox) pane.getContent();
                 oddPaneSettings.getChildren().add(0, gameModifierSettings);
             }
@@ -263,24 +263,22 @@ class HuntWindow {
             }
 
             VBox comboSettings;
-            VBox previousEncountersSettings;
 
             switch (selectedMethod.getName()) {
                 case "Radar Chaining":
                 case "Chain Fishing":
                 case "SOS Chaining":
                 case "Catch Combo":
-                    comboSettings = createLabelSettings(currentComboText, "Combo");
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, layoutSettings);
-                    break;
                 case "DexNav":
                     comboSettings = createLabelSettings(currentComboText, "Combo");
-                    previousEncountersSettings = createLabelSettings(previousEncountersText, "Search Level");
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, previousEncountersSettings, backgroundSettings, layoutSettings);
-                    break;
-                case "Total Encounters":
-                    previousEncountersSettings = createLabelSettings(previousEncountersText, "Total Encounters");
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, previousEncountersSettings, backgroundSettings, layoutSettings);
+                    Button resetComboButton = new Button("Reset Combo");
+                    resetComboButton.setOnAction(e -> resetCombo());
+
+                    Accordion comboAccordion = (Accordion) comboSettings.getChildren().get(0);
+                    TitledPane pane = comboAccordion.getPanes().get(0);
+                    VBox oddPaneSettings = (VBox) pane.getContent();
+                    oddPaneSettings.getChildren().add(0, resetComboButton);
+                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, layoutSettings);
                     break;
                 default:
                     CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, layoutSettings);
@@ -335,7 +333,6 @@ class HuntWindow {
     //resets encounters
     public void resetCombo(){
         combo.setValue(0);
-        currentComboText.setText(String.valueOf(combo));
         dynamicOddsMethods();
     }
 

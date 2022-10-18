@@ -468,16 +468,16 @@ public class ElementSettings {
         underlinedCheck.setSelected(label.isUnderline());
         textProperties.getChildren().addAll(italics, italicsCheck, bold, boldCheck, underlined, underlinedCheck);
 
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable:");
-        CheckBox visableCheck = new CheckBox();
-        visableCheck.setSelected(label.isVisible());
-        visablility.getChildren().addAll(visableLabel, visableCheck);
+        HBox visibility = new HBox();
+        visibility.setSpacing(5);
+        Label visibleLabel = new Label("Visable:");
+        CheckBox visibleCheck = new CheckBox();
+        visibleCheck.setSelected(label.isVisible());
+        visibility.getChildren().addAll(visibleLabel, visibleCheck);
 
         VBox labelVBox = new VBox();
         labelVBox.setSpacing(10);
-        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, /*font,*/ color, stroke, /*strokeWidth, strokeColor,*/ textProperties, visablility);
+        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, textProperties, visibility);
 
         Accordion accordion = new Accordion();
         TitledPane labelTitledPane = new TitledPane(labelName, labelVBox);
@@ -599,7 +599,7 @@ public class ElementSettings {
 
         underlinedCheck.setOnAction(e -> label.setUnderline(underlinedCheck.isSelected()));
 
-        visableCheck.setOnAction(e -> label.setVisible(visableCheck.isSelected()));
+        visibleCheck.setOnAction(e -> label.setVisible(visibleCheck.isSelected()));
 
         return labelSettings;
     }
