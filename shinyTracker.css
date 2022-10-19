@@ -2,7 +2,7 @@
     -fx-font-family: Arial;
 }
 
-.button, .combo-box-base, .scroll-bar: vertical .thumb, .list-cell, .context-menu, .menu-button, .text-field{
+.button, .combo-box-base, .scroll-bar: vertical .thumb, .tree-cell, .tree-view, .list-cell, .context-menu, .menu-button, .text-field{
     -fx-background-color: #404040;
     -fx-background-radius: 0 0 0 0;
     -fx-background-insets: 0;
@@ -13,11 +13,11 @@
     -fx-background-color: #404040;
 }
 
-.button:hover, .list-cell:hover {
+.button:hover, .list-cell:hover, .tree-cell:hover, .combo-box-base:hover{
     -fx-background-color: #505050;
 }
 
-.button:pressed, .list-cell:pressed{
+.button:pressed, .list-cell:pressed, .tree-cell:pressed, .tree-cell:focused{
     -fx-background-color: #555555;
 }
 

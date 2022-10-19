@@ -441,7 +441,7 @@ public class HuntController {
                         Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
                         String encounters = huntData.get("encounters").toString();
 
-                        TreeItem<String> item = new TreeItem<>(pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
+                        TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
                         previousHuntsRoot.getChildren().add(item);
                     }
                 }

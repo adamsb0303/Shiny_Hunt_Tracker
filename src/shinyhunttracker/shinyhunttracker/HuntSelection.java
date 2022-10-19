@@ -65,6 +65,7 @@ public class HuntSelection{
         pokemonSprite.setLayoutY(275);
 
         gameComboBox.setPromptText("---Game---");
+        gameComboBox.setMinHeight(25);
         gameComboBox.setMinWidth(200);
         gameComboBox.setLayoutY(280);
         gameComboBox.setLayoutX(87.5);
@@ -84,7 +85,8 @@ public class HuntSelection{
 
         methodComboBox.setPromptText("---Method---");
         methodComboBox.setMinWidth(200);
-        methodComboBox.setLayoutY(305);
+        methodComboBox.setMinHeight(25);
+        methodComboBox.setLayoutY(315);
         methodComboBox.setLayoutX(87.5);
 
         if(defaultMethodList.size() == 0) {
@@ -102,13 +104,14 @@ public class HuntSelection{
 
         Button beginHunt = new Button("Start");
         beginHunt.setMinWidth(50);
-        beginHunt.setLayoutY(330);
+        beginHunt.setLayoutY(350);
         beginHunt.setLayoutX(162.5);
         beginHunt.setDisable(true);
 
         Button methodHelp = new Button("?");
-        methodHelp.setLayoutY(305);
-        methodHelp.setLayoutX(287.5);
+        methodHelp.setMinSize(25, 25);
+        methodHelp.setLayoutY(315);
+        methodHelp.setLayoutX(287);
         Tooltip methodToolTip = new Tooltip();
         methodToolTip.setShowDelay(ZERO);
         methodToolTip.setShowDuration(INDEFINITE);
@@ -122,6 +125,7 @@ public class HuntSelection{
         pokemonSelection.setMinWidth(375);
 
         TextField pokemonSearch = new TextField();
+        pokemonSearch.setPromptText("Search...");
 
         pokemonListTreeView.setMinHeight(475);
         pokemonListTreeView.setRoot(pokemonListRoot);
@@ -145,7 +149,9 @@ public class HuntSelection{
         pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView);
 
         selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
+        selectionPageLayout.setId("background");
         Scene selectionScene = new Scene(selectionPageLayout, 750, 500);
+        selectionScene.getStylesheets().add("file:shinyTracker.css");
         selectionPageStage.setScene(selectionScene);
         selectionPageStage.setResizable(false);
         selectionPageStage.show();
@@ -171,7 +177,7 @@ public class HuntSelection{
                         updatePokemonList();
                         updateMethodList();
 
-                        if(selectedPokemon != null & selectedGame != null)
+                        if(selectedPokemon != null & selectedMethod != null)
                             beginHunt.setDisable(false);
                     }
                 });
@@ -192,7 +198,7 @@ public class HuntSelection{
         pokemonSearch.setOnKeyReleased(e -> {
             searchPokemonList.clear();
             for (TreeItem<Pokemon> pokemonTreeItem : defaultPokemonList)
-                if (pokemonTreeItem.getValue().getName().toLowerCase().contains(pokemonSearch.getCharacters()))
+                if (pokemonTreeItem.getValue().getName().toLowerCase().contains(pokemonSearch.getText().toLowerCase()))
                     searchPokemonList.add(pokemonTreeItem);
 
             updatePokemonList();
