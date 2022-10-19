@@ -20,6 +20,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -383,24 +384,26 @@ public class HuntController {
      * Prompts the user if they would like to continue an old hunt, or start a new one
      */
     public static void newOrOld(){
-        Stage windowStage = new Stage();
-        Stage loadStage = new Stage();
+        Stage prevHuntsStage = new Stage();
+        Stage promptStage = new Stage();
 
-        Label prompt1 = new Label("Would you like to continue a previous hunt or");
-        Label prompt2 = new Label("start a new one?");
+        Label prompt = new Label("Would you like to continue a previous hunt or\nstart a new one?");
+        prompt.setTextAlignment(TextAlignment.CENTER);
         Button continuePrevious = new Button("Continue Previous Hunt");
         Button newHunt = new Button("Start New Hunt");
 
         VBox loadLayout = new VBox();
-        loadLayout.getChildren().addAll(prompt1, prompt2, continuePrevious, newHunt);
+        loadLayout.setId("background");
+        loadLayout.getChildren().addAll(prompt, continuePrevious, newHunt);
         loadLayout.setSpacing(10);
         loadLayout.setAlignment(Pos.CENTER);
 
         Scene loadScene = new Scene(loadLayout, 275, 150);
-        loadStage.setTitle("Load previous save");
-        loadStage.setResizable(false);
-        loadStage.setScene(loadScene);
-        loadStage.show();
+        loadScene.getStylesheets().add("file:shinyTracker.css");
+        promptStage.setTitle("Load previous save");
+        promptStage.setResizable(false);
+        promptStage.setScene(loadScene);
+        promptStage.show();
 
         //show the previously created Selection Page Window in order of last used
         newHunt.setOnAction(e -> {
@@ -408,13 +411,13 @@ public class HuntController {
             HuntSelection.createHuntSelection();
 
             //closes prompt window
-            windowStage.close();
-            loadStage.close();
+            prevHuntsStage.close();
+            promptStage.close();
         });
 
         //if they would like to continue, show a list of the previous hunts found on the file
         continuePrevious.setOnAction(e -> {
-            windowStage.setTitle("Select a previous hunt");
+            prevHuntsStage.setTitle("Select a previous hunt");
             TreeView<String> previousHuntsView = new TreeView<>();
             TreeItem<String> previousHuntsRoot = new TreeItem<>();
 
@@ -438,7 +441,7 @@ public class HuntController {
                         Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
                         String encounters = huntData.get("encounters").toString();
 
-                        TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
+                        TreeItem<String> item = new TreeItem<>(pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
                         previousHuntsRoot.getChildren().add(item);
                     }
                 }
@@ -450,7 +453,7 @@ public class HuntController {
                             int index = Integer.parseInt(newValue.toString().substring(18, newValue.toString().indexOf(')')));
                             updatePreviousSessionDat(1);
                             SaveData.loadHunt(huntList.size() - index);
-                            windowStage.close();
+                            prevHuntsStage.close();
                         });
             }catch (IOException | ParseException f) {
                 f.printStackTrace();
@@ -463,9 +466,9 @@ public class HuntController {
             previousHuntsLayout.getChildren().addAll(previousHuntsView);
 
             Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
-            windowStage.setScene(previousHuntsScene);
-            windowStage.show();
-            loadStage.close();
+            prevHuntsStage.setScene(previousHuntsScene);
+            prevHuntsStage.show();
+            promptStage.close();
         });
     }
 
