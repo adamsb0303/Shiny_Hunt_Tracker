@@ -2,22 +2,22 @@
     -fx-font-family: Arial;
 }
 
-.button, .context-menu, .menu-button, .text-field{
+.button, .combo-box-base, .scroll-bar: vertical .thumb, .list-cell, .context-menu, .menu-button, .text-field{
     -fx-background-color: #404040;
     -fx-background-radius: 0 0 0 0;
     -fx-background-insets: 0;
     -fx-text-fill: #FFFFFF;
 }
 
-.dialog-pane {
-    -fx-background: #252525;
+.combo-box-popup .list-view {
+    -fx-background-color: #404040;
 }
 
-.button:hover {
+.button:hover, .list-cell:hover {
     -fx-background-color: #505050;
 }
 
-.button:pressed{
+.button:pressed, .list-cell:pressed{
     -fx-background-color: #555555;
 }
 
@@ -25,6 +25,29 @@
     -fx-text-fill: #FFFFFF;
 }
 
-#huntControllerLayout {
+.scroll-bar:vertical .track{
+    -fx-background-color: #252525;
+    -fx-border-color: #252525;
+}
+
+.scroll-bar: vertical *.increment-button,
+.scroll-bar: vertical *.decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0 10 0 0;
+}
+
+.scroll-bar: vertical *.increment-arrow,
+.scroll-bar: vertical *.decrement-arrow{
+   -fx-shape : " ";
+   -fx-padding :0 0.15em;
+}
+
+.text-field:focused {
+    -fx-background-color: #555555;
+    -fx-highlight-fill: null;
+}
+
+#background, .dialog-pane {
     -fx-background: #252525;
 }

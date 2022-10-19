@@ -82,7 +82,7 @@ public class HuntController {
         huntControlsLayout.setTop(windowControls);
         huntControlsLayout.setCenter(huntControlsVBox);
         huntControlsLayout.setBottom(masterButtonsPane);
-        huntControlsLayout.setId("huntControllerLayout");
+        huntControlsLayout.setId("background");
 
         Scene huntControlsScene = new Scene(huntControlsLayout, 405, 75);
         huntControlsScene.getStylesheets().add("file:shinyTracker.css");
@@ -469,9 +469,9 @@ public class HuntController {
 
         //Setup layout
         VBox keyBindingsLayout = new VBox();
-        keyBindingsLayout.setAlignment(Pos.CENTER);
+        keyBindingsLayout.setAlignment(Pos.TOP_CENTER);
         keyBindingsLayout.setSpacing(10);
-        keyBindingsLayout.setPadding(new Insets(10,0,50,75));
+        keyBindingsLayout.setPadding(new Insets(10,0,0,0));
 
         try(FileReader reader = new FileReader("SaveData/keyBinds.json")){
             JSONParser jsonParser = new JSONParser();
@@ -531,8 +531,9 @@ public class HuntController {
             f.printStackTrace();
         }
 
-        ScrollPane scrollPane = new ScrollPane(keyBindingsLayout);
-        Scene keyBindingScene = new Scene(scrollPane, 250, 500);
+        keyBindingsLayout.setId("background");
+        Scene keyBindingScene = new Scene(keyBindingsLayout, 250, 300);
+        keyBindingScene.getStylesheets().add("file:shinyTracker.css");
         keyBindingSettingsStage.setScene(keyBindingScene);
         keyBindingSettingsStage.show();
     }
@@ -552,34 +553,39 @@ public class HuntController {
         VBox health = new VBox();
         health.setAlignment(Pos.TOP_CENTER);
         Label healthLabel = new Label("Health");
+        healthLabel.setUnderline(true);
         Label healthifShiny = new Label();
         health.getChildren().addAll(healthLabel, healthifShiny);
 
         VBox attack = new VBox();
         attack.setAlignment(Pos.TOP_CENTER);
         Label attackLabel = new Label("Attack");
+        attackLabel.setUnderline(true);
         Label attackifShiny = new Label();
         attack.getChildren().addAll(attackLabel, attackifShiny);
 
         VBox defense = new VBox();
         defense.setAlignment(Pos.TOP_CENTER);
         Label defenseLabel = new Label("Defense");
+        defenseLabel.setUnderline(true);
         Label defenseifShiny = new Label();
         defense.getChildren().addAll(defenseLabel, defenseifShiny);
 
         VBox speed = new VBox();
         speed.setAlignment(Pos.TOP_CENTER);
         Label speedLabel = new Label("Speed");
+        speedLabel.setUnderline(true);
         Label speedifShiny = new Label();
         speed.getChildren().addAll(speedLabel, speedifShiny);
 
         VBox special = new VBox();
         special.setAlignment(Pos.TOP_CENTER);
         Label specialLabel = new Label("Special");
+        specialLabel.setUnderline(true);
         Label specialifShiny = new Label();
         special.getChildren().addAll(specialLabel, specialifShiny);
 
-        updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, 1, selectedPokemon);
+        updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, 50, selectedPokemon);
 
         HBox statTable = new HBox();
         statTable.setAlignment(Pos.TOP_CENTER);
@@ -587,11 +593,15 @@ public class HuntController {
         statTable.getChildren().addAll(health, attack, defense, speed, special);
 
         VBox DVTableLayout = new VBox();
-        DVTableLayout.setAlignment(Pos.CENTER);
+        DVTableLayout.setAlignment(Pos.TOP_CENTER);
+        DVTableLayout.setSpacing(10);
+        DVTableLayout.setPadding(new Insets(10, 0, 0, 0));
+        DVTableLayout.setId("background");
         DVTableLayout.getChildren().addAll(levelSelect, statTable);
 
         Stage DVTableStage = new Stage();
-        Scene DVTableScene = new Scene(DVTableLayout, 500, 100);
+        Scene DVTableScene = new Scene(DVTableLayout, 300, 200);
+        DVTableScene.getStylesheets().add("file:shinyTracker.css");
         DVTableStage.setScene(DVTableScene);
         DVTableStage.setTitle(selectedPokemon.getName() + " Shiny DV Table");
 
