@@ -1,10 +1,14 @@
 package shinyhunttracker;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -102,7 +106,7 @@ public class HuntController {
             JSONArray huntList = (JSONArray) obj;
 
             //Load the last n hunts in the json
-            if(huntList != null)
+            if(huntList.size() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.size() - i);
         }catch (IOException | ParseException ignored) {
@@ -344,6 +348,7 @@ public class HuntController {
     }
 
     public static void refreshHunts(){
+        int oldHunts = windowsList.size();
         huntControlsVBox.getChildren().clear();
         huntControls.setHeight(75);
         while(windowsList.size() != 0){
@@ -363,11 +368,14 @@ public class HuntController {
             JSONArray huntList = (JSONArray) obj;
 
             //Load the last n hunts in the json
-            if(huntList != null)
+            if(huntList.size() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.size() - i);
         }catch (IOException | ParseException ignored) {
 
+        }
+        if(oldHunts < windowsList.size()){
+            updatePreviousSessionDat(windowsList.size() - oldHunts);
         }
     }
 
@@ -675,124 +683,144 @@ public class HuntController {
     }
 
     static Stage editHunts = new Stage();
-    static VBox editHuntsLayout;
+    static Pane parentPane;
+    static GridPane editHuntsLayout = new GridPane();
     public static void editSavedHuntsWindow(){
-        editHuntsLayout = new VBox();
+        parentPane = new Pane();
+        editHuntsLayout.getChildren().clear();
+        editHuntsLayout.setPadding(new Insets(5, 10, 5, 10));
+        editHuntsLayout.setHgap(10);
+        editHuntsLayout.setVgap(5);
+
+        editHuntsLayout.heightProperty().addListener((o, oldValue, newValue) -> {
+            editHunts.setWidth(editHuntsLayout.getWidth() + 10);
+            editHunts.setHeight(editHuntsLayout.getHeight() + 40);
+        });
+
         try(FileReader reader = new FileReader("SaveData/previousHunts.json")){
             JSONParser jsonParser = new JSONParser();
             JSONArray huntList = (JSONArray) jsonParser.parse(reader);
 
+            if(huntList.size() == 0) {
+                editHunts.close();
+                return;
+            }
+
             for(int i = 0; i < huntList.size(); i++){
                 JSONObject huntData = (JSONObject) huntList.get(i);
-                HBox huntInfo = new HBox();
                 Pokemon huntPokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
                 Game huntGame = new Game(Integer.parseInt(huntData.get("game").toString()));
                 Method huntMethod = new Method(Integer.parseInt(huntData.get("method").toString()));
 
-                Label pokemonLabel = new Label(huntPokemon.getName());
-                Label gameLabel = new Label(huntGame.getName());
-                Label methodLabel = new Label(huntMethod.getName());
-                Label encounters = new Label(huntData.get("encounters").toString());
-                Button edit = new Button("Edit");
+                Button pokemonButton = new Button(huntPokemon.getName());
+                GridPane.setHalignment(pokemonButton, HPos.CENTER);
+                GridPane.setValignment(pokemonButton, VPos.CENTER);
+                editHuntsLayout.add(pokemonButton, 0, i);
+
+                Button gameButton = new Button(huntGame.getName());
+                GridPane.setHalignment(gameButton, HPos.CENTER);
+                GridPane.setValignment(gameButton, VPos.CENTER);
+                editHuntsLayout.add(gameButton, 1, i);
+
+                Button methodButton = new Button(huntMethod.getName());
+                GridPane.setHalignment(methodButton, HPos.CENTER);
+                GridPane.setValignment(methodButton, VPos.CENTER);
+                editHuntsLayout.add(methodButton, 2, i);
+
+                Button encountersButton = new Button(String.format("%,d", Integer.parseInt(huntData.get("encounters").toString())));
+                GridPane.setHalignment(encountersButton, HPos.CENTER);
+                GridPane.setValignment(encountersButton, VPos.CENTER);
+                editHuntsLayout.add(encountersButton, 3, i);
+
                 Button delete = new Button("Delete");
-                huntInfo.getChildren().addAll(pokemonLabel, gameLabel, methodLabel, encounters, edit, delete);
-                editHuntsLayout.getChildren().add(huntInfo);
+                GridPane.setHalignment(delete, HPos.CENTER);
+                GridPane.setValignment(delete, VPos.CENTER);
+                editHuntsLayout.add(delete, 4, i);
 
                 int index = i;
+
+                pokemonButton.setOnAction(f -> {
+                    ChoiceDialog<Pokemon> pokemonChoiceDialog = new ChoiceDialog<>();
+                    try (FileReader gameReader = new FileReader("GameData/pokemon.json")) {
+                        JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
+
+                        for (int j = 0; j < gameList.size(); j++)
+                            pokemonChoiceDialog.getItems().add(new Pokemon((JSONObject) gameList.get(j), j));
+                    } catch (IOException | ParseException g) {
+                        g.printStackTrace();
+                    }
+                    pokemonChoiceDialog.setSelectedItem(huntPokemon);
+                    pokemonChoiceDialog.showAndWait().ifPresent(g -> {
+                        huntData.put("pokemon", pokemonChoiceDialog.getSelectedItem().getDexNumber());
+                        huntData.put("pokemon_form", 0);
+                        SaveData.updateHunt(index, huntData);
+                        editSavedHuntsWindow();
+                        refreshHunts();
+                    });
+                });
+
+                gameButton.setOnAction(f -> {
+                    ChoiceDialog<Game> gameChoiceDialog = new ChoiceDialog<>();
+                    try (FileReader gameReader = new FileReader("GameData/game.json")) {
+                        JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
+
+                        for (int j = 0; j < gameList.size(); j++)
+                            gameChoiceDialog.getItems().add(new Game((JSONObject) gameList.get(j), j));
+                    } catch (IOException | ParseException g) {
+                        g.printStackTrace();
+                    }
+                    gameChoiceDialog.setSelectedItem(huntGame);
+                    gameChoiceDialog.showAndWait().ifPresent(g -> {
+                        huntData.put("game", gameChoiceDialog.getSelectedItem().getId());
+                        huntData.put("game_mods", new JSONArray());
+                        SaveData.updateHunt(index, huntData);
+                        editSavedHuntsWindow();
+                        refreshHunts();
+                    });
+                });
+
+                methodButton.setOnAction(f -> {
+                    ChoiceDialog<Method> methodChoiceDialog = new ChoiceDialog<>();
+                    try (FileReader gameReader = new FileReader("GameData/method.json")) {
+                        JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
+
+                        for (int j = 0; j < gameList.size(); j++)
+                            methodChoiceDialog.getItems().add(new Method((JSONObject) gameList.get(j), j));
+                    } catch (IOException | ParseException g) {
+                        g.printStackTrace();
+                    }
+                    methodChoiceDialog.setSelectedItem(huntMethod);
+                    methodChoiceDialog.showAndWait().ifPresent(g -> {
+                        huntData.put("method", methodChoiceDialog.getSelectedItem().getId());
+                        SaveData.updateHunt(index, huntData);
+                        editSavedHuntsWindow();
+                        refreshHunts();
+                    });
+                });
+
+                encountersButton.setOnAction(f -> {
+                    TextInputDialog encountersDialog = new TextInputDialog();
+                    encountersDialog.showAndWait().ifPresent(g -> {
+                        huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText()));
+                        SaveData.updateHunt(index, huntData);
+                        editSavedHuntsWindow();
+                        refreshHunts();
+                    });
+                });
+
                 delete.setOnAction(e -> {
                     SaveData.removeHunt(index);
                     editSavedHuntsWindow();
-                });
-                edit.setOnAction(e -> {
-                    Stage editStage = new Stage();
-                    HBox editLayout = new HBox();
-                    Button pokemonButton = new Button(huntPokemon.getName());
-                    Button gameButton = new Button(huntGame.getName());
-                    Button methodButton = new Button(huntMethod.getName());
-                    Button encountersButton = new Button(huntData.get("encounters").toString());
-
-                    editLayout.getChildren().addAll(pokemonButton, gameButton, methodButton, encountersButton);
-                    Scene editScene = new Scene(editLayout, 500, 250);
-                    editStage.setScene(editScene);
-                    editStage.show();
-
-                    pokemonButton.setOnAction(f -> {
-                        ChoiceDialog<Pokemon> pokemonChoiceDialog = new ChoiceDialog<>();
-                        try (FileReader gameReader = new FileReader("GameData/pokemon.json")) {
-                            JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
-
-                            for (int j = 0; j < gameList.size(); j++)
-                                pokemonChoiceDialog.getItems().add(new Pokemon((JSONObject) gameList.get(j), j));
-                        } catch (IOException | ParseException g) {
-                            g.printStackTrace();
-                        }
-                        pokemonChoiceDialog.setSelectedItem(huntPokemon);
-                        pokemonChoiceDialog.showAndWait().ifPresent(g -> {
-                            huntData.put("pokemon", pokemonChoiceDialog.getSelectedItem().getDexNumber());
-                            huntData.put("pokemon_form", 0);
-                            SaveData.updateHunt(index, huntData);
-                            editStage.close();
-                            editSavedHuntsWindow();
-                            refreshHunts();
-                        });
-                    });
-
-                    gameButton.setOnAction(f -> {
-                        ChoiceDialog<Game> gameChoiceDialog = new ChoiceDialog<>();
-                        try (FileReader gameReader = new FileReader("GameData/game.json")) {
-                            JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
-
-                            for (int j = 0; j < gameList.size(); j++)
-                                gameChoiceDialog.getItems().add(new Game((JSONObject) gameList.get(j), j));
-                        } catch (IOException | ParseException g) {
-                            g.printStackTrace();
-                        }
-                        gameChoiceDialog.setSelectedItem(huntGame);
-                        gameChoiceDialog.showAndWait().ifPresent(g -> {
-                            huntData.put("game", gameChoiceDialog.getSelectedItem().getId());
-                            huntData.put("game_mods", new JSONArray());
-                            SaveData.updateHunt(index, huntData);
-                            editStage.close();
-                            editSavedHuntsWindow();
-                            refreshHunts();
-                        });
-                    });
-
-                    methodButton.setOnAction(f -> {
-                        ChoiceDialog<Method> methodChoiceDialog = new ChoiceDialog<>();
-                        try (FileReader gameReader = new FileReader("GameData/method.json")) {
-                            JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
-
-                            for (int j = 0; j < gameList.size(); j++)
-                                methodChoiceDialog.getItems().add(new Method((JSONObject) gameList.get(j), j));
-                        } catch (IOException | ParseException g) {
-                            g.printStackTrace();
-                        }
-                        methodChoiceDialog.setSelectedItem(huntMethod);
-                        methodChoiceDialog.showAndWait().ifPresent(g -> {
-                            huntData.put("method", methodChoiceDialog.getSelectedItem().getId());
-                            SaveData.updateHunt(index, huntData);
-                            editStage.close();
-                            editSavedHuntsWindow();
-                            refreshHunts();
-                        });
-                    });
-
-                    encountersButton.setOnAction(f -> {
-                        TextInputDialog encountersDialog = new TextInputDialog();
-                        encountersDialog.showAndWait().ifPresent(g -> {
-                            huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText()));
-                            SaveData.updateHunt(index, huntData);
-                            editStage.close();
-                            editSavedHuntsWindow();
-                            refreshHunts();
-                        });
-                    });
+                    refreshHunts();
                 });
             }
-            Scene huntListScene = new Scene(editHuntsLayout, 250, 400);
+            parentPane.getChildren().add(editHuntsLayout);
+            parentPane.setId("background");
+            Scene huntListScene = new Scene(parentPane, 1000, 400);
+            huntListScene.getStylesheets().add("file:shinyTracker.css");
             editHunts.setScene(huntListScene);
-            editHunts.show();
+            if(!editHunts.isShowing())
+                editHunts.show();
         }catch(IOException | ParseException e){
             e.printStackTrace();
         }
