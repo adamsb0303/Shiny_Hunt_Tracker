@@ -741,6 +741,10 @@ public class HuntController {
 
                 pokemonButton.setOnAction(f -> {
                     ChoiceDialog<Pokemon> pokemonChoiceDialog = new ChoiceDialog<>();
+                    pokemonChoiceDialog.setHeaderText("Select New Pokemon");
+                    pokemonChoiceDialog.initStyle(StageStyle.UNDECORATED);
+                    makeDraggable(pokemonChoiceDialog.getDialogPane().getScene());
+                    pokemonChoiceDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
                     try (FileReader gameReader = new FileReader("GameData/pokemon.json")) {
                         JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
 
@@ -761,6 +765,10 @@ public class HuntController {
 
                 gameButton.setOnAction(f -> {
                     ChoiceDialog<Game> gameChoiceDialog = new ChoiceDialog<>();
+                    gameChoiceDialog.setHeaderText("Select New Game");
+                    gameChoiceDialog.initStyle(StageStyle.UNDECORATED);
+                    makeDraggable(gameChoiceDialog.getDialogPane().getScene());
+                    gameChoiceDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
                     try (FileReader gameReader = new FileReader("GameData/game.json")) {
                         JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
 
@@ -781,6 +789,10 @@ public class HuntController {
 
                 methodButton.setOnAction(f -> {
                     ChoiceDialog<Method> methodChoiceDialog = new ChoiceDialog<>();
+                    methodChoiceDialog.setHeaderText("Select New Method");
+                    methodChoiceDialog.initStyle(StageStyle.UNDECORATED);
+                    makeDraggable(methodChoiceDialog.getDialogPane().getScene());
+                    methodChoiceDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
                     try (FileReader gameReader = new FileReader("GameData/method.json")) {
                         JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
 
@@ -800,6 +812,10 @@ public class HuntController {
 
                 encountersButton.setOnAction(f -> {
                     TextInputDialog encountersDialog = new TextInputDialog();
+                    encountersDialog.setHeaderText("Input New Encounters");
+                    encountersDialog.initStyle(StageStyle.UNDECORATED);
+                    makeDraggable(encountersDialog.getDialogPane().getScene());
+                    encountersDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
                     encountersDialog.showAndWait().ifPresent(g -> {
                         huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText()));
                         SaveData.updateHunt(index, huntData);
