@@ -58,15 +58,6 @@ public class HuntController {
         huntControlsVBox.setPadding(new Insets(10, 15, 10, 15));
 
         //replacement for normal window control buttons, exit and minimize
-        HBox windowControls = new HBox();
-        Button exit = new Button("X");
-        exit.setMinSize(25, 25);
-        Button minimize = new Button("_");
-        minimize.setMinSize(25, 25);
-        windowControls.getChildren().addAll(minimize, exit);
-        windowControls.setAlignment(Pos.CENTER_RIGHT);
-        windowControls.setSpacing(5);
-        windowControls.setPadding(new Insets(5,5,0,5));
 
         //add hunt and general settings buttons
         Button addHunt = new Button("+");
@@ -84,7 +75,7 @@ public class HuntController {
         masterButtonsPane.setPadding(new Insets(0,5,5,5));
 
         BorderPane huntControlsLayout = new BorderPane();
-        huntControlsLayout.setTop(windowControls);
+        huntControlsLayout.setTop(titleBar(huntControls));
         huntControlsLayout.setCenter(huntControlsVBox);
         huntControlsLayout.setBottom(masterButtonsPane);
         huntControlsLayout.setId("background");
@@ -113,9 +104,6 @@ public class HuntController {
         }catch (IOException | ParseException ignored) {
 
         }
-
-        exit.setOnAction(e -> huntControls.fireEvent(new WindowEvent(huntControls, WindowEvent.WINDOW_CLOSE_REQUEST)));
-        minimize.setOnAction(e -> huntControls.setIconified(true));
 
         editSavedHunts.setOnAction(e -> editSavedHuntsWindow());
         keyBinding.setOnAction(e -> keyBindingSettings());
@@ -855,5 +843,22 @@ public class HuntController {
             stage.setX(e.getScreenX() - xOffset);
             stage.setY(e.getScreenY() - yOffset);
         });
+    }
+
+    public static HBox titleBar(Stage stage){
+        HBox windowControls = new HBox();
+        Button exit = new Button("X");
+        exit.setMinSize(25, 25);
+        Button minimize = new Button("_");
+        minimize.setMinSize(25, 25);
+        windowControls.getChildren().addAll(minimize, exit);
+        windowControls.setAlignment(Pos.CENTER_RIGHT);
+        windowControls.setSpacing(5);
+        windowControls.setPadding(new Insets(5,5,0,5));
+
+        exit.setOnAction(e -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
+        minimize.setOnAction(e -> stage.setIconified(true));
+
+        return windowControls;
     }
 }

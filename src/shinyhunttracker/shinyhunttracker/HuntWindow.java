@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -74,6 +75,7 @@ class HuntWindow {
         currentComboText.setVisible(false);
         previousEncountersText = new Text();
         previousEncountersText.setVisible(false);
+        HBox titleBar = HuntController.titleBar(windowStage);
 
         //Sets the outlines of the labels to white
         currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
@@ -174,6 +176,7 @@ class HuntWindow {
         //Set scene and show screen
         Scene huntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(huntScene);
+
         windowStage.show();
 
         //load layout
@@ -231,10 +234,31 @@ class HuntWindow {
             backgroundColorSettings.setSpacing(5);
             Label backgroundColorLabel = new Label("Color");
             ColorPicker backgroundColorPicker = new ColorPicker();
+            CheckBox transparent = new CheckBox("Transparent");
             backgroundVBox.setPadding(new Insets(10, 10, 10, 10));
             backgroundVBox.setSpacing(10);
             backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-            backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings);
+            backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings, transparent);
+
+            Stage transparentStage = new Stage();
+            transparentStage.initStyle(StageStyle.TRANSPARENT);
+            transparent.setOnAction(e -> {
+                if(transparent.isSelected()) {
+                    transparentStage.setX(windowStage.getX());
+                    transparentStage.setY(windowStage.getY());
+                    transparentStage.setScene(windowStage.getScene());
+                    transparentStage.getScene().getRoot().setStyle("-fx-background-color:transparent;");
+                    transparentStage.getScene().setFill(Color.TRANSPARENT);
+                    windowStage.hide();
+                    transparentStage.show();
+                }else {
+                    windowStage.setX(transparentStage.getX());
+                    windowStage.setY(transparentStage.getY());
+                    windowStage.setScene(transparentStage.getScene());
+                    windowStage.show();
+                    transparentStage.hide();
+                }
+            });
 
             if (windowLayout.getBackground() != null)
                 backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
