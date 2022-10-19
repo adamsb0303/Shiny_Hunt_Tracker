@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
@@ -66,8 +67,10 @@ class HuntWindow {
         currentGameText = new Text(selectedGame.toString());
         oddFractionText = new Text("1/"+simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
         dynamicOddsMethods();
-        encountersText= new Text(String.valueOf(encounters));
-        currentComboText = new Text(String.valueOf(combo));
+        encountersText = new Text();
+        encountersText.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", encounters.getValue()), encounters));
+        currentComboText = new Text();
+        currentComboText.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", combo.getValue()), combo));
         currentComboText.setVisible(false);
         previousEncountersText = new Text();
         previousEncountersText.setVisible(false);
@@ -167,10 +170,6 @@ class HuntWindow {
             sprite.setLayoutX(100);
             sprite.setLayoutY(200);
         }
-
-        //automatically updates encounters and combo texts
-        encountersText.textProperty().bind(encounters.asString());
-        currentComboText.textProperty().bind(combo.asString());
 
         //Set scene and show screen
         Scene huntScene = new Scene(windowLayout, 750, 480);
