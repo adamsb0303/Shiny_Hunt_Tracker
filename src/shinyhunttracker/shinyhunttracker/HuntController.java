@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -11,10 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -45,12 +49,15 @@ public class HuntController {
         huntControls.initStyle(StageStyle.UNDECORATED);
         huntControls.setResizable(false);
         huntControlsVBox.setAlignment(Pos.CENTER);
-        huntControlsVBox.setSpacing(5);
+        huntControlsVBox.setSpacing(10);
+        huntControlsVBox.setPadding(new Insets(10, 15, 10, 15));
 
         //replacement for normal window control buttons, exit and minimize
         HBox windowControls = new HBox();
         Button exit = new Button("X");
+        exit.setMinSize(25, 25);
         Button minimize = new Button("_");
+        minimize.setMinSize(25, 25);
         windowControls.getChildren().addAll(minimize, exit);
         windowControls.setAlignment(Pos.CENTER_RIGHT);
         windowControls.setSpacing(5);
@@ -58,7 +65,9 @@ public class HuntController {
 
         //add hunt and general settings buttons
         Button addHunt = new Button("+");
+        addHunt.setMinSize(25, 25);
         MenuButton masterSettings = new MenuButton("O");
+        masterSettings.setMinSize(30, 25);
         MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
         MenuItem keyBinding = new MenuItem("Key Bind Settings");
         MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
@@ -73,8 +82,10 @@ public class HuntController {
         huntControlsLayout.setTop(windowControls);
         huntControlsLayout.setCenter(huntControlsVBox);
         huntControlsLayout.setBottom(masterButtonsPane);
+        huntControlsLayout.setId("huntControllerLayout");
 
-        Scene huntControlsScene = new Scene(huntControlsLayout, 350, 75);
+        Scene huntControlsScene = new Scene(huntControlsLayout, 405, 75);
+        huntControlsScene.getStylesheets().add("file:shinyTracker.css");
         huntControls.setScene(huntControlsScene);
         huntControls.show();
 
@@ -134,14 +145,7 @@ public class HuntController {
         });
 
         //Make window draggable
-        huntControlsScene.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        huntControlsScene.setOnMouseDragged(e -> {
-            huntControls.setX(e.getScreenX() - xOffset);
-            huntControls.setY(e.getScreenY() - yOffset);
-        });
+        makeDraggable(huntControlsScene);
 
         //Makes sure to save all currently open hunts before closing
         huntControls.setOnCloseRequest(e -> {
@@ -176,29 +180,44 @@ public class HuntController {
         //Hunt Information to add to controller vbox
         HBox huntInformationHBox = new HBox();
         huntInformationHBox.setAlignment(Pos.CENTER);
-        huntInformationHBox.setSpacing(10);
+        huntInformationHBox.setSpacing(5);
+        huntInformationHBox.setMinWidth(325);
 
         Button exitHuntButton = new Button("X");
         exitHuntButton.setFocusTraversable(false);
+        exitHuntButton.setMinSize(25, 25);
 
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
+        huntNumberLabel.setAlignment(Pos.CENTER);
+        huntNumberLabel.setMinWidth(15);
 
         Button encountersButton = new Button("+");
-
-        Label encounterLabel = new Label();
-        encounterLabel.textProperty().bind(newWindow.encounterProperty().asString());
+        encountersButton.setMinSize(25, 25);
 
         Label nameLabel = new Label(newWindow.getPokemon().getName());
+        nameLabel.setAlignment(Pos.CENTER);
+        nameLabel.setMinWidth(75);
+        nameLabel.setMaxWidth(75);
+
+        Label encounterLabel = new Label();
+        encounterLabel.setAlignment(Pos.CENTER);
+        encounterLabel.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", newWindow.encounterProperty().getValue()), newWindow.encounterProperty()));
+        encounterLabel.setMinWidth(75);
+        encounterLabel.setMaxWidth(75);
 
         Button caughtButton = new Button("C");
+        caughtButton.setMinSize(25, 25);
 
         StackPane windowPopout = new StackPane();
         Button popOutButton = new Button("P");
+        popOutButton.setMinSize(25, 25);
         Button windowSettingsButton = new Button("X");
+        windowSettingsButton.setMinSize(25, 25);
         windowSettingsButton.setVisible(false);
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
 
         MenuButton settingsButton = new MenuButton("O");
+        settingsButton.setMinSize(30, 25);
         MenuItem increment= new MenuItem("Change Increment");
         MenuItem resetEncounters = new MenuItem("Fail");
         MenuItem phaseHunt = new MenuItem("Phase");
@@ -209,10 +228,11 @@ public class HuntController {
             settingsButton.getItems().add(DVTable);
 
         Button helpButton = new Button("?");
+        helpButton.setMinSize(25, 25);
 
         huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, windowPopout, settingsButton, helpButton);
         huntControlsVBox.getChildren().add(newWindow.getHuntNumber() - 1, huntInformationHBox);
-        huntControls.setHeight(huntControls.getHeight() + 25);
+        huntControls.setHeight(huntControls.getHeight() + 35);
 
         //Set keybinds
         try (FileReader reader = new FileReader("SaveData/keybinds.json")) {
@@ -235,7 +255,7 @@ public class HuntController {
             newWindow.closeHuntWindow();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
-            huntControls.setHeight(huntControls.getHeight() - 25);
+            huntControls.setHeight(huntControls.getHeight() - 35);
 
             for(int i = windowsList.size() - 1; i >= 0 ; i--)
                 SaveData.saveHunt(windowsList.get(i));
@@ -249,6 +269,7 @@ public class HuntController {
 
         caughtButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
+            huntControls.setHeight(huntControls.getHeight() - 35);
             newWindow.pokemonCaught();
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
@@ -267,6 +288,9 @@ public class HuntController {
             TextInputDialog changeIncrementDialog = new TextInputDialog(String.valueOf(newWindow.getIncrement()));
             changeIncrementDialog.setTitle("Increment Settings");
             changeIncrementDialog.setHeaderText("Increment encounters by: ");
+            changeIncrementDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
+            makeDraggable(changeIncrementDialog.getDialogPane().getScene());
+            changeIncrementDialog.initStyle(StageStyle.UNDECORATED);
             changeIncrementDialog.showAndWait().ifPresent(response -> {
                 try{
                     newWindow.setIncrement(Integer.parseInt(response));
@@ -301,6 +325,9 @@ public class HuntController {
             Alert huntInformation = new Alert(Alert.AlertType.INFORMATION);
             huntInformation.setTitle("Hunt Information");
             huntInformation.setHeaderText(null);
+            huntInformation.initStyle(StageStyle.UNDECORATED);
+            huntInformation.getDialogPane().getStylesheets().add("file:shinyTracker.css");
+            makeDraggable(huntInformation.getDialogPane().getScene());
             huntInformation.setContentText( "Pokemon: " + newWindow.getPokemon().getName() + "\n" +
                                             "Game: " + newWindow.getGame().getName() + "\n" +
                                             "Method: " + newWindow.getMethod().getName() + "\n\n" +
@@ -759,5 +786,17 @@ public class HuntController {
         }catch(IOException | ParseException e){
             e.printStackTrace();
         }
+    }
+
+    public static void makeDraggable(Scene scene){
+        Window stage = scene.getWindow();
+        scene.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        scene.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
     }
 }

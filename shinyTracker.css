@@ -1,0 +1,30 @@
+* {
+    -fx-font-family: Arial;
+}
+
+.button, .context-menu, .menu-button, .text-field{
+    -fx-background-color: #404040;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-insets: 0;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dialog-pane {
+    -fx-background: #252525;
+}
+
+.button:hover {
+    -fx-background-color: #505050;
+}
+
+.button:pressed{
+    -fx-background-color: #555555;
+}
+
+.menu-button .label {
+    -fx-text-fill: #FFFFFF;
+}
+
+#huntControllerLayout {
+    -fx-background: #252525;
+}
