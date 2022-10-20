@@ -459,6 +459,7 @@ class HuntWindow {
                 loadButton.setOnAction(e -> {
                     SaveData.loadLayout(layoutObject.get(0).toString(), windowLayout, true);
                     currentLayout = layoutObject.get(0).toString();
+                    HuntController.saveHuntOrder();
                 });
                 removeButton.setOnAction(e -> {
                     SaveData.removeLayout(layoutObject.get(0).toString(), true);
@@ -495,7 +496,9 @@ class HuntWindow {
             newNameDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             newNameDialog.showAndWait().ifPresent(f -> {
                 SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, true);
-                showLayoutList();
+                currentLayout = newNameDialog.getEditor().getText();
+                SaveData.saveHunt(this);
+                HuntController.saveHuntOrder();
             });
         });
     }
