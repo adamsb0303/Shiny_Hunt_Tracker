@@ -1,8 +1,6 @@
 package shinyhunttracker;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -14,12 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -114,7 +109,7 @@ public class HuntController {
             for(int i = windowsList.size() - 1; i >= 0 ; i--){
                 if (windowsList.get(i).getKeyBinding() == e.getCode())
                     windowsList.get(i).incrementEncounters();
-                SaveData.saveHunt(windowsList.get(i));
+                saveHuntOrder();
             }
         });
 
@@ -249,16 +244,13 @@ public class HuntController {
             huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
             huntControls.setHeight(huntControls.getHeight() - 35);
+            if(prevHuntsStage.isShowing())
+                loadSavedHuntsWindow();
 
-            for(int i = windowsList.size() - 1; i >= 0 ; i--)
-                SaveData.saveHunt(windowsList.get(i));
+            saveHuntOrder();
         });
 
-        encountersButton.setOnAction(e -> {
-            newWindow.incrementEncounters();
-            for(int i = windowsList.size() - 1; i >= 0 ; i--)
-                SaveData.saveHunt(windowsList.get(i));
-        });
+        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
 
         caughtButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
@@ -337,9 +329,9 @@ public class HuntController {
     }
 
     public static void refreshHunts(){
-        int oldHunts = windowsList.size();
         huntControlsVBox.getChildren().clear();
         huntControls.setHeight(75);
+        saveHuntOrder();
         while(windowsList.size() != 0){
             windowsList.lastElement().closeHuntWindow();
             windowsList.remove(windowsList.lastElement());
@@ -363,9 +355,11 @@ public class HuntController {
         }catch (IOException | ParseException ignored) {
 
         }
-        if(oldHunts < windowsList.size()){
-            updatePreviousSessionDat(windowsList.size() - oldHunts);
-        }
+
+        if(prevHuntsStage.isShowing())
+            loadSavedHuntsWindow();
+        if(editHunts.isShowing())
+            editSavedHuntsWindow();
     }
 
     /**
@@ -405,59 +399,99 @@ public class HuntController {
 
         //if they would like to continue, show a list of the previous hunts found on the file
         continuePrevious.setOnAction(e -> {
-            prevHuntsStage.setTitle("Select a previous hunt");
-            TreeView<String> previousHuntsView = new TreeView<>();
-            TreeItem<String> previousHuntsRoot = new TreeItem<>();
-
-            JSONParser jsonParser = new JSONParser();
-
-            try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
-                //Read JSON file
-                Object obj = jsonParser.parse(reader);
-                JSONArray huntList = (JSONArray) obj;
-
-                for(int i = huntList.size() - 1; i >= 0; i--){
-                    JSONObject huntData = (JSONObject) huntList.get(i);
-                    boolean newData = true;
-                    for(HuntWindow j : windowsList)
-                        if(Integer.parseInt(huntData.get("huntID").toString()) == j.getHuntID())
-                            newData = false;
-
-                    if(newData) {
-                        Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
-                        Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
-                        Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
-                        String encounters = huntData.get("encounters").toString();
-
-                        TreeItem<String> item = new TreeItem<>((huntList.size() - i) + ") " + pokemon.getName() + " | " + game.getName() + " | " + method.getName() + " | " + encounters + " encounters");
-                        previousHuntsRoot.getChildren().add(item);
-                    }
-                }
-
-                //skip selection window and go straight to hunt page
-                previousHuntsView.getSelectionModel().selectedItemProperty()
-                        .addListener((v, oldValue, newValue) -> {
-                            //Reads the hunt number from the beginning of the string
-                            int index = Integer.parseInt(newValue.toString().substring(18, newValue.toString().indexOf(')')));
-                            updatePreviousSessionDat(1);
-                            SaveData.loadHunt(huntList.size() - index);
-                            prevHuntsStage.close();
-                        });
-            }catch (IOException | ParseException f) {
-                f.printStackTrace();
-            }
-
-            previousHuntsView.setRoot(previousHuntsRoot);
-            previousHuntsView.setShowRoot(false);
-
-            VBox previousHuntsLayout = new VBox();
-            previousHuntsLayout.getChildren().addAll(previousHuntsView);
-
-            Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
-            prevHuntsStage.setScene(previousHuntsScene);
-            prevHuntsStage.show();
+            loadSavedHuntsWindow();
             promptStage.close();
         });
+    }
+
+    static Stage prevHuntsStage = new Stage();
+    public static void loadSavedHuntsWindow(){
+        prevHuntsStage.setTitle("Select a previous hunt");
+        GridPane previousHunts = new GridPane();
+        previousHunts.setHgap(10);
+        previousHunts.setVgap(5);
+        previousHunts.setPadding(new Insets(5, 10, 5, 10));
+
+        previousHunts.heightProperty().addListener((o, oldVal, newVal) -> {
+            prevHuntsStage.setWidth(previousHunts.getWidth() + 15);
+            prevHuntsStage.setHeight(previousHunts.getHeight() + 40);
+        } );
+
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            for(int i = huntList.size() - 1; i >= 0; i--){
+                JSONObject huntData = (JSONObject) huntList.get(i);
+                boolean newData = true;
+                for(HuntWindow j : windowsList)
+                    if(Integer.parseInt(huntData.get("huntID").toString()) == j.getHuntID())
+                        newData = false;
+
+                if(newData) {
+                    Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
+                    Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
+                    Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
+
+                    int row = previousHunts.getRowCount();
+                    Label pokemonLabel = new Label(pokemon.getName());
+                    GridPane.setHalignment(pokemonLabel, HPos.CENTER);
+                    GridPane.setValignment(pokemonLabel, VPos.CENTER);
+                    previousHunts.add(pokemonLabel, 0, row);
+
+                    Label gameLabel = new Label(game.getName());
+                    GridPane.setHalignment(gameLabel, HPos.CENTER);
+                    GridPane.setValignment(gameLabel, VPos.CENTER);
+                    previousHunts.add(gameLabel, 1, row);
+
+                    Label methodLabel = new Label(method.getName());
+                    GridPane.setHalignment(methodLabel, HPos.CENTER);
+                    GridPane.setValignment(methodLabel, VPos.CENTER);
+                    previousHunts.add(methodLabel, 2, row);
+
+                    Label encounters = new Label(String.format("%,2d", Integer.parseInt(huntData.get("encounters").toString())));
+                    GridPane.setHalignment(encounters, HPos.CENTER);
+                    GridPane.setValignment(encounters, VPos.CENTER);
+                    previousHunts.add(encounters, 3, row);
+
+                    Button loadButton = new Button("Load");
+                    GridPane.setHalignment(loadButton, HPos.CENTER);
+                    GridPane.setValignment(loadButton, VPos.CENTER);
+                    previousHunts.add(loadButton, 4, row);
+
+                    int index = i;
+                    loadButton.setOnAction(f -> {
+                        updatePreviousSessionDat(1);
+                        SaveData.loadHunt(index);
+                        refreshHunts();
+                    });
+                }
+            }
+
+            if(previousHunts.getRowCount() == 0) {
+                prevHuntsStage.close();
+                return;
+            }
+        }catch (IOException | ParseException f) {
+            f.printStackTrace();
+        }
+
+        Pane previousHuntsLayout = new Pane();
+        previousHuntsLayout.setId("background");
+        previousHuntsLayout.getChildren().addAll(previousHunts);
+
+        Scene previousHuntsScene = new Scene(previousHuntsLayout, 0, 0);
+        previousHuntsScene.getStylesheets().add("file:shinyTracker.css");
+        prevHuntsStage.setScene(previousHuntsScene);
+        prevHuntsStage.show();
+    }
+
+    public static void saveHuntOrder(){
+        for(int i = windowsList.size() - 1; i >= 0 ; i--)
+            SaveData.saveHunt(windowsList.get(i));
     }
 
     /**
@@ -674,11 +708,9 @@ public class HuntController {
     }
 
     static Stage editHunts = new Stage();
-    static Pane parentPane;
-    static GridPane editHuntsLayout = new GridPane();
     public static void editSavedHuntsWindow(){
-        parentPane = new Pane();
-        editHuntsLayout.getChildren().clear();
+        Pane parentPane = new Pane();
+        GridPane editHuntsLayout = new GridPane();
         editHuntsLayout.setPadding(new Insets(5, 10, 5, 10));
         editHuntsLayout.setHgap(10);
         editHuntsLayout.setVgap(5);
@@ -697,7 +729,7 @@ public class HuntController {
                 return;
             }
 
-            for(int i = 0; i < huntList.size(); i++){
+            for(int i = huntList.size() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
                 Pokemon huntPokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
                 Game huntGame = new Game(Integer.parseInt(huntData.get("game").toString()));
@@ -749,7 +781,6 @@ public class HuntController {
                         huntData.put("pokemon", pokemonChoiceDialog.getSelectedItem().getDexNumber());
                         huntData.put("pokemon_form", 0);
                         SaveData.updateHunt(index, huntData);
-                        editSavedHuntsWindow();
                         refreshHunts();
                     });
                 });
@@ -773,7 +804,6 @@ public class HuntController {
                         huntData.put("game", gameChoiceDialog.getSelectedItem().getId());
                         huntData.put("game_mods", new JSONArray());
                         SaveData.updateHunt(index, huntData);
-                        editSavedHuntsWindow();
                         refreshHunts();
                     });
                 });
@@ -796,7 +826,6 @@ public class HuntController {
                     methodChoiceDialog.showAndWait().ifPresent(g -> {
                         huntData.put("method", methodChoiceDialog.getSelectedItem().getId());
                         SaveData.updateHunt(index, huntData);
-                        editSavedHuntsWindow();
                         refreshHunts();
                     });
                 });
@@ -810,14 +839,19 @@ public class HuntController {
                     encountersDialog.showAndWait().ifPresent(g -> {
                         huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText()));
                         SaveData.updateHunt(index, huntData);
-                        editSavedHuntsWindow();
                         refreshHunts();
                     });
                 });
 
                 delete.setOnAction(e -> {
                     SaveData.removeHunt(index);
-                    editSavedHuntsWindow();
+                    int huntID = Integer.parseInt(huntData.get("huntID").toString());
+                    for(int j = 0; j < windowsList.size(); j++)
+                        if(windowsList.get(j).getHuntID() == huntID) {
+                            updatePreviousSessionDat(-1);
+                            windowsList.remove(j);
+                            break;
+                        }
                     refreshHunts();
                 });
             }
