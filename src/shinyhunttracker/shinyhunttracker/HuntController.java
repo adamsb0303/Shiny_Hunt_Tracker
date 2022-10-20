@@ -234,8 +234,6 @@ public class HuntController {
             e.printStackTrace();
         }
 
-        refreshMiscWindows();
-
         exitHuntButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
             newWindow.closeHuntWindow();
@@ -350,9 +348,8 @@ public class HuntController {
             if(huntList.size() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.size() - i);
-
-            if(windowsList.size() == 0)
-                refreshMiscWindows();
+            saveHuntOrder();
+            refreshMiscWindows();
         }catch (IOException | ParseException ignored) {
 
         }

@@ -209,6 +209,7 @@ public class HuntSelection{
             SaveData.saveHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, "", 0, 0, 1, -1));
             HuntController.updatePreviousSessionDat(1);
             SaveData.loadHunt(-1);
+            HuntController.refreshMiscWindows();
             selectionPageStage.close();
         });
     }
