@@ -1,7 +1,9 @@
 package shinyhunttracker;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -250,27 +253,45 @@ class PreviouslyCaught {
     }
 
     static Stage layoutListStage = new Stage();
-    static VBox layoutListLayout;
-    public static void showLayoutList() {
-        layoutListLayout = new VBox();
-        //Changes if the file is for current hunt or previously caught window
-        String filePath = "SaveData/caughtLayouts.json";
+    public static void showLayoutList(){
+        GridPane layoutListLayout = new GridPane();
+        layoutListLayout.setHgap(10);
+        layoutListLayout.setVgap(5);
+        layoutListLayout.setPadding(new Insets(5, 10, 5, 10));
 
-        try (FileReader reader = new FileReader(filePath)) {
+        layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
+            layoutListStage.setWidth(layoutListLayout.getWidth() + 15);
+            layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
+        });
+
+        try(FileReader reader = new FileReader("SaveData/caughtLayouts.json")){
             JSONParser jsonParser = new JSONParser();
             JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
 
-            for (Object i : layoutList) {
+            for(Object i : layoutList){
                 JSONArray layoutObject = (JSONArray) i;
-                Label layoutNameLabel = new Label(layoutObject.get(0).toString());
-                Button updateButton = new Button("Update");
-                Button loadButton = new Button("Load");
-                Button removeButton = new Button("Delete");
-                updateButton.disableProperty().bind(windowStage.showingProperty().not());
 
-                HBox layoutInformation = new HBox();
-                layoutInformation.getChildren().addAll(layoutNameLabel, removeButton, loadButton, updateButton);
-                layoutListLayout.getChildren().addAll(layoutInformation);
+                int row = layoutListLayout.getRowCount();
+
+                Label layoutNameLabel = new Label(layoutObject.get(0).toString());
+                GridPane.setHalignment(layoutNameLabel, HPos.CENTER);
+                GridPane.setValignment(layoutNameLabel, VPos.CENTER);
+                layoutListLayout.add(layoutNameLabel, 0, row);
+
+                Button updateButton = new Button("Update");
+                GridPane.setHalignment(updateButton, HPos.CENTER);
+                GridPane.setValignment(updateButton, VPos.CENTER);
+                layoutListLayout.add(updateButton, 1, row);
+
+                Button loadButton = new Button("Load");
+                GridPane.setHalignment(loadButton, HPos.CENTER);
+                GridPane.setValignment(loadButton, VPos.CENTER);
+                layoutListLayout.add(loadButton, 2, row);
+
+                Button removeButton = new Button("Delete");
+                GridPane.setHalignment(removeButton, HPos.CENTER);
+                GridPane.setValignment(removeButton, VPos.CENTER);
+                layoutListLayout.add(removeButton, 3, row);
 
                 updateButton.setOnAction(e -> {
                     SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, false);
@@ -293,25 +314,37 @@ class PreviouslyCaught {
                     showLayoutList();
                 });
             }
-        } catch (IOException | ParseException e) {
+        }catch(IOException | ParseException e){
             e.printStackTrace();
         }
 
         Button newLayoutButton = new Button("Add Layout");
-        layoutListLayout.getChildren().add(newLayoutButton);
+        newLayoutButton.disableProperty().bind(windowStage.showingProperty().not());
+        GridPane.setColumnSpan(newLayoutButton, 4);
+        GridPane.setHalignment(newLayoutButton, HPos.CENTER);
+        GridPane.setValignment(newLayoutButton, VPos.CENTER);
+        layoutListLayout.add(newLayoutButton, 0, layoutListLayout.getRowCount());
 
-        Scene layoutListScene = new Scene(layoutListLayout, 250, 400);
+        Pane parentPane = new Pane();
+        parentPane.setId("background");
+        parentPane.getChildren().add(layoutListLayout);
+
+        Scene layoutListScene = new Scene(parentPane, 0, 0);
+        layoutListScene.getStylesheets().add("file:shinyTracker.css");
         layoutListStage.setTitle("Layouts");
         layoutListStage.setScene(layoutListScene);
-        if (!layoutListStage.isShowing())
+        if(!layoutListStage.isShowing())
             layoutListStage.show();
 
         newLayoutButton.setOnAction(e -> {
             TextInputDialog newNameDialog = new TextInputDialog();
             newNameDialog.setTitle("New Layout Name");
             newNameDialog.setHeaderText("Enter name of new layout.");
+            newNameDialog.initStyle(StageStyle.UNDECORATED);
+            HuntController.makeDraggable(newNameDialog.getDialogPane().getScene());
+            newNameDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             newNameDialog.showAndWait().ifPresent(f -> {
-                SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, false);
+                SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, true);
                 showLayoutList();
             });
         });
