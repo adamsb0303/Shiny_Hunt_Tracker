@@ -395,6 +395,15 @@ public class SaveData {
                     continue;
 
                 layoutList.remove(i);
+                FileReader prevHuntsReader = new FileReader("SaveData/previousHunts.json");
+                JSONArray prevHunts = (JSONArray) jsonParser.parse(prevHuntsReader);
+                for(int j = 0; j < prevHunts.size(); j++){
+                    JSONObject huntData = (JSONObject) prevHunts.get(j);
+                    if(huntData.get("layout").toString().equals(layoutName)){
+                        huntData.put("layout", "");
+                        updateHunt(j, huntData);
+                    }
+                }
                 break;
             }
 

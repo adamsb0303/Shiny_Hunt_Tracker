@@ -497,8 +497,8 @@ class HuntWindow {
             newNameDialog.showAndWait().ifPresent(f -> {
                 SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, true);
                 currentLayout = newNameDialog.getEditor().getText();
-                SaveData.saveHunt(this);
                 HuntController.saveHuntOrder();
+                showLayoutList();
             });
         });
     }
