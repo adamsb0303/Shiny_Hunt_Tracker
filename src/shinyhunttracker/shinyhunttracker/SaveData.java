@@ -46,8 +46,15 @@ public class SaveData {
             JSONArray huntList = (JSONArray) obj;
 
             //Check for duplicate data
-            if(huntData.getHuntID() == -1)
-                pokemonData.put("huntID", huntList.size());
+            int largest = 0;
+            if(huntData.getHuntID() == -1) {
+                for(Object i : huntList){
+                    JSONObject data = (JSONObject) i;
+                    if(Integer.parseInt(data.get("huntID").toString()) > largest)
+                        largest = Integer.parseInt(data.get("huntID").toString());
+                }
+                pokemonData.put("huntID", largest + 1);
+            }
             else {
                 pokemonData.put("huntID", huntData.getHuntID());
 

@@ -234,9 +234,7 @@ public class HuntController {
             e.printStackTrace();
         }
 
-        //update keybind window if it is open
-        if(keyBindingSettingsStage.isShowing())
-            keyBindingSettings();
+        refreshMiscWindows();
 
         exitHuntButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
@@ -283,6 +281,7 @@ public class HuntController {
 
                 }
             });
+            saveHuntOrder();
         });
         resetEncounters.setOnAction(e -> newWindow.resetEncounters());
         phaseHunt.setOnAction(e -> {
@@ -331,7 +330,6 @@ public class HuntController {
     public static void refreshHunts(){
         huntControlsVBox.getChildren().clear();
         huntControls.setHeight(75);
-        saveHuntOrder();
         while(windowsList.size() != 0){
             windowsList.lastElement().closeHuntWindow();
             windowsList.remove(windowsList.lastElement());
@@ -352,10 +350,17 @@ public class HuntController {
             if(huntList.size() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.size() - i);
+
+            if(windowsList.size() == 0)
+                refreshMiscWindows();
         }catch (IOException | ParseException ignored) {
 
         }
+    }
 
+    public static void refreshMiscWindows(){
+        if(keyBindingSettingsStage.isShowing())
+            keyBindingSettings();
         if(prevHuntsStage.isShowing())
             loadSavedHuntsWindow();
         if(editHunts.isShowing())
