@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
@@ -33,7 +32,7 @@ class PreviouslyCaught {
 
     static Stage previouslyCaughtSettingsStage = new Stage();
     static VBox previouslyCaughtSettingsLayout = new VBox();
-    static ColorPicker backgroundColorPicker = new ColorPicker();
+    static Accordion settingsAccordion = new Accordion();
     static TextField numberCaughtField = new TextField();
 
     //creates elements for previously caught element settings
@@ -45,7 +44,7 @@ class PreviouslyCaught {
 
         previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
 
-        Label numberCaught = new Label("Display Previously Caught: ");
+        Label numberCaught = new Label("Display Previously Caught");
         numberCaughtField.setMaxWidth(50);
         numberCaughtField.setPromptText(String.valueOf(displayCaught));
         Button previouslyCaughtList = new Button("List");
@@ -55,34 +54,36 @@ class PreviouslyCaught {
         numberPreviouslyCaught.setPadding(new Insets(10, 0, 0, 10));
         numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
 
-        Label backgroundColorLabel = new Label("Background: ");
-        backgroundColorPicker.setDisable(!windowStage.isShowing());
-        if (windowLayout.getBackground() != null)
-            backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
+        settingsAccordion.getPanes().add(ElementSettings.createBackgroundSettings(windowStage, windowLayout));
 
-        HBox backgroundColor = new HBox();
-        backgroundColor.setAlignment(Pos.CENTER);
-        backgroundColor.setSpacing(5);
-        backgroundColor.setPadding(new Insets(10, 0, 0, 10));
-        backgroundColor.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-
-        Label layoutLabel = new Label("Layout: ");
+        HBox layoutButton = new HBox();
+        layoutButton.setAlignment(Pos.CENTER);
+        layoutButton.setPadding(new Insets(0, 0, 10, 0));
         Button layoutSettingsButton = new Button("Layouts");
-
-        HBox layoutSettings = new HBox();
-        layoutSettings.setAlignment(Pos.CENTER);
-        layoutSettings.setSpacing(5);
-        layoutSettings.setPadding(new Insets(10, 0, 0, 10));
-        layoutSettings.getChildren().addAll(layoutLabel, layoutSettingsButton);
+        layoutButton.getChildren().add(layoutSettingsButton);
 
         previouslyCaughtSettingsLayout = new VBox();
         previouslyCaughtSettingsLayout.setAlignment(Pos.TOP_CENTER);
-        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, backgroundColor, layoutSettings);
+        previouslyCaughtSettingsLayout.setSpacing(10);
+        previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, settingsAccordion, layoutButton);
 
-        ScrollPane scrollPane = new ScrollPane(previouslyCaughtSettingsLayout);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setId("background");
+        scrollPane.setContent(previouslyCaughtSettingsLayout);
 
-        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 300, 500);
+        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 0, 0);
+        previouslyCaughtSettingsScene.getStylesheets().add("file:shinyTracker.css");
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
+
+        settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
+            if(settingsAccordion.getHeight() + 125 <= 540)
+                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 125);
+            else
+                previouslyCaughtSettingsStage.setHeight(540);
+            previouslyCaughtSettingsStage.setWidth(315);
+        });
 
         numberCaughtField.setOnAction(e -> {
             try {
@@ -92,8 +93,7 @@ class PreviouslyCaught {
                 displayCaught = parseInt(numberCaughtField.getText());
                 if (displayCaught == 0) {
                     windowStage.close();
-                    backgroundColorPicker.setDisable(true);
-                    previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+                    settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
                 } else {
                     addPreviouslyCaughtPokemon();
                     windowStage.show();
@@ -107,12 +107,10 @@ class PreviouslyCaught {
 
         previouslyCaughtList.setOnAction(e -> displayPreviouslyCaughtList());
 
-        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
-
         windowStage.setOnCloseRequest(e -> {
             displayCaught = 0;
             numberCaughtField.setPromptText("0");
-            previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+            settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
         });
 
         layoutSettingsButton.setOnAction(e -> showLayoutList());
@@ -127,7 +125,6 @@ class PreviouslyCaught {
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
         windowStage.setScene(previousHuntScene);
         windowStage.setTitle("Previously Caught Pokemon");
-        backgroundColorPicker.setDisable(false);
         windowStage.show();
     }
 
@@ -135,7 +132,7 @@ class PreviouslyCaught {
     public static void refreshPreviouslyCaughtPokemon() {
         SaveData.saveLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
 
-        previouslyCaughtSettingsLayout.getChildren().remove(3, previouslyCaughtSettingsLayout.getChildren().size());
+        settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
         windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
         addPreviouslyCaughtPokemon();
 
@@ -147,6 +144,7 @@ class PreviouslyCaught {
     public static void addPreviouslyCaughtPokemon() {
         if (displayCaught < displayPrevious) {
             windowLayout.getChildren().remove(displayCaught * 4, windowLayout.getChildren().size());
+            settingsAccordion.getPanes().remove(displayCaught * 4, settingsAccordion.getPanes().size() - 1);
             previouslyCaughtSettingsLayout.getChildren().remove(displayCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
             return;
         }
@@ -199,13 +197,17 @@ class PreviouslyCaught {
                 quickEdit(pokemon);
                 quickEdit(method);
                 quickEdit(encounters);
-                Accordion pokemonSettings = new Accordion();
+
                 TitledPane spriteSettings = createImageSettings(windowLayout, sprite, previouslyCaughtPokemon, caughtGame);
                 TitledPane pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
                 TitledPane methodLabelSettings = createLabelSettings(method, "Method");
                 TitledPane encountersLabelSettings = createLabelSettings(encounters, "Encounters");
-                pokemonSettings.getPanes().addAll(spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
-                previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), pokemonSettings);
+                encountersLabelSettings.setPadding(new Insets(0, 0, 25, 0));
+
+                settingsAccordion.getPanes().add(0, encountersLabelSettings);
+                settingsAccordion.getPanes().add(0, methodLabelSettings);
+                settingsAccordion.getPanes().add(0, pokemonLabelSettings);
+                settingsAccordion.getPanes().add(0, spriteSettings);
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();

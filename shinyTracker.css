@@ -2,11 +2,17 @@
     -fx-font-family: Arial;
 }
 
-.button, .combo-box-base, .scroll-bar: vertical .thumb, .titled-pane, .check-box .box, .accordion > .titled-pane > .title, .tree-cell, .tree-view, .list-cell, .context-menu, .menu-button, .text-field{
+.button, .combo-box-base, .titled-pane, .check-box .box, .accordion > .titled-pane > .title, .tree-cell, .tree-view, .list-cell, .context-menu, .menu-button, .text-field{
     -fx-background-color: #404040;
     -fx-background-radius: 0 0 0 0;
     -fx-background-insets: 0;
     -fx-text-fill: #FFFFFF;
+}
+
+.scroll-bar: vertical .thumb {
+    -fx-background-color: #505050;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-insets: 0;
 }
 
 .titled-pane > *.content {
@@ -59,4 +65,5 @@
 
 #background, .dialog-pane {
     -fx-background: #252525;
+    -fx-padding: 0;
 }

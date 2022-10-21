@@ -31,6 +31,19 @@ public class ElementSettings {
         CheckBox visibleCheck = new CheckBox("Visible");
         visibleCheck.setSelected(image.isVisible());
 
+        HBox form = new HBox();
+        form.setSpacing(5);
+        form.setAlignment(Pos.CENTER);
+        Label formLabel = new Label("Form");
+        ComboBox<String> formCombo = new ComboBox<>();
+        if(pokemon.getForms().size() != 0) {
+            for (String i : pokemon.getForms())
+                formCombo.getItems().add(i);
+            formCombo.getSelectionModel().select(pokemon.getForm());
+        }else
+            formCombo.getSelectionModel().select(0);
+        form.getChildren().addAll(formLabel, formCombo);
+
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         changeX.setAlignment(Pos.CENTER_LEFT);
@@ -63,18 +76,6 @@ public class ElementSettings {
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
-        HBox form = new HBox();
-        form.setSpacing(5);
-        Label formLabel = new Label("Form");
-        ComboBox<String> formCombo = new ComboBox<>();
-        if(pokemon.getForms().size() != 0) {
-            for (String i : pokemon.getForms())
-                formCombo.getItems().add(i);
-            formCombo.getSelectionModel().select(pokemon.getForm());
-        }else
-            formCombo.getSelectionModel().select(0);
-        form.getChildren().addAll(formLabel, formCombo);
-
         HBox imageFit = new HBox();
         imageFit.setSpacing(5);
         imageFit.setAlignment(Pos.CENTER);
@@ -85,9 +86,11 @@ public class ElementSettings {
         imageVBox.setSpacing(10);
         imageVBox.setAlignment(Pos.CENTER);
         imageVBox.setPadding(new Insets(10, 10, 10, 10));
+
+        imageVBox.getChildren().add(visibleCheck);
         if(formCombo.getItems().size() != 0)
             imageVBox.getChildren().add(form);
-        imageVBox.getChildren().addAll(visibleCheck, changeLocation, changeSize, imageFit);
+        imageVBox.getChildren().addAll(changeLocation, changeSize, imageFit);
 
         TitledPane imageTitledPane = new TitledPane(pokemon.getName() + " Sprite", imageVBox);
 
@@ -386,6 +389,8 @@ public class ElementSettings {
         backgroundColorSettings.setSpacing(5);
         Label backgroundColorLabel = new Label("Color");
         ColorPicker backgroundColorPicker = new ColorPicker();
+        backgroundColorPicker.setMinHeight(25);
+        backgroundColorPicker.disableProperty().bind(windowStage.showingProperty().not());
         backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
 
         CheckBox transparent = new CheckBox("Transparent");
