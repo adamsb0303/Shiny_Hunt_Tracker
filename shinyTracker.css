@@ -28,7 +28,7 @@
     -fx-background-color: #404040;
 }
 
-.button:hover, .list-cell:hover, .tree-cell:hover, .combo-box-base:hover{
+.button:hover, .list-cell:hover, .tree-cell:hover, .combo-box-base:hover, .menu-button:hover{
     -fx-background-color: #505050;
 }
 

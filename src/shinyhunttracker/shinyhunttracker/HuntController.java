@@ -48,7 +48,6 @@ public class HuntController {
      */
     public static void createHuntController(){
         //Initial Hunt Controller setup
-        huntControls.setTitle("Hunt Controller");
         huntControls.initStyle(StageStyle.UNDECORATED);
         huntControlsLayout.setAlignment(Pos.CENTER);
         huntControlsLayout.setVgap(10);
@@ -82,6 +81,7 @@ public class HuntController {
         //add hunt and general settings buttons
         Button addHunt = new Button("+");
         addHunt.setMinSize(25, 25);
+        addHunt.setTooltip(new Tooltip("Add Hunt"));
         MenuButton masterSettings = new MenuButton("O");
         masterSettings.setMinSize(30, 25);
         MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
@@ -194,6 +194,7 @@ public class HuntController {
 
         //Hunt Information to add to controller vbox
         Button exitHuntButton = new Button("X");
+        exitHuntButton.setTooltip(new Tooltip("Close Hunt"));
         exitHuntButton.setFocusTraversable(false);
         exitHuntButton.setMinSize(25, 25);
         huntControlsLayout.add(exitHuntButton, 0, row);
@@ -205,6 +206,7 @@ public class HuntController {
         huntControlsLayout.add(huntNumberLabel, 1, row);
 
         Button encountersButton = new Button("+");
+        encountersButton.setTooltip(new Tooltip("Increment Encounters"));
         encountersButton.setMinSize(25, 25);
         huntControlsLayout.add(encountersButton, 2, row);
 
@@ -220,13 +222,16 @@ public class HuntController {
         huntControlsLayout.add(encounterLabel, 4, row);
 
         Button caughtButton = new Button("C");
+        caughtButton.setTooltip(new Tooltip("Caught"));
         caughtButton.setMinSize(25, 25);
         huntControlsLayout.add(caughtButton, 5, row);
 
         StackPane windowPopout = new StackPane();
         Button popOutButton = new Button("P");
+        popOutButton.setTooltip(new Tooltip("Hunt Window Popout"));
         popOutButton.setMinSize(25, 25);
         Button windowSettingsButton = new Button("X");
+        windowSettingsButton.setTooltip(new Tooltip("Hunt Window Settings"));
         windowSettingsButton.setMinSize(25, 25);
         windowSettingsButton.setVisible(false);
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
@@ -246,6 +251,7 @@ public class HuntController {
         huntControlsLayout.add(settingsButton, 7, row);
 
         Button helpButton = new Button("?");
+        helpButton.setTooltip(new Tooltip("Info"));
         helpButton.setMinSize(25, 25);
         huntControlsLayout.add(helpButton, 8, row);
 
