@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.TextAlignment;
@@ -79,10 +80,17 @@ public class HuntController {
         huntControlsLayout.widthProperty().addListener(resizeListener);
 
         //add hunt and general settings buttons
-        Button addHunt = new Button("+");
+        Button addHunt = new Button();
+        ImageView addHuntIcon = new ImageView(new Image("file:Images/plus.png"));
+        addHunt.setPadding(new Insets(0, 0, 0, 0));
+        addHunt.setGraphic(addHuntIcon);
         addHunt.setMinSize(25, 25);
         addHunt.setTooltip(new Tooltip("Add Hunt"));
-        MenuButton masterSettings = new MenuButton("O");
+
+        MenuButton masterSettings = new MenuButton();
+        ImageView settingsIcon = new ImageView(new Image("file:Images/gear.png"));
+        masterSettings.setPadding(new Insets(0, 0, 0, 0));
+        masterSettings.setGraphic(settingsIcon);
         masterSettings.setMinSize(30, 25);
         MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
         MenuItem keyBinding = new MenuItem("Key Bind Settings");
@@ -193,7 +201,10 @@ public class HuntController {
         int row = newWindow.getHuntNumber() - 1;
 
         //Hunt Information to add to controller vbox
-        Button exitHuntButton = new Button("X");
+        Button exitHuntButton = new Button();
+        ImageView exitHuntIcon = new ImageView(new Image("file:Images/x.png"));
+        exitHuntButton.setPadding(new Insets(0, 0, 0, 0));
+        exitHuntButton.setGraphic(exitHuntIcon);
         exitHuntButton.setTooltip(new Tooltip("Close Hunt"));
         exitHuntButton.setFocusTraversable(false);
         exitHuntButton.setMinSize(25, 25);
@@ -205,7 +216,10 @@ public class HuntController {
         GridPane.setValignment(huntNumberLabel, VPos.CENTER);
         huntControlsLayout.add(huntNumberLabel, 1, row);
 
-        Button encountersButton = new Button("+");
+        Button encountersButton = new Button();
+        ImageView encountersIcon = new ImageView(new Image("file:Images/plus.png"));
+        encountersButton.setPadding(new Insets(0, 0, 0, 0));
+        encountersButton.setGraphic(encountersIcon);
         encountersButton.setTooltip(new Tooltip("Increment Encounters"));
         encountersButton.setMinSize(25, 25);
         huntControlsLayout.add(encountersButton, 2, row);
@@ -221,23 +235,36 @@ public class HuntController {
         encounterLabel.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", newWindow.encounterProperty().getValue()), newWindow.encounterProperty()));
         huntControlsLayout.add(encounterLabel, 4, row);
 
-        Button caughtButton = new Button("C");
+        Button caughtButton = new Button();
+        ImageView caughtIcon = new ImageView(new Image("file:Images/caught.png"));
+        caughtButton.setPadding(new Insets(0, 0, 0, 0));
+        caughtButton.setGraphic(caughtIcon);
         caughtButton.setTooltip(new Tooltip("Caught"));
         caughtButton.setMinSize(25, 25);
         huntControlsLayout.add(caughtButton, 5, row);
 
         StackPane windowPopout = new StackPane();
-        Button popOutButton = new Button("P");
+        Button popOutButton = new Button();
+        ImageView popOutIcon = new ImageView(new Image("file:Images/popout.png"));
+        popOutButton.setPadding(new Insets(0, 0, 0, 0));
+        popOutButton.setGraphic(popOutIcon);
         popOutButton.setTooltip(new Tooltip("Hunt Window Popout"));
         popOutButton.setMinSize(25, 25);
-        Button windowSettingsButton = new Button("X");
+
+        Button windowSettingsButton = new Button();
+        ImageView windowSettingsIcon = new ImageView(new Image("file:Images/popoutSettings.png"));
+        windowSettingsButton.setPadding(new Insets(0, 0, 0, 0));
+        windowSettingsButton.setGraphic(windowSettingsIcon);
         windowSettingsButton.setTooltip(new Tooltip("Hunt Window Settings"));
         windowSettingsButton.setMinSize(25, 25);
         windowSettingsButton.setVisible(false);
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
         huntControlsLayout.add(windowPopout, 6, row);
 
-        MenuButton settingsButton = new MenuButton("O");
+        MenuButton settingsButton = new MenuButton();
+        ImageView settingsIcon = new ImageView(new Image("file:Images/gear.png"));
+        settingsButton.setPadding(new Insets(0, 0, 0, 0));
+        settingsButton.setGraphic(settingsIcon);
         settingsButton.setMinSize(30, 25);
         MenuItem increment= new MenuItem("Change Increment");
         MenuItem resetEncounters = new MenuItem("Fail");
@@ -250,7 +277,10 @@ public class HuntController {
 
         huntControlsLayout.add(settingsButton, 7, row);
 
-        Button helpButton = new Button("?");
+        Button helpButton = new Button();
+        ImageView helpIcon = new ImageView(new Image("file:Images/questionmark.png"));
+        helpButton.setPadding(new Insets(0, 0, 0, 0));
+        helpButton.setGraphic(helpIcon);
         helpButton.setTooltip(new Tooltip("Info"));
         helpButton.setMinSize(25, 25);
         huntControlsLayout.add(helpButton, 8, row);
@@ -836,9 +866,16 @@ public class HuntController {
     public static HBox titleBar(Stage stage){
         HBox windowControls = new HBox();
         stage.getIcons().add(new Image("file:Images/icon.png"));
-        Button exit = new Button("X");
+        Button exit = new Button();
+        ImageView exitIcon = new ImageView(new Image("file:Images/x.png"));
+        exit.setPadding(new Insets(0, 0, 0, 0));
+        exit.setGraphic(exitIcon);
         exit.setMinSize(25, 25);
-        Button minimize = new Button("_");
+
+        Button minimize = new Button();
+        ImageView minimizeIcon = new ImageView(new Image("file:Images/underscore.png"));
+        minimize.setPadding(new Insets(0, 0, 0, 0));
+        minimize.setGraphic(minimizeIcon);
         minimize.setMinSize(25, 25);
         windowControls.getChildren().addAll(minimize, exit);
         windowControls.setAlignment(Pos.CENTER_RIGHT);
