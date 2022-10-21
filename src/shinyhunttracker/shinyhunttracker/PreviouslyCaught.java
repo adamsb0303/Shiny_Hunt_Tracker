@@ -214,37 +214,83 @@ class PreviouslyCaught {
         }
     }
 
+    static Stage prevCatchesStage = new Stage();
     public static void displayPreviouslyCaughtList() {
-        Stage displayCaughtListStage = new Stage();
-        displayCaughtListStage.setTitle("Previously Caught Pokemon");
-        TreeView<String> previouslyCaughtView = new TreeView<>();
-        TreeItem<String> previoulyCaughtRoot = new TreeItem<>();
+        prevCatchesStage.setTitle("Select a previous hunt");
+        GridPane previousCatches = new GridPane();
+        previousCatches.setHgap(20);
+        previousCatches.setVgap(5);
+        previousCatches.setPadding(new Insets(5, 10, 5, 10));
 
-        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
-            JSONParser jsonParser = new JSONParser();
-            JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
-
-            for (Object i : caughtPokemonList) {
-                JSONObject caughtData = (JSONObject) i;
-                Pokemon caughtPokemon = new Pokemon(Integer.parseInt(caughtData.get("pokemon").toString()));
-                Game caughtGame = new Game(Integer.parseInt(caughtData.get("game").toString()));
-                Method caughtMethod = new Method(Integer.parseInt(caughtData.get("method").toString()));
-                TreeItem<String> item = new TreeItem<>(caughtPokemon.getName() + " | " + caughtGame.getName() + " | " + caughtMethod.getName() + " | " + caughtData.get("encounters").toString() + " encounters");
-                previoulyCaughtRoot.getChildren().add(item);
+        previousCatches.heightProperty().addListener((o, oldVal, newVal) -> {
+            if(previousCatches.getHeight() + 40 <= 540) {
+                prevCatchesStage.setHeight(previousCatches.getHeight() + 40);
+                prevCatchesStage.setWidth(previousCatches.getWidth() + 10);
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            else {
+                prevCatchesStage.setHeight(540);
+                prevCatchesStage.setWidth(previousCatches.getWidth() + 20);
+            }
+        } );
+
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray huntList = (JSONArray) obj;
+
+            for(int i = huntList.size() - 1; i >= 0; i--){
+                JSONObject huntData = (JSONObject) huntList.get(i);
+
+                Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
+                Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
+                Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
+
+                int row = previousCatches.getRowCount();
+                Label caughtNumber = new Label(String.valueOf(huntList.size() - i));
+                GridPane.setHalignment(caughtNumber, HPos.CENTER);
+                GridPane.setValignment(caughtNumber, VPos.CENTER);
+                previousCatches.add(caughtNumber, 0, row);
+
+                Label pokemonLabel = new Label(pokemon.getName());
+                GridPane.setHalignment(pokemonLabel, HPos.CENTER);
+                GridPane.setValignment(pokemonLabel, VPos.CENTER);
+                previousCatches.add(pokemonLabel, 1, row);
+
+                Label gameLabel = new Label(game.getName());
+                GridPane.setHalignment(gameLabel, HPos.CENTER);
+                GridPane.setValignment(gameLabel, VPos.CENTER);
+                previousCatches.add(gameLabel, 2, row);
+
+                Label methodLabel = new Label(method.getName());
+                GridPane.setHalignment(methodLabel, HPos.CENTER);
+                GridPane.setValignment(methodLabel, VPos.CENTER);
+                previousCatches.add(methodLabel, 3, row);
+
+                Label encounters = new Label(String.format("%,2d", Integer.parseInt(huntData.get("encounters").toString())));
+                GridPane.setHalignment(encounters, HPos.CENTER);
+                GridPane.setValignment(encounters, VPos.CENTER);
+                previousCatches.add(encounters, 4, row);
+            }
+
+            if(previousCatches.getRowCount() == 0) {
+                prevCatchesStage.close();
+                return;
+            }
+        }catch (IOException | ParseException f) {
+            f.printStackTrace();
         }
 
-        previouslyCaughtView.setRoot(previoulyCaughtRoot);
-        previouslyCaughtView.setShowRoot(false);
+        ScrollPane previousHuntsLayout = new ScrollPane();
+        previousHuntsLayout.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        previousHuntsLayout.setId("background");
+        previousHuntsLayout.setContent(previousCatches);
 
-        VBox previousHuntsLayout = new VBox();
-        previousHuntsLayout.getChildren().addAll(previouslyCaughtView);
-
-        Scene previousHuntsScene = new Scene(previousHuntsLayout, 300, 400);
-        displayCaughtListStage.setScene(previousHuntsScene);
-        displayCaughtListStage.show();
+        Scene previousHuntsScene = new Scene(previousHuntsLayout, 0, 0);
+        previousHuntsScene.getStylesheets().add("file:shinyTracker.css");
+        prevCatchesStage.setScene(previousHuntsScene);
+        prevCatchesStage.show();
     }
 
     public static void close() {
