@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.TextAlignment;
@@ -828,6 +829,7 @@ public class HuntController {
 
     public static HBox titleBar(Stage stage){
         HBox windowControls = new HBox();
+        stage.getIcons().add(new Image("file:Images/icon.png"));
         Button exit = new Button("X");
         exit.setMinSize(25, 25);
         Button minimize = new Button("_");
