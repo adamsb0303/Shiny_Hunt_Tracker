@@ -1,6 +1,8 @@
 package shinyhunttracker;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -25,12 +27,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.Vector;
 
 public class HuntController {
     static Stage huntControls = new Stage();
-    static VBox huntControlsVBox = new VBox();
+    static ScrollPane huntControlsScroll = new ScrollPane();
+    static GridPane huntControlsLayout = new GridPane();
     static double xOffset, yOffset;
 
     static ObservableList<Pokemon> pokedex = FXCollections.observableArrayList();
@@ -45,10 +49,34 @@ public class HuntController {
         //Initial Hunt Controller setup
         huntControls.setTitle("Hunt Controller");
         huntControls.initStyle(StageStyle.UNDECORATED);
-        huntControls.setResizable(false);
-        huntControlsVBox.setAlignment(Pos.CENTER);
-        huntControlsVBox.setSpacing(10);
-        huntControlsVBox.setPadding(new Insets(10, 15, 10, 15));
+        huntControlsLayout.setAlignment(Pos.CENTER);
+        huntControlsLayout.setVgap(10);
+        huntControlsLayout.setHgap(10);
+        huntControlsLayout.setPadding(new Insets(10, 15, 10, 15));
+
+        huntControlsScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        huntControlsScroll.setContent(huntControlsLayout);
+        huntControlsScroll.setId("background");
+
+        ChangeListener<Number> resizeListener = (observableValue, o, t1) -> {
+            if(huntControlsLayout.getHeight() < 25){
+                huntControls.setHeight(100);
+                huntControls.setWidth(300);
+                return;
+            }
+
+            if(huntControlsLayout.getHeight() + 60 <= 540) {
+                huntControls.setHeight(huntControlsLayout.getHeight() + 60);
+                huntControls.setWidth(huntControlsLayout.getWidth());
+            }
+            else {
+                huntControls.setHeight(540);
+                huntControls.setWidth(huntControlsLayout.getWidth());
+            }
+        };
+
+        huntControlsLayout.heightProperty().addListener(resizeListener);
+        huntControlsLayout.widthProperty().addListener(resizeListener);
 
         //add hunt and general settings buttons
         Button addHunt = new Button("+");
@@ -67,11 +95,11 @@ public class HuntController {
 
         BorderPane huntControlsLayout = new BorderPane();
         huntControlsLayout.setTop(titleBar(huntControls));
-        huntControlsLayout.setCenter(huntControlsVBox);
+        huntControlsLayout.setCenter(huntControlsScroll);
         huntControlsLayout.setBottom(masterButtonsPane);
         huntControlsLayout.setId("background");
 
-        Scene huntControlsScene = new Scene(huntControlsLayout, 405, 75);
+        Scene huntControlsScene = new Scene(huntControlsLayout, 300, 100);
         huntControlsScene.getStylesheets().add("file:shinyTracker.css");
         huntControls.setScene(huntControlsScene);
         huntControls.show();
@@ -161,36 +189,38 @@ public class HuntController {
         //Add hunt Labels to controller
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
 
-        //Hunt Information to add to controller vbox
-        HBox huntInformationHBox = new HBox();
-        huntInformationHBox.setAlignment(Pos.CENTER);
-        huntInformationHBox.setSpacing(5);
-        huntInformationHBox.setMinWidth(325);
+        int row = newWindow.getHuntNumber() - 1;
 
+        //Hunt Information to add to controller vbox
         Button exitHuntButton = new Button("X");
         exitHuntButton.setFocusTraversable(false);
         exitHuntButton.setMinSize(25, 25);
+        huntControlsLayout.add(exitHuntButton, 0, row);
 
         Label huntNumberLabel = new Label(String.valueOf(newWindow.getHuntNumber()));
         huntNumberLabel.setAlignment(Pos.CENTER);
-        huntNumberLabel.setMinWidth(15);
+        GridPane.setHalignment(huntNumberLabel, HPos.CENTER);
+        GridPane.setValignment(huntNumberLabel, VPos.CENTER);
+        huntControlsLayout.add(huntNumberLabel, 1, row);
 
         Button encountersButton = new Button("+");
         encountersButton.setMinSize(25, 25);
+        huntControlsLayout.add(encountersButton, 2, row);
 
         Label nameLabel = new Label(newWindow.getPokemon().getName());
-        nameLabel.setAlignment(Pos.CENTER);
-        nameLabel.setMinWidth(75);
-        nameLabel.setMaxWidth(75);
+        GridPane.setHalignment(nameLabel, HPos.CENTER);
+        GridPane.setValignment(nameLabel, VPos.CENTER);
+        huntControlsLayout.add(nameLabel, 3, row);
 
         Label encounterLabel = new Label();
-        encounterLabel.setAlignment(Pos.CENTER);
+        GridPane.setHalignment(encounterLabel, HPos.CENTER);
+        GridPane.setValignment(encounterLabel, VPos.CENTER);
         encounterLabel.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", newWindow.encounterProperty().getValue()), newWindow.encounterProperty()));
-        encounterLabel.setMinWidth(75);
-        encounterLabel.setMaxWidth(75);
+        huntControlsLayout.add(encounterLabel, 4, row);
 
         Button caughtButton = new Button("C");
         caughtButton.setMinSize(25, 25);
+        huntControlsLayout.add(caughtButton, 5, row);
 
         StackPane windowPopout = new StackPane();
         Button popOutButton = new Button("P");
@@ -199,6 +229,7 @@ public class HuntController {
         windowSettingsButton.setMinSize(25, 25);
         windowSettingsButton.setVisible(false);
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
+        huntControlsLayout.add(windowPopout, 6, row);
 
         MenuButton settingsButton = new MenuButton("O");
         settingsButton.setMinSize(30, 25);
@@ -211,12 +242,11 @@ public class HuntController {
         if(newWindow.getGame().getGeneration() == 1)
             settingsButton.getItems().add(DVTable);
 
+        huntControlsLayout.add(settingsButton, 7, row);
+
         Button helpButton = new Button("?");
         helpButton.setMinSize(25, 25);
-
-        huntInformationHBox.getChildren().addAll(exitHuntButton, huntNumberLabel, encountersButton, nameLabel, encounterLabel, caughtButton, windowPopout, settingsButton, helpButton);
-        huntControlsVBox.getChildren().add(newWindow.getHuntNumber() - 1, huntInformationHBox);
-        huntControls.setHeight(huntControls.getHeight() + 35);
+        huntControlsLayout.add(helpButton, 8, row);
 
         //Set keybinds
         try (FileReader reader = new FileReader("SaveData/keybinds.json")) {
@@ -233,23 +263,25 @@ public class HuntController {
         exitHuntButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
             newWindow.closeHuntWindow();
-            huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
-            huntControls.setHeight(huntControls.getHeight() - 35);
             if(prevHuntsStage.isShowing())
                 loadSavedHuntsWindow();
 
             saveHuntOrder();
+            refreshHunts();
         });
 
-        encountersButton.setOnAction(e -> newWindow.incrementEncounters());
+        encountersButton.setOnAction(e -> {
+            newWindow.incrementEncounters();
+            saveHuntOrder();
+        });
 
         caughtButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
-            huntControls.setHeight(huntControls.getHeight() - 35);
             newWindow.pokemonCaught();
-            huntControlsVBox.getChildren().remove(huntInformationHBox);
             windowsList.remove(newWindow);
+            saveHuntOrder();
+            refreshHunts();
         });
 
         popOutButton.setOnAction(e -> {
@@ -275,7 +307,6 @@ public class HuntController {
 
                 }
             });
-            saveHuntOrder();
         });
         resetEncounters.setOnAction(e -> newWindow.resetEncounters());
         phaseHunt.setOnAction(e -> {
@@ -718,8 +749,7 @@ public class HuntController {
     }
 
     public static void refreshHunts(){
-        huntControlsVBox.getChildren().clear();
-        huntControls.setHeight(75);
+        huntControlsLayout.getChildren().clear();
         while(windowsList.size() != 0){
             windowsList.lastElement().closeHuntWindow();
             windowsList.remove(windowsList.lastElement());

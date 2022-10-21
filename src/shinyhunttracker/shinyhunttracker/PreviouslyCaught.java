@@ -235,7 +235,7 @@ class PreviouslyCaught {
 
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
             //Read JSON file
             Object obj = jsonParser.parse(reader);
             JSONArray huntList = (JSONArray) obj;
