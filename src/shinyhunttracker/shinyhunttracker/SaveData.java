@@ -333,6 +333,9 @@ public class SaveData {
 
             //Loads data from file onto elements of layout
             for(int i = 1; i <= huntLayout.getChildren().size(); i++){
+                if(i >= layoutData.size() - 1)
+                    break;
+
                 JSONObject elementData = (JSONObject) layoutData.get(i);
                 Node element = huntLayout.getChildren().get(i - 1);
                 if(element instanceof ImageView){
