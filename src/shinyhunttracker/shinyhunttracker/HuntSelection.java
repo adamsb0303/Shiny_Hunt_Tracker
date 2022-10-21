@@ -2,15 +2,16 @@ package shinyhunttracker;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -127,7 +128,7 @@ public class HuntSelection{
         TextField pokemonSearch = new TextField();
         pokemonSearch.setPromptText("Search...");
 
-        pokemonListTreeView.setMinHeight(475);
+        pokemonListTreeView.setMinHeight(441);
         pokemonListTreeView.setRoot(pokemonListRoot);
         pokemonListTreeView.setShowRoot(false);
 
@@ -146,14 +147,22 @@ public class HuntSelection{
         }
         pokemonListRoot.getChildren().addAll(defaultPokemonList);
 
-        pokemonSelection.getChildren().addAll(pokemonSearch, pokemonListTreeView);
+        HBox titleBar = HuntController.titleBar(selectionPageStage);
+        titleBar.setPadding(new Insets(5, 5, 5, 5));
+
+        pokemonSelection.getChildren().addAll(titleBar, pokemonSearch, pokemonListTreeView);
 
         selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
         selectionPageLayout.setId("background");
+
         Scene selectionScene = new Scene(selectionPageLayout, 750, 500);
         selectionScene.getStylesheets().add("file:shinyTracker.css");
+
+        if(selectionPageStage.getScene() == null)
+            selectionPageStage.initStyle(StageStyle.UNDECORATED);
+
         selectionPageStage.setScene(selectionScene);
-        selectionPageStage.setResizable(false);
+        HuntController.makeDraggable(selectionScene);
         selectionPageStage.show();
 
         //Listeners for when selection tools are changed

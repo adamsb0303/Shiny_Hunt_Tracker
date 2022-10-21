@@ -73,9 +73,18 @@ class PreviouslyCaught {
         scrollPane.setId("background");
         scrollPane.setContent(previouslyCaughtSettingsLayout);
 
-        Scene previouslyCaughtSettingsScene = new Scene(scrollPane, 0, 0);
+        VBox masterLayout = new VBox();
+        masterLayout.setId("background");
+        masterLayout.getChildren().addAll(HuntController.titleBar(previouslyCaughtSettingsStage), scrollPane);
+
+        Scene previouslyCaughtSettingsScene = new Scene(masterLayout, 0, 0);
         previouslyCaughtSettingsScene.getStylesheets().add("file:shinyTracker.css");
+
+        if(previouslyCaughtSettingsStage.getScene() == null)
+            previouslyCaughtSettingsStage.initStyle(StageStyle.UNDECORATED);
+
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
+        HuntController.makeDraggable(previouslyCaughtSettingsScene);
 
         settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
             if(settingsAccordion.getHeight() + 125 <= 540)
@@ -216,20 +225,19 @@ class PreviouslyCaught {
 
     static Stage prevCatchesStage = new Stage();
     public static void displayPreviouslyCaughtList() {
-        prevCatchesStage.setTitle("Select a previous hunt");
         GridPane previousCatches = new GridPane();
         previousCatches.setHgap(20);
         previousCatches.setVgap(5);
-        previousCatches.setPadding(new Insets(5, 10, 5, 10));
+        previousCatches.setPadding(new Insets(10, 10, 10, 10));
 
         previousCatches.heightProperty().addListener((o, oldVal, newVal) -> {
             if(previousCatches.getHeight() + 40 <= 540) {
                 prevCatchesStage.setHeight(previousCatches.getHeight() + 40);
-                prevCatchesStage.setWidth(previousCatches.getWidth() + 10);
+                prevCatchesStage.setWidth(previousCatches.getWidth());
             }
             else {
                 prevCatchesStage.setHeight(540);
-                prevCatchesStage.setWidth(previousCatches.getWidth() + 20);
+                prevCatchesStage.setWidth(previousCatches.getWidth() + 10);
             }
         } );
 
@@ -282,14 +290,23 @@ class PreviouslyCaught {
             f.printStackTrace();
         }
 
-        ScrollPane previousHuntsLayout = new ScrollPane();
-        previousHuntsLayout.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        previousHuntsLayout.setId("background");
-        previousHuntsLayout.setContent(previousCatches);
+        ScrollPane parentPane = new ScrollPane();
+        parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        parentPane.setId("background");
+        parentPane.setContent(previousCatches);
 
-        Scene previousHuntsScene = new Scene(previousHuntsLayout, 0, 0);
+        VBox masterLayout = new VBox();
+        masterLayout.setId("background");
+        masterLayout.getChildren().addAll(HuntController.titleBar(prevCatchesStage), parentPane);
+
+        Scene previousHuntsScene = new Scene(masterLayout, 0, 0);
         previousHuntsScene.getStylesheets().add("file:shinyTracker.css");
+
+        if(prevCatchesStage.getScene() == null)
+            prevCatchesStage.initStyle(StageStyle.UNDECORATED);
+
         prevCatchesStage.setScene(previousHuntsScene);
+        HuntController.makeDraggable(previousHuntsScene);
         prevCatchesStage.show();
     }
 
@@ -307,16 +324,16 @@ class PreviouslyCaught {
         GridPane layoutListLayout = new GridPane();
         layoutListLayout.setHgap(10);
         layoutListLayout.setVgap(5);
-        layoutListLayout.setPadding(new Insets(5, 10, 5, 10));
+        layoutListLayout.setPadding(new Insets(10, 10, 10, 10));
 
         layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
             if(layoutListLayout.getHeight() + 40 <= 540) {
                 layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
-                layoutListStage.setWidth(layoutListLayout.getWidth() + 15);
+                layoutListStage.setWidth(layoutListLayout.getWidth());
             }
             else {
                 layoutListStage.setHeight(540);
-                layoutListStage.setWidth(layoutListLayout.getWidth() + 25);
+                layoutListStage.setWidth(layoutListLayout.getWidth() + 10);
             }
         });
 
@@ -386,12 +403,19 @@ class PreviouslyCaught {
         parentPane.setId("background");
         parentPane.setContent(layoutListLayout);
 
-        Scene layoutListScene = new Scene(parentPane, 0, 0);
+        VBox masterLayout = new VBox();
+        masterLayout.setId("background");
+        masterLayout.getChildren().addAll(HuntController.titleBar(layoutListStage), parentPane);
+
+        Scene layoutListScene = new Scene(masterLayout, 0, 0);
         layoutListScene.getStylesheets().add("file:shinyTracker.css");
-        layoutListStage.setTitle("Layouts");
+
+        if(layoutListStage.getScene() == null)
+            layoutListStage.initStyle(StageStyle.UNDECORATED);
+
         layoutListStage.setScene(layoutListScene);
-        if(!layoutListStage.isShowing())
-            layoutListStage.show();
+        HuntController.makeDraggable(layoutListScene);
+        layoutListStage.show();
 
         newLayoutButton.setOnAction(e -> {
             TextInputDialog newNameDialog = new TextInputDialog();

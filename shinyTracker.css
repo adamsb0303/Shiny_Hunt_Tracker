@@ -66,4 +66,6 @@
 #background, .dialog-pane {
     -fx-background: #252525;
     -fx-padding: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }

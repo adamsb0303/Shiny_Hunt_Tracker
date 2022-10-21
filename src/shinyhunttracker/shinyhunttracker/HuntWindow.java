@@ -77,7 +77,6 @@ class HuntWindow {
         currentComboText.setVisible(false);
         previousEncountersText = new Text();
         previousEncountersText.setVisible(false);
-        HBox titleBar = HuntController.titleBar(windowStage);
 
         //Sets the outlines of the labels to white
         currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
@@ -263,11 +262,16 @@ class HuntWindow {
             CustomizeHuntLayout.setAlignment(Pos.TOP_CENTER);
             CustomizeHuntLayout.setId("background");
             CustomizeHuntLayout.setSpacing(10);
-            CustomizeHuntLayout.getChildren().addAll(settings, layoutSettings);
+            CustomizeHuntLayout.getChildren().addAll(HuntController.titleBar(CustomizeHuntStage), settings, layoutSettings);
 
             Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 0, 0);
             CustomizeHuntScene.getStylesheets().add("file:shinyTracker.css");
+
+            if(CustomizeHuntStage.getScene() == null)
+                CustomizeHuntStage.initStyle(StageStyle.UNDECORATED);
+
             CustomizeHuntStage.setScene(CustomizeHuntScene);
+            HuntController.makeDraggable(CustomizeHuntScene);
 
             settings.heightProperty().addListener((o, oldVal, newVal) -> {
                 CustomizeHuntStage.setHeight(settings.getHeight() + 80);
@@ -368,16 +372,16 @@ class HuntWindow {
         GridPane layoutListLayout = new GridPane();
         layoutListLayout.setHgap(10);
         layoutListLayout.setVgap(5);
-        layoutListLayout.setPadding(new Insets(5, 10, 5, 10));
+        layoutListLayout.setPadding(new Insets(10, 10, 10, 10));
 
         layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
             if(layoutListLayout.getHeight() + 40 <= 540) {
                 layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
-                layoutListStage.setWidth(layoutListLayout.getWidth() + 15);
+                layoutListStage.setWidth(layoutListLayout.getWidth());
             }
             else {
                 layoutListStage.setHeight(540);
-                layoutListStage.setWidth(layoutListLayout.getWidth() + 25);
+                layoutListStage.setWidth(layoutListLayout.getWidth() + 10);
             }
         });
 
@@ -439,12 +443,18 @@ class HuntWindow {
         parentPane.setId("background");
         parentPane.setContent(layoutListLayout);
 
+        VBox masterLayout = new VBox();
+        masterLayout.setId("background");
+        masterLayout.getChildren().addAll(HuntController.titleBar(layoutListStage), parentPane);
+
         Scene layoutListScene = new Scene(parentPane, 0, 0);
         layoutListScene.getStylesheets().add("file:shinyTracker.css");
-        layoutListStage.setTitle("Layouts");
         layoutListStage.setScene(layoutListScene);
-        if(!layoutListStage.isShowing())
+        if(!layoutListStage.isShowing()) {
+            layoutListStage.initStyle(StageStyle.UNDECORATED);
+            HuntController.makeDraggable(layoutListScene);
             layoutListStage.show();
+        }
 
         newLayoutButton.setOnAction(e -> {
             TextInputDialog newNameDialog = new TextInputDialog();
