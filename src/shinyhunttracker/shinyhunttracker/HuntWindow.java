@@ -371,8 +371,14 @@ class HuntWindow {
         layoutListLayout.setPadding(new Insets(5, 10, 5, 10));
 
         layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
-            layoutListStage.setWidth(layoutListLayout.getWidth() + 15);
-            layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
+            if(layoutListLayout.getHeight() + 40 <= 540) {
+                layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
+                layoutListStage.setWidth(layoutListLayout.getWidth() + 15);
+            }
+            else {
+                layoutListStage.setHeight(540);
+                layoutListStage.setWidth(layoutListLayout.getWidth() + 25);
+            }
         });
 
         try(FileReader reader = new FileReader("SaveData/huntLayouts.json")){
@@ -428,9 +434,10 @@ class HuntWindow {
         GridPane.setValignment(newLayoutButton, VPos.CENTER);
         layoutListLayout.add(newLayoutButton, 0, layoutListLayout.getRowCount());
 
-        Pane parentPane = new Pane();
+        ScrollPane parentPane = new ScrollPane();
+        parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         parentPane.setId("background");
-        parentPane.getChildren().add(layoutListLayout);
+        parentPane.setContent(layoutListLayout);
 
         Scene layoutListScene = new Scene(parentPane, 0, 0);
         layoutListScene.getStylesheets().add("file:shinyTracker.css");

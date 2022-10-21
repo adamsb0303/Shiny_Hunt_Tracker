@@ -37,8 +37,6 @@ public class HuntController {
 
     static Vector<HuntWindow> windowsList = new Vector<>();
 
-    static Stage keyBindingSettingsStage = new Stage();
-
     /**
      * Creates the Hunt Controller and
      * opens hunts from previous session
@@ -374,8 +372,14 @@ public class HuntController {
         previousHunts.setPadding(new Insets(5, 10, 5, 10));
 
         previousHunts.heightProperty().addListener((o, oldVal, newVal) -> {
-            prevHuntsStage.setWidth(previousHunts.getWidth() + 15);
-            prevHuntsStage.setHeight(previousHunts.getHeight() + 40);
+            if(previousHunts.getHeight() + 40 <= 540) {
+                prevHuntsStage.setHeight(previousHunts.getHeight() + 40);
+                prevHuntsStage.setWidth(previousHunts.getWidth() + 15);
+            }
+            else {
+                prevHuntsStage.setHeight(540);
+                prevHuntsStage.setWidth(previousHunts.getWidth() + 25);
+            }
         } );
 
         JSONParser jsonParser = new JSONParser();
@@ -440,11 +444,12 @@ public class HuntController {
             f.printStackTrace();
         }
 
-        Pane previousHuntsLayout = new Pane();
-        previousHuntsLayout.setId("background");
-        previousHuntsLayout.getChildren().addAll(previousHunts);
+        ScrollPane parentPane = new ScrollPane();
+        parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        parentPane.setId("background");
+        parentPane.setContent(previousHunts);
 
-        Scene previousHuntsScene = new Scene(previousHuntsLayout, 0, 0);
+        Scene previousHuntsScene = new Scene(parentPane, 0, 0);
         previousHuntsScene.getStylesheets().add("file:shinyTracker.css");
         prevHuntsStage.setScene(previousHuntsScene);
         prevHuntsStage.show();
@@ -452,15 +457,20 @@ public class HuntController {
 
     static Stage editHunts = new Stage();
     public static void editSavedHuntsWindow(){
-        Pane parentPane = new Pane();
         GridPane editHuntsLayout = new GridPane();
         editHuntsLayout.setPadding(new Insets(5, 10, 5, 10));
         editHuntsLayout.setHgap(10);
         editHuntsLayout.setVgap(5);
 
         editHuntsLayout.heightProperty().addListener((o, oldValue, newValue) -> {
-            editHunts.setWidth(editHuntsLayout.getWidth() + 10);
-            editHunts.setHeight(editHuntsLayout.getHeight() + 40);
+            if(editHuntsLayout.getHeight() + 40 <= 540) {
+                editHunts.setHeight(editHuntsLayout.getHeight() + 40);
+                editHunts.setWidth(editHuntsLayout.getWidth() + 15);
+            }
+            else {
+                editHunts.setHeight(540);
+                editHunts.setWidth(editHuntsLayout.getWidth() + 25);
+            }
         });
 
         try(FileReader reader = new FileReader("SaveData/previousHunts.json")){
@@ -598,8 +608,12 @@ public class HuntController {
                     refreshHunts();
                 });
             }
-            parentPane.getChildren().add(editHuntsLayout);
+
+            ScrollPane parentPane = new ScrollPane();
+            parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             parentPane.setId("background");
+            parentPane.setContent(editHuntsLayout);
+
             Scene huntListScene = new Scene(parentPane, 1000, 400);
             huntListScene.getStylesheets().add("file:shinyTracker.css");
             editHunts.setScene(huntListScene);
@@ -613,14 +627,26 @@ public class HuntController {
     /**
      * Pop up listing the keys that the hunts are bound too and allows the user to change them
      */
+    static Stage keyBindingSettingsStage = new Stage();
     public static void keyBindingSettings(){
         keyBindingSettingsStage.setTitle("Key Bindings");
 
         //Setup layout
         VBox keyBindingsLayout = new VBox();
-        keyBindingsLayout.setAlignment(Pos.TOP_CENTER);
+        keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
-        keyBindingsLayout.setPadding(new Insets(10,0,0,0));
+        keyBindingsLayout.setPadding(new Insets(10, 10, 10, 10));
+
+        keyBindingsLayout.heightProperty().addListener((o, oldValue, newValue) -> {
+            if(keyBindingsLayout.getHeight() + 40 <= 540) {
+                keyBindingSettingsStage.setHeight(keyBindingsLayout.getHeight() + 40);
+                keyBindingSettingsStage.setWidth(keyBindingsLayout.getWidth() + 15);
+            }
+            else {
+                keyBindingSettingsStage.setHeight(540);
+                keyBindingSettingsStage.setWidth(keyBindingsLayout.getWidth() + 25);
+            }
+        });
 
         try(FileReader reader = new FileReader("SaveData/keyBinds.json")){
             JSONParser jsonParser = new JSONParser();
@@ -680,8 +706,12 @@ public class HuntController {
             f.printStackTrace();
         }
 
-        keyBindingsLayout.setId("background");
-        Scene keyBindingScene = new Scene(keyBindingsLayout, 250, 300);
+        ScrollPane parentPane = new ScrollPane();
+        parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        parentPane.setId("background");
+        parentPane.setContent(keyBindingsLayout);
+
+        Scene keyBindingScene = new Scene(parentPane, 250, 300);
         keyBindingScene.getStylesheets().add("file:shinyTracker.css");
         keyBindingSettingsStage.setScene(keyBindingScene);
         keyBindingSettingsStage.show();
