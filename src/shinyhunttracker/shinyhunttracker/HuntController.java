@@ -52,8 +52,6 @@ public class HuntController {
         huntControlsVBox.setSpacing(10);
         huntControlsVBox.setPadding(new Insets(10, 15, 10, 15));
 
-        //replacement for normal window control buttons, exit and minimize
-
         //add hunt and general settings buttons
         Button addHunt = new Button("+");
         addHunt.setMinSize(25, 25);
@@ -325,45 +323,6 @@ public class HuntController {
         });
     }
 
-    public static void refreshHunts(){
-        huntControlsVBox.getChildren().clear();
-        huntControls.setHeight(75);
-        while(windowsList.size() != 0){
-            windowsList.lastElement().closeHuntWindow();
-            windowsList.remove(windowsList.lastElement());
-        }
-
-        JSONParser jsonParser = new JSONParser();
-        try {
-            //reads the number of hunts that were open when the program was last closed
-            FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
-            DataInputStream previousSessionData = new DataInputStream(reader);
-            int previousHuntsNum = previousSessionData.read();
-
-            //Read JSON file
-            Object obj = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
-            JSONArray huntList = (JSONArray) obj;
-
-            //Load the last n hunts in the json
-            if(huntList.size() != 0)
-                for(int i = 1; i <= previousHuntsNum; i++)
-                    SaveData.loadHunt(huntList.size() - i);
-            saveHuntOrder();
-            refreshMiscWindows();
-        }catch (IOException | ParseException ignored) {
-
-        }
-    }
-
-    public static void refreshMiscWindows(){
-        if(keyBindingSettingsStage.isShowing())
-            keyBindingSettings();
-        if(prevHuntsStage.isShowing())
-            loadSavedHuntsWindow();
-        if(editHunts.isShowing())
-            editSavedHuntsWindow();
-    }
-
     /**
      * Prompts the user if they would like to continue an old hunt, or start a new one
      */
@@ -489,224 +448,6 @@ public class HuntController {
         previousHuntsScene.getStylesheets().add("file:shinyTracker.css");
         prevHuntsStage.setScene(previousHuntsScene);
         prevHuntsStage.show();
-    }
-
-    public static void saveHuntOrder(){
-        for(int i = windowsList.size() - 1; i >= 0 ; i--)
-            SaveData.saveHunt(windowsList.get(i));
-    }
-
-    /**
-     * Pop up listing the keys that the hunts are bound too and allows the user to change them
-     */
-    public static void keyBindingSettings(){
-        keyBindingSettingsStage.setTitle("Key Bindings");
-
-        //Setup layout
-        VBox keyBindingsLayout = new VBox();
-        keyBindingsLayout.setAlignment(Pos.TOP_CENTER);
-        keyBindingsLayout.setSpacing(10);
-        keyBindingsLayout.setPadding(new Insets(10,0,0,0));
-
-        try(FileReader reader = new FileReader("SaveData/keyBinds.json")){
-            JSONParser jsonParser = new JSONParser();
-
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray keyBindsList = (JSONArray) obj;
-
-            //temporarily stores keys in order
-            Vector<KeyCode> keyBindsTemp = new Vector<>();
-            for (int i = 0; i < windowsList.lastElement().getHuntNumber(); i++) {
-                keyBindsTemp.add(KeyCode.valueOf((String) keyBindsList.get(i)));
-
-                //adds text-field and label to layout
-                HBox windowSettings = new HBox();
-                windowSettings.setAlignment(Pos.CENTER);
-                windowSettings.setSpacing(10);
-                Label huntWindowLabel = new Label("Hunt " + (i + 1));
-                TextField keyField = new TextField();
-                keyField.setText(String.valueOf(keyBindsList.get(i)));
-                keyField.setEditable(false);
-                keyField.setMaxWidth(100);
-                windowSettings.getChildren().addAll(huntWindowLabel, keyField);
-                keyBindingsLayout.getChildren().add(windowSettings);
-
-                //replaces the keybind in the temporary list
-                int index = i;
-                keyField.setOnKeyPressed(f -> {
-                    keyField.setText(f.getCode().toString());
-                    keyBindsTemp.set(index, f.getCode());
-                });
-            }
-
-            //Allows user to save changes and closes window
-            Button apply = new Button("Apply");
-            keyBindingsLayout.getChildren().add(apply);
-
-            apply.setOnAction(e->{
-                try {
-                    //updates the JSONArray updates the currently open hunts with the new binds
-                    for(int i = 0; i < keyBindsTemp.size(); i++) {
-                        keyBindsList.set(i, keyBindsTemp.get(i).toString());
-                        if(windowsList.get(i).getHuntNumber() == i + 1)
-                            windowsList.get(i).setKeybind(keyBindsTemp.get(i));
-                    }
-
-                    //Write to file
-                    FileWriter file = new FileWriter("SaveData/keyBinds.json");
-                    file.write(keyBindsList.toJSONString());
-                    file.close();
-                }catch(IOException f){
-                    f.printStackTrace();
-                }
-                keyBindingSettingsStage.close();
-            });
-        }catch(IOException | ParseException f){
-            f.printStackTrace();
-        }
-
-        keyBindingsLayout.setId("background");
-        Scene keyBindingScene = new Scene(keyBindingsLayout, 250, 300);
-        keyBindingScene.getStylesheets().add("file:shinyTracker.css");
-        keyBindingSettingsStage.setScene(keyBindingScene);
-        keyBindingSettingsStage.show();
-    }
-
-    /**
-     * Creates the window that displays the projected stats with shiny DVs
-     * @param selectedPokemon pokemon that is going to have calculated IVs
-     */
-    public static void generateDVTable(Pokemon selectedPokemon){
-        //Select level between 1-100
-        ComboBox<Integer> levelSelect = new ComboBox<>();
-        for(int i = 1; i <= 100; i++)
-            levelSelect.getItems().add(i);
-        levelSelect.getSelectionModel().select(49);
-
-        //Labels for each stat
-        VBox health = new VBox();
-        health.setAlignment(Pos.TOP_CENTER);
-        Label healthLabel = new Label("Health");
-        healthLabel.setUnderline(true);
-        Label healthifShiny = new Label();
-        health.getChildren().addAll(healthLabel, healthifShiny);
-
-        VBox attack = new VBox();
-        attack.setAlignment(Pos.TOP_CENTER);
-        Label attackLabel = new Label("Attack");
-        attackLabel.setUnderline(true);
-        Label attackifShiny = new Label();
-        attack.getChildren().addAll(attackLabel, attackifShiny);
-
-        VBox defense = new VBox();
-        defense.setAlignment(Pos.TOP_CENTER);
-        Label defenseLabel = new Label("Defense");
-        defenseLabel.setUnderline(true);
-        Label defenseifShiny = new Label();
-        defense.getChildren().addAll(defenseLabel, defenseifShiny);
-
-        VBox speed = new VBox();
-        speed.setAlignment(Pos.TOP_CENTER);
-        Label speedLabel = new Label("Speed");
-        speedLabel.setUnderline(true);
-        Label speedifShiny = new Label();
-        speed.getChildren().addAll(speedLabel, speedifShiny);
-
-        VBox special = new VBox();
-        special.setAlignment(Pos.TOP_CENTER);
-        Label specialLabel = new Label("Special");
-        specialLabel.setUnderline(true);
-        Label specialifShiny = new Label();
-        special.getChildren().addAll(specialLabel, specialifShiny);
-
-        updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, 50, selectedPokemon);
-
-        HBox statTable = new HBox();
-        statTable.setAlignment(Pos.TOP_CENTER);
-        statTable.setSpacing(10);
-        statTable.getChildren().addAll(health, attack, defense, speed, special);
-
-        VBox DVTableLayout = new VBox();
-        DVTableLayout.setAlignment(Pos.TOP_CENTER);
-        DVTableLayout.setSpacing(10);
-        DVTableLayout.setPadding(new Insets(10, 0, 0, 0));
-        DVTableLayout.setId("background");
-        DVTableLayout.getChildren().addAll(levelSelect, statTable);
-
-        Stage DVTableStage = new Stage();
-        Scene DVTableScene = new Scene(DVTableLayout, 300, 200);
-        DVTableScene.getStylesheets().add("file:shinyTracker.css");
-        DVTableStage.setScene(DVTableScene);
-        DVTableStage.setTitle(selectedPokemon.getName() + " Shiny DV Table");
-
-        DVTableStage.show();
-
-        //Updates labels with projected stats with given level
-        levelSelect.setOnAction(e -> {
-            int level = levelSelect.getSelectionModel().getSelectedItem();
-            updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, level, selectedPokemon);
-        });
-    }
-
-    /**
-     * Updates stat labels with projected shiny stats
-     * @param health Health Label
-     * @param attack Attack Label
-     * @param defense Defense Label
-     * @param speed Speed Label
-     * @param special Special Label
-     * @param level Pokemon Level
-     * @param selectedPokemon Pokemon
-     */
-    public static void updateStatLabels(Label health, Label attack, Label defense, Label speed, Label special, int level, Pokemon selectedPokemon){
-        int speedStat = selectedPokemon.getBase()[0];
-        int healthStat = selectedPokemon.getBase()[1];
-        int specialStat = selectedPokemon.getBase()[2];
-        int attackStat = selectedPokemon.getBase()[3];
-        int defenseStat = selectedPokemon.getBase()[4];
-
-        speed.setText(calculateShinyStat(speedStat, 10, level, false) + "");
-
-        health.setText(calculateShinyStat(healthStat, 0,level, true) + "\n"
-                     + calculateShinyStat(healthStat, 8,level, true));
-
-        special.setText(calculateShinyStat(specialStat, 10, level, false) + "");
-
-        attack.setText(calculateShinyStat(attackStat, 2, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 3, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 6, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 7, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 10, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 11, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 14, level, false) + "\n"
-                     + calculateShinyStat(attackStat, 15, level, false));
-
-        defense.setText(calculateShinyStat(defenseStat, 10, level, false) + "");
-    }
-
-    /**
-     * Calculates projected stat at given level and returns
-     * @param base Base Stat of selected pokemon
-     * @param dv Projected DV to calculate
-     * @param level Pokemon level
-     * @param isHealth Changes calculation if the stat is the health stat
-     * @return calculated Stat
-     */
-    public static int calculateShinyStat(int base, int dv, int level, boolean isHealth){
-        int health = isHealth ? 1 : 0;
-        return (((base + dv) * 2 * level) / 100) + (level * health) + 5 + (5 * health);
-    }
-
-    public static void updatePreviousSessionDat(int change){
-        //saves current hunts to open next time the program is started
-        try {
-            OutputStream out = new FileOutputStream("SaveData/previousSession.dat");
-            out.write(windowsList.size() + change);
-            out.close();
-        }catch (IOException f){
-            f.printStackTrace();
-        }
     }
 
     static Stage editHunts = new Stage();
@@ -869,16 +610,136 @@ public class HuntController {
         }
     }
 
-    public static void makeDraggable(Scene scene){
-        Window stage = scene.getWindow();
-        scene.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        scene.setOnMouseDragged(e -> {
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
-        });
+    /**
+     * Pop up listing the keys that the hunts are bound too and allows the user to change them
+     */
+    public static void keyBindingSettings(){
+        keyBindingSettingsStage.setTitle("Key Bindings");
+
+        //Setup layout
+        VBox keyBindingsLayout = new VBox();
+        keyBindingsLayout.setAlignment(Pos.TOP_CENTER);
+        keyBindingsLayout.setSpacing(10);
+        keyBindingsLayout.setPadding(new Insets(10,0,0,0));
+
+        try(FileReader reader = new FileReader("SaveData/keyBinds.json")){
+            JSONParser jsonParser = new JSONParser();
+
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            JSONArray keyBindsList = (JSONArray) obj;
+
+            //temporarily stores keys in order
+            Vector<KeyCode> keyBindsTemp = new Vector<>();
+            for (int i = 0; i < windowsList.lastElement().getHuntNumber(); i++) {
+                keyBindsTemp.add(KeyCode.valueOf((String) keyBindsList.get(i)));
+
+                //adds text-field and label to layout
+                HBox windowSettings = new HBox();
+                windowSettings.setAlignment(Pos.CENTER);
+                windowSettings.setSpacing(10);
+                Label huntWindowLabel = new Label("Hunt " + (i + 1));
+                TextField keyField = new TextField();
+                keyField.setText(String.valueOf(keyBindsList.get(i)));
+                keyField.setEditable(false);
+                keyField.setMaxWidth(100);
+                windowSettings.getChildren().addAll(huntWindowLabel, keyField);
+                keyBindingsLayout.getChildren().add(windowSettings);
+
+                //replaces the keybind in the temporary list
+                int index = i;
+                keyField.setOnKeyPressed(f -> {
+                    keyField.setText(f.getCode().toString());
+                    keyBindsTemp.set(index, f.getCode());
+                });
+            }
+
+            //Allows user to save changes and closes window
+            Button apply = new Button("Apply");
+            keyBindingsLayout.getChildren().add(apply);
+
+            apply.setOnAction(e->{
+                try {
+                    //updates the JSONArray updates the currently open hunts with the new binds
+                    for(int i = 0; i < keyBindsTemp.size(); i++) {
+                        keyBindsList.set(i, keyBindsTemp.get(i).toString());
+                        if(windowsList.get(i).getHuntNumber() == i + 1)
+                            windowsList.get(i).setKeybind(keyBindsTemp.get(i));
+                    }
+
+                    //Write to file
+                    FileWriter file = new FileWriter("SaveData/keyBinds.json");
+                    file.write(keyBindsList.toJSONString());
+                    file.close();
+                }catch(IOException f){
+                    f.printStackTrace();
+                }
+                keyBindingSettingsStage.close();
+            });
+        }catch(IOException | ParseException f){
+            f.printStackTrace();
+        }
+
+        keyBindingsLayout.setId("background");
+        Scene keyBindingScene = new Scene(keyBindingsLayout, 250, 300);
+        keyBindingScene.getStylesheets().add("file:shinyTracker.css");
+        keyBindingSettingsStage.setScene(keyBindingScene);
+        keyBindingSettingsStage.show();
+    }
+
+    public static void refreshHunts(){
+        huntControlsVBox.getChildren().clear();
+        huntControls.setHeight(75);
+        while(windowsList.size() != 0){
+            windowsList.lastElement().closeHuntWindow();
+            windowsList.remove(windowsList.lastElement());
+        }
+
+        JSONParser jsonParser = new JSONParser();
+        try {
+            //reads the number of hunts that were open when the program was last closed
+            FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
+            DataInputStream previousSessionData = new DataInputStream(reader);
+            int previousHuntsNum = previousSessionData.read();
+
+            //Read JSON file
+            Object obj = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
+            JSONArray huntList = (JSONArray) obj;
+
+            //Load the last n hunts in the json
+            if(huntList.size() != 0)
+                for(int i = 1; i <= previousHuntsNum; i++)
+                    SaveData.loadHunt(huntList.size() - i);
+            saveHuntOrder();
+            refreshMiscWindows();
+        }catch (IOException | ParseException ignored) {
+
+        }
+    }
+
+    public static void refreshMiscWindows(){
+        if(keyBindingSettingsStage.isShowing())
+            keyBindingSettings();
+        if(prevHuntsStage.isShowing())
+            loadSavedHuntsWindow();
+        if(editHunts.isShowing())
+            editSavedHuntsWindow();
+    }
+
+    public static void saveHuntOrder(){
+        for(int i = windowsList.size() - 1; i >= 0 ; i--)
+            SaveData.saveHunt(windowsList.get(i));
+    }
+
+    public static void updatePreviousSessionDat(int change){
+        //saves current hunts to open next time the program is started
+        try {
+            OutputStream out = new FileOutputStream("SaveData/previousSession.dat");
+            out.write(windowsList.size() + change);
+            out.close();
+        }catch (IOException f){
+            f.printStackTrace();
+        }
     }
 
     public static HBox titleBar(Stage stage){
@@ -896,5 +757,142 @@ public class HuntController {
         minimize.setOnAction(e -> stage.setIconified(true));
 
         return windowControls;
+    }
+
+    public static void makeDraggable(Scene scene){
+        Window stage = scene.getWindow();
+        scene.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        scene.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
+    }
+
+    /**
+     * Creates the window that displays the projected stats with shiny DVs
+     * @param selectedPokemon pokemon that is going to have calculated IVs
+     */
+    public static void generateDVTable(Pokemon selectedPokemon){
+        //Select level between 1-100
+        ComboBox<Integer> levelSelect = new ComboBox<>();
+        for(int i = 1; i <= 100; i++)
+            levelSelect.getItems().add(i);
+        levelSelect.getSelectionModel().select(49);
+
+        //Labels for each stat
+        VBox health = new VBox();
+        health.setAlignment(Pos.TOP_CENTER);
+        Label healthLabel = new Label("Health");
+        healthLabel.setUnderline(true);
+        Label healthifShiny = new Label();
+        health.getChildren().addAll(healthLabel, healthifShiny);
+
+        VBox attack = new VBox();
+        attack.setAlignment(Pos.TOP_CENTER);
+        Label attackLabel = new Label("Attack");
+        attackLabel.setUnderline(true);
+        Label attackifShiny = new Label();
+        attack.getChildren().addAll(attackLabel, attackifShiny);
+
+        VBox defense = new VBox();
+        defense.setAlignment(Pos.TOP_CENTER);
+        Label defenseLabel = new Label("Defense");
+        defenseLabel.setUnderline(true);
+        Label defenseifShiny = new Label();
+        defense.getChildren().addAll(defenseLabel, defenseifShiny);
+
+        VBox speed = new VBox();
+        speed.setAlignment(Pos.TOP_CENTER);
+        Label speedLabel = new Label("Speed");
+        speedLabel.setUnderline(true);
+        Label speedifShiny = new Label();
+        speed.getChildren().addAll(speedLabel, speedifShiny);
+
+        VBox special = new VBox();
+        special.setAlignment(Pos.TOP_CENTER);
+        Label specialLabel = new Label("Special");
+        specialLabel.setUnderline(true);
+        Label specialifShiny = new Label();
+        special.getChildren().addAll(specialLabel, specialifShiny);
+
+        updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, 50, selectedPokemon);
+
+        HBox statTable = new HBox();
+        statTable.setAlignment(Pos.TOP_CENTER);
+        statTable.setSpacing(10);
+        statTable.getChildren().addAll(health, attack, defense, speed, special);
+
+        VBox DVTableLayout = new VBox();
+        DVTableLayout.setAlignment(Pos.TOP_CENTER);
+        DVTableLayout.setSpacing(10);
+        DVTableLayout.setPadding(new Insets(10, 0, 0, 0));
+        DVTableLayout.setId("background");
+        DVTableLayout.getChildren().addAll(levelSelect, statTable);
+
+        Stage DVTableStage = new Stage();
+        Scene DVTableScene = new Scene(DVTableLayout, 300, 200);
+        DVTableScene.getStylesheets().add("file:shinyTracker.css");
+        DVTableStage.setScene(DVTableScene);
+        DVTableStage.setTitle(selectedPokemon.getName() + " Shiny DV Table");
+
+        DVTableStage.show();
+
+        //Updates labels with projected stats with given level
+        levelSelect.setOnAction(e -> {
+            int level = levelSelect.getSelectionModel().getSelectedItem();
+            updateStatLabels(healthifShiny, attackifShiny, defenseifShiny, speedifShiny, specialifShiny, level, selectedPokemon);
+        });
+    }
+
+    /**
+     * Updates stat labels with projected shiny stats
+     * @param health Health Label
+     * @param attack Attack Label
+     * @param defense Defense Label
+     * @param speed Speed Label
+     * @param special Special Label
+     * @param level Pokemon Level
+     * @param selectedPokemon Pokemon
+     */
+    public static void updateStatLabels(Label health, Label attack, Label defense, Label speed, Label special, int level, Pokemon selectedPokemon){
+        int speedStat = selectedPokemon.getBase()[0];
+        int healthStat = selectedPokemon.getBase()[1];
+        int specialStat = selectedPokemon.getBase()[2];
+        int attackStat = selectedPokemon.getBase()[3];
+        int defenseStat = selectedPokemon.getBase()[4];
+
+        speed.setText(calculateShinyStat(speedStat, 10, level, false) + "");
+
+        health.setText(calculateShinyStat(healthStat, 0,level, true) + "\n"
+                     + calculateShinyStat(healthStat, 8,level, true));
+
+        special.setText(calculateShinyStat(specialStat, 10, level, false) + "");
+
+        attack.setText(calculateShinyStat(attackStat, 2, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 3, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 6, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 7, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 10, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 11, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 14, level, false) + "\n"
+                     + calculateShinyStat(attackStat, 15, level, false));
+
+        defense.setText(calculateShinyStat(defenseStat, 10, level, false) + "");
+    }
+
+    /**
+     * Calculates projected stat at given level and returns
+     * @param base Base Stat of selected pokemon
+     * @param dv Projected DV to calculate
+     * @param level Pokemon level
+     * @param isHealth Changes calculation if the stat is the health stat
+     * @return calculated Stat
+     */
+    public static int calculateShinyStat(int base, int dv, int level, boolean isHealth){
+        int health = isHealth ? 1 : 0;
+        return (((base + dv) * 2 * level) / 100) + (level * health) + 5 + (5 * health);
     }
 }

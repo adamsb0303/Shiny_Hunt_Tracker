@@ -190,13 +190,14 @@ class HuntWindow {
     public void customizeHuntWindowSettings(){
         if(CustomizeHuntVBox.getChildren().size() == 0) {
             CustomizeHuntStage.setTitle("Settings");
-            CustomizeHuntStage.setResizable(false);
-            VBox spriteSettings = createImageSettings(windowLayout, sprite, selectedPokemon, selectedGame);
-            VBox currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
-            VBox currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
-            VBox currentGameSettings = createLabelSettings(currentGameText, "Game");
-            VBox encountersSettings = createLabelSettings(encountersText, "Encounters");
-            VBox oddsFraction = createLabelSettings(oddFractionText, "Odds");
+            Accordion settings = new Accordion();
+
+            TitledPane spriteSettings = createImageSettings(windowLayout, sprite, selectedPokemon, selectedGame);
+            TitledPane currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
+            TitledPane currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
+            TitledPane currentGameSettings = createLabelSettings(currentGameText, "Game");
+            TitledPane encountersSettings = createLabelSettings(encountersText, "Encounters");
+            TitledPane oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
             VBox gameModifierSettings = new VBox();
             if(selectedGame.getOddModifiers().size() != 0) {
@@ -223,71 +224,20 @@ class HuntWindow {
                         oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
                     });
                 }
-                Accordion oddsAccordion = (Accordion) oddsFraction.getChildren().get(0);
-                TitledPane pane = oddsAccordion.getPanes().get(0);
-                VBox oddPaneSettings = (VBox) pane.getContent();
+                VBox oddPaneSettings = (VBox) oddsFraction.getContent();
                 oddPaneSettings.getChildren().add(0, gameModifierSettings);
             }
 
-            VBox backgroundVBox = new VBox();
-            Label backgroundGroup = new Label("Background");
-            backgroundGroup.setUnderline(true);
-            HBox backgroundColorSettings = new HBox();
-            backgroundColorSettings.setSpacing(5);
-            Label backgroundColorLabel = new Label("Color");
-            ColorPicker backgroundColorPicker = new ColorPicker();
-            CheckBox transparent = new CheckBox("Transparent");
-            backgroundVBox.setPadding(new Insets(10, 10, 10, 10));
-            backgroundVBox.setSpacing(10);
-            backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
-            backgroundVBox.getChildren().addAll(backgroundGroup, backgroundColorSettings, transparent);
-
-            Stage transparentStage = new Stage();
-            transparentStage.initStyle(StageStyle.TRANSPARENT);
-            transparent.setOnAction(e -> {
-                if(transparent.isSelected()) {
-                    transparentStage.setX(windowStage.getX());
-                    transparentStage.setY(windowStage.getY());
-                    transparentStage.setScene(windowStage.getScene());
-                    transparentStage.getScene().getRoot().setStyle("-fx-background-color:transparent;");
-                    transparentStage.getScene().setFill(Color.TRANSPARENT);
-                    windowStage.hide();
-                    transparentStage.show();
-                }else {
-                    windowStage.setX(transparentStage.getX());
-                    windowStage.setY(transparentStage.getY());
-                    windowStage.setScene(transparentStage.getScene());
-                    windowStage.show();
-                    transparentStage.hide();
-                }
-            });
-
-            if (windowLayout.getBackground() != null)
-                backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
-
-            Accordion accordion = new Accordion();
-            TitledPane backgroundTitledPane = new TitledPane("Background", backgroundVBox);
-            accordion.getPanes().add(backgroundTitledPane);
-
-            VBox backgroundSettings = new VBox();
-            backgroundSettings.getChildren().add(accordion);
-
             Button layoutSettings = new Button("Layouts");
 
-            VBox Evo0Settings;
-            VBox Evo1Settings;
+            settings.getPanes().add(spriteSettings);
 
-            CustomizeHuntVBox.getChildren().add(spriteSettings);
-            if (Evo1.getImage() != null) {
-                Evo1Settings = createImageSettings(windowLayout, Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame);
-                CustomizeHuntVBox.getChildren().add(Evo1Settings);
-            }
-            if (Evo0.getImage() != null) {
-                Evo0Settings = createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame);
-                CustomizeHuntVBox.getChildren().addAll(Evo0Settings);
-            }
+            if (Evo1.getImage() != null)
+                settings.getPanes().add(createImageSettings(windowLayout, Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame));
+            if (Evo0.getImage() != null)
+                settings.getPanes().add(createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
 
-            VBox comboSettings;
+            settings.getPanes().addAll(currentPokemonSettings, currentMethodSettings, currentGameSettings, encountersSettings, oddsFraction);
 
             switch (selectedMethod.getName()) {
                 case "Radar Chaining":
@@ -295,32 +245,34 @@ class HuntWindow {
                 case "SOS Chaining":
                 case "Catch Combo":
                 case "DexNav":
-                    comboSettings = createLabelSettings(currentComboText, "Combo");
+                    TitledPane comboSettings = createLabelSettings(currentComboText, "Combo");
                     Button resetComboButton = new Button("Reset Combo");
                     resetComboButton.setOnAction(e -> resetCombo());
 
-                    Accordion comboAccordion = (Accordion) comboSettings.getChildren().get(0);
-                    TitledPane pane = comboAccordion.getPanes().get(0);
-                    VBox oddPaneSettings = (VBox) pane.getContent();
+                    VBox oddPaneSettings = (VBox) comboSettings.getContent();
                     oddPaneSettings.getChildren().add(0, resetComboButton);
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, comboSettings, backgroundSettings, layoutSettings);
+                    settings.getPanes().add(comboSettings);
                     break;
                 default:
-                    CustomizeHuntVBox.getChildren().addAll(encountersSettings, currentPokemonSettings, currentMethodSettings, currentGameSettings, oddsFraction, backgroundSettings, layoutSettings);
                     break;
             }
 
-            AnchorPane CustomizeHuntLayout = new AnchorPane();
-            CustomizeHuntLayout.getChildren().add(CustomizeHuntVBox);
-            AnchorPane.setTopAnchor(CustomizeHuntVBox, 0d);
+            settings.getPanes().add(createBackgroundSettings(windowStage, windowLayout));
 
-            ScrollPane CustomizeHuntScrollpane = new ScrollPane(CustomizeHuntLayout);
-            CustomizeHuntScrollpane.setFitToHeight(true);
+            VBox CustomizeHuntLayout = new VBox();
+            CustomizeHuntLayout.setAlignment(Pos.TOP_CENTER);
+            CustomizeHuntLayout.setId("background");
+            CustomizeHuntLayout.setSpacing(10);
+            CustomizeHuntLayout.getChildren().addAll(settings, layoutSettings);
 
-            Scene CustomizeHuntScene = new Scene(CustomizeHuntScrollpane, 263, 500);
+            Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 0, 0);
+            CustomizeHuntScene.getStylesheets().add("file:shinyTracker.css");
             CustomizeHuntStage.setScene(CustomizeHuntScene);
 
-            backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+            settings.heightProperty().addListener((o, oldVal, newVal) -> {
+                CustomizeHuntStage.setHeight(settings.getHeight() + 80);
+                CustomizeHuntStage.setWidth(315);
+            });
 
             layoutSettings.setOnAction(e -> showLayoutList());
         }

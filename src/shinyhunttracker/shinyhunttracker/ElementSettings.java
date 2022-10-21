@@ -1,5 +1,7 @@
 package shinyhunttracker;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +16,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
 
@@ -24,44 +27,41 @@ public class ElementSettings {
     static String[] fonts = generateFonts();
 
     //creates ImageView settings VBox
-    public static VBox createImageSettings(AnchorPane windowLayout, ImageView image, Pokemon pokemon, Game selectedGame){
-        HBox groupLabel = new HBox();
-        Label Group = new Label(pokemon.getName() + " Sprite:");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale:");
-        TextField sizeField = new TextField();
-        sizeField.promptTextProperty().bind(image.scaleXProperty().asString());
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
+    public static TitledPane createImageSettings(AnchorPane windowLayout, ImageView image, Pokemon pokemon, Game selectedGame){
+        CheckBox visibleCheck = new CheckBox("Visible");
+        visibleCheck.setSelected(image.isVisible());
 
         HBox changeX = new HBox();
         changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
+        changeX.setAlignment(Pos.CENTER_LEFT);
+        Label XLabel = new Label("X");
         TextField XField = new TextField();
+        XField.setMaxWidth(100);
         XField.promptTextProperty().bind(image.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
         HBox changeY = new HBox();
         changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
+        changeY.setAlignment(Pos.CENTER_LEFT);
+        Label YLabel = new Label("Y");
         TextField YField = new TextField();
+        YField.setMaxWidth(100);
         YField.promptTextProperty().bind(image.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
-        HBox visablility = new HBox();
-        visablility.setSpacing(5);
-        Label visableLabel = new Label("Visable:");
-        CheckBox visableCheck = new CheckBox();
-        visableCheck.setSelected(image.isVisible());
-        visablility.getChildren().addAll(visableLabel, visableCheck);
+        HBox changeLocation = new HBox();
+        changeLocation.setSpacing(10);
+        changeLocation.setAlignment(Pos.CENTER);
+        changeLocation.getChildren().addAll(changeX, changeY);
 
-        HBox imageFit = new HBox();
-        imageFit.setSpacing(5);
-        Button imageFitButton = new Button("Adjust Image Layout Bounds");
-        imageFit.getChildren().add(imageFitButton);
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale");
+        TextField sizeField = new TextField();
+        sizeField.setMaxWidth(100);
+        sizeField.promptTextProperty().bind(image.scaleXProperty().asString());
+        changeSize.setAlignment(Pos.CENTER);
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
 
         HBox form = new HBox();
         form.setSpacing(5);
@@ -75,18 +75,21 @@ public class ElementSettings {
             formCombo.getSelectionModel().select(0);
         form.getChildren().addAll(formLabel, formCombo);
 
+        HBox imageFit = new HBox();
+        imageFit.setSpacing(5);
+        imageFit.setAlignment(Pos.CENTER);
+        Button imageFitButton = new Button("Adjust Image Layout Bounds");
+        imageFit.getChildren().add(imageFitButton);
+
         VBox imageVBox = new VBox();
         imageVBox.setSpacing(10);
+        imageVBox.setAlignment(Pos.CENTER);
+        imageVBox.setPadding(new Insets(10, 10, 10, 10));
         if(formCombo.getItems().size() != 0)
             imageVBox.getChildren().add(form);
-        imageVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, visablility, imageFit);
+        imageVBox.getChildren().addAll(visibleCheck, changeLocation, changeSize, imageFit);
 
-        Accordion accordion = new Accordion();
         TitledPane imageTitledPane = new TitledPane(pokemon.getName() + " Sprite", imageVBox);
-        accordion.getPanes().add(imageTitledPane);
-
-        VBox imageSettings = new VBox();
-        imageSettings.getChildren().add(accordion);
 
         formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
@@ -127,7 +130,7 @@ public class ElementSettings {
             }
         });
 
-        visableCheck.setOnAction(e -> image.setVisible(visableCheck.isSelected()));
+        visibleCheck.setOnAction(e -> image.setVisible(visibleCheck.isSelected()));
 
         imageFitButton.setOnAction(e -> {
             double originalScale = image.getScaleX();
@@ -160,7 +163,264 @@ public class ElementSettings {
             });
         });
 
-        return imageSettings;
+        return imageTitledPane;
+    }
+
+    //creates Label settings VBox
+    public static TitledPane createLabelSettings(Text label, String labelName){
+        CheckBox visibleCheck = new CheckBox("Visible");
+        visibleCheck.setSelected(label.isVisible());
+
+        HBox changeX = new HBox();
+        changeX.setSpacing(5);
+        changeX.setAlignment(Pos.CENTER_LEFT);
+        Label XLabel = new Label("X");
+        TextField XField = new TextField();
+        XField.setMaxWidth(100);
+        XField.promptTextProperty().bind(label.layoutXProperty().asString());
+        changeX.getChildren().addAll(XLabel, XField);
+
+        HBox changeY = new HBox();
+        changeY.setSpacing(5);
+        changeY.setAlignment(Pos.CENTER_LEFT);
+        Label YLabel = new Label("Y");
+        TextField YField = new TextField();
+        YField.setMaxWidth(100);
+        YField.promptTextProperty().bind(label.layoutYProperty().asString());
+        changeY.getChildren().addAll(YLabel, YField);
+
+        HBox changeLocation = new HBox();
+        changeLocation.setSpacing(10);
+        changeLocation.setAlignment(Pos.CENTER);
+        changeLocation.getChildren().addAll(changeX, changeY);
+
+        HBox changeSize = new HBox();
+        changeSize.setSpacing(5);
+        Label sizeLabel = new Label("Scale");
+        TextField sizeField = new TextField();
+        sizeField.setMaxWidth(100);
+        sizeField.promptTextProperty().bind(label.scaleXProperty().asString());
+        changeSize.setAlignment(Pos.CENTER);
+        changeSize.getChildren().addAll(sizeLabel, sizeField);
+
+        HBox color = new HBox();
+        color.setSpacing(5);
+        Label colorLabel = new Label("Color");
+        ColorPicker colorField = new ColorPicker();
+        colorField.setValue((Color) label.getFill());
+        color.setAlignment(Pos.CENTER);
+        color.getChildren().addAll(colorLabel, colorField);
+
+        HBox font = new HBox();
+        font.setSpacing(5);
+        Label fontLabel = new Label("Font");
+        ComboBox<String> fontNameBox = new ComboBox<>();
+        fontNameBox.setEditable(false);
+        fontNameBox.getItems().addAll(fonts);
+        font.setAlignment(Pos.CENTER);
+        fontNameBox.getSelectionModel().select(label.getFont().getName());
+        font.getChildren().addAll(fontLabel, fontNameBox);
+
+        HBox textProperties = new HBox();
+        textProperties.setSpacing(25);
+        CheckBox italicsCheck = new CheckBox("Italics");
+        italicsCheck.setSelected(label.getFont().getName().contains("Italic"));
+        CheckBox boldCheck = new CheckBox("Bold");
+        boldCheck.setSelected(label.getFont().getName().contains("Bold"));
+        CheckBox underlinedCheck = new CheckBox("Underlined");
+        underlinedCheck.setSelected(label.isUnderline());
+        textProperties.setAlignment(Pos.CENTER);
+        textProperties.getChildren().addAll(italicsCheck, boldCheck, underlinedCheck);
+
+        CheckBox strokeCheckbox = new CheckBox("Stroke");
+        strokeCheckbox.setSelected(label.getStrokeWidth() > 0);
+
+        HBox strokeWidth = new HBox();
+        strokeWidth.setSpacing(5);
+        Label strokeWidthLabel = new Label("Width");
+        TextField strokeWidthField = new TextField();
+        strokeWidthField.setMaxWidth(100);
+        strokeWidthField.promptTextProperty().bind(label.strokeWidthProperty().asString());
+        strokeWidth.disableProperty().bind(strokeCheckbox.selectedProperty().not());
+        strokeWidthField.disableProperty().bind(strokeCheckbox.selectedProperty().not());
+        strokeWidth.setAlignment(Pos.CENTER_LEFT);
+        strokeWidth.getChildren().addAll(strokeWidthLabel, strokeWidthField);
+
+        HBox strokeColor = new HBox();
+        strokeColor.setSpacing(5);
+        Label strokeColorLabel = new Label("Color");
+        ColorPicker strokeColorPicker = new ColorPicker();
+        strokeColorPicker.setMaxWidth(100);
+        strokeColorPicker.setValue((Color) label.getStroke());
+        strokeColorLabel.disableProperty().bind(strokeCheckbox.selectedProperty().not());
+        strokeColorPicker.disableProperty().bind(strokeCheckbox.selectedProperty().not());
+        strokeColor.setAlignment(Pos.CENTER_LEFT);
+        strokeColor.getChildren().addAll(strokeColorLabel, strokeColorPicker);
+
+        HBox strokeSettings = new HBox();
+        strokeSettings.setSpacing(10);
+        strokeSettings.setAlignment(Pos.CENTER);
+        strokeSettings.getChildren().addAll(strokeWidth, strokeColor);
+
+        VBox labelVBox = new VBox();
+        labelVBox.setSpacing(10);
+        labelVBox.setAlignment(Pos.CENTER);
+        labelVBox.setPadding(new Insets(10, 10, 10, 10));
+        labelVBox.getChildren().addAll(visibleCheck, changeLocation, changeSize, color, font, textProperties, strokeCheckbox, strokeSettings);
+
+        TitledPane labelTitledPane = new TitledPane(labelName + " Text", labelVBox);
+
+        sizeField.setOnAction(e -> {
+            try{
+                label.setScaleX(parseDouble(sizeField.getText()));
+                label.setScaleY(parseDouble(sizeField.getText()));
+                sizeField.setText("");
+            }catch(NumberFormatException f){
+                sizeField.setText("");
+            }
+        });
+
+        XField.setOnAction(e ->{
+            double X = 0;
+            try{
+                X = parseDouble(XField.getText());
+                XField.setText("");
+            }catch(NumberFormatException f){
+                XField.setText("");
+            }
+            label.setLayoutX(X);
+        });
+
+        YField.setOnAction(e ->{
+            double Y = 0;
+            try{
+                Y = parseDouble(YField.getText());
+                YField.setText("");
+            }catch(NumberFormatException f){
+                YField.setText("");
+            }
+            label.setLayoutY(Y);
+        });
+
+        fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if(newValue != null){
+                if(!canBold(newValue)) {
+                    boldCheck.setSelected(false);
+                    boldCheck.setDisable(true);
+                }else
+                    boldCheck.setDisable(false);
+
+                if(!canItalic(newValue)){
+                    italicsCheck.setSelected(false);
+                    italicsCheck.setDisable(true);
+                }else
+                    italicsCheck.setDisable(false);
+
+                if(boldCheck.isSelected() && italicsCheck.isSelected())
+                    label.setFont(Font.font(newValue, FontWeight.BOLD, FontPosture.ITALIC, 12));
+                else if(boldCheck.isSelected())
+                    label.setFont(Font.font(newValue, FontWeight.BOLD, 12));
+                else if(italicsCheck.isSelected())
+                    label.setFont(Font.font(newValue, FontPosture.ITALIC, 12));
+                else
+                    label.setFont(new Font(newValue, 12));
+            }
+        });
+
+        colorField.setOnAction(e -> label.setFill(colorField.getValue()));
+
+        strokeCheckbox.setOnAction(e -> {
+            if(strokeCheckbox.isSelected())
+                label.setStrokeWidth(parseDouble(strokeWidthField.getPromptText()));
+            else
+                label.setStrokeWidth(0);
+        });
+
+        strokeWidthField.setOnAction(e -> {
+            try{
+                double width = parseDouble(strokeWidthField.getText());
+                label.setStrokeWidth(width);
+                strokeWidthField.setText("");
+            }catch(NumberFormatException f){
+                strokeWidthField.setText("");
+            }
+        });
+
+        strokeColorPicker.setOnAction(e -> label.setStroke(strokeColorPicker.getValue()));
+
+        italicsCheck.setOnAction(e -> {
+            String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
+            if(boldCheck.isSelected() && italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
+            else if(boldCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
+            else if(italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
+            else
+                label.setFont(new Font(fontName, 12));
+        });
+
+        boldCheck.setOnAction(e -> {
+            String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
+            if(boldCheck.isSelected() && italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
+            else if(boldCheck.isSelected())
+                label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
+            else if(italicsCheck.isSelected())
+                label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
+            else
+                label.setFont(new Font(fontName, 12));
+        });
+
+        underlinedCheck.setOnAction(e -> label.setUnderline(underlinedCheck.isSelected()));
+
+        visibleCheck.setOnAction(e -> label.setVisible(visibleCheck.isSelected()));
+
+        return labelTitledPane;
+    }
+
+    //creates Label settings VBox
+    public static TitledPane createBackgroundSettings(Stage windowStage, AnchorPane windowLayout){
+        HBox backgroundColorSettings = new HBox();
+        backgroundColorSettings.setAlignment(Pos.CENTER);
+        backgroundColorSettings.setSpacing(5);
+        Label backgroundColorLabel = new Label("Color");
+        ColorPicker backgroundColorPicker = new ColorPicker();
+        backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
+
+        CheckBox transparent = new CheckBox("Transparent");
+        VBox backgroundVBox = new VBox();
+        backgroundVBox.setAlignment(Pos.CENTER);
+        backgroundVBox.setPadding(new Insets(10, 10, 10, 10));
+        backgroundVBox.setSpacing(10);
+        backgroundVBox.getChildren().addAll(backgroundColorSettings, transparent);
+
+        Stage transparentStage = new Stage();
+        transparentStage.initStyle(StageStyle.TRANSPARENT);
+        transparent.setOnAction(e -> {
+            if(transparent.isSelected()) {
+                transparentStage.setX(windowStage.getX());
+                transparentStage.setY(windowStage.getY());
+                transparentStage.setScene(windowStage.getScene());
+                transparentStage.getScene().getRoot().setStyle("-fx-background-color:transparent;");
+                transparentStage.getScene().setFill(Color.TRANSPARENT);
+                windowStage.hide();
+                transparentStage.show();
+            }else {
+                windowStage.setX(transparentStage.getX());
+                windowStage.setY(transparentStage.getY());
+                windowStage.setScene(transparentStage.getScene());
+                windowStage.show();
+                transparentStage.hide();
+            }
+        });
+
+        if (windowLayout.getBackground() != null)
+            backgroundColorPicker.setValue((Color) windowLayout.getBackground().getFills().get(0).getFill());
+
+        backgroundColorPicker.setOnAction(e -> windowLayout.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(), CornerRadii.EMPTY, Insets.EMPTY))));
+
+        return new TitledPane("Background", backgroundVBox);
     }
 
     //draws square that shows where the fit width and length are
@@ -387,221 +647,6 @@ public class ElementSettings {
                 image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
             }
         }
-    }
-
-    //creates Label settings VBox
-    public static VBox createLabelSettings(Text label, String labelName){
-        HBox groupLabel = new HBox();
-        Label Group = new Label(labelName + " Label");
-        Group.setUnderline(true);
-        groupLabel.getChildren().add(Group);
-
-        HBox changeSize = new HBox();
-        changeSize.setSpacing(5);
-        Label sizeLabel = new Label("Scale: ");
-        TextField sizeField = new TextField();
-        sizeField.promptTextProperty().bind(label.scaleXProperty().asString());
-        changeSize.getChildren().addAll(sizeLabel, sizeField);
-
-        HBox changeX = new HBox();
-        changeX.setSpacing(5);
-        Label XLabel = new Label("X Location:");
-        TextField XField = new TextField();
-        XField.promptTextProperty().bind(label.layoutXProperty().asString());
-        changeX.getChildren().addAll(XLabel, XField);
-
-        HBox changeY = new HBox();
-        changeY.setSpacing(5);
-        Label YLabel = new Label("Y Location:");
-        TextField YField = new TextField();
-        YField.promptTextProperty().bind(label.layoutYProperty().asString());
-        changeY.getChildren().addAll(YLabel, YField);
-
-        HBox font = new HBox();
-        font.setSpacing(5);
-        Label fontLabel = new Label("Font:");
-        ComboBox<String> fontNameBox = new ComboBox<>();
-        fontNameBox.setEditable(false);
-        fontNameBox.getItems().addAll(fonts);
-        font.getChildren().addAll(fontLabel, fontNameBox);
-
-        HBox color = new HBox();
-        color.setSpacing(5);
-        Label colorLabel = new Label("Color:");
-        ColorPicker colorField = new ColorPicker();
-        colorField.setValue((Color) label.getFill());
-        color.getChildren().addAll(colorLabel, colorField);
-
-        HBox stroke = new HBox();
-        stroke.setSpacing(5);
-        Label strokeLabel = new Label("Stroke:");
-        CheckBox strokeCheckbox = new CheckBox();
-        stroke.getChildren().addAll(strokeLabel, strokeCheckbox);
-
-        HBox strokeWidth = new HBox();
-        strokeWidth.setSpacing(5);
-        Label strokeWidthLabel = new Label("Stroke Width:");
-        TextField strokeWidthField = new TextField();
-        strokeWidthField.promptTextProperty().bind(label.strokeWidthProperty().asString());
-        strokeWidthField.disableProperty().bind(strokeCheckbox.selectedProperty());
-        strokeWidth.getChildren().addAll(strokeWidthLabel, strokeWidthField);
-
-        HBox strokeColor = new HBox();
-        strokeColor.setSpacing(5);
-        Label strokeColorLabel = new Label("Stroke Color:");
-        ColorPicker strokeColorPicker = new ColorPicker();
-        strokeColorPicker.setValue((Color) label.getStroke());
-        strokeColorLabel.setDisable(true);
-        strokeColorPicker.setDisable(true);
-        strokeColor.getChildren().addAll(strokeColorLabel, strokeColorPicker);
-
-        HBox textProperties = new HBox();
-        textProperties.setSpacing(5);
-        Label italics = new Label("Italics:");
-        CheckBox italicsCheck = new CheckBox();
-        italicsCheck.setSelected(label.getFont().getName().contains("Italic"));
-        Label bold = new Label("Bold:");
-        CheckBox boldCheck = new CheckBox();
-        boldCheck.setSelected(label.getFont().getName().contains("Bold"));
-        Label underlined = new Label("Underlined:");
-        CheckBox underlinedCheck = new CheckBox();
-        underlinedCheck.setSelected(label.isUnderline());
-        textProperties.getChildren().addAll(italics, italicsCheck, bold, boldCheck, underlined, underlinedCheck);
-
-        HBox visibility = new HBox();
-        visibility.setSpacing(5);
-        Label visibleLabel = new Label("Visable:");
-        CheckBox visibleCheck = new CheckBox();
-        visibleCheck.setSelected(label.isVisible());
-        visibility.getChildren().addAll(visibleLabel, visibleCheck);
-
-        VBox labelVBox = new VBox();
-        labelVBox.setSpacing(10);
-        labelVBox.getChildren().addAll(groupLabel, changeSize, changeX, changeY, font, color, stroke, strokeWidth, strokeColor, textProperties, visibility);
-
-        Accordion accordion = new Accordion();
-        TitledPane labelTitledPane = new TitledPane(labelName, labelVBox);
-        accordion.getPanes().add(labelTitledPane);
-
-        VBox labelSettings = new VBox();
-        labelSettings.getChildren().add(accordion);
-
-        sizeField.setOnAction(e -> {
-            double scale = 0;
-            try{
-                scale = parseDouble(sizeField.getText());
-                sizeField.setText("");
-            }catch(NumberFormatException f){
-                sizeField.setText("");
-            }
-            label.setScaleX(scale);
-            label.setScaleY(scale);
-        });
-
-        XField.setOnAction(e ->{
-            double X = 0;
-            try{
-                X = parseDouble(XField.getText());
-                XField.setText("");
-            }catch(NumberFormatException f){
-                XField.setText("");
-            }
-            label.setLayoutX(X);
-        });
-
-        YField.setOnAction(e ->{
-            double Y = 0;
-            try{
-                Y = parseDouble(YField.getText());
-                YField.setText("");
-            }catch(NumberFormatException f){
-                YField.setText("");
-            }
-            label.setLayoutY(Y);
-        });
-
-        fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-            if(newValue != null){
-                if(!canBold(newValue)) {
-                    boldCheck.setSelected(false);
-                    boldCheck.setDisable(true);
-                }else
-                    boldCheck.setDisable(false);
-
-                if(!canItalic(newValue)){
-                    italicsCheck.setSelected(false);
-                    italicsCheck.setDisable(true);
-                }else
-                    italicsCheck.setDisable(false);
-
-                if(boldCheck.isSelected() && italicsCheck.isSelected())
-                    label.setFont(Font.font(newValue, FontWeight.BOLD, FontPosture.ITALIC, 12));
-                else if(boldCheck.isSelected())
-                    label.setFont(Font.font(newValue, FontWeight.BOLD, 12));
-                else if(italicsCheck.isSelected())
-                    label.setFont(Font.font(newValue, FontPosture.ITALIC, 12));
-                else
-                    label.setFont(new Font(newValue, 12));
-            }
-        });
-
-        colorField.setOnAction(e -> label.setFill(colorField.getValue()));
-
-        strokeCheckbox.setOnAction(e -> {
-            boolean selected = strokeCheckbox.isSelected();
-            if(selected) {
-                strokeWidthLabel.setDisable(false);
-                strokeWidthField.setDisable(false);
-                strokeColorLabel.setDisable(false);
-                strokeColorPicker.setDisable(false);
-                label.setStrokeWidth(parseDouble(strokeWidthField.getPromptText()));
-            }else {
-                label.setStrokeWidth(0);
-            }
-        });
-
-        strokeWidthField.setOnAction(e -> {
-            try{
-                double width = parseDouble(strokeWidthField.getText());
-                label.setStrokeWidth(width);
-                strokeWidthField.setPromptText(String.valueOf(label.getStrokeWidth()));
-                strokeWidthField.setText("");
-            }catch(NumberFormatException f){
-                strokeWidthField.setText("");
-            }
-        });
-
-        strokeColorPicker.setOnAction(e -> label.setStroke(strokeColorPicker.getValue()));
-
-        italicsCheck.setOnAction(e -> {
-            String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
-            if(boldCheck.isSelected() && italicsCheck.isSelected())
-                label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
-            else if(boldCheck.isSelected())
-                label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
-            else if(italicsCheck.isSelected())
-                label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
-            else
-                label.setFont(new Font(fontName, 12));
-        });
-
-        boldCheck.setOnAction(e -> {
-            String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
-            if(boldCheck.isSelected() && italicsCheck.isSelected())
-                label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
-            else if(boldCheck.isSelected())
-                label.setFont(Font.font(fontName, FontWeight.BOLD, 12));
-            else if(italicsCheck.isSelected())
-                label.setFont(Font.font(fontName, FontPosture.ITALIC, 12));
-            else
-                label.setFont(new Font(fontName, 12));
-        });
-
-        underlinedCheck.setOnAction(e -> label.setUnderline(underlinedCheck.isSelected()));
-
-        visibleCheck.setOnAction(e -> label.setVisible(visibleCheck.isSelected()));
-
-        return labelSettings;
     }
 
     //change location of Text when dragged

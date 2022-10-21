@@ -199,11 +199,13 @@ class PreviouslyCaught {
                 quickEdit(pokemon);
                 quickEdit(method);
                 quickEdit(encounters);
-                VBox spriteSettings = createImageSettings(windowLayout, sprite, previouslyCaughtPokemon, caughtGame);
-                VBox pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
-                VBox methodLabelSettings = createLabelSettings(method, "Method");
-                VBox encountersLabelSettings = createLabelSettings(encounters, "Encounters");
-                previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
+                Accordion pokemonSettings = new Accordion();
+                TitledPane spriteSettings = createImageSettings(windowLayout, sprite, previouslyCaughtPokemon, caughtGame);
+                TitledPane pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
+                TitledPane methodLabelSettings = createLabelSettings(method, "Method");
+                TitledPane encountersLabelSettings = createLabelSettings(encounters, "Encounters");
+                pokemonSettings.getPanes().addAll(spriteSettings, pokemonLabelSettings, methodLabelSettings, encountersLabelSettings);
+                previouslyCaughtSettingsLayout.getChildren().addAll(new Text("-------------------------------------------"), pokemonSettings);
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();

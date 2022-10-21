@@ -2,11 +2,20 @@
     -fx-font-family: Arial;
 }
 
-.button, .combo-box-base, .scroll-bar: vertical .thumb, .tree-cell, .tree-view, .list-cell, .context-menu, .menu-button, .text-field{
+.button, .combo-box-base, .scroll-bar: vertical .thumb, .titled-pane, .check-box .box, .accordion > .titled-pane > .title, .tree-cell, .tree-view, .list-cell, .context-menu, .menu-button, .text-field{
     -fx-background-color: #404040;
     -fx-background-radius: 0 0 0 0;
     -fx-background-insets: 0;
     -fx-text-fill: #FFFFFF;
+}
+
+.titled-pane > *.content {
+    -fx-border-color: null;
+}
+
+.check-box:selected .mark, .titled-pane .arrow-button .arrow {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: null;
 }
 
 .combo-box-popup .list-view {
@@ -21,7 +30,7 @@
     -fx-background-color: #555555;
 }
 
-.menu-button .label {
+.menu-button .label, .color-picker-label, .text-field .text {
     -fx-text-fill: #FFFFFF;
 }
 
