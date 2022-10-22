@@ -62,7 +62,9 @@ class HuntWindow {
         this.huntID = huntID;
     }
 
-    //creates hunt window
+    /**
+     * Adds all elements to the hunt window
+     */
     public void createHuntWindow(){
         //Initializes Labels
         currentHuntingPokemonText = new Text(selectedPokemon.getName());
@@ -185,188 +187,115 @@ class HuntWindow {
             SaveData.loadLayout(currentLayout, windowLayout, true);
     }
 
-    //creates window for the hunt window settings
+    /**
+     * Creates the settings window
+     */
     public void customizeHuntWindowSettings(){
-        if(CustomizeHuntVBox.getChildren().size() == 0) {
-            CustomizeHuntStage.setTitle("Settings");
-            Accordion settings = new Accordion();
-
-            TitledPane spriteSettings = createImageSettings(windowLayout, sprite, selectedPokemon, selectedGame);
-            TitledPane currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
-            TitledPane currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
-            TitledPane currentGameSettings = createLabelSettings(currentGameText, "Game");
-            TitledPane encountersSettings = createLabelSettings(encountersText, "Encounters");
-            TitledPane oddsFraction = createLabelSettings(oddFractionText, "Odds");
-
-            VBox gameModifierSettings = new VBox();
-            if(selectedGame.getOddModifiers().size() != 0) {
-                gameModifierSettings.setSpacing(10);
-
-                HBox groupLabel = new HBox();
-                Label Group = new Label("Game Odd Modifiers");
-                Group.setUnderline(true);
-                groupLabel.getChildren().add(Group);
-
-                gameModifierSettings.getChildren().add(groupLabel);
-                for(Object i : selectedGame.getOddModifiers()){
-                    JSONObject gameMod = (JSONObject) i;
-                    CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
-                    checkBox.setSelected(selectedMethod.getGameMods().contains(gameMod.get("name").toString()));
-                    gameModifierSettings.getChildren().add(checkBox);
-
-                    checkBox.selectedProperty().addListener(e -> {
-                        if(checkBox.isSelected())
-                            selectedMethod.addGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
-                        else
-                            selectedMethod.removeGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
-
-                        oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
-                    });
-                }
-                VBox oddPaneSettings = (VBox) oddsFraction.getContent();
-                oddPaneSettings.getChildren().add(0, gameModifierSettings);
-            }
-
-            Button layoutSettings = new Button("Layouts");
-
-            settings.getPanes().add(spriteSettings);
-
-            if (Evo1.getImage() != null)
-                settings.getPanes().add(createImageSettings(windowLayout, Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame));
-            if (Evo0.getImage() != null)
-                settings.getPanes().add(createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
-
-            settings.getPanes().addAll(currentPokemonSettings, currentMethodSettings, currentGameSettings, encountersSettings, oddsFraction);
-
-            switch (selectedMethod.getName()) {
-                case "Radar Chaining":
-                case "Chain Fishing":
-                case "SOS Chaining":
-                case "Catch Combo":
-                case "DexNav":
-                    TitledPane comboSettings = createLabelSettings(currentComboText, "Combo");
-                    Button resetComboButton = new Button("Reset Combo");
-                    resetComboButton.setOnAction(e -> resetCombo());
-
-                    VBox oddPaneSettings = (VBox) comboSettings.getContent();
-                    oddPaneSettings.getChildren().add(0, resetComboButton);
-                    settings.getPanes().add(comboSettings);
-                    break;
-                default:
-                    break;
-            }
-
-            settings.getPanes().add(createBackgroundSettings(windowStage, windowLayout));
-
-            VBox CustomizeHuntLayout = new VBox();
-            CustomizeHuntLayout.setAlignment(Pos.TOP_CENTER);
-            CustomizeHuntLayout.setId("background");
-            CustomizeHuntLayout.setSpacing(10);
-            CustomizeHuntLayout.getChildren().addAll(HuntController.titleBar(CustomizeHuntStage), settings, layoutSettings);
-
-            Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 0, 0);
-            CustomizeHuntScene.getStylesheets().add("file:shinyTracker.css");
-
-            if(CustomizeHuntStage.getScene() == null)
-                CustomizeHuntStage.initStyle(StageStyle.UNDECORATED);
-
-            CustomizeHuntStage.setScene(CustomizeHuntScene);
-            HuntController.makeDraggable(CustomizeHuntScene);
-
-            settings.heightProperty().addListener((o, oldVal, newVal) -> {
-                CustomizeHuntStage.setHeight(settings.getHeight() + 80);
-                CustomizeHuntStage.setWidth(315);
-            });
-
-            layoutSettings.setOnAction(e -> showLayoutList());
+        if(CustomizeHuntVBox.getChildren().size() != 0) {
+            CustomizeHuntStage.show();
+            return;
         }
-        CustomizeHuntStage.show();
-        CustomizeHuntStage.setOnCloseRequest(e -> CustomizeHuntStage.hide());
-    }
 
-    //adds increment to the encounters
-    public void incrementEncounters(){
-        encounters.setValue(encounters.getValue() + increment);
-        combo.setValue(combo.getValue() + increment);
-        if(oddFractionText != null)
-            dynamicOddsMethods();
-    }
+        //Settings for all elements
+        TitledPane spriteSettings = createImageSettings(windowLayout, sprite, selectedPokemon, selectedGame);
+        TitledPane currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
+        TitledPane currentMethodSettings = createLabelSettings(currentHuntingMethodText, "Method");
+        TitledPane currentGameSettings = createLabelSettings(currentGameText, "Game");
+        TitledPane encountersSettings = createLabelSettings(encountersText, "Encounters");
+        TitledPane oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
-    //adds current pokemon to the caught pokemon file
-    public void pokemonCaught() {
-        SaveData.pokemonCaught(this);
-        if(PreviouslyCaught.isShowing())
-            PreviouslyCaught.refreshPreviouslyCaughtPokemon();
+        //Adds game modifiers under the Odds TitlePane
+        if(selectedGame.getOddModifiers().size() != 0) {
+            VBox gameModifierSettings = new VBox();
+            gameModifierSettings.setSpacing(10);
 
-        CustomizeHuntStage.close();
-        windowStage.close();
-    }
+            HBox groupLabel = new HBox();
+            Label Group = new Label("Game Odd Modifiers");
+            Group.setUnderline(true);
+            groupLabel.getChildren().add(Group);
 
-    //prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
-    public void phaseHunt(int pokemonID){
-        SaveData.pokemonCaught(new HuntWindow(new Pokemon(pokemonID), selectedGame, selectedMethod, currentLayout, encounters.getValue(), combo.getValue(), increment, 0));
-        resetCombo();
-        resetEncounters();
-        if(PreviouslyCaught.isShowing())
-            PreviouslyCaught.refreshPreviouslyCaughtPokemon();
-    }
+            gameModifierSettings.getChildren().add(groupLabel);
+            for(Object i : selectedGame.getOddModifiers()){
+                JSONObject gameMod = (JSONObject) i;
+                CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
+                checkBox.setSelected(selectedMethod.getGameMods().contains(gameMod.get("name").toString()));
+                gameModifierSettings.getChildren().add(checkBox);
 
-    //resets encounters
-    public void resetCombo(){
-        combo.setValue(0);
-        dynamicOddsMethods();
-    }
+                checkBox.selectedProperty().addListener(e -> {
+                    if(checkBox.isSelected())
+                        selectedMethod.addGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
+                    else
+                        selectedMethod.removeGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
 
-    //save hunt and it closes the window
-    public void closeHuntWindow(){
-        windowStage.close();
-        CustomizeHuntStage.close();
-    }
+                    oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
+                });
+            }
+            VBox oddPaneSettings = (VBox) oddsFraction.getContent();
+            oddPaneSettings.getChildren().add(0, gameModifierSettings);
+        }
 
-    //reset encounters
-    public void resetEncounters(){
-        encounters.setValue(0);
-        encountersText.setText("0");
-    }
+        //Adds all settings Panes to accordion
+        Accordion settings = new Accordion();
+        settings.getPanes().add(spriteSettings);
 
-    //since some methods' odds change based on encounters
-    private void dynamicOddsMethods(){
-        switch(selectedMethod.getName()){
+        if (Evo1.getImage() != null)
+            settings.getPanes().add(createImageSettings(windowLayout, Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame));
+        if (Evo0.getImage() != null)
+            settings.getPanes().add(createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
+
+        settings.getPanes().addAll(currentPokemonSettings, currentMethodSettings, currentGameSettings, encountersSettings, oddsFraction);
+
+        switch (selectedMethod.getName()) {
             case "Radar Chaining":
-                int tempEncounters;
-                if (combo.getValue() >= 40)
-                    tempEncounters = 39;
-                else
-                    tempEncounters = combo.getValue();
-                oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(selectedGame.getOdds() - 8196) / 4096)))));
-                break;
             case "Chain Fishing":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo.getValue()), selectedGame.getOdds()));
-                break;
-            case "DexNav":
-                if (previousEncounters < 999) {
-                    previousEncounters++;
-                    previousEncountersText.setText(String.valueOf(previousEncounters));
-                }else
-                    previousEncountersText.setText("999");
-                oddFractionText.setText("1/" + selectedMethod.dexNav(combo.getValue(), previousEncounters));
-                break;
             case "SOS Chaining":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo.getValue()), selectedGame.getOdds()));
-                break;
             case "Catch Combo":
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo.getValue()), selectedGame.getOdds()));
-                break;
-            case "Total Encounters":
-                previousEncounters++;
-                previousEncountersText.setText(String.valueOf(previousEncounters));
-                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), selectedGame.getOdds()));
+            case "DexNav":
+                TitledPane comboSettings = createLabelSettings(currentComboText, "Combo");
+                Button resetComboButton = new Button("Reset Combo");
+                resetComboButton.setOnAction(e -> resetCombo());
+
+                VBox oddPaneSettings = (VBox) comboSettings.getContent();
+                oddPaneSettings.getChildren().add(0, resetComboButton);
+                settings.getPanes().add(comboSettings);
                 break;
             default:
                 break;
         }
+
+        //Adds background settings to accordion
+        settings.getPanes().add(createBackgroundSettings(windowStage, windowLayout));
+
+        Button layoutSettings = new Button("Layouts");
+
+        VBox CustomizeHuntLayout = new VBox();
+        CustomizeHuntLayout.setAlignment(Pos.TOP_CENTER);
+        CustomizeHuntLayout.setId("background");
+        CustomizeHuntLayout.setSpacing(10);
+        CustomizeHuntLayout.getChildren().addAll(HuntController.titleBar(CustomizeHuntStage), settings, layoutSettings);
+
+        Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 0, 0);
+        CustomizeHuntScene.getStylesheets().add("file:shinyTracker.css");
+
+        if(CustomizeHuntStage.getScene() == null)
+            CustomizeHuntStage.initStyle(StageStyle.UNDECORATED);
+
+        CustomizeHuntStage.setScene(CustomizeHuntScene);
+        HuntController.makeDraggable(CustomizeHuntScene);
+
+        settings.heightProperty().addListener((o, oldVal, newVal) -> {
+            CustomizeHuntStage.setHeight(settings.getHeight() + 80);
+            CustomizeHuntStage.setWidth(315);
+        });
+
+        layoutSettings.setOnAction(e -> showLayoutList());
+        CustomizeHuntStage.setOnCloseRequest(e -> CustomizeHuntStage.hide());
+        CustomizeHuntStage.show();
     }
 
+    /**
+     * Creates a list of layouts that the user can load from, delete, or add too
+     */
     Stage layoutListStage = new Stage();
     public void showLayoutList(){
         GridPane layoutListLayout = new GridPane();
@@ -389,6 +318,7 @@ class HuntWindow {
             JSONParser jsonParser = new JSONParser();
             JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
 
+            //Adds all saved layouts to GridPane
             for(Object i : layoutList){
                 JSONArray layoutObject = (JSONArray) i;
 
@@ -457,6 +387,7 @@ class HuntWindow {
         HuntController.makeDraggable(layoutListScene);
         layoutListStage.show();
 
+        //Allows user to save a new layout and prompts for name
         newLayoutButton.setOnAction(e -> {
             TextInputDialog newNameDialog = new TextInputDialog();
             newNameDialog.setTitle("New Layout Name");
@@ -473,7 +404,104 @@ class HuntWindow {
         });
     }
 
-    //simplifies odds fraction for easier reading
+    /**
+     * Increases encounters by increment value
+     */
+    public void incrementEncounters(){
+        encounters.setValue(encounters.getValue() + increment);
+        combo.setValue(combo.getValue() + increment);
+        if(oddFractionText != null)
+            dynamicOddsMethods();
+    }
+
+    /**
+     * Closes this window and moves pokemon data to caught list
+     */
+    public void pokemonCaught() {
+        SaveData.pokemonCaught(this);
+        if(PreviouslyCaught.isShowing())
+            PreviouslyCaught.refreshPreviouslyCaughtPokemon();
+
+        CustomizeHuntStage.close();
+        windowStage.close();
+    }
+
+    /**
+     * Prompts user for phase pokemon, resets encounters, and adds phased pokemon to the caught pokemon file
+     */
+    public void phaseHunt(int pokemonID){
+        SaveData.pokemonCaught(new HuntWindow(new Pokemon(pokemonID), selectedGame, selectedMethod, currentLayout, encounters.getValue(), combo.getValue(), increment, 0));
+        resetCombo();
+        resetEncounters();
+        if(PreviouslyCaught.isShowing())
+            PreviouslyCaught.refreshPreviouslyCaughtPokemon();
+    }
+
+    /**
+     * Resets encounters
+     */
+    public void resetCombo(){
+        combo.setValue(0);
+        dynamicOddsMethods();
+    }
+
+    /**
+     * Save hunt and it closes the window
+     */
+    public void closeHuntWindow(){
+        windowStage.close();
+        CustomizeHuntStage.close();
+    }
+
+    /**
+     * Reset Encounters
+     */
+    public void resetEncounters(){
+        encounters.setValue(0);
+        encountersText.setText("0");
+    }
+
+    //since some methods' odds change based on encounters
+    private void dynamicOddsMethods(){
+        switch(selectedMethod.getName()){
+            case "Radar Chaining":
+                int tempEncounters;
+                if (combo.getValue() >= 40)
+                    tempEncounters = 39;
+                else
+                    tempEncounters = combo.getValue();
+                oddFractionText.setText("1/" + simplifyFraction(Math.round(((65535 / (8200.0 - tempEncounters * 200)) + selectedMethod.getModifier() - 1)), (65536 / (1 + (Math.abs(selectedGame.getOdds() - 8196) / 4096)))));
+                break;
+            case "Chain Fishing":
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.chainFishing(combo.getValue()), selectedGame.getOdds()));
+                break;
+            case "DexNav":
+                if (previousEncounters < 999) {
+                    previousEncounters++;
+                    previousEncountersText.setText(String.valueOf(previousEncounters));
+                }else
+                    previousEncountersText.setText("999");
+                oddFractionText.setText("1/" + selectedMethod.dexNav(combo.getValue(), previousEncounters));
+                break;
+            case "SOS Chaining":
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.sosChaining(combo.getValue()), selectedGame.getOdds()));
+                break;
+            case "Catch Combo":
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.catchCombo(combo.getValue()), selectedGame.getOdds()));
+                break;
+            case "Total Encounters":
+                previousEncounters++;
+                previousEncountersText.setText(String.valueOf(previousEncounters));
+                oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier() + selectedMethod.totalEncounters(previousEncounters), selectedGame.getOdds()));
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Simplifies odds fraction for easier reading
+     */
     private int simplifyFraction(double num, int den){
         return (int)Math.round(den / num);
     }
