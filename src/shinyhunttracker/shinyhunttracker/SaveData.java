@@ -376,19 +376,8 @@ public class SaveData {
                     image.setFitWidth(-imageWidth);
                     double imageHeight = -(Double) elementData.get("height");
                     image.setFitHeight(-imageHeight);
-                    if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight && image.getImage() != null){
-                        double width = -image.getFitWidth();
-                        double height = -image.getFitHeight();
-                        double scale;
-                        if((height / imageHeight) * width <= height)
-                            scale = imageHeight / height;
-                        else
-                            scale = imageWidth / width;
-                        image.setScaleX(image.getScaleX() * scale);
-                        image.setScaleY(image.getScaleY() * scale);
-                        image.setTranslateX(-image.getImage().getWidth() / 2);
-                        image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-                    }
+                    if(image.getImage() != null)
+                        FetchImage.adjustImageScale(image, image.getImage());
                     image.setVisible(elementData.get("visible").toString().compareTo("true") == 0);
                 }else{
                     Text text = (Text) element;
