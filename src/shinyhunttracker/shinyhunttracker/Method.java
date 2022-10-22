@@ -15,14 +15,19 @@ import java.util.Vector;
 public class Method {
     StringProperty name = new SimpleStringProperty();
     int id;
-    int base;
-    int modifier;
-    boolean breeding;
-    String methodInfo;
-    Vector<Integer> games = new Vector<>();
-    Vector<String> gameMods = new Vector<>();
-    Vector<Integer> pokemon = new Vector<>();
+    int base;//some methods have a custom base odds
+    int modifier;//numerator in calculating odds
+    boolean breeding;//if it's a breeding method
+    String methodInfo;//Helpful information on method to display in help menu
+    Vector<Integer> games = new Vector<>();//All games that method is available in
+    Vector<String> gameMods = new Vector<>();//Currently active, game specific, odd modifiers
+    Vector<Integer> pokemon = new Vector<>();//List of pokemon that can be hunted with this method
 
+    /**
+     * Saves data from jsonobject to variables
+     * @param methodObject data
+     * @param id id
+     */
     Method(JSONObject methodObject, int id){
         name.setValue(methodObject.get("name").toString());
         breeding = (Boolean) methodObject.get("breeding");
@@ -44,18 +49,20 @@ public class Method {
                 pokemon.add(Integer.parseInt(i.toString()));
     }
 
+    /**
+     * Calls main constructor with id and passes JSONObject from that index
+     * @param id index
+     */
     Method(int id){
         this(Objects.requireNonNull(SaveData.readJSON("GameData/method.json", id)), id);
     }
 
-    //returns modifier to added to the base modifier by selected method with given encounters
-
+    //Still trying to figure out how I am going to move these to json. They stay for now
     public int chainFishing(int encounters){
         if(encounters >= 20)
             encounters = 20;
         return encounters * 2;
     }
-
     public int dexNav(int encounters, int searchLevel){
         int searchPoints = searchLevel;
         double points = 0;
@@ -94,7 +101,6 @@ public class Method {
         else
             return 1;
     }
-
     public int sosChaining(int encounters){
         if(encounters >= 255 && (name.getValue().compareTo("Sun") == 0 || name.getValue().compareTo("Moon") == 0)) {
             while(encounters >= 255){
@@ -110,7 +116,6 @@ public class Method {
         else
             return 12;
     }
-
     public int catchCombo(int encounters){
         if(encounters >= 0 && encounters <= 10)
             return 0;
@@ -121,7 +126,6 @@ public class Method {
         else
             return 11;
     }
-
     public int totalEncounters(int previousEncounters){
         if(previousEncounters < 50)
             return 0;
@@ -137,11 +141,21 @@ public class Method {
             return 5;
     }
 
+    /**
+     * Adds game specific odd modifier
+     * @param name name of modifier
+     * @param modifier how many extra rolls that are added
+     */
     public void addGameMod(String name, int modifier){
         gameMods.add(name);
         this.modifier += modifier;
     }
 
+    /**
+     * Removes game specific odd modifier
+     * @param name name of modifier
+     * @param modifier how many extra rolls that are removed
+     */
     public void removeGameMod(String name, int modifier){
         gameMods.remove(name);
         this.modifier -= modifier;
@@ -149,19 +163,14 @@ public class Method {
 
     @Override public String toString(){ return name.getValue(); }
 
-    public Boolean getBreeding(){ return breeding; }
-
-    public StringProperty getNameProperty(){ return name; }
     public String getMethodInfo(){ return methodInfo; }
     public String getName(){ return name.getValue(); }
-
-    public int getBase(){ return base; }
-    public int getId(){ return id; }
-    public int getModifier(){ return modifier; }
-
     public Vector<Integer> getPokemon(){ return pokemon; }
     public Vector<Integer> getGames(){ return games; }
     public Vector<String> getGameMods(){ return gameMods; }
 
-    public void setModifier(int modifier){ this.modifier = modifier; }
+    public Boolean getBreeding(){ return breeding; }
+    public int getBase(){ return base; }
+    public int getId(){ return id; }
+    public int getModifier(){ return modifier; }
 }
