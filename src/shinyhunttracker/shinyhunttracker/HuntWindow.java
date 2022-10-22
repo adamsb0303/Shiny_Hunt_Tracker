@@ -209,29 +209,33 @@ class HuntWindow {
             VBox gameModifierSettings = new VBox();
             gameModifierSettings.setSpacing(10);
 
-            HBox groupLabel = new HBox();
-            Label Group = new Label("Game Odd Modifiers");
-            Group.setUnderline(true);
-            groupLabel.getChildren().add(Group);
+            //Loops through game modifiers in groups of 2 as rows
+            for(int i = 0; i < selectedGame.getOddModifiers().size(); i += 2) {
+                //row hbox
+                HBox row = new HBox();
+                row.setAlignment(Pos.CENTER);
+                row.setSpacing(20);
 
-            gameModifierSettings.getChildren().add(groupLabel);
-            for(Object i : selectedGame.getOddModifiers()){
-                JSONObject gameMod = (JSONObject) i;
-                CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
-                checkBox.setSelected(selectedMethod.getGameMods().contains(gameMod.get("name").toString()));
-                gameModifierSettings.getChildren().add(checkBox);
+                //adds game modifiers in groups of 2
+                for(int j = 0; j < 2 && i + j < selectedGame.getOddModifiers().size(); j++) {
+                    JSONObject gameMod = (JSONObject) selectedGame.getOddModifiers().get(i + j);
+                    CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
+                    checkBox.setSelected(selectedMethod.getGameMods().contains(gameMod.get("name").toString()));
+                    row.getChildren().add(checkBox);
 
-                checkBox.selectedProperty().addListener(e -> {
-                    if(checkBox.isSelected())
-                        selectedMethod.addGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
-                    else
-                        selectedMethod.removeGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
+                    checkBox.selectedProperty().addListener(e -> {
+                        if(checkBox.isSelected())
+                            selectedMethod.addGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
+                        else
+                            selectedMethod.removeGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
 
-                    oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
-                });
+                        oddFractionText.setText("1/" + simplifyFraction(selectedMethod.getModifier(), selectedGame.getOdds()));
+                    });
+                }
+                gameModifierSettings.getChildren().add(row);
             }
             VBox oddPaneSettings = (VBox) oddsFraction.getContent();
-            oddPaneSettings.getChildren().add(0, gameModifierSettings);
+            oddPaneSettings.getChildren().add(1, gameModifierSettings);
         }
 
         //Adds all settings Panes to accordion
