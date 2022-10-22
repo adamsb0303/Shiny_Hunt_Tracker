@@ -12,13 +12,18 @@ public class Game {
     StringProperty name = new SimpleStringProperty();
     int generation;
     int id;
-    int odds;
-    String imagePath;
-    Vector<Integer> pokedex = new Vector<>();
-    Vector<Integer> unbreedables = new Vector<>();
-    Vector<Integer> methods = new Vector<>();
-    JSONArray oddModifiers = new JSONArray();
+    int odds;//Base odds for game
+    String imagePath;//where the sprites for game are located
+    Vector<Integer> pokedex = new Vector<>();//game specific pokedex
+    Vector<Integer> unbreedables = new Vector<>();//obtainable unbreedable pokemon
+    Vector<Integer> methods = new Vector<>();//available methods
+    JSONArray oddModifiers = new JSONArray();//available odd modifiers
 
+    /**
+     * Saves data from jsonobject to variables
+     * @param gameObject data
+     * @param id id
+     */
     Game(JSONObject gameObject, int id){
         this.name.setValue((String) gameObject.get("name"));
         generation = (int) (long)  gameObject.get("generation");
@@ -46,10 +51,19 @@ public class Game {
             oddModifiers = tempJSONArr;
     }
 
+    /**
+     * Calls main constructor with id and passes JSONObject from that index
+     * @param id index
+     */
     Game(int id){
         this(Objects.requireNonNull(SaveData.readJSON("GameData/game.json", id)), id);
     }
 
+    /**
+     * Checks if given un-breedable pokemon is obtainable
+     * @param id ID of given pokemon
+     * @return true/false of whether it is obtainable
+     */
     public boolean hasUnbreedable(int id){
         for (int j : unbreedables)
             if (id == j)
@@ -58,6 +72,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Returns the table for the given method
+     * @param method Method
+     * @return list of huntable pokemon for that method
+     */
     public Vector<Integer> getMethodTable(int method){
         Vector<Integer> methodVector = new Vector<>();
         JSONObject jsonObject = SaveData.readJSON("GameData/game.json", id);
@@ -75,11 +94,8 @@ public class Game {
     public String toString(){ return name.getValue(); }
 
     public JSONArray getOddModifiers(){ return oddModifiers; }
-
     public String getImagePath() { return imagePath; }
     public String getName() { return name.getValue(); }
-    public StringProperty getNameProperty(){ return name; }
-
     public Vector<Integer> getPokedex() { return pokedex; }
     public Vector<Integer> getMethods() { return methods; }
 
