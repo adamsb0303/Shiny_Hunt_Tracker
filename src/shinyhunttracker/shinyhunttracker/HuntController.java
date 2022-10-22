@@ -2,7 +2,6 @@ package shinyhunttracker;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -29,7 +28,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.Vector;
 
@@ -38,8 +36,6 @@ public class HuntController {
     static ScrollPane huntControlsScroll = new ScrollPane();
     static GridPane huntControlsLayout = new GridPane();
     static double xOffset, yOffset;
-
-    static ObservableList<Pokemon> pokedex = FXCollections.observableArrayList();
 
     static Vector<HuntWindow> windowsList = new Vector<>();
 
@@ -60,12 +56,14 @@ public class HuntController {
         huntControlsScroll.setId("background");
 
         ChangeListener<Number> resizeListener = (observableValue, o, t1) -> {
+            //Sets stage size when there are hunts
             if(huntControlsLayout.getHeight() < 25){
                 huntControls.setHeight(100);
                 huntControls.setWidth(300);
                 return;
             }
 
+            //caps window height at 540
             if(huntControlsLayout.getHeight() + 60 <= 540) {
                 huntControls.setHeight(huntControlsLayout.getHeight() + 60);
                 huntControls.setWidth(huntControlsLayout.getWidth());
@@ -87,6 +85,7 @@ public class HuntController {
         addHunt.setMinSize(25, 25);
         addHunt.setTooltip(new Tooltip("Add Hunt"));
 
+        //Settings that apply to none or all of the hunts
         MenuButton masterSettings = new MenuButton();
         ImageView settingsIcon = new ImageView(new Image("file:Images/gear.png"));
         masterSettings.setPadding(new Insets(0, 0, 0, 0));
@@ -97,11 +96,13 @@ public class HuntController {
         MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
         masterSettings.getItems().addAll(editSavedHunts, keyBinding, previouslyCaught);
 
+        //puts addHunt and masterSettings to bottom left and right respectively
         BorderPane masterButtonsPane = new BorderPane();
         masterButtonsPane.setRight(addHunt);
         masterButtonsPane.setLeft(masterSettings);
         masterButtonsPane.setPadding(new Insets(0,5,5,5));
 
+        //Puts controls at the top, hunts in the middle, and master buttons at the bottom
         BorderPane huntControlsLayout = new BorderPane();
         huntControlsLayout.setTop(titleBar(huntControls));
         huntControlsLayout.setCenter(huntControlsScroll);
@@ -332,7 +333,6 @@ public class HuntController {
 
         increment.setOnAction(e -> {
             TextInputDialog changeIncrementDialog = new TextInputDialog(String.valueOf(newWindow.getIncrement()));
-            changeIncrementDialog.setTitle("Increment Settings");
             changeIncrementDialog.setHeaderText("Increment encounters by: ");
             changeIncrementDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             makeDraggable(changeIncrementDialog.getDialogPane().getScene());
@@ -347,22 +347,24 @@ public class HuntController {
         });
         resetEncounters.setOnAction(e -> newWindow.resetEncounters());
         phaseHunt.setOnAction(e -> {
-            if(pokedex.size() == 0) {
-                try (FileReader reader = new FileReader("GameData/pokemon.json")) {
-                    JSONParser jsonParser = new JSONParser();
-                    JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
+            ChoiceDialog<Pokemon> phaseDialog = new ChoiceDialog<>();
+            phaseDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
+            makeDraggable(phaseDialog.getDialogPane().getScene());
+            phaseDialog.initStyle(StageStyle.UNDECORATED);
+            try (FileReader reader = new FileReader("GameData/pokemon.json")) {
+                JSONParser jsonParser = new JSONParser();
+                JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
 
-                    for (int i = 0; i < pokemonListJSON.size(); i++)
-                        pokedex.add(new Pokemon((JSONObject) pokemonListJSON.get(i), i));
-                } catch (IOException | ParseException f) {
-                    f.printStackTrace();
-                }
+                for (int i = 0; i < pokemonListJSON.size(); i++)
+                    phaseDialog.getItems().add(new Pokemon((JSONObject) pokemonListJSON.get(i), i));
+            } catch (IOException | ParseException f) {
+                f.printStackTrace();
             }
-            ChoiceDialog<Pokemon> phaseDialog = new ChoiceDialog<>(pokedex.get(0), pokedex);
             phaseDialog.setTitle("Phase Hunt");
             phaseDialog.setHeaderText("Phased Pokemon: ");
             phaseDialog.showAndWait().ifPresent(response -> newWindow.phaseHunt(response.getDexNumber()));
         });
+
         DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
 
         windowSettingsButton.setOnAction(e -> newWindow.customizeHuntWindowSettings());
@@ -432,14 +434,19 @@ public class HuntController {
         });
     }
 
+    /**
+     * Creates a window of previously saved hunts for the user to load from
+     */
     static Stage prevHuntsStage = new Stage();
     public static void loadSavedHuntsWindow(){
+        //creates a grid to load the hunts into
         GridPane previousHunts = new GridPane();
         previousHunts.setPadding(new Insets(10, 10, 10, 10));
         previousHunts.setHgap(10);
         previousHunts.setVgap(5);
 
         previousHunts.heightProperty().addListener((o, oldVal, newVal) -> {
+            //caps window height at 540
             if(previousHunts.getHeight() + 30 <= 540) {
                 prevHuntsStage.setHeight(previousHunts.getHeight() + 30);
                 prevHuntsStage.setWidth(previousHunts.getWidth());
@@ -450,15 +457,16 @@ public class HuntController {
             }
         } );
 
-        JSONParser jsonParser = new JSONParser();
-
         try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+            JSONParser jsonParser = new JSONParser();
             //Read JSON file
             Object obj = jsonParser.parse(reader);
             JSONArray huntList = (JSONArray) obj;
 
+            //Loops through previously saved hunts
             for(int i = huntList.size() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
+                //Doesn't add hunt data to the grid if the hunt is already open
                 boolean newData = true;
                 for(HuntWindow j : windowsList)
                     if(Integer.parseInt(huntData.get("huntID").toString()) == j.getHuntID())
@@ -497,6 +505,7 @@ public class HuntController {
 
                     int index = i;
                     loadButton.setOnAction(f -> {
+                        //loads hunt and refreshes the controller
                         updatePreviousSessionDat(1);
                         SaveData.loadHunt(index);
                         refreshHunts();
@@ -532,8 +541,12 @@ public class HuntController {
         prevHuntsStage.show();
     }
 
+    /**
+     * Creates a window of previously saved hunts for the user to edit hunt information
+     */
     static Stage editHunts = new Stage();
     public static void editSavedHuntsWindow(){
+        //Grid pane to add all hunts into
         GridPane editHuntsLayout = new GridPane();
         editHuntsLayout.setPadding(new Insets(10, 10, 10, 10));
         editHuntsLayout.setHgap(10);
@@ -559,6 +572,7 @@ public class HuntController {
                 return;
             }
 
+            //loops through all saved hunts
             for(int i = huntList.size() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
                 Pokemon huntPokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
@@ -592,6 +606,7 @@ public class HuntController {
 
                 int index = i;
 
+                //Creates a drop-down for user to select a new pokemon and updates the information
                 pokemonButton.setOnAction(f -> {
                     ChoiceDialog<Pokemon> pokemonChoiceDialog = new ChoiceDialog<>();
                     pokemonChoiceDialog.setHeaderText("Select New Pokemon");
@@ -615,6 +630,7 @@ public class HuntController {
                     });
                 });
 
+                //Creates a drop-down for user to select a new game and updates the information
                 gameButton.setOnAction(f -> {
                     ChoiceDialog<Game> gameChoiceDialog = new ChoiceDialog<>();
                     gameChoiceDialog.setHeaderText("Select New Game");
@@ -638,6 +654,7 @@ public class HuntController {
                     });
                 });
 
+                //Creates a drop-down for user to select a new method and updates the information
                 methodButton.setOnAction(f -> {
                     ChoiceDialog<Method> methodChoiceDialog = new ChoiceDialog<>();
                     methodChoiceDialog.setHeaderText("Select New Method");
@@ -660,6 +677,7 @@ public class HuntController {
                     });
                 });
 
+                //Creates a text field for the user to enter a new amount of encounters and updates the information
                 encountersButton.setOnAction(f -> {
                     TextInputDialog encountersDialog = new TextInputDialog();
                     encountersDialog.setHeaderText("Input New Encounters");
@@ -673,6 +691,7 @@ public class HuntController {
                     });
                 });
 
+                //removes hunt i
                 delete.setOnAction(e -> {
                     SaveData.removeHunt(index);
                     int huntID = Integer.parseInt(huntData.get("huntID").toString());
@@ -714,7 +733,6 @@ public class HuntController {
      */
     static Stage keyBindingSettingsStage = new Stage();
     public static void keyBindingSettings(){
-        //Setup layout
         VBox keyBindingsLayout = new VBox();
         keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
@@ -769,7 +787,7 @@ public class HuntController {
 
             apply.setOnAction(e->{
                 try {
-                    //updates the JSONArray updates the currently open hunts with the new binds
+                    //updates the JSONArray updates the currently open hunts with the temporarily saved binds
                     for(int i = 0; i < keyBindsTemp.size(); i++) {
                         keyBindsList.set(i, keyBindsTemp.get(i).toString());
                         if(windowsList.get(i).getHuntNumber() == i + 1)
@@ -809,16 +827,20 @@ public class HuntController {
         keyBindingSettingsStage.show();
     }
 
+    /**
+     * Refreshes hunt control window
+     */
     public static void refreshHunts(){
+        //Removes all hunts from window and list
         huntControlsLayout.getChildren().clear();
         while(windowsList.size() != 0){
             windowsList.lastElement().closeHuntWindow();
             windowsList.remove(windowsList.lastElement());
         }
 
-        JSONParser jsonParser = new JSONParser();
         try {
             //reads the number of hunts that were open when the program was last closed
+            JSONParser jsonParser = new JSONParser();
             FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
             DataInputStream previousSessionData = new DataInputStream(reader);
             int previousHuntsNum = previousSessionData.read();
@@ -831,13 +853,18 @@ public class HuntController {
             if(huntList.size() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.size() - i);
+            //Saves any changes that occurred before refreshing
             saveHuntOrder();
+            //Refreshes all other windows
             refreshMiscWindows();
         }catch (IOException | ParseException ignored) {
 
         }
     }
 
+    /**
+     * Refreshes Load, Edit, and Key Binding Windows
+     */
     public static void refreshMiscWindows(){
         if(keyBindingSettingsStage.isShowing())
             keyBindingSettings();
@@ -847,11 +874,18 @@ public class HuntController {
             editSavedHuntsWindow();
     }
 
+    /**
+     * Writes the current hunts to the json in reverse order to list from most recent
+     */
     public static void saveHuntOrder(){
         for(int i = windowsList.size() - 1; i >= 0 ; i--)
             SaveData.saveHunt(windowsList.get(i));
     }
 
+    /**
+     * Updates the number of hunts that are open at any given time
+     * @param change amount to change the value saved in previousSession.dat
+     */
     public static void updatePreviousSessionDat(int change){
         //saves current hunts to open next time the program is started
         try {
@@ -863,31 +897,44 @@ public class HuntController {
         }
     }
 
+    /**
+     * Returns a new title bar with exit and minimize buttons
+     * @param stage window to close or minimize
+     * @return HBox with new title bar
+     */
     public static HBox titleBar(Stage stage){
-        HBox windowControls = new HBox();
         stage.getIcons().add(new Image("file:Images/icon.png"));
+
+        //Exits given stage
         Button exit = new Button();
         ImageView exitIcon = new ImageView(new Image("file:Images/x.png"));
         exit.setPadding(new Insets(0, 0, 0, 0));
         exit.setGraphic(exitIcon);
         exit.setMinSize(25, 25);
+        exit.setOnAction(e -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
 
+        //Minimizes given stage
         Button minimize = new Button();
         ImageView minimizeIcon = new ImageView(new Image("file:Images/underscore.png"));
         minimize.setPadding(new Insets(0, 0, 0, 0));
         minimize.setGraphic(minimizeIcon);
         minimize.setMinSize(25, 25);
+        minimize.setOnAction(e -> stage.setIconified(true));
+
+        //Places the buttons next to each other in the top right
+        HBox windowControls = new HBox();
         windowControls.getChildren().addAll(minimize, exit);
         windowControls.setAlignment(Pos.CENTER_RIGHT);
         windowControls.setSpacing(5);
         windowControls.setPadding(new Insets(5,5,0,5));
 
-        exit.setOnAction(e -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
-        minimize.setOnAction(e -> stage.setIconified(true));
-
         return windowControls;
     }
 
+    /**
+     * Allows given Scene to detect mouse movement and drag stage with mouse
+     * @param scene Scene that is going to be made draggable
+     */
     public static void makeDraggable(Scene scene){
         Window stage = scene.getWindow();
         scene.setOnMousePressed(e -> {
