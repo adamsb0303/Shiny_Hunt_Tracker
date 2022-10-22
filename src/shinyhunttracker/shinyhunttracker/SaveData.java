@@ -344,12 +344,14 @@ public class SaveData {
                     image.setLayoutX((Double) elementData.get("X"));
                     image.setLayoutY((Double) elementData.get("Y"));
                     double imageWidth = -(Double) elementData.get("width");
+                    image.setFitWidth(-imageWidth);
                     double imageHeight = -(Double) elementData.get("height");
+                    image.setFitHeight(-imageHeight);
                     if(-image.getFitWidth() != imageWidth && -image.getFitHeight() != imageHeight && image.getImage() != null){
                         double width = -image.getFitWidth();
                         double height = -image.getFitHeight();
                         double scale;
-                        if(height > width)
+                        if((height / imageHeight) * width <= height)
                             scale = imageHeight / height;
                         else
                             scale = imageWidth / width;

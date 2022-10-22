@@ -40,10 +40,10 @@ class FetchImage extends Thread{
             sprite.setFitHeight(-200);
         }
         if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
-            double height = image.getHeight();
             double width = image.getWidth();
+            double height = image.getHeight();
             double scale;
-            if(height > width)
+            if((-sprite.getFitHeight() / height) * width <= -sprite.getFitWidth())
                 scale = -sprite.getFitHeight() / height;
             else
                 scale = -sprite.getFitWidth() / width;
@@ -53,7 +53,7 @@ class FetchImage extends Thread{
             sprite.setScaleX(1);
             sprite.setScaleY(1);
         }
-        imageViewFitAdjust(sprite);
+        //imageViewFitAdjust(sprite);
         sprite.setTranslateX(-image.getWidth() / 2);
         sprite.setTranslateY(-((image.getHeight() / 2) + (image.getHeight() * sprite.getScaleX()) / 2));
     }

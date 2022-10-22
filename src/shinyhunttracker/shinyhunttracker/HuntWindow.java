@@ -447,14 +447,15 @@ class HuntWindow {
         masterLayout.setId("background");
         masterLayout.getChildren().addAll(HuntController.titleBar(layoutListStage), parentPane);
 
-        Scene layoutListScene = new Scene(parentPane, 0, 0);
+        Scene layoutListScene = new Scene(masterLayout, 0, 0);
         layoutListScene.getStylesheets().add("file:shinyTracker.css");
-        layoutListStage.setScene(layoutListScene);
-        if(!layoutListStage.isShowing()) {
+
+        if(layoutListStage.getScene() == null)
             layoutListStage.initStyle(StageStyle.UNDECORATED);
-            HuntController.makeDraggable(layoutListScene);
-            layoutListStage.show();
-        }
+
+        layoutListStage.setScene(layoutListScene);
+        HuntController.makeDraggable(layoutListScene);
+        layoutListStage.show();
 
         newLayoutButton.setOnAction(e -> {
             TextInputDialog newNameDialog = new TextInputDialog();
