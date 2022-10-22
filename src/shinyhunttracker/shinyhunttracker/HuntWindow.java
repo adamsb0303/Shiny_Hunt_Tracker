@@ -14,15 +14,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import static shinyhunttracker.ElementSettings.*;
@@ -205,19 +203,19 @@ class HuntWindow {
         TitledPane oddsFraction = createLabelSettings(oddFractionText, "Odds");
 
         //Adds game modifiers under the Odds TitlePane
-        if(selectedGame.getOddModifiers().size() != 0) {
+        if(selectedGame.getOddModifiers().length() != 0) {
             VBox gameModifierSettings = new VBox();
             gameModifierSettings.setSpacing(10);
 
             //Loops through game modifiers in groups of 2 as rows
-            for(int i = 0; i < selectedGame.getOddModifiers().size(); i += 2) {
+            for(int i = 0; i < selectedGame.getOddModifiers().length(); i += 2) {
                 //row hbox
                 HBox row = new HBox();
                 row.setAlignment(Pos.CENTER);
                 row.setSpacing(20);
 
                 //adds game modifiers in groups of 2
-                for(int j = 0; j < 2 && i + j < selectedGame.getOddModifiers().size(); j++) {
+                for(int j = 0; j < 2 && i + j < selectedGame.getOddModifiers().length(); j++) {
                     JSONObject gameMod = (JSONObject) selectedGame.getOddModifiers().get(i + j);
                     CheckBox checkBox = new CheckBox(gameMod.get("name").toString());
                     checkBox.setSelected(selectedMethod.getGameMods().contains(gameMod.get("name").toString()));
@@ -318,9 +316,8 @@ class HuntWindow {
             }
         });
 
-        try(FileReader reader = new FileReader("SaveData/huntLayouts.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
+        try {
+            JSONArray layoutList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/huntLayouts.json")));
 
             //Adds all saved layouts to GridPane
             for(Object i : layoutList){
@@ -362,7 +359,7 @@ class HuntWindow {
                     showLayoutList();
                 });
             }
-        }catch(IOException | ParseException e){
+        }catch(IOException e){
             e.printStackTrace();
         }
 

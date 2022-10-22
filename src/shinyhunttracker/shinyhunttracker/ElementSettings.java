@@ -22,7 +22,6 @@ import java.awt.*;
 import java.util.Vector;
 
 import static java.lang.Double.parseDouble;
-import static java.lang.Integer.parseInt;
 
 public class ElementSettings {
     static Vector<String> fonts = generateFonts();

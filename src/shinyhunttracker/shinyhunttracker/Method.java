@@ -2,13 +2,9 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -29,24 +25,32 @@ public class Method {
      * @param id id
      */
     Method(JSONObject methodObject, int id){
-        name.setValue(methodObject.get("name").toString());
-        breeding = (Boolean) methodObject.get("breeding");
-        methodInfo = methodObject.get("method-info").toString();
-        modifier = Integer.parseInt(methodObject.get("modifier").toString());
+        name.setValue(methodObject.getString("name"));
+        breeding = methodObject.getBoolean("breeding");
+        methodInfo = methodObject.getString("method-info");
+        modifier = methodObject.getInt("modifier");
         this.id = id;
 
-        if(methodObject.get("base") != null)
-            base = Integer.parseInt(methodObject.get("base").toString());
+        try {
+            if (methodObject.get("base") != null)
+                base = Integer.parseInt(methodObject.get("base").toString());
+        }catch(JSONException ignored){
 
-        JSONArray tempJSONArr = (JSONArray) methodObject.get("games");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
+        }
+
+        try {
+            for (Object i : methodObject.getJSONArray("games"))
                 games.add(Integer.parseInt(i.toString()));
+        }catch(JSONException ignored){
 
-        tempJSONArr = (JSONArray) methodObject.get("pokemon");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
+        }
+
+        try {
+            for (Object i : methodObject.getJSONArray("pokemon"))
                 pokemon.add(Integer.parseInt(i.toString()));
+        }catch(JSONException ignored){
+
+        }
     }
 
     /**

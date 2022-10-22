@@ -2,8 +2,9 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 import java.util.Vector;
@@ -21,59 +22,70 @@ public class Pokemon{
     int[] base; //Stores Speed, HP, Special, Attack, Defense
 
     /**
-     * calls the main constructor with id and passes JSONObject from that index
-     * @param id index
-     */
-    Pokemon(int id){
-        this(Objects.requireNonNull(SaveData.readJSON("GameData/pokemon.json", id)), id);
-    }
-
-    /**
      * Loads data from JSONObject
      * @param pokemonObject data
      * @param id index
      */
     Pokemon(JSONObject pokemonObject, int id){
-        name.setValue((String) pokemonObject.get("name"));
-        generation = (int) (long)  pokemonObject.get("generation");
-        breedable = (Boolean) pokemonObject.get("breedable");
+        name.setValue(pokemonObject.getString("name"));
+        generation = pokemonObject.getInt("generation");
+        breedable = pokemonObject.getBoolean("breedable");
         this.id = id;
 
         //Families are 1D unless they branch, then they are 2D
-        JSONArray tempJSONArr = (JSONArray) pokemonObject.get("family");
-        if(tempJSONArr != null) {
+        try {
+            JSONArray tempJSONArr = pokemonObject.getJSONArray("family");
             family.add(new Vector<>());
-            for (int i = 0; i < tempJSONArr.size(); i++)
-                if (tempJSONArr.get(i) instanceof Long) {
-                    family.get(0).add(Integer.parseInt(tempJSONArr.get(i).toString()));
-                    if (Integer.parseInt(tempJSONArr.get(i).toString()) == this.id)
+            for (int i = 0; i < tempJSONArr.length(); i++) {
+                if (tempJSONArr.get(i) instanceof Integer) {
+                    family.get(0).add(tempJSONArr.getInt(i));
+                    if (tempJSONArr.getInt(i) == this.id)
                         evoStage = i;
                 } else {
-                    JSONArray multipleFamilies = (JSONArray) tempJSONArr.get(i);
-                    if(family.size() <= i)
+                    JSONArray multipleFamilies = tempJSONArr.getJSONArray(i);
+                    if (family.size() <= i)
                         family.add(new Vector<>());
 
                     for (Object j : multipleFamilies)
                         family.get(i).add(Integer.parseInt(j.toString()));
                 }
+            }
+        }catch(JSONException ignored){
+
         }
 
-        tempJSONArr = (JSONArray) pokemonObject.get("forms");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
+        try{
+            for(Object i : pokemonObject.getJSONArray("forms"))
                 forms.add(i.toString());
+        }catch (JSONException ignored){
 
-        tempJSONArr = (JSONArray) pokemonObject.get("regional-forms");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
-                regionalForms.add(Integer.parseInt(i.toString()));
-
-        JSONArray baseStats = (JSONArray) pokemonObject.get("base");
-        if(baseStats != null) {
-            base = new int[5];
-            for (int i = 0; i < 5; i++)
-                base[i] = Integer.parseInt(baseStats.get(i).toString());
         }
+
+        try {
+            for (Object i : pokemonObject.getJSONArray("regional-forms"))
+                regionalForms.add(Integer.parseInt(i.toString()));
+        } catch(JSONException ignored){
+
+        }
+
+        try {
+            JSONArray baseStats = pokemonObject.getJSONArray("base");
+            if (baseStats != null) {
+                base = new int[5];
+                for (int i = 0; i < 5; i++)
+                    base[i] = Integer.parseInt(baseStats.get(i).toString());
+            }
+        }catch(JSONException ignored){
+
+        }
+    }
+
+    /**
+     * calls the main constructor with id and passes JSONObject from that index
+     * @param id index
+     */
+    Pokemon(int id){
+        this(Objects.requireNonNull(SaveData.readJSON("GameData/pokemon.json", id)), id);
     }
 
     @Override

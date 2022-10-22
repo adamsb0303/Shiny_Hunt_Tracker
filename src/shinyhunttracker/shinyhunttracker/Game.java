@@ -2,8 +2,9 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 import java.util.Vector;
@@ -25,30 +26,40 @@ public class Game {
      * @param id id
      */
     Game(JSONObject gameObject, int id){
-        this.name.setValue((String) gameObject.get("name"));
-        generation = (int) (long)  gameObject.get("generation");
-        odds = (int) (long) gameObject.get("odds");
+        this.name.setValue(gameObject.getString("name"));
+        generation = gameObject.getInt("generation");
+        odds = gameObject.getInt("odds");
         this.id = id;
-        imagePath = String.valueOf(gameObject.get("imagePath"));
+        imagePath = gameObject.getString("imagePath");
 
-        JSONArray tempJSONArr = (JSONArray) gameObject.get("pokedex");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
-                pokedex.add(Integer.parseInt(i.toString()));
+        try {
+            JSONArray tempJSONArr = gameObject.getJSONArray("pokedex");
+            if (tempJSONArr != null)
+                for (Object i : tempJSONArr)
+                    pokedex.add(Integer.parseInt(i.toString()));
+        }catch(JSONException ignored){
 
-        tempJSONArr = (JSONArray) gameObject.get("unbreedables");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
+        }
+
+        try{
+            for(Object i : gameObject.getJSONArray("unbreedables"))
                 unbreedables.add(Integer.parseInt(i.toString()));
+        }catch(JSONException ignored){
 
-        tempJSONArr = (JSONArray) gameObject.get("method");
-        if(tempJSONArr != null)
-            for(Object i : tempJSONArr)
+        }
+
+        try{
+            for(Object i : gameObject.getJSONArray("method"))
                 methods.add(Integer.parseInt(i.toString()));
+        }catch(JSONException ignored){
 
-        tempJSONArr = (JSONArray) gameObject.get("modifiers");
-        if(tempJSONArr != null)
-            oddModifiers = tempJSONArr;
+        }
+
+        try{
+            oddModifiers = gameObject.getJSONArray("modifiers");
+        }catch(JSONException ignored){
+
+        }
     }
 
     /**
@@ -79,12 +90,16 @@ public class Game {
      */
     public Vector<Integer> getMethodTable(int method){
         Vector<Integer> methodVector = new Vector<>();
-        JSONObject jsonObject = SaveData.readJSON("GameData/game.json", id);
-        if(jsonObject != null) {
-            JSONArray methodTable = (JSONArray) jsonObject.get("table-" + method);
-            if(methodTable != null)
-                for(Object i : methodTable)
-                    methodVector.add(Integer.parseInt(i.toString()));
+        try{
+            JSONObject jsonObject = SaveData.readJSON("GameData/game.json", id);
+            if(jsonObject != null) {
+                JSONArray methodTable = jsonObject.getJSONArray("table-" + method);
+                if (methodTable != null)
+                    for (Object i : methodTable)
+                        methodVector.add(Integer.parseInt(i.toString()));
+            }
+        }catch(JSONException ignored){
+
         }
 
         return methodVector;

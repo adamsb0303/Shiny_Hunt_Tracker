@@ -10,12 +10,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONTokener;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Vector;
@@ -51,8 +49,6 @@ public class HuntSelection{
         if(selectionPageStage.isShowing())
             return;
 
-        selectionPageStage.setTitle("Hunt Selection");
-
         //resets variables for when the window is reopened
         resetVariables();
 
@@ -73,13 +69,12 @@ public class HuntSelection{
         gameComboBox.setLayoutX(87.5);
 
         if(defaultGameList.size() == 0) {
-            try (FileReader reader = new FileReader("GameData/game.json")) {
-                JSONParser jsonParser = new JSONParser();
-                JSONArray gameList = (JSONArray) jsonParser.parse(reader);
+            try {
+                JSONArray gameList = new JSONArray(new JSONTokener(new FileInputStream("GameData/game.json")));
 
-                for (int i = 0; i < gameList.size(); i++)
-                    defaultGameList.add(new Game((JSONObject) gameList.get(i), i));
-            } catch (IOException | ParseException e) {
+                for (int i = 0; i < gameList.length(); i++)
+                    defaultGameList.add(new Game(gameList.getJSONObject(i), i));
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -92,13 +87,12 @@ public class HuntSelection{
         methodComboBox.setLayoutX(87.5);
 
         if(defaultMethodList.size() == 0) {
-            try (FileReader reader = new FileReader("GameData/method.json")) {
-                JSONParser jsonParser = new JSONParser();
-                JSONArray methodList = (JSONArray) jsonParser.parse(reader);
+            try {
+                JSONArray methodList = new JSONArray(new JSONTokener(new FileInputStream("GameData/method.json")));
 
-                for (int i = 0; i < methodList.size(); i++)
-                    defaultMethodList.add(new Method((JSONObject) methodList.get(i), i));
-            } catch (IOException | ParseException e) {
+                for (int i = 0; i < methodList.length(); i++)
+                    defaultMethodList.add(new Method(methodList.getJSONObject(i), i));
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -134,15 +128,14 @@ public class HuntSelection{
         pokemonListTreeView.setShowRoot(false);
 
         if(defaultPokemonList.size() == 0) {
-            try (FileReader reader = new FileReader("GameData/pokemon.json")) {
-                JSONParser jsonParser = new JSONParser();
-                JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
+            try {
+                JSONArray pokemonListJSON = new JSONArray(new JSONTokener(new FileInputStream("GameData/pokemon.json")));
 
-                for (int i = 0; i < pokemonListJSON.size(); i++) {
-                    defaultPokemonList.add(new TreeItem<>(new Pokemon((JSONObject) pokemonListJSON.get(i), i)));
+                for (int i = 0; i < pokemonListJSON.length(); i++) {
+                    defaultPokemonList.add(new TreeItem<>(new Pokemon(pokemonListJSON.getJSONObject(i), i)));
                     searchPokemonList.add(defaultPokemonList.get(i));
                 }
-            } catch (IOException | ParseException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

@@ -2,8 +2,6 @@ package shinyhunttracker;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,10 +21,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.*;
 import java.util.Vector;
@@ -115,7 +112,6 @@ public class HuntController {
         huntControls.show();
 
         //Check to see if there were hunts open when the hunt controller was last closed
-        JSONParser jsonParser = new JSONParser();
         try {
             //reads the number of hunts that were open when the program was last closed
             FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
@@ -123,14 +119,13 @@ public class HuntController {
             int previousHuntsNum = previousSessionData.read();
 
             //Read JSON file
-            Object obj = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //Load the last n hunts in the json
-            if(huntList.size() != 0)
+            if(huntList.length() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
-                    SaveData.loadHunt(huntList.size() - i);
-        }catch (IOException | ParseException ignored) {
+                    SaveData.loadHunt(huntList.length() - i);
+        }catch (IOException ignored) {
 
         }
 
@@ -151,17 +146,16 @@ public class HuntController {
         addHunt.setOnAction(e -> {
             //check save data file for previous saves
             //if anything is found, ask the user if they would like to start a new hunt or a previous one
-            try (FileReader reader = new FileReader("SaveData/previousHunts.json")) {
+            try {
                 //Read JSON file
-                Object obj = jsonParser.parse(reader);
-                JSONArray huntList = (JSONArray) obj;
+                JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
                 //If there are no previous hunts, it goes straight to selection page
-                if(huntList.size() > 0 && windowsList.size() < huntList.size())
+                if(huntList.length() > 0 && windowsList.size() < huntList.length())
                     newOrOld();
                 else
                     HuntSelection.createHuntSelection();
-            }catch(IOException | ParseException f){
+            }catch(IOException f){
                 HuntSelection.createHuntSelection();
             }
         });
@@ -287,14 +281,12 @@ public class HuntController {
         huntControlsLayout.add(helpButton, 8, row);
 
         //Set keybinds
-        try (FileReader reader = new FileReader("SaveData/keybinds.json")) {
-            JSONParser jsonParser = new JSONParser();
+        try {
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray keybindList = (JSONArray) obj;
+            JSONArray keybindList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/keybinds.json")));
 
             newWindow.setKeybind(KeyCode.valueOf(keybindList.get(newWindow.getHuntNumber() - 1).toString()));
-        }catch(IOException | ParseException e){
+        }catch(IOException  e){
             e.printStackTrace();
         }
 
@@ -351,13 +343,12 @@ public class HuntController {
             phaseDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             makeDraggable(phaseDialog.getDialogPane().getScene());
             phaseDialog.initStyle(StageStyle.UNDECORATED);
-            try (FileReader reader = new FileReader("GameData/pokemon.json")) {
-                JSONParser jsonParser = new JSONParser();
-                JSONArray pokemonListJSON = (JSONArray) jsonParser.parse(reader);
+            try {
+                JSONArray pokemonListJSON = new JSONArray(new JSONTokener(new FileInputStream("GameData/pokemon.json")));
 
-                for (int i = 0; i < pokemonListJSON.size(); i++)
-                    phaseDialog.getItems().add(new Pokemon((JSONObject) pokemonListJSON.get(i), i));
-            } catch (IOException | ParseException f) {
+                for (int i = 0; i < pokemonListJSON.length(); i++)
+                    phaseDialog.getItems().add(new Pokemon(pokemonListJSON.getJSONObject(i), i));
+            } catch (IOException f) {
                 f.printStackTrace();
             }
             phaseDialog.setTitle("Phase Hunt");
@@ -457,14 +448,12 @@ public class HuntController {
             }
         } );
 
-        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
-            JSONParser jsonParser = new JSONParser();
+        try {
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //Loops through previously saved hunts
-            for(int i = huntList.size() - 1; i >= 0; i--){
+            for(int i = huntList.length() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
                 //Doesn't add hunt data to the grid if the hunt is already open
                 boolean newData = true;
@@ -517,7 +506,7 @@ public class HuntController {
                 prevHuntsStage.close();
                 return;
             }
-        }catch (IOException | ParseException f) {
+        }catch (IOException f) {
             f.printStackTrace();
         }
 
@@ -563,17 +552,16 @@ public class HuntController {
             }
         });
 
-        try(FileReader reader = new FileReader("SaveData/previousHunts.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray huntList = (JSONArray) jsonParser.parse(reader);
+        try {
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
-            if(huntList.size() == 0) {
+            if(huntList.length() == 0) {
                 editHunts.close();
                 return;
             }
 
             //loops through all saved hunts
-            for(int i = huntList.size() - 1; i >= 0; i--){
+            for(int i = huntList.length() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
                 Pokemon huntPokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
                 Game huntGame = new Game(Integer.parseInt(huntData.get("game").toString()));
@@ -613,12 +601,12 @@ public class HuntController {
                     pokemonChoiceDialog.initStyle(StageStyle.UNDECORATED);
                     makeDraggable(pokemonChoiceDialog.getDialogPane().getScene());
                     pokemonChoiceDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
-                    try (FileReader gameReader = new FileReader("GameData/pokemon.json")) {
-                        JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
+                    try {
+                        JSONArray gameList = new JSONArray(new JSONTokener(new FileInputStream("GameData/pokemon.json")));
 
-                        for (int j = 0; j < gameList.size(); j++)
-                            pokemonChoiceDialog.getItems().add(new Pokemon((JSONObject) gameList.get(j), j));
-                    } catch (IOException | ParseException g) {
+                        for (int j = 0; j < gameList.length(); j++)
+                            pokemonChoiceDialog.getItems().add(new Pokemon(gameList.getJSONObject(j), j));
+                    } catch (IOException g) {
                         g.printStackTrace();
                     }
                     pokemonChoiceDialog.setSelectedItem(huntPokemon);
@@ -637,12 +625,12 @@ public class HuntController {
                     gameChoiceDialog.initStyle(StageStyle.UNDECORATED);
                     makeDraggable(gameChoiceDialog.getDialogPane().getScene());
                     gameChoiceDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
-                    try (FileReader gameReader = new FileReader("GameData/game.json")) {
-                        JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
+                    try {
+                        JSONArray gameList = new JSONArray(new JSONTokener(new FileInputStream("GameData/game.json")));
 
-                        for (int j = 0; j < gameList.size(); j++)
-                            gameChoiceDialog.getItems().add(new Game((JSONObject) gameList.get(j), j));
-                    } catch (IOException | ParseException g) {
+                        for (int j = 0; j < gameList.length(); j++)
+                            gameChoiceDialog.getItems().add(new Game(gameList.getJSONObject(j), j));
+                    } catch (IOException g) {
                         g.printStackTrace();
                     }
                     gameChoiceDialog.setSelectedItem(huntGame);
@@ -661,12 +649,12 @@ public class HuntController {
                     methodChoiceDialog.initStyle(StageStyle.UNDECORATED);
                     makeDraggable(methodChoiceDialog.getDialogPane().getScene());
                     methodChoiceDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
-                    try (FileReader gameReader = new FileReader("GameData/method.json")) {
-                        JSONArray gameList = (JSONArray) jsonParser.parse(gameReader);
+                    try {
+                        JSONArray gameList = new JSONArray(new JSONTokener(new FileInputStream("GameData/method.json")));
 
-                        for (int j = 0; j < gameList.size(); j++)
-                            methodChoiceDialog.getItems().add(new Method((JSONObject) gameList.get(j), j));
-                    } catch (IOException | ParseException g) {
+                        for (int j = 0; j < gameList.length(); j++)
+                            methodChoiceDialog.getItems().add(new Method(gameList.getJSONObject(j), j));
+                    } catch (IOException g) {
                         g.printStackTrace();
                     }
                     methodChoiceDialog.setSelectedItem(huntMethod);
@@ -723,7 +711,7 @@ public class HuntController {
             editHunts.setScene(huntListScene);
             makeDraggable(huntListScene);
             editHunts.show();
-        }catch(IOException | ParseException e){
+        }catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -749,12 +737,9 @@ public class HuntController {
             }
         });
 
-        try(FileReader reader = new FileReader("SaveData/keyBinds.json")){
-            JSONParser jsonParser = new JSONParser();
-
+        try {
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray keyBindsList = (JSONArray) obj;
+            JSONArray keyBindsList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/keyBinds.json")));
 
             //temporarily stores keys in order
             Vector<KeyCode> keyBindsTemp = new Vector<>();
@@ -789,21 +774,21 @@ public class HuntController {
                 try {
                     //updates the JSONArray updates the currently open hunts with the temporarily saved binds
                     for(int i = 0; i < keyBindsTemp.size(); i++) {
-                        keyBindsList.set(i, keyBindsTemp.get(i).toString());
+                        keyBindsList.put(i, keyBindsTemp.get(i).toString());
                         if(windowsList.get(i).getHuntNumber() == i + 1)
                             windowsList.get(i).setKeybind(keyBindsTemp.get(i));
                     }
 
                     //Write to file
                     FileWriter file = new FileWriter("SaveData/keyBinds.json");
-                    file.write(keyBindsList.toJSONString());
+                    file.write(keyBindsList.toString());
                     file.close();
                 }catch(IOException f){
                     f.printStackTrace();
                 }
                 keyBindingSettingsStage.close();
             });
-        }catch(IOException | ParseException f){
+        }catch(IOException f){
             f.printStackTrace();
         }
 
@@ -840,24 +825,22 @@ public class HuntController {
 
         try {
             //reads the number of hunts that were open when the program was last closed
-            JSONParser jsonParser = new JSONParser();
             FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
             DataInputStream previousSessionData = new DataInputStream(reader);
             int previousHuntsNum = previousSessionData.read();
 
             //Read JSON file
-            Object obj = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //Load the last n hunts in the json
-            if(huntList.size() != 0)
+            if(huntList.length() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
-                    SaveData.loadHunt(huntList.size() - i);
+                    SaveData.loadHunt(huntList.length() - i);
             //Saves any changes that occurred before refreshing
             saveHuntOrder();
             //Refreshes all other windows
             refreshMiscWindows();
-        }catch (IOException | ParseException ignored) {
+        }catch (IOException ignored) {
 
         }
     }

@@ -7,14 +7,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.*;
-
-import static java.lang.Integer.parseInt;
 
 public class SaveData {
     /**
@@ -34,11 +31,9 @@ public class SaveData {
         pokemonData.put("increment", huntData.getIncrement());
         pokemonData.put("layout", huntData.getCurrentLayout());
 
-        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+        try {
             //Read JSON file
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //set the hunt ID of the new data, -1 being a new pokemon
             int largest = 0;
@@ -54,10 +49,10 @@ public class SaveData {
                 pokemonData.put("huntID", huntData.getHuntID());
 
                 //removes duplicate data
-                for(int i = 0; i < huntList.size(); i++){
+                for(int i = 0; i < huntList.length(); i++){
                     JSONObject checkData = (JSONObject) huntList.get(i);
-                    int checkDataID = Integer.parseInt(checkData.get("huntID").toString());
-                    int pokemonDataID = Integer.parseInt(pokemonData.get("huntID").toString());
+                    int checkDataID = checkData.getInt("huntID");
+                    int pokemonDataID = pokemonData.getInt("huntID");
                     if(checkDataID == pokemonDataID) {
                         huntList.remove(i);
                         break;
@@ -66,23 +61,13 @@ public class SaveData {
             }
 
             //Writes new data to file
-            huntList.add(pokemonData);
+            huntList.put(pokemonData);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
-            file.write(huntList.toJSONString());
+            file.write(huntList.toString());
             file.close();
         }catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException f){
-            //If it gets here, the file exists but it is empty so it add data surrounded in []
-            try{
-                FileWriter file = new FileWriter("SaveData/previousHunts.json");
-                pokemonData.put("huntID", 0);
-                file.write("[" + pokemonData.toJSONString() + "]");
-                file.close();
-            } catch (IOException g) {
-                g.printStackTrace();
-            }
         }
     }
 
@@ -91,34 +76,32 @@ public class SaveData {
      * @param index index of hunt data
      */
     public static void loadHunt(int index){
-        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+        try {
             //Read JSON file
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //for loading the last entry in the list
             if(index == -1)
-                index = huntList.size() - 1;
+                index = huntList.length() - 1;
 
             //parse hunt data
             JSONObject huntObject = (JSONObject) huntList.get(index);
-            Pokemon selectedPokemon = new Pokemon(Integer.parseInt(huntObject.get("pokemon").toString()));
-            Game selectedGame = new Game(Integer.parseInt(huntObject.get("game").toString()));
-            Method selectedMethod = new Method(Integer.parseInt(huntObject.get("method").toString()));
+            Pokemon selectedPokemon = new Pokemon(huntObject.getInt("pokemon"));
+            Game selectedGame = new Game(huntObject.getInt("game"));
+            Method selectedMethod = new Method(huntObject.getInt("method"));
             for(Object i : (JSONArray) huntObject.get("game_mods")){
-                for(int j = 0; j < selectedGame.getOddModifiers().size(); j++) {
+                for(int j = 0; j < selectedGame.getOddModifiers().length(); j++) {
                     JSONObject checkMod = (JSONObject) selectedGame.getOddModifiers().get(j);
-                    if (checkMod.get("name").toString().equals(i.toString())){
+                    if (checkMod.getString("name").equals(i.toString())){
                         selectedMethod.addGameMod(i.toString(), Integer.parseInt(checkMod.get("extra-rolls").toString()));
                         break;
                     }
                 }
             }
-            int encounters = parseInt(huntObject.get("encounters").toString());
-            int combo = parseInt(huntObject.get("combo").toString());
-            int increment = parseInt(huntObject.get("increment").toString());
-            int huntID = parseInt(huntObject.get("huntID").toString());
+            int encounters = huntObject.getInt("encounters");
+            int combo = huntObject.getInt("combo");
+            int increment = huntObject.getInt("increment");
+            int huntID = huntObject.getInt("huntID");
             String layout = "";
 
             //data-points that can be null
@@ -130,7 +113,7 @@ public class SaveData {
                 layout = layoutObject.toString();
 
             HuntController.addHunt(new HuntWindow(selectedPokemon, selectedGame, selectedMethod, layout, encounters, combo, increment, huntID));
-        }catch (IOException | ParseException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -140,19 +123,17 @@ public class SaveData {
      * @param index index of hunt data
      */
     public static void removeHunt(int index){
-        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+        try {
             //Read JSON file
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //removes data point at index
             huntList.remove(index);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
-            file.write(huntList.toJSONString());
+            file.write(huntList.toString());
             file.close();
-        }catch (IOException | ParseException e) {
+        }catch (IOException  e) {
             e.printStackTrace();
         }
     }
@@ -163,20 +144,18 @@ public class SaveData {
      * @param data new hunt data
      */
     public static void updateHunt(int index, JSONObject data){
-        try (FileReader reader = new FileReader("SaveData/previousHunts.json")){
+        try {
             //Read JSON file
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //removes the data at index, and replaces it with new data
             huntList.remove(index);
-            huntList.add(index, data);
+            huntList.put(index, data);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
-            file.write(huntList.toJSONString());
+            file.write(huntList.toString());
             file.close();
-        }catch (IOException | ParseException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -197,47 +176,35 @@ public class SaveData {
         pokemonData.put("encounters", huntData.getEncounters());
         pokemonData.put("combo", huntData.getCombo());
 
-        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
+        try {
             //Read previous hunts JSON
-            JSONParser jsonParser = new JSONParser();
-            Object listObject = jsonParser.parse(new FileReader("SaveData/previousHunts.json"));
-            JSONArray huntList = (JSONArray) listObject;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //Finds the pokemon from the list and removes it
-            for(int i = 0; i < huntList.size(); i++){
+            for(int i = 0; i < huntList.length(); i++){
                 JSONObject checkData = (JSONObject) huntList.get(i);
-                int checkDataID = Integer.parseInt(checkData.get("huntID").toString());
+                int checkDataID = checkData.getInt("huntID");
                 if(checkDataID == huntData.getHuntID()) {
                     huntList.remove(i);
 
                     FileWriter listFile = new FileWriter("SaveData/previousHunts.json");
-                    listFile.write(huntList.toJSONString());
+                    listFile.write(huntList.toString());
                     listFile.close();
                     break;
                 }
             }
 
             //reads caught pokemon json
-            Object caughtObj = jsonParser.parse(reader);
-            JSONArray caughtList = (JSONArray) caughtObj;
+            JSONArray caughtList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
 
             //adds data to caught pokemon list
-            caughtList.add(pokemonData);
+            caughtList.put(pokemonData);
 
             FileWriter caughtFile = new FileWriter("SaveData/caughtPokemon.json");
-            caughtFile.write(caughtList.toJSONString());
+            caughtFile.write(caughtList.toString());
             caughtFile.close();
         }catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException f){
-            try{
-                //Surrounds data in [] if file is empty
-                FileWriter file = new FileWriter("SaveData/caughtPokemon.json");
-                file.write("[" + pokemonData.toJSONString() + "]");
-                file.close();
-            } catch (IOException g) {
-                g.printStackTrace();
-            }
         }
     }
 
@@ -250,7 +217,7 @@ public class SaveData {
     public static void saveLayout(String layoutName, AnchorPane huntLayout, boolean currentHunt){
         //saves layout name in index 0
         JSONArray layoutData = new JSONArray();
-        layoutData.add(layoutName);
+        layoutData.put(layoutName);
 
         //Saves every element from layout to json
         for(Node i : huntLayout.getChildren()) {
@@ -263,7 +230,7 @@ public class SaveData {
                 imageData.put("height", image.getFitHeight());
                 imageData.put("visible", image.isVisible());
 
-                layoutData.add(imageData);
+                layoutData.put(imageData);
             }else if(i instanceof Text){
                 Text text = (Text) i;
                 JSONObject textData = new JSONObject();
@@ -277,12 +244,10 @@ public class SaveData {
                 textData.put("underline", text.isUnderline());
                 textData.put("visible", text.isVisible());
 
-                layoutData.add(textData);
+                layoutData.put(textData);
             }
         }
-        layoutData.add(huntLayout.getBackground().getFills().get(0).getFill().toString());
-
-        JSONParser jsonParser = new JSONParser();
+        layoutData.put(huntLayout.getBackground().getFills().get(0).getFill().toString());
 
         //Changes if the file is for current hunt or previously caught window
         String filePath = "SaveData/";
@@ -291,18 +256,17 @@ public class SaveData {
         else
             filePath += "caughtLayouts.json";
 
-        try (FileReader reader = new FileReader(filePath)){
+        try {
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray layoutList = (JSONArray) obj;
+            JSONArray layoutList = new JSONArray(new JSONTokener(new FileInputStream(filePath)));
 
             //Check list for another layout with same name and update it
             boolean newData = true;
-            for(int i = 0; i < layoutList.size(); i++){
+            for(int i = 0; i < layoutList.length(); i++){
                 JSONArray layoutCheck = (JSONArray) layoutList.get(i);
                 if(layoutCheck.get(0).equals(layoutName)) {
                     layoutList.remove(i);
-                    layoutList.add(i, layoutData);
+                    layoutList.put(i, layoutData);
                     newData = false;
                     break;
                 }
@@ -310,23 +274,14 @@ public class SaveData {
 
             //add new data if new
             if(newData)
-                layoutList.add(layoutData);
+                layoutList.put(layoutData);
 
             //Write to file
             FileWriter file = new FileWriter(filePath);
-            file.write(layoutList.toJSONString());
+            file.write(layoutList.toString());
             file.close();
         }catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException f){
-            //If the file is empty, add brackets and write to file
-            try{
-                FileWriter file = new FileWriter(filePath);
-                file.write("[" + layoutData.toJSONString() + "]");
-                file.close();
-            } catch (IOException g) {
-                g.printStackTrace();
-            }
         }
     }
 
@@ -337,8 +292,6 @@ public class SaveData {
      * @param currentHunt flag for if it's for HuntWindow or PreviouslyCaught
      */
     public static void loadLayout(String layoutName, AnchorPane huntLayout, boolean currentHunt){
-        JSONParser jsonParser = new JSONParser();
-
         //Changes if the file is for current hunt or previously caught window
         String filePath = "SaveData/";
         if(currentHunt)
@@ -346,15 +299,14 @@ public class SaveData {
         else
             filePath += "caughtLayouts.json";
 
-        try (FileReader reader = new FileReader(filePath)) {
+        try {
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONArray layoutList = (JSONArray) obj;
+            JSONArray layoutList = new JSONArray(new JSONTokener(new FileInputStream(filePath)));
 
             //set layoutData to the matching save data
             JSONArray layoutData = new JSONArray();
 
-            for(int i = layoutList.size() - 1; i >= 0; i--) {
+            for(int i = layoutList.length() - 1; i >= 0; i--) {
                 layoutData = (JSONArray) layoutList.get(i);
                 if (layoutData.get(0).toString().equals(layoutName))
                     break;
@@ -362,7 +314,7 @@ public class SaveData {
 
             //Loads data from file onto elements of layout
             for(int i = 1; i <= huntLayout.getChildren().size(); i++){
-                if(i >= layoutData.size() - 1)
+                if(i >= layoutData.length() - 1)
                     break;
 
                 JSONObject elementData = (JSONObject) layoutData.get(i);
@@ -370,32 +322,30 @@ public class SaveData {
                 if(element instanceof ImageView){
                     ImageView image = (ImageView) element;
 
-                    image.setLayoutX((Double) elementData.get("X"));
-                    image.setLayoutY((Double) elementData.get("Y"));
-                    double imageWidth = -(Double) elementData.get("width");
-                    image.setFitWidth(-imageWidth);
-                    double imageHeight = -(Double) elementData.get("height");
-                    image.setFitHeight(-imageHeight);
+                    image.setLayoutX(elementData.getDouble("X"));
+                    image.setLayoutY(elementData.getDouble("Y"));
+                    image.setFitWidth(elementData.getDouble("width"));
+                    image.setFitHeight(elementData.getDouble("height"));
                     if(image.getImage() != null)
                         FetchImage.adjustImageScale(image, image.getImage());
-                    image.setVisible(elementData.get("visible").toString().compareTo("true") == 0);
+                    image.setVisible(elementData.getBoolean("visible"));
                 }else{
                     Text text = (Text) element;
 
-                    text.setLayoutX((Double) elementData.get("X"));
-                    text.setLayoutY((Double) elementData.get("Y"));
-                    text.setScaleX((Double) elementData.get("scale"));
-                    text.setScaleY((Double) elementData.get("scale"));
-                    text.setFont(new Font(elementData.get("font").toString(), 12));
-                    text.setFill(Color.web(elementData.get("fill").toString()));
-                    text.setStrokeWidth((Double) elementData.get("stroke_width"));
-                    text.setStroke(Color.web(elementData.get("stroke").toString()));
-                    text.setUnderline(elementData.get("underline").toString().compareTo("true") == 0);
-                    text.setVisible(elementData.get("visible").toString().compareTo("true") == 0);
+                    text.setLayoutX(elementData.getDouble("X"));
+                    text.setLayoutY(elementData.getDouble("Y"));
+                    text.setScaleX(elementData.getDouble("scale"));
+                    text.setScaleY(elementData.getDouble("scale"));
+                    text.setFont(new Font(elementData.getString("font"), 12));
+                    text.setFill(Color.web(elementData.getString("fill")));
+                    text.setStrokeWidth(elementData.getDouble("stroke_width"));
+                    text.setStroke(Color.web(elementData.getString("stroke")));
+                    text.setUnderline(elementData.getBoolean("underline"));
+                    text.setVisible(elementData.getBoolean("visible"));
                 }
             }
-            huntLayout.setBackground(new Background(new BackgroundFill(Color.web(layoutData.get(layoutData.size() - 1).toString()), CornerRadii.EMPTY, Insets.EMPTY)));
-        }catch(IOException | ParseException e){
+            huntLayout.setBackground(new Background(new BackgroundFill(Color.web(layoutData.get(layoutData.length() - 1).toString()), CornerRadii.EMPTY, Insets.EMPTY)));
+        }catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -413,12 +363,11 @@ public class SaveData {
         else
             filePath += "caughtLayouts.json";
 
-        try(FileReader reader = new FileReader(filePath)){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
+        try {
+            JSONArray layoutList = new JSONArray(new JSONTokener(new FileInputStream(filePath)));
 
             //Finds the layout and removes it
-            for(int i = 0; i < layoutList.size(); i++){
+            for(int i = 0; i < layoutList.length(); i++){
                 JSONArray layoutData = (JSONArray) layoutList.get(i);
                 if(!layoutData.get(0).toString().equals(layoutName))
                     continue;
@@ -426,9 +375,8 @@ public class SaveData {
                 layoutList.remove(i);
 
                 //Removes layout from any saved hunts
-                FileReader prevHuntsReader = new FileReader("SaveData/previousHunts.json");
-                JSONArray prevHunts = (JSONArray) jsonParser.parse(prevHuntsReader);
-                for(int j = 0; j < prevHunts.size(); j++){
+                JSONArray prevHunts = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
+                for(int j = 0; j < prevHunts.length(); j++){
                     JSONObject huntData = (JSONObject) prevHunts.get(j);
                     if(huntData.get("layout").toString().equals(layoutName)){
                         huntData.put("layout", "");
@@ -440,9 +388,9 @@ public class SaveData {
 
             //Write to file
             FileWriter file = new FileWriter(filePath);
-            file.write(layoutList.toJSONString());
+            file.write(layoutList.toString());
             file.close();
-        }catch(IOException | ParseException e){
+        }catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -454,15 +402,13 @@ public class SaveData {
      * @return JSONObject from given index
      */
     public static JSONObject readJSON(String filePath, int index){
-        try (FileReader reader = new FileReader(filePath)){
+        try {
             //Read JSON file
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray jsonList = (JSONArray) obj;
+            JSONArray jsonList = new JSONArray(new JSONTokener(new FileInputStream(filePath)));
 
             //return json data at index
             return (JSONObject) jsonList.get(index);
-        }catch (IOException | ParseException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
         return null;

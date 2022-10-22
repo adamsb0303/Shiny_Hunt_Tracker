@@ -12,12 +12,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
@@ -182,30 +181,29 @@ class PreviouslyCaught {
             return;
         }
 
-        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")) {
-            JSONParser jsonParser = new JSONParser();
-            JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
+        try {
+            JSONArray caughtPokemonList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
 
             //Makes sure that the user doesn't load more than what is saved
-            int caughtListSize = caughtPokemonList.size();
+            int caughtListSize = caughtPokemonList.length();
             if (caughtListSize < displayCaught)
                 displayCaught = caughtListSize;
 
             //Creates elements from caught list from displayPrevious up to displayCaught
             double widthTotal = 0;
             for (int i = caughtListSize - displayPrevious - 1; i >= (caughtListSize - displayCaught); i--) {
-                JSONObject caughtData = (JSONObject) caughtPokemonList.get(i);
+                JSONObject caughtData = caughtPokemonList.getJSONObject(i);
 
-                Game caughtGame = new Game(Integer.parseInt(caughtData.get("game").toString()));
+                Game caughtGame = new Game(caughtData.getInt("game"));
 
-                Pokemon previouslyCaughtPokemon = new Pokemon(Integer.parseInt(caughtData.get("pokemon").toString()));
-                previouslyCaughtPokemon.setForm(Integer.parseInt(caughtData.get("form").toString()));
+                Pokemon previouslyCaughtPokemon = new Pokemon(caughtData.getInt("pokemon"));
+                previouslyCaughtPokemon.setForm(caughtData.getInt("form"));
                 ImageView sprite = new ImageView();
                 FetchImage.setImage(sprite, previouslyCaughtPokemon, caughtGame);
 
                 Text pokemon = new Text(previouslyCaughtPokemon.getName());
                 Text method = new Text(caughtGame.getName());
-                Text encounters = new Text(caughtData.get("encounters").toString());
+                Text encounters = new Text(String.valueOf(caughtData.getInt("encounters")));
 
                 windowLayout.getChildren().addAll(sprite, pokemon, method, encounters);
 
@@ -245,7 +243,7 @@ class PreviouslyCaught {
                 settingsAccordion.getPanes().add(0, pokemonLabelSettings);
                 settingsAccordion.getPanes().add(0, spriteSettings);
             }
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -272,22 +270,20 @@ class PreviouslyCaught {
             }
         });
 
-        try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
+        try {
             //Read JSON file
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(reader);
-            JSONArray huntList = (JSONArray) obj;
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
 
             //adds data to grid pane
-            for(int i = huntList.size() - 1; i >= 0; i--){
+            for(int i = huntList.length() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
 
-                Pokemon pokemon = new Pokemon(Integer.parseInt(huntData.get("pokemon").toString()));
-                Game game = new Game(Integer.parseInt(huntData.get("game").toString()));
-                Method method = new Method(Integer.parseInt(huntData.get("method").toString()));
+                Pokemon pokemon = new Pokemon(huntData.getInt("pokemon"));
+                Game game = new Game(huntData.getInt("game"));
+                Method method = new Method(huntData.getInt("method"));
 
                 int row = previousCatches.getRowCount();
-                Label caughtNumber = new Label(String.valueOf(huntList.size() - i));
+                Label caughtNumber = new Label(String.valueOf(huntList.length() - i));
                 GridPane.setHalignment(caughtNumber, HPos.CENTER);
                 GridPane.setValignment(caughtNumber, VPos.CENTER);
                 previousCatches.add(caughtNumber, 0, row);
@@ -318,7 +314,7 @@ class PreviouslyCaught {
                 prevCatchesStage.close();
                 return;
             }
-        }catch (IOException | ParseException f) {
+        }catch (IOException f) {
             f.printStackTrace();
         }
 
@@ -366,9 +362,8 @@ class PreviouslyCaught {
             }
         });
 
-        try(FileReader reader = new FileReader("SaveData/caughtLayouts.json")){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
+        try {
+            JSONArray layoutList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtLayouts.json")));
 
             //adds data to grid pane
             for(Object i : layoutList){
@@ -405,7 +400,7 @@ class PreviouslyCaught {
                     if (displayCaught == 0) {
                         createPreviouslyCaughtPokemonWindow();
                         displayPrevious = displayCaught;
-                        displayCaught = (layoutObject.size() - 2) / 4;
+                        displayCaught = (layoutObject.length() - 2) / 4;
                         addPreviouslyCaughtPokemon();
                         windowStage.show();
                         numberCaughtField.setPromptText(String.valueOf(displayCaught));
@@ -418,7 +413,7 @@ class PreviouslyCaught {
                     showLayoutList();
                 });
             }
-        }catch(IOException | ParseException e){
+        }catch(IOException e){
             e.printStackTrace();
         }
 
