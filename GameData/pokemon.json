@@ -1221,7 +1221,6 @@
   },
   {
     "generation":1,
-    "legendary":true,
     "name":"Articuno",
     "breedable":false,
     "regional-forms":[931],
@@ -1229,7 +1228,6 @@
   },
   {
     "generation":1,
-    "legendary":true,
     "name":"Zapdos",
     "breedable":false,
     "regional-forms":[932],
@@ -1237,7 +1235,6 @@
   },
   {
     "generation":1,
-    "legendary":true,
     "name":"Moltres",
     "breedable":false,
     "regional-forms":[933],
@@ -1269,7 +1266,6 @@
   },
   {
     "generation":1,
-    "legendary":true,
     "name":"Mewtwo",
     "breedable":false,
     "forms":["Regular", "Mega X", "Mega Y"],
@@ -1277,7 +1273,6 @@
   },
   {
     "generation":1,
-    "legendary":true,
     "name":"Mew",
     "breedable":false,
     "base":[100, 100, 100, 100, 100]
@@ -1933,19 +1928,16 @@
   },
   {
     "generation":2,
-    "legendary":true,
     "name":"Raikou",
     "breedable":false
   },
   {
     "generation":2,
-    "legendary":true,
     "name":"Entei",
     "breedable":false
   },
   {
     "generation":2,
-    "legendary":true,
     "name":"Suicune",
     "breedable":false
   },
@@ -1973,19 +1965,16 @@
   },
   {
     "generation":2,
-    "legendary":true,
     "name":"Lugia",
     "breedable":false
   },
   {
     "generation":2,
-    "legendary":true,
     "name":"Ho-Oh",
     "breedable":false
   },
   {
     "generation":2,
-    "legendary":true,
     "name":"Celebi",
     "breedable":false
   },
@@ -2884,64 +2873,54 @@
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Regirock",
     "breedable":false
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Regice",
     "breedable":false
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Registeel",
     "breedable":false
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Latias",
     "breedable":false,
     "forms":["Regular","Mega"]
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Latios",
     "breedable":false,
     "forms":["Regular", "Mega"]
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Kyogre",
     "breedable":false
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Groudon",
     "breedable":false
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Rayquaza",
     "breedable":false,
     "forms": ["Regular", "Mega"]
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Jirachi",
     "breedable":false
   },
   {
     "generation":3,
-    "legendary":true,
     "name":"Deoxys",
     "breedable":false,
     "forms":["Normal", "Attack", "Defense", "Speed"]
@@ -3627,56 +3606,47 @@
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Uxie",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Mesprit",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Azelf",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Dialga",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Palkia",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Heatran",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Regigigas",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Giratina",
     "breedable":false,
     "forms":["Altered", "Origin"]
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Cresselia",
     "breedable":false
   },
@@ -3687,32 +3657,27 @@
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Manaphy",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Darkrai",
     "breedable":false
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Shaymin",
     "breedable":false,
     "forms":["Land", "Sky"]
   },
   {
     "generation":4,
-    "legendary":true,
     "name":"Arceus",
     "breedable":false
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Victini",
     "breedable":false
   },
@@ -4711,79 +4676,67 @@
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Cobalion",
     "breedable":false
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Terrakion",
     "breedable":false
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Virizion",
     "breedable":false
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Tornadus",
     "breedable":false,
     "forms":["Incarnate", "Therian"]
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Thundurus",
     "breedable":false,
     "forms":["Incarnate", "Therian"]
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Reshiram",
     "breedable":false
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Zekrom",
     "breedable":false
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Landorus",
     "breedable":false,
     "forms":["Incarnate", "Therian"]
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Kyurem",
     "breedable":false,
     "forms":["Kyurem", "Black Kyurem", "White Kyurem"]
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Keldeo",
     "breedable":false,
     "forms":["Ordinary", "Resolute"]
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Meloetta",
     "breedable":false,
     "forms":["Aria", "Pirouette"]
   },
   {
     "generation":5,
-    "legendary":true,
     "name":"Genesect",
     "breedable":false
   },
@@ -5252,40 +5205,34 @@
   },
   {
     "generation":6,
-    "legendary":true,
     "name":"Xerneas",
     "breedable":false,
     "forms":["Neutral", "Active"]
   },
   {
     "generation":6,
-    "legendary":true,
     "name":"Yveltal",
     "breedable":false
   },
   {
     "generation":6,
-    "legendary":true,
     "name":"Zygarde",
     "breedable":false,
     "forms":["50%", "10%", "100%"]
   },
   {
     "generation":6,
-    "legendary":true,
     "name":"Diancie",
     "breedable":false,
     "forms": ["Regular", "Mega"]
   },
   {
     "generation":6,
-    "legendary":true,
     "name":"Hoopa",
     "breedable":false
   },
   {
     "generation":6,
-    "legendary":true,
     "name":"Volcanion",
     "breedable":false
   },
@@ -5634,7 +5581,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":true,
     "name":"Type: Null",
     "breedable":false,
     "family":[771, 772]
@@ -5642,7 +5588,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":true,
     "name":"Silvally",
     "breedable":false,
     "family":[771, 772]
@@ -5711,32 +5656,27 @@
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Tapu Koko",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Tapu Lele",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Tapu Bulu",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Tapu Fini",
     "breedable":false
   },
   {
     "generation":7,
     "stage":0,
-    "legendary":true,
     "name":"Cosmog",
     "breedable":false,
     "family":[
@@ -5747,7 +5687,6 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":true,
     "name":"Cosmoem",
     "breedable":false,
     "family":[
@@ -5758,7 +5697,6 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":true,
     "name":"Solgaleo",
     "breedable":false,
     "family":[788, 789, 790]
@@ -5766,26 +5704,22 @@
   {
     "generation":7,
     "stage":2,
-    "legendary":true,
     "name":"Lunala",
     "breedable":false,
     "family":[788, 789, 791]
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Nihilego",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Buzzwole",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Pheromosa",
     "breedable":false
   },
@@ -5796,38 +5730,32 @@
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Celesteela",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Kartana",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Guzzlord",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Necrozma",
     "breedable":false,
     "forms":["Necrozma", "Dawn Mane", "Dusk Wing"]
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Magearna",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Marshadow",
     "breedable":false
   },
@@ -5961,7 +5889,6 @@
   {
     "generation":7,
     "stage":0,
-    "legendary":true,
     "name":"Poipole",
     "breedable":false,
     "family":[820, 821]
@@ -5969,38 +5896,32 @@
   {
     "generation":7,
     "stage":1,
-    "legendary":true,
     "name":"Naganadel",
     "breedable":false,
     "family":[820, 821]
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Stakataka",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Blacephalon",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Zeraora",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Meltan",
     "breedable":false
   },
   {
     "generation":7,
-    "legendary":true,
     "name":"Melmetal",
     "breedable":false,
     "forms":["Regular", "Gigantamax"]
@@ -6549,21 +6470,18 @@
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Zacian",
     "breedable":false,
     "forms":["Hero of Many Battles", "Crowned"]
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Zamazenta",
     "breedable":false,
     "forms":["Hero of Many Battles", "Crowned"]
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Eternatus",
     "breedable":false
   },
@@ -6661,7 +6579,6 @@
   {
     "generation":8,
     "stage":0,
-    "legendary":true,
     "name":"Kubfu",
     "breedable":false,
     "family":[921, 922]
@@ -6669,7 +6586,6 @@
   {
     "generation":8,
     "stage":1,
-    "legendary":true,
     "name":"Urshifu",
     "breedable":false,
     "family":[921, 922],
@@ -6677,20 +6593,17 @@
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Zarude",
     "breedable":false,
     "forms":["Zarude", "Dada"]
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Regieleki",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Regidrago",
     "breedable":false
   },
@@ -6710,19 +6623,16 @@
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Glastrier",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Spectrier",
     "breedable":false
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Calyrex",
     "breedable":false,
     "forms": ["Solo", "Ice Rider", "Shadow Rider"]
@@ -6736,21 +6646,18 @@
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Galarian Articuno",
     "breedable":false,
     "regional-forms":[143]
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Galarian Zapdos",
     "breedable":false,
     "regional-forms":[144]
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Galarian Moltres",
     "breedable":false,
     "regional-forms":[145]
@@ -6799,7 +6706,6 @@
   },
   {
     "generation":8,
-    "legendary":true,
     "name":"Enamorus",
     "breedable":false,
     "forms":["Incarnate", "Therian"]
