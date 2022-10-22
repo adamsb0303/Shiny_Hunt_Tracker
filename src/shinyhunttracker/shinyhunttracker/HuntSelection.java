@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.json.simple.JSONArray;
@@ -28,16 +26,19 @@ import static javafx.util.Duration.ZERO;
 public class HuntSelection{
     static Stage selectionPageStage = new Stage();
 
+    //Pokemon Elements
     static Pokemon selectedPokemon = null;
     static TreeView<Pokemon> pokemonListTreeView = new TreeView<>();
-    static ObservableList<TreeItem<Pokemon>> defaultPokemonList = FXCollections.observableArrayList();
-    static ObservableList<TreeItem<Pokemon>> searchPokemonList = FXCollections.observableArrayList();
+    static ObservableList<TreeItem<Pokemon>> defaultPokemonList = FXCollections.observableArrayList();//List of all pokemon
+    static ObservableList<TreeItem<Pokemon>> searchPokemonList = FXCollections.observableArrayList();//List of pokemon restricted by content of Search
     static TreeItem<Pokemon> pokemonListRoot = new TreeItem<>();
 
+    //Game Elements
     static Game selectedGame = null;
     static ObservableList<Game> defaultGameList = FXCollections.observableArrayList();
     static ComboBox<Game> gameComboBox = new ComboBox<>();
 
+    //Method Elements
     static Method selectedMethod = null;
     static ObservableList<Method> defaultMethodList = FXCollections.observableArrayList();
     static ComboBox<Method> methodComboBox = new ComboBox<>();
