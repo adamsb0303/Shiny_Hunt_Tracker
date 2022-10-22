@@ -19,18 +19,28 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.awt.*;
+import java.util.Vector;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class ElementSettings {
-    static String[] fonts = generateFonts();
+    static Vector<String> fonts = generateFonts();
 
-    //creates ImageView settings VBox
+    /**
+     * Creates ImageView settings TitledPane
+     * @param windowLayout Layout to add boundary guide to
+     * @param image Image the settings are for
+     * @param pokemon Pokemon the image is of
+     * @param selectedGame Game the image is from
+     * @return TitledPane with the Image settings
+     */
     public static TitledPane createImageSettings(AnchorPane windowLayout, ImageView image, Pokemon pokemon, Game selectedGame){
+        //Check to make image visible
         CheckBox visibleCheck = new CheckBox("Visible");
         visibleCheck.setSelected(image.isVisible());
 
+        //Creates a list of available forms for pokemon
         HBox form = new HBox();
         form.setSpacing(5);
         form.setAlignment(Pos.CENTER);
@@ -44,6 +54,7 @@ public class ElementSettings {
             formCombo.getSelectionModel().select(0);
         form.getChildren().addAll(formLabel, formCombo);
 
+        //Changes X location of Image
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         changeX.setAlignment(Pos.CENTER_LEFT);
@@ -53,6 +64,7 @@ public class ElementSettings {
         XField.promptTextProperty().bind(image.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
+        //Changes Y location of image
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         changeY.setAlignment(Pos.CENTER_LEFT);
@@ -62,11 +74,13 @@ public class ElementSettings {
         YField.promptTextProperty().bind(image.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
+        //Group for X and Y fields
         HBox changeLocation = new HBox();
         changeLocation.setSpacing(10);
         changeLocation.setAlignment(Pos.CENTER);
         changeLocation.getChildren().addAll(changeX, changeY);
 
+        //Changes scale of Image
         HBox changeSize = new HBox();
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale");
@@ -76,6 +90,7 @@ public class ElementSettings {
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
+        //Adjust fit of image
         HBox imageFit = new HBox();
         imageFit.setSpacing(5);
         imageFit.setAlignment(Pos.CENTER);
@@ -87,6 +102,7 @@ public class ElementSettings {
         imageVBox.setAlignment(Pos.CENTER);
         imageVBox.setPadding(new Insets(10, 10, 10, 10));
 
+        //adds all elements to master layout
         imageVBox.getChildren().add(visibleCheck);
         if(formCombo.getItems().size() != 0)
             imageVBox.getChildren().add(form);
@@ -102,42 +118,39 @@ public class ElementSettings {
         });
 
         sizeField.setOnAction(e -> {
-            double scale = 0;
             try{
-                scale = parseDouble(sizeField.getText());
-            }catch(NumberFormatException f){
-                sizeField.setText("");
+                double scale = parseDouble(sizeField.getText());
+                image.setScaleX(scale);
+                image.setScaleY(scale);
+                image.setTranslateX(-image.getImage().getWidth() / 2);
+                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
+            }catch(NumberFormatException ignored){
+
             }
-            image.setScaleX(scale);
-            image.setScaleY(scale);
-            image.setTranslateX(-image.getImage().getWidth() / 2);
-            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
             sizeField.setText("");
         });
 
         XField.setOnAction(e ->{
             try{
                 image.setLayoutX(parseDouble(XField.getText()));
-                XField.setText("");
-            }catch(NumberFormatException f){
-                XField.setText("");
+            }catch(NumberFormatException ignored){
+
             }
+            XField.setText("");
         });
 
         YField.setOnAction(e ->{
             try{
                 image.setLayoutY(parseDouble(YField.getText()));
-                YField.setText("");
-            }catch(NumberFormatException f){
-                YField.setText("");
+            }catch(NumberFormatException ignored){
+
             }
+            YField.setText("");
         });
 
         visibleCheck.setOnAction(e -> image.setVisible(visibleCheck.isSelected()));
 
         imageFitButton.setOnAction(e -> {
-            double originalScale = image.getScaleX();
-
             Rectangle square = new Rectangle();
             drawBoundaryGuide(windowLayout, image, square);
             imageFit.getChildren().remove(0);
@@ -147,6 +160,7 @@ public class ElementSettings {
 
             imageFit.getChildren().addAll(saveImageFit, cancelImageFit);
 
+            //Sets fit height and width to the height and width of the square
             saveImageFit.setOnAction(f -> {
                 image.setFitHeight(-square.getHeight() * square.getScaleY());
                 image.setFitWidth(-square.getWidth() * square.getScaleX());
@@ -155,6 +169,8 @@ public class ElementSettings {
                 imageFit.getChildren().add(imageFitButton);
             });
 
+            //Removes square and resets image scale
+            double originalScale = image.getScaleX();
             cancelImageFit.setOnAction(f -> {
                 image.setScaleX(originalScale);
                 image.setScaleY(originalScale);
@@ -169,11 +185,18 @@ public class ElementSettings {
         return imageTitledPane;
     }
 
-    //creates Label settings VBox
+    /**
+     * Creates Label settings TitledPane
+     * @param label Label the settings are for
+     * @param labelName Name of the label for the pane title
+     * @return TitledPane with the Label settings
+     */
     public static TitledPane createLabelSettings(Text label, String labelName){
+        //Check to make image visible
         CheckBox visibleCheck = new CheckBox("Visible");
         visibleCheck.setSelected(label.isVisible());
 
+        //Change X location of Label
         HBox changeX = new HBox();
         changeX.setSpacing(5);
         changeX.setAlignment(Pos.CENTER_LEFT);
@@ -183,6 +206,7 @@ public class ElementSettings {
         XField.promptTextProperty().bind(label.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
+        //Change Y location of Label
         HBox changeY = new HBox();
         changeY.setSpacing(5);
         changeY.setAlignment(Pos.CENTER_LEFT);
@@ -192,11 +216,13 @@ public class ElementSettings {
         YField.promptTextProperty().bind(label.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
+        //Group for X and Y
         HBox changeLocation = new HBox();
         changeLocation.setSpacing(10);
         changeLocation.setAlignment(Pos.CENTER);
         changeLocation.getChildren().addAll(changeX, changeY);
 
+        //Change scale of Label
         HBox changeSize = new HBox();
         changeSize.setSpacing(5);
         Label sizeLabel = new Label("Scale");
@@ -206,6 +232,7 @@ public class ElementSettings {
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
 
+        //Change color of label
         HBox color = new HBox();
         color.setSpacing(5);
         Label colorLabel = new Label("Color");
@@ -214,6 +241,7 @@ public class ElementSettings {
         color.setAlignment(Pos.CENTER);
         color.getChildren().addAll(colorLabel, colorField);
 
+        //Change font of label
         HBox font = new HBox();
         font.setSpacing(5);
         Label fontLabel = new Label("Font");
@@ -224,6 +252,7 @@ public class ElementSettings {
         fontNameBox.getSelectionModel().select(label.getFont().getName());
         font.getChildren().addAll(fontLabel, fontNameBox);
 
+        //Italics, Bold, and Underline Checkboxes
         HBox textProperties = new HBox();
         textProperties.setSpacing(25);
         CheckBox italicsCheck = new CheckBox("Italics");
@@ -235,9 +264,11 @@ public class ElementSettings {
         textProperties.setAlignment(Pos.CENTER);
         textProperties.getChildren().addAll(italicsCheck, boldCheck, underlinedCheck);
 
+        //Turns on outline for label
         CheckBox strokeCheckbox = new CheckBox("Stroke");
         strokeCheckbox.setSelected(label.getStrokeWidth() > 0);
 
+        //Width of outline
         HBox strokeWidth = new HBox();
         strokeWidth.setSpacing(5);
         Label strokeWidthLabel = new Label("Width");
@@ -249,6 +280,7 @@ public class ElementSettings {
         strokeWidth.setAlignment(Pos.CENTER_LEFT);
         strokeWidth.getChildren().addAll(strokeWidthLabel, strokeWidthField);
 
+        //Color of outline
         HBox strokeColor = new HBox();
         strokeColor.setSpacing(5);
         Label strokeColorLabel = new Label("Color");
@@ -260,11 +292,13 @@ public class ElementSettings {
         strokeColor.setAlignment(Pos.CENTER_LEFT);
         strokeColor.getChildren().addAll(strokeColorLabel, strokeColorPicker);
 
+        //Group for outline settings
         HBox strokeSettings = new HBox();
         strokeSettings.setSpacing(10);
         strokeSettings.setAlignment(Pos.CENTER);
         strokeSettings.getChildren().addAll(strokeWidth, strokeColor);
 
+        //Adds all elements to layout
         VBox labelVBox = new VBox();
         labelVBox.setSpacing(10);
         labelVBox.setAlignment(Pos.CENTER);
@@ -277,57 +311,57 @@ public class ElementSettings {
             try{
                 label.setScaleX(parseDouble(sizeField.getText()));
                 label.setScaleY(parseDouble(sizeField.getText()));
-                sizeField.setText("");
-            }catch(NumberFormatException f){
-                sizeField.setText("");
+            }catch(NumberFormatException ignored){
+
             }
+            sizeField.setText("");
         });
 
         XField.setOnAction(e ->{
-            double X = 0;
             try{
-                X = parseDouble(XField.getText());
-                XField.setText("");
-            }catch(NumberFormatException f){
-                XField.setText("");
+                label.setLayoutX(parseDouble(XField.getText()));
+            }catch(NumberFormatException ignored){
+
             }
-            label.setLayoutX(X);
+            XField.setText("");
         });
 
         YField.setOnAction(e ->{
-            double Y = 0;
             try{
-                Y = parseDouble(YField.getText());
-                YField.setText("");
-            }catch(NumberFormatException f){
-                YField.setText("");
+                label.setLayoutY(parseDouble(YField.getText()));
+            }catch(NumberFormatException ignored){
+
             }
-            label.setLayoutY(Y);
+            YField.setText("");
         });
 
         fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
-            if(newValue != null){
-                if(!canBold(newValue)) {
-                    boldCheck.setSelected(false);
-                    boldCheck.setDisable(true);
-                }else
-                    boldCheck.setDisable(false);
+            if(newValue == null)
+                return;
 
-                if(!canItalic(newValue)){
-                    italicsCheck.setSelected(false);
-                    italicsCheck.setDisable(true);
-                }else
-                    italicsCheck.setDisable(false);
+            //Disables Bold if font can't be bolded
+            if(!canBold(newValue)) {
+                boldCheck.setSelected(false);
+                boldCheck.setDisable(true);
+            }else
+                boldCheck.setDisable(false);
 
-                if(boldCheck.isSelected() && italicsCheck.isSelected())
-                    label.setFont(Font.font(newValue, FontWeight.BOLD, FontPosture.ITALIC, 12));
-                else if(boldCheck.isSelected())
-                    label.setFont(Font.font(newValue, FontWeight.BOLD, 12));
-                else if(italicsCheck.isSelected())
-                    label.setFont(Font.font(newValue, FontPosture.ITALIC, 12));
-                else
-                    label.setFont(new Font(newValue, 12));
-            }
+            //Disables Italics if font can't be italicized
+            if(!canItalic(newValue)){
+                italicsCheck.setSelected(false);
+                italicsCheck.setDisable(true);
+            }else
+                italicsCheck.setDisable(false);
+
+            //Apply bold or italics to label
+            if(boldCheck.isSelected() && italicsCheck.isSelected())
+                label.setFont(Font.font(newValue, FontWeight.BOLD, FontPosture.ITALIC, 12));
+            else if(boldCheck.isSelected())
+                label.setFont(Font.font(newValue, FontWeight.BOLD, 12));
+            else if(italicsCheck.isSelected())
+                label.setFont(Font.font(newValue, FontPosture.ITALIC, 12));
+            else
+                label.setFont(new Font(newValue, 12));
         });
 
         colorField.setOnAction(e -> label.setFill(colorField.getValue()));
@@ -341,17 +375,17 @@ public class ElementSettings {
 
         strokeWidthField.setOnAction(e -> {
             try{
-                double width = parseDouble(strokeWidthField.getText());
-                label.setStrokeWidth(width);
-                strokeWidthField.setText("");
-            }catch(NumberFormatException f){
-                strokeWidthField.setText("");
+                label.setStrokeWidth(parseDouble(strokeWidthField.getText()));
+            }catch(NumberFormatException ignored){
+
             }
+            strokeWidthField.setText("");
         });
 
         strokeColorPicker.setOnAction(e -> label.setStroke(strokeColorPicker.getValue()));
 
         italicsCheck.setOnAction(e -> {
+            //makes label italicized
             String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
             if(boldCheck.isSelected() && italicsCheck.isSelected())
                 label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
@@ -364,6 +398,7 @@ public class ElementSettings {
         });
 
         boldCheck.setOnAction(e -> {
+            //makes label bolded
             String fontName = sanitizeFontName(String.valueOf(label.getFont().getName()));
             if(boldCheck.isSelected() && italicsCheck.isSelected())
                 label.setFont(Font.font(fontName, FontWeight.BOLD, FontPosture.ITALIC, 12));
@@ -382,8 +417,14 @@ public class ElementSettings {
         return labelTitledPane;
     }
 
-    //creates Label settings VBox
+    /**
+     * Creates Background settings TitledPane
+     * @param windowStage Stage to make transparent
+     * @param windowLayout Layout to change background of
+     * @return TitledPane with background settings
+     */
     public static TitledPane createBackgroundSettings(Stage windowStage, AnchorPane windowLayout){
+        //Color Picker for background color
         HBox backgroundColorSettings = new HBox();
         backgroundColorSettings.setAlignment(Pos.CENTER);
         backgroundColorSettings.setSpacing(5);
@@ -393,6 +434,7 @@ public class ElementSettings {
         backgroundColorPicker.disableProperty().bind(windowStage.showingProperty().not());
         backgroundColorSettings.getChildren().addAll(backgroundColorLabel, backgroundColorPicker);
 
+        //Checkbox to make background transparent
         CheckBox transparent = new CheckBox("Transparent");
         VBox backgroundVBox = new VBox();
         backgroundVBox.setAlignment(Pos.CENTER);
@@ -428,8 +470,14 @@ public class ElementSettings {
         return new TitledPane("Background", backgroundVBox);
     }
 
-    //draws square that shows where the fit width and length are
+    /**
+     * Draws square that shows where the fit width and length are
+     * @param windowLayout Layout to add boundary to
+     * @param image Image the boundary is for
+     * @param square Square that covers the fit height and width
+     */
     public static void drawBoundaryGuide(AnchorPane windowLayout, ImageView image, Rectangle square){
+        //Sets square to the fit width of image
         square.setHeight(-image.getFitHeight());
         square.setWidth(-image.getFitWidth());
         square.setTranslateX(-square.getWidth() / 2);
@@ -439,7 +487,7 @@ public class ElementSettings {
         square.setOpacity(0.8);
         windowLayout.getChildren().add(square);
 
-        //cornered piece in the top left
+        //Cornered piece in the top left
         Line verticalTopLeft = new Line();
         verticalTopLeft.setStroke(Color.WHITE);
         verticalTopLeft.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7 / 2)));
@@ -476,7 +524,7 @@ public class ElementSettings {
             });
         });
 
-        //top center line
+        //Top center line
         Line topCenter = new Line();
         topCenter.setStroke(Color.WHITE);
         topCenter.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(8)));
@@ -491,7 +539,7 @@ public class ElementSettings {
             topCenter.setOnMouseDragged(f -> adjustY(square, oldHeight, f.getSceneY(), image));
         });
 
-        //cornered piece in the top right
+        //Cornered piece in the top right
         Line verticalTopRight = new Line();
         verticalTopRight.setStroke(Color.WHITE);
         verticalTopRight.startXProperty().bind(square.layoutXProperty().add(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7 / 2)));
@@ -528,7 +576,7 @@ public class ElementSettings {
             });
         });
 
-        //center right line
+        //Center right line
         Line rightCenter = new Line();
         rightCenter.setStroke(Color.WHITE);
         rightCenter.startXProperty().bind(square.layoutXProperty().add(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7 / 2)));
@@ -543,7 +591,7 @@ public class ElementSettings {
             rightCenter.setOnMouseDragged(f -> adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()), image));
         });
 
-        //cornered piece in the bottom right
+        //Cornered piece in the bottom right
         Line verticalBottomRight = new Line();
         verticalBottomRight.setStroke(Color.WHITE);
         verticalBottomRight.startXProperty().bind(square.layoutXProperty().add(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7 / 2)));
@@ -552,6 +600,11 @@ public class ElementSettings {
         verticalBottomRight.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).divide(8).subtract(7/2)));
         verticalBottomRight.setStrokeWidth(7);
         windowLayout.getChildren().add(verticalBottomRight);
+
+        verticalBottomRight.setOnMousePressed(e -> {
+            double oldWidth = square.getWidth();
+            verticalBottomRight.setOnMouseDragged(f -> adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()), image));
+        });
 
         Line horizontalBottomRight = new Line();
         horizontalBottomRight.setStroke(Color.WHITE);
@@ -562,7 +615,7 @@ public class ElementSettings {
         horizontalBottomRight.setStrokeWidth(7);
         windowLayout.getChildren().add(horizontalBottomRight);
 
-        //bottom center line
+        //Bottom center line
         Line bottomCenter = new Line();
         bottomCenter.setStroke(Color.WHITE);
         bottomCenter.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(8)));
@@ -572,7 +625,7 @@ public class ElementSettings {
         bottomCenter.setStrokeWidth(7);
         windowLayout.getChildren().add(bottomCenter);
 
-        //bottom left corner piece
+        //Bottom left corner piece
         Line verticalBottomLeft = new Line();
         verticalBottomLeft.setStroke(Color.WHITE);
         verticalBottomLeft.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
@@ -581,6 +634,11 @@ public class ElementSettings {
         verticalBottomLeft.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().multiply(square.scaleYProperty()).divide(8).subtract(7/2)));
         verticalBottomLeft.setStrokeWidth(7);
         windowLayout.getChildren().add(verticalBottomLeft);
+
+        verticalBottomLeft.setOnMousePressed(e -> {
+            double oldWidth = square.getWidth();
+            verticalBottomLeft.setOnMouseDragged(f -> adjustX(square, oldWidth, square.getLayoutX() - (f.getSceneX() - square.getLayoutX()), image));
+        });
 
         Line horizontalBottomLeft = new Line();
         horizontalBottomLeft.setStroke(Color.WHITE);
@@ -591,7 +649,7 @@ public class ElementSettings {
         horizontalBottomLeft.setStrokeWidth(7);
         windowLayout.getChildren().add(horizontalBottomLeft);
 
-        //left center line
+        //Left center line
         Line leftCenter = new Line();
         leftCenter.setStroke(Color.WHITE);
         leftCenter.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(2).subtract(7/2)));
@@ -619,48 +677,71 @@ public class ElementSettings {
         });
     }
 
-    //adjusts boundary Y
+    /**
+     * Adjust boundary Y of guide
+     * @param square Guide
+     * @param oldHeight Current Image height
+     * @param mouseLocation Where the mouse is
+     * @param image Image to change
+     */
     public static void adjustY(Rectangle square, double oldHeight, double mouseLocation, ImageView image){
-        if(square.getHeight() * (square.getLayoutY() - mouseLocation) / square.getHeight() >= 20) {
-            square.setScaleY((square.getLayoutY() - mouseLocation) / square.getHeight());
-            square.setTranslateY(-(square.getHeight() * square.getScaleY() / 2) - oldHeight / 2);
-            double newImageHeight = square.getHeight() * square.getScaleY() ;
+        //Makes sure to not adjust width past 20 px tall
+        if(square.getHeight() * (square.getLayoutY() - mouseLocation) / square.getHeight() < 20)
+            return;
 
-            double imageScale = newImageHeight / image.getImage().getHeight();
-            if(image.getImage().getWidth() * imageScale <= square.getWidth() * square.getScaleX()) {
-                image.setScaleY(imageScale);
-                image.setScaleX(imageScale);
-                image.setTranslateX(-image.getImage().getWidth() / 2);
-                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-            }
+        //Adjusts scale of guide
+        square.setScaleY((square.getLayoutY() - mouseLocation) / square.getHeight());
+        square.setTranslateY(-(square.getHeight() * square.getScaleY() / 2) - oldHeight / 2);
+        double newImageHeight = square.getHeight() * square.getScaleY() ;
+
+        //Adjusts scale of image
+        double imageScale = newImageHeight / image.getImage().getHeight();
+        if(image.getImage().getWidth() * imageScale <= square.getWidth() * square.getScaleX()) {
+            image.setScaleY(imageScale);
+            image.setScaleX(imageScale);
+            image.setTranslateX(-image.getImage().getWidth() / 2);
+            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
         }
     }
 
-    //adjusts boundary X
+    /**
+     * Adjust boundary X of guide
+     * @param square Guide
+     * @param oldWidth Current Image width
+     * @param mouseLocation Where the mouse is
+     * @param image Image to change
+     */
     public static void adjustX(Rectangle square, double oldWidth, double mouseLocation, ImageView image){
-        if(square.getWidth() * (square.getLayoutX() - mouseLocation) / square.getWidth() * 2 >= 20) {
-            square.setScaleX((square.getLayoutX() - mouseLocation) / square.getWidth() * 2);
-            square.setTranslateX(-oldWidth / 2);
+        if(square.getWidth() * (square.getLayoutX() - mouseLocation) / square.getWidth() * 2 < 20)
+            return;
 
-            double newImageWidth = square.getWidth() * square.getScaleX();
+        //Adjusts scale of guide
+        square.setScaleX((square.getLayoutX() - mouseLocation) / square.getWidth() * 2);
+        square.setTranslateX(-oldWidth / 2);
+        double newImageWidth = square.getWidth() * square.getScaleX();
 
-            double imageScale = newImageWidth / image.getImage().getWidth();
-            if(image.getImage().getHeight() * imageScale <= square.getHeight() * square.getScaleY()) {
-                image.setScaleY(imageScale);
-                image.setScaleX(imageScale);
-                image.setTranslateX(-image.getImage().getWidth() / 2);
-                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-            }
+        //Adjusts scale of image
+        double imageScale = newImageWidth / image.getImage().getWidth();
+        if(image.getImage().getHeight() * imageScale <= square.getHeight() * square.getScaleY()) {
+            image.setScaleY(imageScale);
+            image.setScaleX(imageScale);
+            image.setTranslateX(-image.getImage().getWidth() / 2);
+            image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
         }
     }
 
-    //change location of Text when dragged
-    //change scale of Text when scrolled
+    /**
+     * Change location of Text when dragged
+     * Change scale of Text when scrolled
+     * @param element Label to apply to
+     */
     public static void quickEdit(Text element){
+        //Increases scale when scrolled on
         element.setOnScroll(e -> {
             element.setScaleX(element.getScaleX() + (e.getDeltaY() / 1000));
             element.setScaleY(element.getScaleY() + (e.getDeltaY() / 1000));
         });
+        //Saves mouse click, and follows until mouse is released
         element.setOnMousePressed(e -> {
             double diffX = element.getLayoutX() - e.getSceneX();
             double diffY = element.getLayoutY() - e.getSceneY();
@@ -671,9 +752,13 @@ public class ElementSettings {
         });
     }
 
-    //change location of ImageView when dragged
-    //change scale of ImageView when scrolled
+    /**
+     * Change location of ImageView when dragged
+     * Change scale of ImageView when scrolled
+     * @param element ImageView to apply to
+     */
     public static void quickEdit(ImageView element){
+        //Increases scale when scrolled on
         element.setOnScroll(e -> {
             double scale = element.getScaleX() + (e.getDeltaY() / 1000);
             if(element.getImage().getWidth() * scale > -element.getFitWidth())
@@ -685,6 +770,7 @@ public class ElementSettings {
             element.setTranslateX(-element.getImage().getWidth() / 2);
             element.setTranslateY(-((element.getImage().getHeight() / 2) + (element.getImage().getHeight() * element.getScaleX()) / 2));
         });
+        //Saves mouse click, and follows until mouse is released
         element.setOnMousePressed(e -> {
             double diffX = element.getLayoutX() - e.getSceneX();
             double diffY = element.getLayoutY() - e.getSceneY();
@@ -695,29 +781,25 @@ public class ElementSettings {
         });
     }
 
-    //creates string array of available fonts
-    private static String[] generateFonts(){
-        String[] avaliableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        int fontArraySize = 0;
-        for (String avaliableFont : avaliableFonts) {
-            if (sanitizeAvailableFontStrings(avaliableFont) != null) {
-                fontArraySize++;
-            }
-        }
+    /**
+     * Creates string array of available fonts
+     * @return Font array
+     */
+    private static Vector<String> generateFonts(){
+        String[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        Vector<String> availableFonts = new Vector<>();
+        for (String availableFont : allFonts)
+            if (sanitizeAvailableFontStrings(availableFont) != null)
+                availableFonts.add(availableFont);
 
-        String[] temp = new String[fontArraySize];
-        int index = 0;
-        for (String avaliableFont : avaliableFonts) {
-            if (sanitizeAvailableFontStrings(avaliableFont) != null) {
-                temp[index] = avaliableFont;
-                index++;
-            }
-        }
-
-        return temp;
+        return availableFonts;
     }
 
-    //removes "Bold", "Italics", and "Regular" from given string
+    /**
+     * Removes "Bold", "Italics", and "Regular" from given string
+     * @param name Font name
+     * @return Proper font name
+     */
     public static String sanitizeFontName(String name){
         int index = 0;
         if(name.contains("Bold"))
@@ -729,7 +811,11 @@ public class ElementSettings {
         return name.substring(0, name.length() - index);
     }
 
-    //checks to see if using a given font returns the system default font
+    /**
+     * Checks to see if using a given font returns the system default font
+     * @param name Font name
+     * @return Font, if it can be used
+     */
     public static String sanitizeAvailableFontStrings(String name){
         Font test = new Font(name, 12);
         if(test.getName().compareTo("System Regular") == 0){
@@ -738,7 +824,11 @@ public class ElementSettings {
         return name;
     }
 
-    //checks to see if bolding and unbolding a font returns system default
+    /**
+     * Checks to see if bolding and un-bolding a font returns system default
+     * @param name Font name
+     * @return If font can be bolded properly
+     */
     public static boolean canBold(String name){
         Font test;
         test = Font.font(name,  FontWeight.BOLD, 12);
@@ -749,7 +839,11 @@ public class ElementSettings {
         return test.getName().compareTo("System") != 0;
     }
 
-    //checks to see if italicizing and unitalicizing a font returns system default
+    /**
+     * Checks to see if italicizing and un-italicizing a font returns system default
+     * @param name Font name
+     * @return If font can be italicized properly
+     */
     public static boolean canItalic(String name){
         Font test;
         test = Font.font(name,  FontPosture.ITALIC, 12);
@@ -758,11 +852,5 @@ public class ElementSettings {
         test = new Font(sanitizeFontName(test.getName()), 12);
 
         return test.getName().compareTo("System") != 0;
-    }
-
-    //method to create Tree Item branches
-    public void makeBranch(String title, TreeItem<String> parent){
-        TreeItem<String> item = new TreeItem<>(title);
-        parent.getChildren().add(item);
     }
 }
