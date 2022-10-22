@@ -4,7 +4,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -35,27 +34,33 @@ class PreviouslyCaught {
     static Accordion settingsAccordion = new Accordion();
     static TextField numberCaughtField = new TextField();
 
-    //creates elements for previously caught element settings
+    /**
+     * Creates elements for previously caught settings
+     */
     public static void previouslyCaughtPokemonSettings() {
         if (previouslyCaughtSettingsLayout.getChildren().size() != 0) {
             previouslyCaughtSettingsStage.show();
             return;
         }
 
-        previouslyCaughtSettingsStage.setTitle("Previously Caught Pokemon Settings");
-
+        //Field for user to load last n caught pokemon
         Label numberCaught = new Label("Display Previously Caught");
         numberCaughtField.setMaxWidth(50);
         numberCaughtField.setPromptText(String.valueOf(displayCaught));
-        Button previouslyCaughtList = new Button("List");
+
         HBox numberPreviouslyCaught = new HBox();
         numberPreviouslyCaught.setAlignment(Pos.CENTER);
         numberPreviouslyCaught.setSpacing(5);
         numberPreviouslyCaught.setPadding(new Insets(10, 0, 0, 10));
+
+        //List button to display all caught pokemon
+        Button previouslyCaughtList = new Button("List");
         numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
 
+        //Add background settings
         settingsAccordion.getPanes().add(ElementSettings.createBackgroundSettings(windowStage, windowLayout));
 
+        //Layout button to display list of saved layouts
         HBox layoutButton = new HBox();
         layoutButton.setAlignment(Pos.CENTER);
         layoutButton.setPadding(new Insets(0, 0, 10, 0));
@@ -67,12 +72,14 @@ class PreviouslyCaught {
         previouslyCaughtSettingsLayout.setSpacing(10);
         previouslyCaughtSettingsLayout.getChildren().addAll(numberPreviouslyCaught, settingsAccordion, layoutButton);
 
+        //Adds scroll bar
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setId("background");
         scrollPane.setContent(previouslyCaughtSettingsLayout);
 
+        //Adds new title bar
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
         masterLayout.getChildren().addAll(HuntController.titleBar(previouslyCaughtSettingsStage), scrollPane);
@@ -86,6 +93,7 @@ class PreviouslyCaught {
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
         HuntController.makeDraggable(previouslyCaughtSettingsScene);
 
+        //Caps window height at 540
         settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
             if(settingsAccordion.getHeight() + 125 <= 540)
                 previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 125);
@@ -96,10 +104,15 @@ class PreviouslyCaught {
 
         numberCaughtField.setOnAction(e -> {
             try {
+                //If the previous number of pokemon displayed is 0, it creates a new blank window
                 if (displayCaught == 0)
                     createPreviouslyCaughtPokemonWindow();
+
+                //updates displayPrevious and displayCaught
                 displayPrevious = displayCaught;
                 displayCaught = parseInt(numberCaughtField.getText());
+
+                //Closes window and removes settings if new display = 0
                 if (displayCaught == 0) {
                     windowStage.close();
                     settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
@@ -128,7 +141,9 @@ class PreviouslyCaught {
         previouslyCaughtSettingsStage.setOnCloseRequest(e -> previouslyCaughtSettingsStage.hide());
     }
 
-    //creates window with previously caught pokemon
+    /**
+     * Creates empty window for previously caught pokemon
+     */
     public static void createPreviouslyCaughtPokemonWindow() {
         windowLayout = new AnchorPane();
         Scene previousHuntScene = new Scene(windowLayout, 750, 480);
@@ -137,20 +152,29 @@ class PreviouslyCaught {
         windowStage.show();
     }
 
-    //refreshes previously caught pokemon window
+    /**
+     * Refreshes previously caught pokemon window
+     */
     public static void refreshPreviouslyCaughtPokemon() {
+        //Save layout with long name, so that it doesn't accidentally delete any of the user's layouts
+        //This is to preserve where the elements are when refreshing, even if the layout isn't saved or updated.
         SaveData.saveLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
 
+        //removes all elements and re-adds them
         settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
         windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
         addPreviouslyCaughtPokemon();
 
+        //Loads and deletes the layout with the really long name
         SaveData.loadLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", windowLayout, false);
         SaveData.removeLayout("temporaryTransitionLayoutForRefreshingPreviouslyCaughtWindow", false);
     }
 
-    //create elements of the last x previously caught pokemon
+    /**
+     * Create elements of the last n previously caught pokemon
+     */
     public static void addPreviouslyCaughtPokemon() {
+        //Removes elements if the number that needs to be displayed goes down
         if (displayCaught < displayPrevious) {
             windowLayout.getChildren().remove(displayCaught * 4, windowLayout.getChildren().size());
             settingsAccordion.getPanes().remove(displayCaught * 4, settingsAccordion.getPanes().size() - 1);
@@ -162,9 +186,12 @@ class PreviouslyCaught {
             JSONParser jsonParser = new JSONParser();
             JSONArray caughtPokemonList = (JSONArray) jsonParser.parse(reader);
 
+            //Makes sure that the user doesn't load more than what is saved
             int caughtListSize = caughtPokemonList.size();
             if (caughtListSize < displayCaught)
                 displayCaught = caughtListSize;
+
+            //Creates elements from caught list from displayPrevious up to displayCaught
             double widthTotal = 0;
             for (int i = caughtListSize - displayPrevious - 1; i >= (caughtListSize - displayCaught); i--) {
                 JSONObject caughtData = (JSONObject) caughtPokemonList.get(i);
@@ -223,6 +250,9 @@ class PreviouslyCaught {
         }
     }
 
+    /**
+     * Creates list of previously caught hunts
+     */
     static Stage prevCatchesStage = new Stage();
     public static void displayPreviouslyCaughtList() {
         GridPane previousCatches = new GridPane();
@@ -230,6 +260,7 @@ class PreviouslyCaught {
         previousCatches.setVgap(5);
         previousCatches.setPadding(new Insets(10, 10, 10, 10));
 
+        //Caps height at 540
         previousCatches.heightProperty().addListener((o, oldVal, newVal) -> {
             if(previousCatches.getHeight() + 40 <= 540) {
                 prevCatchesStage.setHeight(previousCatches.getHeight() + 40);
@@ -239,15 +270,15 @@ class PreviouslyCaught {
                 prevCatchesStage.setHeight(540);
                 prevCatchesStage.setWidth(previousCatches.getWidth() + 10);
             }
-        } );
-
-        JSONParser jsonParser = new JSONParser();
+        });
 
         try (FileReader reader = new FileReader("SaveData/caughtPokemon.json")){
             //Read JSON file
+            JSONParser jsonParser = new JSONParser();
             Object obj = jsonParser.parse(reader);
             JSONArray huntList = (JSONArray) obj;
 
+            //adds data to grid pane
             for(int i = huntList.size() - 1; i >= 0; i--){
                 JSONObject huntData = (JSONObject) huntList.get(i);
 
@@ -282,6 +313,7 @@ class PreviouslyCaught {
                 previousCatches.add(encounters, 4, row);
             }
 
+            //closes the stage if there are no elements
             if(previousCatches.getRowCount() == 0) {
                 prevCatchesStage.close();
                 return;
@@ -290,11 +322,13 @@ class PreviouslyCaught {
             f.printStackTrace();
         }
 
+        //add scroll bar
         ScrollPane parentPane = new ScrollPane();
         parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         parentPane.setId("background");
         parentPane.setContent(previousCatches);
 
+        //add custom title bar
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
         masterLayout.getChildren().addAll(HuntController.titleBar(prevCatchesStage), parentPane);
@@ -310,15 +344,9 @@ class PreviouslyCaught {
         prevCatchesStage.show();
     }
 
-    public static void close() {
-        windowStage.close();
-        previouslyCaughtSettingsStage.close();
-    }
-
-    public static boolean isShowing() {
-        return windowStage.isShowing();
-    }
-
+    /**
+     * Creates a list of saved layouts for user to load, update, or delete
+     */
     static Stage layoutListStage = new Stage();
     public static void showLayoutList(){
         GridPane layoutListLayout = new GridPane();
@@ -326,6 +354,7 @@ class PreviouslyCaught {
         layoutListLayout.setVgap(5);
         layoutListLayout.setPadding(new Insets(10, 10, 10, 10));
 
+        //caps height at 540
         layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
             if(layoutListLayout.getHeight() + 40 <= 540) {
                 layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
@@ -341,6 +370,7 @@ class PreviouslyCaught {
             JSONParser jsonParser = new JSONParser();
             JSONArray layoutList = (JSONArray) jsonParser.parse(reader);
 
+            //adds data to grid pane
             for(Object i : layoutList){
                 JSONArray layoutObject = (JSONArray) i;
 
@@ -371,6 +401,7 @@ class PreviouslyCaught {
                     showLayoutList();
                 });
                 loadButton.setOnAction(e -> {
+                    //ensures that the proper number of elements are in the window to load layout to if display caught is 0
                     if (displayCaught == 0) {
                         createPreviouslyCaughtPokemonWindow();
                         displayPrevious = displayCaught;
@@ -391,6 +422,7 @@ class PreviouslyCaught {
             e.printStackTrace();
         }
 
+        //opens list of layouts for user to load from
         Button newLayoutButton = new Button("Add Layout");
         newLayoutButton.disableProperty().bind(windowStage.showingProperty().not());
         GridPane.setColumnSpan(newLayoutButton, 4);
@@ -398,11 +430,13 @@ class PreviouslyCaught {
         GridPane.setValignment(newLayoutButton, VPos.CENTER);
         layoutListLayout.add(newLayoutButton, 0, layoutListLayout.getRowCount());
 
+        //add scroll bar
         ScrollPane parentPane = new ScrollPane();
         parentPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         parentPane.setId("background");
         parentPane.setContent(layoutListLayout);
 
+        //add custom title bar
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
         masterLayout.getChildren().addAll(HuntController.titleBar(layoutListStage), parentPane);
@@ -430,4 +464,17 @@ class PreviouslyCaught {
             });
         });
     }
+
+    /**
+     * Closes all Previously Caught associated windows
+     */
+    public static void close() {
+        windowStage.close();
+        previouslyCaughtSettingsStage.close();
+    }
+
+    /**
+     * @return if window is showing
+     */
+    public static boolean isShowing() { return windowStage.isShowing(); }
 }
