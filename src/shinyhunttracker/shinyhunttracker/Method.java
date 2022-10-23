@@ -134,6 +134,7 @@ public class Method {
     public Vector<Vector<String>> getResources(){ return resources; }
 
     public Boolean getBreeding(){ return breeding; }
+    public Boolean getDynamic(){ return dynamic; }
     public int getBase(){ return base; }
     public int getId(){ return id; }
     public double getModifier(){ return modifier; }

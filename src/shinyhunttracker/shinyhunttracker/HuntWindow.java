@@ -31,7 +31,7 @@ class HuntWindow {
     AnchorPane windowLayout = new AnchorPane();
     String currentLayout;
     ImageView Evo0, Evo1, sprite;
-    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, currentComboText, oddFractionText;
+    Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, oddFractionText;
     Text previousEncountersText = new Text();
     IntegerProperty encounters = new SimpleIntegerProperty();
     IntegerProperty combo = new SimpleIntegerProperty();
@@ -74,9 +74,6 @@ class HuntWindow {
         oddFractionText.textProperty().bind(Bindings.createStringBinding(() -> "1/" + simplifyFraction(selectedMethod.comboExtraRolls(combo.getValue()), selectedGame.getOdds()), combo));
         encountersText = new Text();
         encountersText.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", encounters.getValue()), encounters));
-        currentComboText = new Text();
-        currentComboText.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", combo.getValue()), combo));
-        currentComboText.setVisible(false);
         previousEncountersText = new Text();
         previousEncountersText.setVisible(false);
 
@@ -86,7 +83,6 @@ class HuntWindow {
         currentGameText.setStroke(Color.web("0x00000000"));
         oddFractionText.setStroke(Color.web("0x00000000"));
         encountersText.setStroke(Color.web("0x00000000"));
-        currentComboText.setStroke(Color.web("0x00000000"));
         previousEncountersText.setStroke(Color.web("0x00000000"));
 
         //Makes labels draggable
@@ -95,7 +91,6 @@ class HuntWindow {
         quickEdit(currentGameText);
         quickEdit(oddFractionText);
         quickEdit(encountersText);
-        quickEdit(currentComboText);
         quickEdit(previousEncountersText);
 
         //Creates the pokemon's sprite
@@ -118,25 +113,7 @@ class HuntWindow {
 
         windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
-        //Adds combo text and prompts user for previous encounters when needed
-        switch(selectedMethod.getName()){
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "SOS Chaining":
-            case "Catch Combo":
-                currentComboText.setVisible(true);
-                break;
-            case "DexNav":
-                currentComboText.setVisible(true);
-                previousEncountersText.setVisible(true);
-                break;
-            case "Total Encounters":
-                previousEncountersText.setVisible(true);
-                break;
-            default:
-                break;
-        }
-        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, currentComboText, oddFractionText);
+        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, oddFractionText);
 
         //Positions the labels to the right of the sprite images
         int index = 3;
@@ -239,6 +216,23 @@ class HuntWindow {
             oddPaneSettings.getChildren().add(1, gameModifierSettings);
         }
 
+        if(selectedMethod.getDynamic()){
+            VBox comboSettings = new VBox();
+            comboSettings.setAlignment(Pos.CENTER);
+            comboSettings.setSpacing(10);
+
+            Label comboLength = new Label();
+            comboLength.textProperty().bind(Bindings.createStringBinding(() -> "Combo: " + combo.getValue(), combo));
+
+            Button resetComboButton = new Button("Reset Combo");
+            resetComboButton.setOnAction(e -> resetCombo());
+
+            comboSettings.getChildren().addAll(comboLength, resetComboButton);
+
+            VBox oddPaneSettings = (VBox) oddsFraction.getContent();
+            oddPaneSettings.getChildren().add(1, comboSettings);
+        }
+
         //Adds all settings Panes to accordion
         Accordion settings = new Accordion();
         settings.getPanes().add(spriteSettings);
@@ -249,24 +243,6 @@ class HuntWindow {
             settings.getPanes().add(createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
 
         settings.getPanes().addAll(currentPokemonSettings, currentMethodSettings, currentGameSettings, encountersSettings, oddsFraction);
-
-        switch (selectedMethod.getName()) {
-            case "Radar Chaining":
-            case "Chain Fishing":
-            case "SOS Chaining":
-            case "Catch Combo":
-            case "DexNav":
-                TitledPane comboSettings = createLabelSettings(currentComboText, "Combo");
-                Button resetComboButton = new Button("Reset Combo");
-                resetComboButton.setOnAction(e -> resetCombo());
-
-                VBox oddPaneSettings = (VBox) comboSettings.getContent();
-                oddPaneSettings.getChildren().add(0, resetComboButton);
-                settings.getPanes().add(comboSettings);
-                break;
-            default:
-                break;
-        }
 
         //Adds background settings to accordion
         settings.getPanes().add(createBackgroundSettings(windowStage, windowLayout));

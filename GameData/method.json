@@ -556,7 +556,7 @@
     "name": "DexNav",
     "breeding": false,
     "modifier": 1,
-    "dynamic": true,
+    "dynamic": false,
     "combo-gate": [0],
     "combo-mod": [0.0],
     "games": [23, 24],
