@@ -280,6 +280,9 @@ public class HuntController {
         helpButton.setMinSize(25, 25);
         huntControlsLayout.add(helpButton, 8, row);
 
+        //Saves the order of window list
+        saveHuntOrder();
+
         //Set keybinds
         try {
             //Read JSON file
@@ -836,8 +839,6 @@ public class HuntController {
             if(huntList.length() != 0)
                 for(int i = 1; i <= previousHuntsNum; i++)
                     SaveData.loadHunt(huntList.length() - i);
-            //Saves any changes that occurred before refreshing
-            saveHuntOrder();
             //Refreshes all other windows
             refreshMiscWindows();
         }catch (IOException ignored) {

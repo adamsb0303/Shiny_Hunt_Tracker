@@ -85,7 +85,7 @@ public class SaveData {
                 index = huntList.length() - 1;
 
             //parse hunt data
-            JSONObject huntObject = (JSONObject) huntList.get(index);
+            JSONObject huntObject = huntList.getJSONObject(index);
             Pokemon selectedPokemon = new Pokemon(huntObject.getInt("pokemon"));
             Game selectedGame = new Game(huntObject.getInt("game"));
             Method selectedMethod = new Method(huntObject.getInt("method"));
