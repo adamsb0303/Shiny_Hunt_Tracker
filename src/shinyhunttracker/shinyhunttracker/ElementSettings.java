@@ -265,7 +265,7 @@ public class ElementSettings {
 
         //Turns on outline for label
         CheckBox strokeCheckbox = new CheckBox("Stroke");
-        strokeCheckbox.setSelected(label.getStrokeWidth() > 0);
+        label.setStrokeWidth(0);
 
         //Width of outline
         HBox strokeWidth = new HBox();
