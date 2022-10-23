@@ -11,11 +11,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,7 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Vector;
 
 public class HuntController {
@@ -370,11 +375,47 @@ public class HuntController {
             huntInformation.initStyle(StageStyle.UNDECORATED);
             huntInformation.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             makeDraggable(huntInformation.getDialogPane().getScene());
-            huntInformation.setContentText( "Pokemon: " + newWindow.getPokemon().getName() + "\n" +
-                                            "Game: " + newWindow.getGame().getName() + "\n" +
-                                            "Method: " + newWindow.getMethod().getName() + "\n\n" +
-                                            "Method Info: \n" + newWindow.getMethod().getMethodInfo());
+
+            VBox dialogLayout = new VBox();
+            dialogLayout.setSpacing(10);
+            dialogLayout.setPadding(new Insets(10));
+            Label huntInfoLabel = new Label("Pokemon: " + newWindow.getPokemon().getName() + "\n" +
+                                                "Game: " + newWindow.getGame().getName() + "\n" +
+                                                "Method: " + newWindow.getMethod().getName() + "\n\n");
+
+            Label methodInfoLabel = new Label("Method Info: \n" + newWindow.getMethod().getMethodInfo());
+            methodInfoLabel.setMaxWidth(275);
+            methodInfoLabel.setWrapText(true);
+
+            dialogLayout.getChildren().addAll(huntInfoLabel, methodInfoLabel);
+
+            Pane masterPane = new Pane();
+            masterPane.getChildren().add(dialogLayout);
+
+            VBox resourceSection = new VBox();
+            Label methodResourcesLabel = new Label("Resources:");
+            resourceSection.getChildren().add(methodResourcesLabel);
+            for(int i = 0; i < newWindow.getMethod().getResources().get(0).size(); i++){
+                Hyperlink link = new Hyperlink(newWindow.getMethod().getResources().get(0).get(i));
+                resourceSection.getChildren().add(link);
+
+                String url = newWindow.getMethod().getResources().get(1).get(i);
+                link.setOnAction(f -> {
+                    try {
+                        Desktop.getDesktop().browse(new URL(url).toURI());
+                    } catch (IOException | URISyntaxException g) {
+                        g.printStackTrace();
+                    }
+                });
+            }
+            dialogLayout.getChildren().add(resourceSection);
+
+            huntInformation.getDialogPane().setContent(masterPane);
             huntInformation.show();
+            huntInformation.setHeight(dialogLayout.getHeight() + 33);
+            huntInformation.setWidth(360);
+
+            dialogLayout.heightProperty().addListener((o, ov, nv) -> System.out.println(huntInformation.getHeight() + ", " + dialogLayout.getHeight()));
         });
 
         newWindow.getStage().setOnCloseRequest(e -> {

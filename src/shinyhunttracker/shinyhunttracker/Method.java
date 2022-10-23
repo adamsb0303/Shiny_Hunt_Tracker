@@ -2,6 +2,7 @@ package shinyhunttracker;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +22,7 @@ public class Method {
     Vector<Integer> comboGates = new Vector<>();//The # of encounters where the odds change
     Vector<Double> comboMods = new Vector<>();//The extra rolls when gates are passed
     Vector<Integer> pokemon = new Vector<>();//List of pokemon that can be hunted with this method
+    Vector<Vector<String>> resources = new Vector<>();//List of links to useful websites
 
     /**
      * Saves data from jsonobject to variables
@@ -55,6 +57,19 @@ public class Method {
         try {
             for (Object i : methodObject.getJSONArray("pokemon"))
                 pokemon.add(Integer.parseInt(i.toString()));
+        }catch(JSONException ignored){}
+
+        try{
+            JSONArray namesArray = (JSONArray) methodObject.getJSONArray("resources").get(0);
+            resources.add(new Vector<>());
+
+            JSONArray linksArray = (JSONArray) methodObject.getJSONArray("resources").get(1);
+            resources.add(new Vector<>());
+
+            for(int i = 0; i < namesArray.length(); i++){
+                resources.get(0).add(namesArray.getString(i));
+                resources.get(1).add(linksArray.getString(i));
+            }
         }catch(JSONException ignored){}
     }
 
@@ -108,6 +123,7 @@ public class Method {
     public Vector<Integer> getPokemon(){ return pokemon; }
     public Vector<Integer> getGames(){ return games; }
     public Vector<String> getGameMods(){ return gameMods; }
+    public Vector<Vector<String>> getResources(){ return resources; }
 
     public Boolean getBreeding(){ return breeding; }
     public int getBase(){ return base; }
