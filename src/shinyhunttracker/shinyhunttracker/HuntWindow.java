@@ -227,6 +227,9 @@ class HuntWindow {
                             selectedMethod.addGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
                         else
                             selectedMethod.removeGameMod(gameMod.get("name").toString(), Integer.parseInt(gameMod.get("extra-rolls").toString()));
+                        //Triggers combo change event to update odds label
+                        combo.setValue(combo.getValue() + 1);
+                        combo.setValue(combo.getValue() - 1);
                     });
                 }
                 gameModifierSettings.getChildren().add(row);
