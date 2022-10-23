@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
@@ -17,12 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -414,8 +412,6 @@ public class HuntController {
             huntInformation.show();
             huntInformation.setHeight(dialogLayout.getHeight() + 33);
             huntInformation.setWidth(360);
-
-            dialogLayout.heightProperty().addListener((o, ov, nv) -> System.out.println(huntInformation.getHeight() + ", " + dialogLayout.getHeight()));
         });
 
         newWindow.getStage().setOnCloseRequest(e -> {
@@ -928,6 +924,8 @@ public class HuntController {
      * @return HBox with new title bar
      */
     public static HBox titleBar(Stage stage){
+        customBehaviors(stage);
+
         stage.getIcons().add(new Image("file:Images/icon.png"));
 
         //Exits given stage
@@ -954,6 +952,27 @@ public class HuntController {
         windowControls.setPadding(new Insets(5,5,0,5));
 
         return windowControls;
+    }
+
+    /**
+     * Adds any special behaviors that aren't already on the custom stages
+     * @param stage custom stage
+     */
+    public static void customBehaviors(Stage stage){
+        Point mouse = MouseInfo.getPointerInfo().getLocation();
+
+        Screen.getScreens().forEach(e -> {
+            //checks for screen on x and y axises
+            if(e.getBounds().getMinX() <= mouse.getX() && e.getBounds().getMaxX() > mouse.getX())
+                if(e.getBounds().getMinY() <= mouse.getY() && e.getBounds().getMaxY() > mouse.getY()) {
+                    double centerX = (e.getBounds().getMinX() + e.getBounds().getMaxX()) / 2;
+                    double centerY = (e.getBounds().getMinY() + e.getBounds().getMaxY()) / 2;
+                    Platform.runLater(() -> {
+                        stage.setX(centerX - stage.getScene().getWidth() / 2);
+                        stage.setY(centerY - stage.getScene().getHeight() / 2);
+                    });
+                }
+        });
     }
 
     /**
