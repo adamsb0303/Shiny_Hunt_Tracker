@@ -87,7 +87,7 @@ public class Method {
      */
     public double comboExtraRolls(int length){
         if(!dynamic)
-            return 0;
+            return modifier;
 
         for(int i = 0; i < comboGates.size() - 1; i++)
             if(comboGates.get(i + 1) > length)
@@ -114,6 +114,14 @@ public class Method {
     public void removeGameMod(String name, int modifier){
         gameMods.remove(name);
         this.modifier -= modifier;
+    }
+
+    public void checkSpecialModifier(int generation){
+        try{
+            JSONObject check = SaveData.readJSON("GameData/method.json", id);
+            if(check != null)
+                modifier = check.getDouble("gen-" + generation);
+        }catch(JSONException ignored){}
     }
 
     @Override public String toString(){ return name.getValue(); }

@@ -53,6 +53,7 @@ class HuntWindow {
         this.selectedMethod = selectedMethod;
         if(selectedMethod.getBase() != 0)
             selectedGame.setOdds(selectedMethod.getBase());
+        selectedMethod.checkSpecialModifier(selectedGame.getGeneration());
         this.currentLayout = layout;
         this.encounters.setValue(encounters);
         this.combo.setValue(combo);
