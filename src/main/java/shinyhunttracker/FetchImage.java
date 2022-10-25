@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -13,7 +14,7 @@ class FetchImage extends Thread{
      * @param selectedPokemon Pokemon to get sprite for
      * @param selectedGame Game to get sprite from
      */
-    public static void setImage(ImageView sprite, Pokemon selectedPokemon, Game selectedGame){
+    public static Image getImage(ProgressIndicator progress, ImageView sprite, Pokemon selectedPokemon, Game selectedGame){
         //Creates filepath of were pokemon's sprite is
         String filePath = "Images/Sprites/" + selectedGame.getImagePath() + "/";
         if(selectedPokemon.getFormId() > 0)
@@ -30,6 +31,8 @@ class FetchImage extends Thread{
         }
 
         Image image = new Image(filePath, true);
+
+        progress.progressProperty().bind(image.progressProperty());
         image.progressProperty().addListener(e -> {
             if (image.getProgress() != 1)
                 return;
@@ -38,6 +41,8 @@ class FetchImage extends Thread{
             sprite.setImage(image);
             adjustImageScale(sprite, image);
         });
+
+        return image;
     }
 
     /**

@@ -95,16 +95,16 @@ class HuntWindow {
 
         //Creates the pokemon's sprite
         sprite = new ImageView();
-        FetchImage.setImage(sprite, selectedPokemon, selectedGame);
+        sprite.setImage(FetchImage.getImage(new ProgressIndicator(), sprite, selectedPokemon, selectedGame));
 
         //Creates the pokemon's family's sprites
         Evo0 = new ImageView();
         Evo1 = new ImageView();
 
         if(selectedPokemon.getEvoStage() >= 1)
-            FetchImage.setImage(Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame);
+            Evo0.setImage(FetchImage.getImage(new ProgressIndicator(), Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
         if(selectedPokemon.getEvoStage() >= 2)
-            FetchImage.setImage(Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame);
+            Evo1.setImage(FetchImage.getImage(new ProgressIndicator(), Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame));
 
         //Makes family sprites draggable
         quickEdit(sprite);

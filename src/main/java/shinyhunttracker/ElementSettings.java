@@ -112,7 +112,7 @@ public class ElementSettings {
         formCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if(newValue != null){
                 pokemon.setForm(formCombo.getSelectionModel().getSelectedIndex());
-                FetchImage.setImage(image, pokemon, selectedGame);
+                image.setImage(FetchImage.getImage(new ProgressIndicator(), image, pokemon, selectedGame));
             }
         });
 

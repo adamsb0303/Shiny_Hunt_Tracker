@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -58,7 +59,7 @@ public class HuntSelection{
         AnchorPane huntInformation = new AnchorPane();
         huntInformation.setMinWidth(375);
 
-        ImageView pokemonSprite = new ImageView();
+        ImageView pokemonSprite = new ImageView(new Image("file:Images/blank.png"));
         pokemonSprite.setLayoutX(180);
         pokemonSprite.setLayoutY(275);
 
@@ -159,12 +160,27 @@ public class HuntSelection{
         HuntController.makeDraggable(selectionScene);
         selectionPageStage.show();
 
+        ProgressIndicator progressBar = new ProgressIndicator();
+        progressBar.setProgress(1);
+        progressBar.managedProperty().bind(progressBar.visibleProperty());
+        progressBar.visibleProperty().bind(progressBar.progressProperty().lessThan(1));
+
+        huntInformation.getChildren().add(progressBar);
+
+        progressBar.setLayoutX(pokemonSprite.getLayoutX() - 10);
+        progressBar.setLayoutY(pokemonSprite.getLayoutY() - 100);
+
+        pokemonSprite.managedProperty().bind(pokemonSprite.visibleProperty());
+        pokemonSprite.visibleProperty().bind(progressBar.progressProperty().isEqualTo(1));
+
         //Listeners for when selection tools are changed
         pokemonListTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if(newValue != null && newValue.getValue() != selectedPokemon){
                         selectedPokemon = newValue.getValue();
-                        FetchImage.setImage(pokemonSprite, newValue.getValue(), new Game(21));
+                        if(pokemonSprite.getImage().getProgress() < 1)
+                            pokemonSprite.getImage().cancel();
+                        pokemonSprite.setImage(FetchImage.getImage(progressBar, pokemonSprite, newValue.getValue(), new Game(21)));
                         updateGameList();
                         updateMethodList();
 

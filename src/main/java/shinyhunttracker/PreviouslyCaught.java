@@ -202,7 +202,7 @@ class PreviouslyCaught {
                 Pokemon previouslyCaughtPokemon = new Pokemon(caughtData.getInt("pokemon"));
                 previouslyCaughtPokemon.setForm(caughtData.getInt("form"));
                 ImageView sprite = new ImageView();
-                FetchImage.setImage(sprite, previouslyCaughtPokemon, caughtGame);
+                sprite.setImage(FetchImage.getImage(new ProgressIndicator(), sprite, previouslyCaughtPokemon, caughtGame));
 
                 Text pokemon = new Text(previouslyCaughtPokemon.getName());
                 Text method = new Text(caughtGame.getName());
