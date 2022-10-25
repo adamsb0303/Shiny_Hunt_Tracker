@@ -58,6 +58,10 @@
    -fx-padding :0 0.15em;
 }
 
+.progress-indicator{
+    -fx-progress-color: #505050;
+}
+
 .text-field:focused {
     -fx-background-color: #555555;
     -fx-highlight-fill: null;
