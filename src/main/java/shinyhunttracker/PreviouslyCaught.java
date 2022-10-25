@@ -103,13 +103,16 @@ class PreviouslyCaught {
 
         numberCaughtField.setOnAction(e -> {
             try {
+                //Captures user input so that window doesn't open if non-int is entered
+                int newDisplay = parseInt(numberCaughtField.getText());
+
                 //If the previous number of pokemon displayed is 0, it creates a new blank window
                 if (displayCaught == 0)
                     createPreviouslyCaughtPokemonWindow();
 
                 //updates displayPrevious and displayCaught
                 displayPrevious = displayCaught;
-                displayCaught = parseInt(numberCaughtField.getText());
+                displayCaught = newDisplay;
 
                 //Closes window and removes settings if new display = 0
                 if (displayCaught == 0) {
