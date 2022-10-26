@@ -64,13 +64,13 @@ public class HuntController {
             }
 
             //caps window height at 540
-            if(huntControlsLayout.getHeight() + 60 <= 540) {
-                huntControls.setHeight(huntControlsLayout.getHeight() + 60);
-                huntControls.setWidth(huntControlsLayout.getWidth());
+            if(huntControlsLayout.getHeight() + 65 <= 540) {
+                huntControls.setHeight(huntControlsLayout.getHeight() + 65);
+                huntControls.setWidth(huntControlsLayout.getWidth() + 5);
             }
             else {
                 huntControls.setHeight(540);
-                huntControls.setWidth(huntControlsLayout.getWidth());
+                huntControls.setWidth(huntControlsLayout.getWidth() + 5);
             }
         };
 
@@ -79,6 +79,7 @@ public class HuntController {
 
         //add hunt and general settings buttons
         Button addHunt = new Button();
+        addHunt.setFocusTraversable(false);
         ImageView addHuntIcon = new ImageView(new Image("file:Images/plus.png"));
         addHunt.setPadding(new Insets(0, 0, 0, 0));
         addHunt.setGraphic(addHuntIcon);
@@ -87,6 +88,7 @@ public class HuntController {
 
         //Settings that apply to none or all of the hunts
         MenuButton masterSettings = new MenuButton();
+        masterSettings.setFocusTraversable(false);
         ImageView settingsIcon = new ImageView(new Image("file:Images/gear.png"));
         masterSettings.setPadding(new Insets(0, 0, 0, 0));
         masterSettings.setGraphic(settingsIcon);
@@ -104,6 +106,7 @@ public class HuntController {
 
         //Puts controls at the top, hunts in the middle, and master buttons at the bottom
         BorderPane huntControlsLayout = new BorderPane();
+        huntControlsLayout.setFocusTraversable(false);
         huntControlsLayout.setTop(titleBar(huntControls));
         huntControlsLayout.setCenter(huntControlsScroll);
         huntControlsLayout.setBottom(masterButtonsPane);
@@ -200,6 +203,7 @@ public class HuntController {
 
         //Hunt Information to add to controller vbox
         Button exitHuntButton = new Button();
+        exitHuntButton.setFocusTraversable(false);
         ImageView exitHuntIcon = new ImageView(new Image("file:Images/x.png"));
         exitHuntButton.setPadding(new Insets(0, 0, 0, 0));
         exitHuntButton.setGraphic(exitHuntIcon);
@@ -215,6 +219,7 @@ public class HuntController {
         huntControlsLayout.add(huntNumberLabel, 1, row);
 
         Button encountersButton = new Button();
+        encountersButton.setFocusTraversable(false);
         ImageView encountersIcon = new ImageView(new Image("file:Images/plus.png"));
         encountersButton.setPadding(new Insets(0, 0, 0, 0));
         encountersButton.setGraphic(encountersIcon);
@@ -234,6 +239,7 @@ public class HuntController {
         huntControlsLayout.add(encounterLabel, 4, row);
 
         Button caughtButton = new Button();
+        caughtButton.setFocusTraversable(false);
         ImageView caughtIcon = new ImageView(new Image("file:Images/caught.png"));
         caughtButton.setPadding(new Insets(0, 0, 0, 0));
         caughtButton.setGraphic(caughtIcon);
@@ -241,8 +247,8 @@ public class HuntController {
         caughtButton.setMinSize(25, 25);
         huntControlsLayout.add(caughtButton, 5, row);
 
-        StackPane windowPopout = new StackPane();
         Button popOutButton = new Button();
+        popOutButton.setFocusTraversable(false);
         ImageView popOutIcon = new ImageView(new Image("file:Images/popout.png"));
         popOutButton.setPadding(new Insets(0, 0, 0, 0));
         popOutButton.setGraphic(popOutIcon);
@@ -250,16 +256,20 @@ public class HuntController {
         popOutButton.setMinSize(25, 25);
 
         Button windowSettingsButton = new Button();
+        windowSettingsButton.setFocusTraversable(false);
         ImageView windowSettingsIcon = new ImageView(new Image("file:Images/popoutSettings.png"));
         windowSettingsButton.setPadding(new Insets(0, 0, 0, 0));
         windowSettingsButton.setGraphic(windowSettingsIcon);
         windowSettingsButton.setTooltip(new Tooltip("Hunt Window Settings"));
         windowSettingsButton.setMinSize(25, 25);
         windowSettingsButton.setVisible(false);
+
+        StackPane windowPopout = new StackPane();
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
         huntControlsLayout.add(windowPopout, 6, row);
 
         MenuButton settingsButton = new MenuButton();
+        settingsButton.setFocusTraversable(false);
         ImageView settingsIcon = new ImageView(new Image("file:Images/gear.png"));
         settingsButton.setPadding(new Insets(0, 0, 0, 0));
         settingsButton.setGraphic(settingsIcon);
@@ -276,6 +286,7 @@ public class HuntController {
         huntControlsLayout.add(settingsButton, 7, row);
 
         Button helpButton = new Button();
+        helpButton.setFocusTraversable(false);
         ImageView helpIcon = new ImageView(new Image("file:Images/questionmark.png"));
         helpButton.setPadding(new Insets(0, 0, 0, 0));
         helpButton.setGraphic(helpIcon);
@@ -577,7 +588,6 @@ public class HuntController {
     public static void editSavedHuntsWindow(){
         //Grid pane to add all hunts into
         GridPane editHuntsLayout = new GridPane();
-        editHuntsLayout.setPadding(new Insets(10, 10, 10, 10));
         editHuntsLayout.setHgap(10);
         editHuntsLayout.setVgap(5);
 
@@ -930,6 +940,7 @@ public class HuntController {
 
         //Exits given stage
         Button exit = new Button();
+        exit.setFocusTraversable(false);
         ImageView exitIcon = new ImageView(new Image("file:Images/x.png"));
         exit.setPadding(new Insets(0, 0, 0, 0));
         exit.setGraphic(exitIcon);
@@ -938,6 +949,7 @@ public class HuntController {
 
         //Minimizes given stage
         Button minimize = new Button();
+        minimize.setFocusTraversable(false);
         ImageView minimizeIcon = new ImageView(new Image("file:Images/underscore.png"));
         minimize.setPadding(new Insets(0, 0, 0, 0));
         minimize.setGraphic(minimizeIcon);
