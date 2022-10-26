@@ -124,6 +124,7 @@ class PreviouslyCaught {
                 }
                 numberCaughtField.setText("");
                 numberCaughtField.setPromptText(String.valueOf(displayCaught));
+                previouslyCaughtSettingsStage.toFront();
             } catch (NumberFormatException f) {
                 numberCaughtField.setText("");
             }

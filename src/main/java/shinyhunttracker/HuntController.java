@@ -323,6 +323,8 @@ public class HuntController {
                 newWindow.createHuntWindow();
             else
                 newWindow.getStage().show();
+
+            huntControls.toFront();
         });
 
         increment.setOnAction(e -> {
