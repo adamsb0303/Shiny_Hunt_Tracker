@@ -225,7 +225,7 @@ class HuntWindow {
         //Adds background settings to accordion
         settings.getPanes().add(createBackgroundSettings(windowStage, windowLayout));
 
-        Button layoutSettings = new Button("Layouts");
+        Button layoutSettings = new Button("Saved Layouts");
 
         VBox CustomizeHuntLayout = new VBox();
         CustomizeHuntLayout.setAlignment(Pos.TOP_CENTER);

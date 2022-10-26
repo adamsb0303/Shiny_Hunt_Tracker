@@ -63,7 +63,7 @@ class PreviouslyCaught {
         HBox layoutButton = new HBox();
         layoutButton.setAlignment(Pos.CENTER);
         layoutButton.setPadding(new Insets(0, 0, 10, 0));
-        Button layoutSettingsButton = new Button("Layouts");
+        Button layoutSettingsButton = new Button("Saved Layouts");
         layoutButton.getChildren().add(layoutSettingsButton);
 
         previouslyCaughtSettingsLayout = new VBox();
@@ -95,7 +95,7 @@ class PreviouslyCaught {
         //Caps window height at 540
         settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
             if(settingsAccordion.getHeight() + 125 <= 540)
-                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 125);
+                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 115);
             else
                 previouslyCaughtSettingsStage.setHeight(540);
             previouslyCaughtSettingsStage.setWidth(315);
