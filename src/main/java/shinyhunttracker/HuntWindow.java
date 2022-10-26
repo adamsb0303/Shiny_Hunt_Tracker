@@ -74,8 +74,6 @@ class HuntWindow {
         oddFractionText.textProperty().bind(Bindings.createStringBinding(() -> "1/" + simplifyFraction(selectedMethod.comboExtraRolls(combo.getValue()), selectedGame.getOdds()), combo));
         encountersText = new Text();
         encountersText.textProperty().bind(Bindings.createStringBinding(() -> String.format("%,d", encounters.getValue()), encounters));
-        previousEncountersText = new Text();
-        previousEncountersText.setVisible(false);
 
         //Sets the outlines of the labels to white
         currentHuntingPokemonText.setStroke(Color.web("0x00000000"));
@@ -83,7 +81,6 @@ class HuntWindow {
         currentGameText.setStroke(Color.web("0x00000000"));
         oddFractionText.setStroke(Color.web("0x00000000"));
         encountersText.setStroke(Color.web("0x00000000"));
-        previousEncountersText.setStroke(Color.web("0x00000000"));
 
         //Makes labels draggable
         quickEdit(currentHuntingPokemonText);
@@ -91,7 +88,6 @@ class HuntWindow {
         quickEdit(currentGameText);
         quickEdit(oddFractionText);
         quickEdit(encountersText);
-        quickEdit(previousEncountersText);
 
         //Creates the pokemon's sprite
         sprite = new ImageView();
@@ -99,7 +95,9 @@ class HuntWindow {
 
         //Creates the pokemon's family's sprites
         Evo0 = new ImageView();
+        Evo0.setVisible(false);
         Evo1 = new ImageView();
+        Evo1.setVisible(false);
 
         if(selectedPokemon.getEvoStage() >= 1)
             Evo0.setImage(FetchImage.getImage(new ProgressIndicator(), Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
@@ -113,45 +111,25 @@ class HuntWindow {
 
         windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
 
-        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, previousEncountersText, oddFractionText);
+        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
 
         //Positions the labels to the right of the sprite images
-        int index = 3;
         for(int i = 3; i < windowLayout.getChildren().size(); i++){
             if(windowLayout.getChildren().get(i).isVisible()) {
-                double evo1Width = 0;
-                double evo0Width = 0;
-                double spriteWidth = 200;
-                if(Evo0.getImage() != null)
-                    evo0Width = 200;
-                if(Evo1.getImage() != null)
-                    evo1Width = 200;
-                windowLayout.getChildren().get(i).setLayoutX(evo0Width + evo1Width + spriteWidth + 5);
-                windowLayout.getChildren().get(i).setLayoutY(15 * (index - 2));
-                index++;
+                windowLayout.getChildren().get(i).setLayoutX(200 + 5);
+                windowLayout.getChildren().get(i).setLayoutY(15 * (i - 2));
             }
         }
 
         //Positions the sprites so that they are in order of the family i.e stage 0, 1, 2
-        if(selectedPokemon.getEvoStage() == 2) {
-            Evo0.setLayoutX(100);
-            Evo0.setLayoutY(200);
+        sprite.setLayoutX(100);
+        sprite.setLayoutY(200);
 
-            Evo1.setLayoutX(200 + 100);
-            Evo1.setLayoutY(200);
+        Evo0.setLayoutX(200 + 100);
+        Evo0.setLayoutY(200);
 
-            sprite.setLayoutX(200 + 200 + 100);
-            sprite.setLayoutY(200);
-        }else if(selectedPokemon.getEvoStage() == 1){
-            Evo0.setLayoutX(100);
-            Evo0.setLayoutY(200);
-
-            sprite.setLayoutX(200 + 100);
-            sprite.setLayoutY(200);
-        }else {
-            sprite.setLayoutX(100);
-            sprite.setLayoutY(200);
-        }
+        Evo1.setLayoutX(200 + 200 + 100);
+        Evo1.setLayoutY(200);
 
         //Set scene and show screen
         Scene huntScene = new Scene(windowLayout, 750, 480);
