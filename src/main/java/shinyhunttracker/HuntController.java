@@ -118,22 +118,7 @@ public class HuntController {
         huntControls.show();
 
         //Check to see if there were hunts open when the hunt controller was last closed
-        try {
-            //reads the number of hunts that were open when the program was last closed
-            FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
-            DataInputStream previousSessionData = new DataInputStream(reader);
-            int previousHuntsNum = previousSessionData.read();
-
-            //Read JSON file
-            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
-
-            //Load the last n hunts in the json
-            if(huntList.length() != 0)
-                for(int i = 1; i <= previousHuntsNum; i++)
-                    SaveData.loadHunt(huntList.length() - i);
-        }catch (IOException ignored) {
-
-        }
+        refreshHunts();
 
         editSavedHunts.setOnAction(e -> editSavedHuntsWindow());
         keyBinding.setOnAction(e -> keyBindingSettings());
@@ -379,6 +364,7 @@ public class HuntController {
 
         helpButton.setOnAction(e -> {
             Alert huntInformation = new Alert(Alert.AlertType.INFORMATION);
+            huntInformation.initModality(Modality.NONE);
             huntInformation.setTitle("Hunt Information");
             huntInformation.setHeaderText(null);
             huntInformation.initStyle(StageStyle.UNDECORATED);
