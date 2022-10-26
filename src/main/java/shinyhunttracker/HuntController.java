@@ -529,12 +529,40 @@ public class HuntController {
                     GridPane.setValignment(loadButton, VPos.CENTER);
                     previousHunts.add(loadButton, 4, row);
 
+                    Button delete = new Button("Delete");
+                    GridPane.setHalignment(delete, HPos.CENTER);
+                    GridPane.setValignment(delete, VPos.CENTER);
+                    previousHunts.add(delete, 5, row);
+
                     int index = i;
                     loadButton.setOnAction(f -> {
                         //loads hunt and refreshes the controller
                         updatePreviousSessionDat(1);
                         SaveData.loadHunt(index);
                         refreshHunts();
+                    });
+
+                    //removes hunt i
+                    delete.setOnAction(e -> {
+                        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                        confirmAlert.setContentText("Are you sure you would like to delete " + pokemon.getName() + " hunt?");
+                        confirmAlert.initStyle(StageStyle.UNDECORATED);
+                        confirmAlert.getDialogPane().getStylesheets().add("file:shinyTracker.css");
+                        makeDraggable(confirmAlert.getDialogPane().getScene());
+                        confirmAlert.showAndWait().ifPresent(f -> {
+                            if(!f.getButtonData().toString().equals("OK_DONE"))
+                                return;
+
+                            SaveData.removeHunt(index);
+                            int huntID = Integer.parseInt(huntData.get("huntID").toString());
+                            for(int j = 0; j < windowsList.size(); j++)
+                                if(windowsList.get(j).getHuntID() == huntID) {
+                                    updatePreviousSessionDat(-1);
+                                    windowsList.remove(j);
+                                    break;
+                                }
+                            refreshHunts();
+                        });
                     });
                 }
             }
@@ -624,11 +652,6 @@ public class HuntController {
                 GridPane.setValignment(encountersButton, VPos.CENTER);
                 editHuntsLayout.add(encountersButton, 3, i);
 
-                Button delete = new Button("Delete");
-                GridPane.setHalignment(delete, HPos.CENTER);
-                GridPane.setValignment(delete, VPos.CENTER);
-                editHuntsLayout.add(delete, 4, i);
-
                 int index = i;
 
                 //Creates a drop-down for user to select a new pokemon and updates the information
@@ -714,19 +737,6 @@ public class HuntController {
                         SaveData.updateHunt(index, huntData);
                         refreshHunts();
                     });
-                });
-
-                //removes hunt i
-                delete.setOnAction(e -> {
-                    SaveData.removeHunt(index);
-                    int huntID = Integer.parseInt(huntData.get("huntID").toString());
-                    for(int j = 0; j < windowsList.size(); j++)
-                        if(windowsList.get(j).getHuntID() == huntID) {
-                            updatePreviousSessionDat(-1);
-                            windowsList.remove(j);
-                            break;
-                        }
-                    refreshHunts();
                 });
             }
 
