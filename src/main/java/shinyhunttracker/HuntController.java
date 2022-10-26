@@ -790,7 +790,7 @@ public class HuntController {
 
             //temporarily stores keys in order
             Vector<KeyCode> keyBindsTemp = new Vector<>();
-            for (int i = 0; i < windowsList.lastElement().getHuntNumber(); i++) {
+            for (int i = 0; i < 5 || i < windowsList.size(); i++) {
                 keyBindsTemp.add(KeyCode.valueOf((String) keyBindsList.get(i)));
 
                 //adds text-field and label to layout
