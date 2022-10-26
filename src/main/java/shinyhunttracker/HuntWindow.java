@@ -403,9 +403,10 @@ class HuntWindow {
     /**
      * Save hunt and it closes the window
      */
-    public void closeHuntWindow(){
+    public void close(){
         windowStage.close();
         CustomizeHuntStage.close();
+        layoutListStage.close();
     }
 
     /**

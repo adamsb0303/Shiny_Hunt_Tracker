@@ -470,6 +470,8 @@ class PreviouslyCaught {
     public static void close() {
         windowStage.close();
         previouslyCaughtSettingsStage.close();
+        prevCatchesStage.close();
+        layoutListStage.close();
     }
 
     /**

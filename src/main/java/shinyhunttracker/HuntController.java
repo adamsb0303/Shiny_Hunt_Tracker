@@ -294,7 +294,7 @@ public class HuntController {
 
         exitHuntButton.setOnAction(e -> {
             updatePreviousSessionDat(-1);
-            newWindow.closeHuntWindow();
+            newWindow.close();
             windowsList.remove(newWindow);
             if(prevHuntsStage.isShowing())
                 loadSavedHuntsWindow();
@@ -417,7 +417,7 @@ public class HuntController {
             e.consume();
             popOutButton.setVisible(true);
             windowSettingsButton.setVisible(false);
-            newWindow.closeHuntWindow();
+            newWindow.close();
         });
     }
 
@@ -868,7 +868,7 @@ public class HuntController {
         //Removes all hunts from window and list
         huntControlsLayout.getChildren().clear();
         while(windowsList.size() != 0){
-            windowsList.lastElement().closeHuntWindow();
+            windowsList.lastElement().close();
             windowsList.remove(windowsList.lastElement());
         }
 
