@@ -333,7 +333,7 @@ public class HuntController {
             changeIncrementDialog.initStyle(StageStyle.UNDECORATED);
             changeIncrementDialog.showAndWait().ifPresent(response -> {
                 try{
-                    newWindow.setIncrement(Integer.parseInt(response));
+                    newWindow.setIncrement(Integer.parseInt(response.replaceAll(",", "")));
                 }catch(NumberFormatException ignored){
 
                 }
@@ -574,6 +574,7 @@ public class HuntController {
     public static void editSavedHuntsWindow(){
         //Grid pane to add all hunts into
         GridPane editHuntsLayout = new GridPane();
+        editHuntsLayout.setPadding(new Insets(10, 10, 10, 10));
         editHuntsLayout.setHgap(10);
         editHuntsLayout.setVgap(5);
 
@@ -709,7 +710,7 @@ public class HuntController {
                     makeDraggable(encountersDialog.getDialogPane().getScene());
                     encountersDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
                     encountersDialog.showAndWait().ifPresent(g -> {
-                        huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText()));
+                        huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText().replaceAll(",", "")));
                         SaveData.updateHunt(index, huntData);
                         refreshHunts();
                     });
