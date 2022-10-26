@@ -139,6 +139,9 @@ public class HuntSelection{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            searchPokemonList.clear();
+            searchPokemonList.addAll(defaultPokemonList);
         }
         pokemonListRoot.getChildren().addAll(defaultPokemonList);
 
