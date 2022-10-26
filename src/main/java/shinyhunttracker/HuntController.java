@@ -1043,17 +1043,20 @@ public class HuntController {
         statTable.setSpacing(10);
         statTable.getChildren().addAll(health, attack, defense, speed, special);
 
+        Stage DVTableStage = new Stage();
+        DVTableStage.initStyle(StageStyle.UNDECORATED);
+
         VBox DVTableLayout = new VBox();
         DVTableLayout.setAlignment(Pos.TOP_CENTER);
         DVTableLayout.setSpacing(10);
         DVTableLayout.setPadding(new Insets(10, 0, 0, 0));
         DVTableLayout.setId("background");
-        DVTableLayout.getChildren().addAll(levelSelect, statTable);
+        DVTableLayout.getChildren().addAll(titleBar(DVTableStage), levelSelect, statTable);
 
-        Stage DVTableStage = new Stage();
-        Scene DVTableScene = new Scene(DVTableLayout, 300, 200);
+        Scene DVTableScene = new Scene(DVTableLayout, 300, 225);
         DVTableScene.getStylesheets().add("file:shinyTracker.css");
         DVTableStage.setScene(DVTableScene);
+        makeDraggable(DVTableScene);
         DVTableStage.setTitle(selectedPokemon.getName() + " Shiny DV Table");
 
         DVTableStage.show();
