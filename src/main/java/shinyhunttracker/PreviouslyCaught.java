@@ -56,9 +56,6 @@ class PreviouslyCaught {
         Button previouslyCaughtList = new Button("List");
         numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
 
-        //Add background settings
-        settingsAccordion.getPanes().add(ElementSettings.createBackgroundSettings(windowStage, windowLayout));
-
         //Layout button to display list of saved layouts
         HBox layoutButton = new HBox();
         layoutButton.setAlignment(Pos.CENTER);
@@ -83,7 +80,7 @@ class PreviouslyCaught {
         masterLayout.setId("background");
         masterLayout.getChildren().addAll(HuntController.titleBar(previouslyCaughtSettingsStage), scrollPane);
 
-        Scene previouslyCaughtSettingsScene = new Scene(masterLayout, 0, 0);
+        Scene previouslyCaughtSettingsScene = new Scene(masterLayout, 340, 115);
         previouslyCaughtSettingsScene.getStylesheets().add("file:shinyTracker.css");
 
         if(previouslyCaughtSettingsStage.getScene() == null)
@@ -98,7 +95,7 @@ class PreviouslyCaught {
                 previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 115);
             else
                 previouslyCaughtSettingsStage.setHeight(540);
-            previouslyCaughtSettingsStage.setWidth(315);
+            previouslyCaughtSettingsStage.setWidth(340);
         });
 
         numberCaughtField.setOnAction(e -> {
@@ -117,7 +114,7 @@ class PreviouslyCaught {
                 //Closes window and removes settings if new display = 0
                 if (displayCaught == 0) {
                     windowStage.close();
-                    settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
+                    settingsAccordion.getPanes().clear();
                 } else {
                     addPreviouslyCaughtPokemon();
                     windowStage.show();
@@ -135,7 +132,7 @@ class PreviouslyCaught {
         windowStage.setOnCloseRequest(e -> {
             displayCaught = 0;
             numberCaughtField.setPromptText("0");
-            settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
+            settingsAccordion.getPanes().clear();
         });
 
         layoutSettingsButton.setOnAction(e -> showLayoutList());
@@ -179,11 +176,13 @@ class PreviouslyCaught {
     public static void addPreviouslyCaughtPokemon() {
         //Removes elements if the number that needs to be displayed goes down
         if (displayCaught < displayPrevious) {
-            windowLayout.getChildren().remove(displayCaught * 4, windowLayout.getChildren().size());
-            settingsAccordion.getPanes().remove(displayCaught * 4, settingsAccordion.getPanes().size() - 1);
-            previouslyCaughtSettingsLayout.getChildren().remove(displayCaught * 5 + 3, previouslyCaughtSettingsLayout.getChildren().size());
+            windowLayout.getChildren().remove(displayCaught * 5, windowLayout.getChildren().size());
+            settingsAccordion.getPanes().remove(displayCaught, settingsAccordion.getPanes().size() - 1);
             return;
         }
+
+        if(settingsAccordion.getPanes().size() > 0)
+            settingsAccordion.getPanes().remove(settingsAccordion.getPanes().size() - 1);
 
         try {
             JSONArray caughtPokemonList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
@@ -199,6 +198,7 @@ class PreviouslyCaught {
                 JSONObject caughtData = caughtPokemonList.getJSONObject(i);
 
                 Game caughtGame = new Game(caughtData.getInt("game"));
+                Method caughtMethod = new Method(caughtData.getInt("method"));
 
                 Pokemon previouslyCaughtPokemon = new Pokemon(caughtData.getInt("pokemon"));
                 previouslyCaughtPokemon.setForm(caughtData.getInt("form"));
@@ -206,12 +206,14 @@ class PreviouslyCaught {
                 sprite.setImage(FetchImage.getImage(new ProgressIndicator(), sprite, previouslyCaughtPokemon, caughtGame));
 
                 Text pokemon = new Text(previouslyCaughtPokemon.getName());
-                Text method = new Text(caughtGame.getName());
-                Text encounters = new Text(String.valueOf(caughtData.getInt("encounters")));
+                Text game = new Text(caughtGame.getName());
+                Text method = new Text(caughtMethod.getName());
+                Text encounters = new Text(String.format("%,d", caughtData.getInt("encounters")));
 
-                windowLayout.getChildren().addAll(sprite, pokemon, method, encounters);
+                windowLayout.getChildren().addAll(sprite, pokemon, game, method, encounters);
 
                 pokemon.setStroke(Color.web("0x00000000"));
+                game.setStroke(Color.web("0x00000000"));
                 method.setStroke(Color.web("0x00000000"));
                 encounters.setStroke(Color.web("0x00000000"));
 
@@ -223,33 +225,42 @@ class PreviouslyCaught {
                 pokemon.setLayoutX(widthTotal + currentImageWidth / 2);
                 pokemon.setLayoutY(75);
 
+                game.setLayoutX(widthTotal + currentImageWidth / 2);
+                game.setLayoutY(90);
+
                 method.setLayoutX(widthTotal + currentImageWidth / 2);
-                method.setLayoutY(90);
+                method.setLayoutY(105);
 
                 encounters.setLayoutX(widthTotal + currentImageWidth / 2);
-                encounters.setLayoutY(105);
+                encounters.setLayoutY(120);
 
                 widthTotal += currentImageWidth;
 
                 quickEdit(sprite);
                 quickEdit(pokemon);
+                quickEdit(game);
                 quickEdit(method);
                 quickEdit(encounters);
 
+                Accordion accordion = new Accordion();
+                accordion.setStyle("-fx-background-color:#404040");
+                accordion.setPadding(new Insets(0, 0, 0, 25));
                 TitledPane spriteSettings = createImageSettings(windowLayout, sprite, previouslyCaughtPokemon, caughtGame);
                 TitledPane pokemonLabelSettings = createLabelSettings(pokemon, "Pokemon");
+                TitledPane gameLabelSettings = createLabelSettings(game, "Game");
                 TitledPane methodLabelSettings = createLabelSettings(method, "Method");
                 TitledPane encountersLabelSettings = createLabelSettings(encounters, "Encounters");
-                encountersLabelSettings.setPadding(new Insets(0, 0, 25, 0));
+                accordion.getPanes().addAll(spriteSettings, pokemonLabelSettings, gameLabelSettings, methodLabelSettings, encountersLabelSettings);
+                TitledPane pokemonSettings = new TitledPane(previouslyCaughtPokemon.getName() + " Settings", accordion);
 
-                settingsAccordion.getPanes().add(0, encountersLabelSettings);
-                settingsAccordion.getPanes().add(0, methodLabelSettings);
-                settingsAccordion.getPanes().add(0, pokemonLabelSettings);
-                settingsAccordion.getPanes().add(0, spriteSettings);
+                settingsAccordion.getPanes().add(pokemonSettings);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //Add background settings
+        settingsAccordion.getPanes().add(ElementSettings.createBackgroundSettings(windowStage, windowLayout));
     }
 
     /**
