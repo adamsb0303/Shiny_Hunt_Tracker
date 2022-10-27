@@ -193,8 +193,12 @@ class PreviouslyCaught {
                 displayCaught = caughtListSize;
 
             //Creates elements from caught list from displayPrevious up to displayCaught
-            double widthTotal = 0;
+            int maxColumns = (int) (windowStage.getWidth() - 100) / 200;
             for (int i = caughtListSize - displayPrevious - 1; i >= (caughtListSize - displayCaught); i--) {
+                int positionIndex = Math.abs(i - (caughtListSize - 1));
+                int column = positionIndex % maxColumns;
+                int row = positionIndex / maxColumns;
+
                 JSONObject caughtData = caughtPokemonList.getJSONObject(i);
 
                 Game caughtGame = new Game(caughtData.getInt("game"));
@@ -217,24 +221,20 @@ class PreviouslyCaught {
                 method.setStroke(Color.web("0x00000000"));
                 encounters.setStroke(Color.web("0x00000000"));
 
-                double currentImageWidth = 200;
+                sprite.setLayoutX(100 + 200 * column);
+                sprite.setLayoutY(200 + 200 * row);
 
-                sprite.setLayoutX(widthTotal + currentImageWidth / 2);
-                sprite.setLayoutY(200);
+                pokemon.setLayoutX(100 + 200 * column);
+                pokemon.setLayoutY(75 + 200 * row);
 
-                pokemon.setLayoutX(widthTotal + currentImageWidth / 2);
-                pokemon.setLayoutY(75);
+                game.setLayoutX(100 + 200 * column);
+                game.setLayoutY(90 + 200 * row);
 
-                game.setLayoutX(widthTotal + currentImageWidth / 2);
-                game.setLayoutY(90);
+                method.setLayoutX(100 + 200 * column);
+                method.setLayoutY(105 + 200 * row);
 
-                method.setLayoutX(widthTotal + currentImageWidth / 2);
-                method.setLayoutY(105);
-
-                encounters.setLayoutX(widthTotal + currentImageWidth / 2);
-                encounters.setLayoutY(120);
-
-                widthTotal += currentImageWidth;
+                encounters.setLayoutX(100 + 200 * column);
+                encounters.setLayoutY(120 + 200 * row);
 
                 quickEdit(sprite);
                 quickEdit(pokemon);
