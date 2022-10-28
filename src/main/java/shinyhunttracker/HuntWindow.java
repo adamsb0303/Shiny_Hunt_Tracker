@@ -94,14 +94,20 @@ class HuntWindow {
 
         //Creates the pokemon's sprite
         sprite = new ImageView();
-        sprite.setImage(FetchImage.getImage(new ProgressIndicator(), sprite, selectedPokemon, selectedGame));
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.managedProperty().bind(progressIndicator.visibleProperty());
+        progressIndicator.visibleProperty().bind(progressIndicator.progressProperty().lessThan(1));
+        sprite.setImage(FetchImage.getImage(progressIndicator, sprite, selectedPokemon, selectedGame));
         quickEdit(sprite);
 
-        windowLayout.getChildren().addAll(sprite);
+        windowLayout.getChildren().addAll(progressIndicator, sprite);
 
-        //Positions the sprites so that they are in order of the family i.e stage 0, 1, 2
+        //Positions the main sprite and progress indicator
         sprite.setLayoutX(100);
         sprite.setLayoutY(200);
+
+        progressIndicator.setLayoutX(100);
+        progressIndicator.setLayoutY(100);
 
         //Creates list of family members without duplicates
         for(int i = 0; i < selectedPokemon.getFamily().size(); i++){
@@ -118,25 +124,39 @@ class HuntWindow {
                 continue;
             }
 
+            ProgressIndicator familyProgressIndicator = new ProgressIndicator();
+            familyProgressIndicator.managedProperty().bind(progressIndicator.visibleProperty());
+            familyProgressIndicator.visibleProperty().bind(progressIndicator.progressProperty().lessThan(1));
+            familyProgressIndicator.setLayoutX(100 + 200 * ((i + 1) % 4));
+            familyProgressIndicator.setLayoutY(100 + 200 * (int)((i + 1) / 4.0));
+
             ImageView memberSprite = new ImageView();
-            memberSprite.setImage(FetchImage.getImage(new ProgressIndicator(), memberSprite, familyMember, selectedGame));
+            memberSprite.setImage(FetchImage.getImage(familyProgressIndicator, memberSprite, familyMember, selectedGame));
             memberSprite.setLayoutX(100 + 200 * ((i + 1) % 4));
             memberSprite.setLayoutY(200 + 200 * (int)((i + 1) / 4.0));
             memberSprite.setVisible(false);
             quickEdit(memberSprite);
-            windowLayout.getChildren().add(memberSprite);
+            windowLayout.getChildren().addAll(familyProgressIndicator, memberSprite);
             familySprites.add(memberSprite);
         }
 
         windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
 
         //Positions the labels to the right of the sprite images
-        for(int i = familySprites.size() + 1; i < windowLayout.getChildren().size(); i++){
-            if(windowLayout.getChildren().get(i).isVisible()) {
-                windowLayout.getChildren().get(i).setLayoutX(200 + 5);
-                windowLayout.getChildren().get(i).setLayoutY(15 * (i - familySprites.size()));
-            }
-        }
+        currentHuntingPokemonText.setLayoutX(205);
+        currentHuntingPokemonText.setLayoutY(15);
+
+        currentHuntingMethodText.setLayoutX(205);
+        currentHuntingMethodText.setLayoutY(30);
+
+        currentGameText.setLayoutX(205);
+        currentGameText.setLayoutY(45);
+
+        encountersText.setLayoutX(205);
+        encountersText.setLayoutY(60);
+
+        oddFractionText.setLayoutX(205);
+        oddFractionText.setLayoutY(75);
 
         //Set scene and show screen
         Scene huntScene = new Scene(windowLayout, 750, 480);
