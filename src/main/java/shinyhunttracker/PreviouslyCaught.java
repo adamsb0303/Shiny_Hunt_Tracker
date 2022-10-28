@@ -475,7 +475,7 @@ class PreviouslyCaught {
             HuntController.makeDraggable(newNameDialog.getDialogPane().getScene());
             newNameDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             newNameDialog.showAndWait().ifPresent(f -> {
-                SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, true);
+                SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, false);
                 showLayoutList();
             });
         });

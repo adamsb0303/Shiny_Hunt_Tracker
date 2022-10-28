@@ -2,6 +2,7 @@ package shinyhunttracker;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -221,9 +222,13 @@ public class SaveData {
 
         //Saves every element from layout to json
         for(Node i : huntLayout.getChildren()) {
+            if(i instanceof ProgressIndicator)
+                continue;
+
             if(i instanceof ImageView) {
                 ImageView image = (ImageView) i;
                 JSONObject imageData = new JSONObject();
+                imageData.put("type", "image");
                 imageData.put("X", image.getLayoutX());
                 imageData.put("Y", image.getLayoutY());
                 imageData.put("width", image.getFitWidth());
@@ -234,6 +239,7 @@ public class SaveData {
             }else if(i instanceof Text){
                 Text text = (Text) i;
                 JSONObject textData = new JSONObject();
+                textData.put("type", "text");
                 textData.put("X", text.getLayoutX());
                 textData.put("Y", text.getLayoutY());
                 textData.put("scale", text.getScaleX());
@@ -313,13 +319,17 @@ public class SaveData {
             }
 
             //Loads data from file onto elements of layout
-            for(int i = 1; i <= huntLayout.getChildren().size(); i++){
-                if(i >= layoutData.length() - 1)
+            int layoutDataIndex = 1;
+            for(int i = 0; i < huntLayout.getChildren().size(); i++){
+                if(layoutDataIndex >= layoutData.length() - 1)
                     break;
 
-                JSONObject elementData = (JSONObject) layoutData.get(i);
-                Node element = huntLayout.getChildren().get(i - 1);
-                if(element instanceof ImageView){
+                JSONObject elementData = (JSONObject) layoutData.get(layoutDataIndex);
+                Node element = huntLayout.getChildren().get(i);
+                if(element instanceof ProgressIndicator)
+                    continue;
+
+                if(element instanceof ImageView && elementData.get("type").equals("image")){
                     ImageView image = (ImageView) element;
 
                     image.setLayoutX(elementData.getDouble("X"));
@@ -329,7 +339,7 @@ public class SaveData {
                     if(image.getImage() != null)
                         FetchImage.adjustImageScale(image, image.getImage());
                     image.setVisible(elementData.getBoolean("visible"));
-                }else{
+                }else if(element instanceof Text && elementData.get("type").equals("text")){
                     Text text = (Text) element;
 
                     text.setLayoutX(elementData.getDouble("X"));
@@ -342,7 +352,9 @@ public class SaveData {
                     text.setStroke(Color.web(elementData.getString("stroke")));
                     text.setUnderline(elementData.getBoolean("underline"));
                     text.setVisible(elementData.getBoolean("visible"));
-                }
+                }else
+                    continue;
+                layoutDataIndex++;
             }
             huntLayout.setBackground(new Background(new BackgroundFill(Color.web(layoutData.get(layoutData.length() - 1).toString()), CornerRadii.EMPTY, Insets.EMPTY)));
         }catch(IOException e){
