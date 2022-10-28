@@ -60,6 +60,7 @@ public class ElementSettings {
         Label XLabel = new Label("X");
         TextField XField = new TextField();
         XField.setMaxWidth(100);
+        XField.setText(String.valueOf(image.getLayoutX()));
         XField.promptTextProperty().bind(image.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
@@ -70,6 +71,7 @@ public class ElementSettings {
         Label YLabel = new Label("Y");
         TextField YField = new TextField();
         YField.setMaxWidth(100);
+        YField.setText(String.valueOf(image.getLayoutY()));
         YField.promptTextProperty().bind(image.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
@@ -85,6 +87,7 @@ public class ElementSettings {
         Label sizeLabel = new Label("Scale");
         TextField sizeField = new TextField();
         sizeField.setMaxWidth(100);
+        sizeField.setText(String.valueOf(image.getScaleX()));
         sizeField.promptTextProperty().bind(image.scaleXProperty().asString());
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
@@ -116,7 +119,7 @@ public class ElementSettings {
             }
         });
 
-        sizeField.setOnAction(e -> {
+        sizeField.setOnKeyTyped(e -> {
             try{
                 double scale = parseDouble(sizeField.getText());
                 image.setScaleX(scale);
@@ -126,25 +129,22 @@ public class ElementSettings {
             }catch(NumberFormatException ignored){
 
             }
-            sizeField.setText("");
         });
 
-        XField.setOnAction(e ->{
+        XField.setOnKeyTyped(e ->{
             try{
                 image.setLayoutX(parseDouble(XField.getText()));
             }catch(NumberFormatException ignored){
 
             }
-            XField.setText("");
         });
 
-        YField.setOnAction(e ->{
+        YField.setOnKeyTyped(e ->{
             try{
                 image.setLayoutY(parseDouble(YField.getText()));
             }catch(NumberFormatException ignored){
 
             }
-            YField.setText("");
         });
 
         visibleCheck.setOnAction(e -> image.setVisible(visibleCheck.isSelected()));
@@ -202,6 +202,7 @@ public class ElementSettings {
         Label XLabel = new Label("X");
         TextField XField = new TextField();
         XField.setMaxWidth(100);
+        XField.setText(String.valueOf(label.getLayoutX()));
         XField.promptTextProperty().bind(label.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
 
@@ -212,6 +213,7 @@ public class ElementSettings {
         Label YLabel = new Label("Y");
         TextField YField = new TextField();
         YField.setMaxWidth(100);
+        YField.setText(String.valueOf(label.getLayoutY()));
         YField.promptTextProperty().bind(label.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
 
@@ -227,6 +229,7 @@ public class ElementSettings {
         Label sizeLabel = new Label("Scale");
         TextField sizeField = new TextField();
         sizeField.setMaxWidth(100);
+        sizeField.setText(String.valueOf(label.getScaleX()));
         sizeField.promptTextProperty().bind(label.scaleXProperty().asString());
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
@@ -236,6 +239,7 @@ public class ElementSettings {
         color.setSpacing(5);
         Label colorLabel = new Label("Color");
         ColorPicker colorField = new ColorPicker();
+        colorField.setMinHeight(25);
         colorField.setValue((Color) label.getFill());
         color.setAlignment(Pos.CENTER);
         color.getChildren().addAll(colorLabel, colorField);
@@ -273,6 +277,7 @@ public class ElementSettings {
         Label strokeWidthLabel = new Label("Width");
         TextField strokeWidthField = new TextField();
         strokeWidthField.setMaxWidth(100);
+        strokeWidthField.setText(String.valueOf(label.getStrokeWidth()));
         strokeWidthField.promptTextProperty().bind(label.strokeWidthProperty().asString());
         strokeWidth.disableProperty().bind(strokeCheckbox.selectedProperty().not());
         strokeWidthField.disableProperty().bind(strokeCheckbox.selectedProperty().not());
@@ -284,6 +289,7 @@ public class ElementSettings {
         strokeColor.setSpacing(5);
         Label strokeColorLabel = new Label("Color");
         ColorPicker strokeColorPicker = new ColorPicker();
+        strokeColorPicker.setMinHeight(25);
         strokeColorPicker.setMaxWidth(100);
         strokeColorPicker.setValue((Color) label.getStroke());
         strokeColorLabel.disableProperty().bind(strokeCheckbox.selectedProperty().not());
@@ -306,32 +312,29 @@ public class ElementSettings {
 
         TitledPane labelTitledPane = new TitledPane(labelName + " Text", labelVBox);
 
-        sizeField.setOnAction(e -> {
+        sizeField.setOnKeyTyped(e -> {
             try{
                 label.setScaleX(parseDouble(sizeField.getText()));
                 label.setScaleY(parseDouble(sizeField.getText()));
             }catch(NumberFormatException ignored){
 
             }
-            sizeField.setText("");
         });
 
-        XField.setOnAction(e ->{
+        XField.setOnKeyTyped(e ->{
             try{
                 label.setLayoutX(parseDouble(XField.getText()));
             }catch(NumberFormatException ignored){
 
             }
-            XField.setText("");
         });
 
-        YField.setOnAction(e ->{
+        YField.setOnKeyTyped(e ->{
             try{
                 label.setLayoutY(parseDouble(YField.getText()));
             }catch(NumberFormatException ignored){
 
             }
-            YField.setText("");
         });
 
         fontNameBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
@@ -372,13 +375,12 @@ public class ElementSettings {
                 label.setStrokeWidth(0);
         });
 
-        strokeWidthField.setOnAction(e -> {
+        strokeWidthField.setOnKeyTyped(e -> {
             try{
                 label.setStrokeWidth(parseDouble(strokeWidthField.getText()));
             }catch(NumberFormatException ignored){
 
             }
-            strokeWidthField.setText("");
         });
 
         strokeColorPicker.setOnAction(e -> label.setStroke(strokeColorPicker.getValue()));
