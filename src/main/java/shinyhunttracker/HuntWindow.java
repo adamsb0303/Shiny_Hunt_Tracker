@@ -22,6 +22,8 @@ import org.json.JSONTokener;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Vector;
 
 import static shinyhunttracker.ElementSettings.*;
 
@@ -30,9 +32,10 @@ class HuntWindow {
     Stage windowStage = new Stage();
     AnchorPane windowLayout = new AnchorPane();
     String currentLayout;
-    ImageView Evo0, Evo1, sprite;
+    ImageView sprite;
+    LinkedHashSet<Integer> familyMembers = new LinkedHashSet<>();
+    Vector<ImageView> familySprites = new Vector<>();
     Text currentHuntingMethodText, currentHuntingPokemonText, currentGameText, encountersText, oddFractionText;
-    Text previousEncountersText = new Text();
     IntegerProperty encounters = new SimpleIntegerProperty();
     IntegerProperty combo = new SimpleIntegerProperty();
     int increment, huntNumber, huntID;
@@ -92,44 +95,48 @@ class HuntWindow {
         //Creates the pokemon's sprite
         sprite = new ImageView();
         sprite.setImage(FetchImage.getImage(new ProgressIndicator(), sprite, selectedPokemon, selectedGame));
-
-        //Creates the pokemon's family's sprites
-        Evo0 = new ImageView();
-        Evo0.setVisible(false);
-        Evo1 = new ImageView();
-        Evo1.setVisible(false);
-
-        if(selectedPokemon.getEvoStage() >= 1)
-            Evo0.setImage(FetchImage.getImage(new ProgressIndicator(), Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
-        if(selectedPokemon.getEvoStage() >= 2)
-            Evo1.setImage(FetchImage.getImage(new ProgressIndicator(), Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame));
-
-        //Makes family sprites draggable
         quickEdit(sprite);
-        quickEdit(Evo0);
-        quickEdit(Evo1);
 
-        windowLayout.getChildren().addAll(sprite, Evo0, Evo1);
-
-        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
-
-        //Positions the labels to the right of the sprite images
-        for(int i = 3; i < windowLayout.getChildren().size(); i++){
-            if(windowLayout.getChildren().get(i).isVisible()) {
-                windowLayout.getChildren().get(i).setLayoutX(200 + 5);
-                windowLayout.getChildren().get(i).setLayoutY(15 * (i - 2));
-            }
-        }
+        windowLayout.getChildren().addAll(sprite);
 
         //Positions the sprites so that they are in order of the family i.e stage 0, 1, 2
         sprite.setLayoutX(100);
         sprite.setLayoutY(200);
 
-        Evo0.setLayoutX(200 + 100);
-        Evo0.setLayoutY(200);
+        //Creates list of family members without duplicates
+        for(int i = 0; i < selectedPokemon.getFamily().size(); i++){
+            familyMembers.addAll(selectedPokemon.getFamily().get(i));
+        }
+        familyMembers.remove(selectedPokemon.getDexNumber());
 
-        Evo1.setLayoutX(200 + 200 + 100);
-        Evo1.setLayoutY(200);
+        //Creates the pokemon's family's sprites
+        for(int i = 0; i < familyMembers.size(); i++){
+            Pokemon familyMember = new Pokemon((int) familyMembers.toArray()[i]);
+            if(familyMember.getGeneration() > selectedGame.getGeneration()) {
+                familyMembers.remove(familyMember.getDexNumber());
+                i--;
+                continue;
+            }
+
+            ImageView memberSprite = new ImageView();
+            memberSprite.setImage(FetchImage.getImage(new ProgressIndicator(), memberSprite, familyMember, selectedGame));
+            memberSprite.setLayoutX(100 + 200 * ((i + 1) % 4));
+            memberSprite.setLayoutY(200 + 200 * (int)((i + 1) / 4.0));
+            memberSprite.setVisible(false);
+            quickEdit(memberSprite);
+            windowLayout.getChildren().add(memberSprite);
+            familySprites.add(memberSprite);
+        }
+
+        windowLayout.getChildren().addAll(currentHuntingPokemonText, currentHuntingMethodText, currentGameText, encountersText, oddFractionText);
+
+        //Positions the labels to the right of the sprite images
+        for(int i = familySprites.size() + 1; i < windowLayout.getChildren().size(); i++){
+            if(windowLayout.getChildren().get(i).isVisible()) {
+                windowLayout.getChildren().get(i).setLayoutX(200 + 5);
+                windowLayout.getChildren().get(i).setLayoutY(15 * (i - familySprites.size()));
+            }
+        }
 
         //Set scene and show screen
         Scene huntScene = new Scene(windowLayout, 750, 480);
@@ -215,10 +222,12 @@ class HuntWindow {
         Accordion settings = new Accordion();
         settings.getPanes().add(spriteSettings);
 
-        if (Evo1.getImage() != null)
-            settings.getPanes().add(createImageSettings(windowLayout, Evo1, new Pokemon(selectedPokemon.getFamily().get(0).get(1)), selectedGame));
-        if (Evo0.getImage() != null)
-            settings.getPanes().add(createImageSettings(windowLayout, Evo0, new Pokemon(selectedPokemon.getFamily().get(0).get(0)), selectedGame));
+        for(int i = 0; i < familySprites.size(); i++) {
+            TitledPane familyPane = createImageSettings(windowLayout, familySprites.get(i), new Pokemon((int) familyMembers.toArray()[i]), selectedGame);
+            settings.getPanes().add(familyPane);
+        }
+
+        //add settings for family sprites
 
         settings.getPanes().addAll(currentPokemonSettings, currentMethodSettings, currentGameSettings, encountersSettings, oddsFraction);
 
