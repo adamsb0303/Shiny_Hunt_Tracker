@@ -37,6 +37,9 @@ public class HuntController {
     static GridPane huntControlsLayout = new GridPane();
     static double xOffset, yOffset;
 
+    static MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
+    static MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
+
     static Vector<HuntWindow> windowsList = new Vector<>();
 
     /**
@@ -93,10 +96,20 @@ public class HuntController {
         masterSettings.setPadding(new Insets(0, 0, 0, 0));
         masterSettings.setGraphic(settingsIcon);
         masterSettings.setMinSize(30, 25);
-        MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
         MenuItem keyBinding = new MenuItem("Key Bind Settings");
-        MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
         masterSettings.getItems().addAll(editSavedHunts, keyBinding, previouslyCaught);
+
+        try {
+            //Read JSON file
+            JSONArray caughtList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
+            JSONArray prevHuntsList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
+
+            //hides settings if they lead to empty windows
+            previouslyCaught.setVisible(caughtList.length() > 0);
+            editSavedHunts.setVisible(prevHuntsList.length() > 0);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //puts addHunt and masterSettings to bottom left and right respectively
         BorderPane masterButtonsPane = new BorderPane();
@@ -180,6 +193,8 @@ public class HuntController {
                 break;
         newWindow.setHuntNumber(huntNum + 1);
         windowsList.add(huntNum, newWindow);
+
+        editSavedHunts.setVisible(true);
 
         //Add hunt Labels to controller
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
@@ -298,7 +313,6 @@ public class HuntController {
             windowsList.remove(newWindow);
             if(prevHuntsStage.isShowing())
                 loadSavedHuntsWindow();
-
             saveHuntOrder();
             refreshHunts();
         });
@@ -312,6 +326,7 @@ public class HuntController {
             updatePreviousSessionDat(-1);
             newWindow.pokemonCaught();
             windowsList.remove(newWindow);
+            previouslyCaught.setVisible(true);
             saveHuntOrder();
             refreshHunts();
         });
@@ -556,6 +571,13 @@ public class HuntController {
                                 return;
 
                             SaveData.removeHunt(index);
+                            try {
+                                JSONArray checkPrevious = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
+                                editSavedHunts.setVisible(checkPrevious.length() > 0);
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+
                             int huntID = Integer.parseInt(huntData.get("huntID").toString());
                             for(int j = 0; j < windowsList.size(); j++)
                                 if(windowsList.get(j).getHuntID() == huntID) {
