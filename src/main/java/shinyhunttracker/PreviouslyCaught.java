@@ -176,7 +176,7 @@ class PreviouslyCaught {
     public static void addPreviouslyCaughtPokemon() {
         //Removes elements if the number that needs to be displayed goes down
         if (displayCaught < displayPrevious) {
-            windowLayout.getChildren().remove(displayCaught * 5, windowLayout.getChildren().size());
+            windowLayout.getChildren().remove(displayCaught * 6, windowLayout.getChildren().size());
             settingsAccordion.getPanes().remove(displayCaught, settingsAccordion.getPanes().size() - 1);
             return;
         }
@@ -207,19 +207,25 @@ class PreviouslyCaught {
                 Pokemon previouslyCaughtPokemon = new Pokemon(caughtData.getInt("pokemon"));
                 previouslyCaughtPokemon.setForm(caughtData.getInt("form"));
                 ImageView sprite = new ImageView();
-                sprite.setImage(FetchImage.getImage(new ProgressIndicator(), sprite, previouslyCaughtPokemon, caughtGame));
+                ProgressIndicator progressIndicator = new ProgressIndicator();
+                progressIndicator.managedProperty().bind(progressIndicator.visibleProperty());
+                progressIndicator.visibleProperty().bind(progressIndicator.progressProperty().lessThan(1));
+                sprite.setImage(FetchImage.getImage(progressIndicator, sprite, previouslyCaughtPokemon, caughtGame));
 
                 Text pokemon = new Text(previouslyCaughtPokemon.getName());
                 Text game = new Text(caughtGame.getName());
                 Text method = new Text(caughtMethod.getName());
                 Text encounters = new Text(String.format("%,d", caughtData.getInt("encounters")));
 
-                windowLayout.getChildren().addAll(sprite, pokemon, game, method, encounters);
+                windowLayout.getChildren().addAll(progressIndicator, sprite, pokemon, game, method, encounters);
 
                 pokemon.setStroke(Color.web("0x00000000"));
                 game.setStroke(Color.web("0x00000000"));
                 method.setStroke(Color.web("0x00000000"));
                 encounters.setStroke(Color.web("0x00000000"));
+
+                progressIndicator.setLayoutX(100 + 200 * column);
+                progressIndicator.setLayoutY(100 + 200 * row);
 
                 sprite.setLayoutX(100 + 200 * column);
                 sprite.setLayoutY(200 + 200 * row);
