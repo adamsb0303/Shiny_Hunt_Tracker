@@ -415,7 +415,8 @@ public class HuntSelection{
         if(selectedPokemon != null && selectedGame != null){
             for(int i = 0; i < updatedMethodList.size(); i++){
                 if(i == selectedGame.getMethods().size() ||  !selectedGame.getMethods().contains(updatedMethodList.get(i).getId()) ||
-                        (defaultMethodList.get(selectedGame.getMethods().get(i)).getBreeding() && !selectedPokemon.getBreedable())) {
+                        (defaultMethodList.get(selectedGame.getMethods().get(i)).getBreeding() && !selectedPokemon.getBreedable()) ||
+                        (selectedGame.getMethodTable(updatedMethodList.get(i).getId()).size() > 0 && Collections.binarySearch(selectedGame.getMethodTable(updatedMethodList.get(i).getId()), selectedPokemon.getDexNumber()) < 0)) {
                     updatedMethodList.remove(i);
                     i--;
                 }
