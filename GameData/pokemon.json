@@ -154,7 +154,6 @@
     "stage":0,
     "name":"Rattata",
     "breedable":true,
-    "regional-forms":[802],
     "family":[18, 19],
     "forms":["Male", "Female"],
     "base":[71, 30, 25, 56, 35]
@@ -164,7 +163,6 @@
     "stage":1,
     "name":"Raticate",
     "breedable":true,
-    "regional-forms":[803],
     "family":[18, 19],
     "forms":["Male", "Female"],
     "base":[97, 55, 50, 81, 60]
@@ -206,7 +204,10 @@
     "stage":1,
     "name":"Pikachu",
     "breedable":true,
-    "family":[171, 24, 25],
+    "family":[
+      [171, 24, 25],
+      [171, 24, 804]
+    ],
     "forms":["Male", "Female", "Gigantamax"],
     "base":[90, 35, 50, 55, 30]
   },
@@ -215,7 +216,6 @@
     "stage":2,
     "name":"Raichu",
     "breedable":true,
-    "regional-forms":[804],
     "family":[171, 24, 25],
     "forms":["Male", "Female"],
     "base":[100, 60, 90, 90, 55]
@@ -225,7 +225,6 @@
     "stage":0,
     "name":"Sandshrew",
     "breedable":true,
-    "regional-forms":[805],
     "family":[26, 27],
     "base":[40, 50, 30, 75, 85]
   },
@@ -234,7 +233,6 @@
     "stage":1,
     "name":"Sandslash",
     "breedable":true,
-    "regional-forms":[806],
     "family":[26, 27],
     "base":[65, 75, 55, 100, 110]
   },
@@ -307,7 +305,6 @@
     "stage":0,
     "name":"Vulpix",
     "breedable":true,
-    "regional-forms":[807],
     "family":[36, 37],
     "base":[65, 38, 65, 41, 40]
   },
@@ -316,7 +313,6 @@
     "stage":1,
     "name":"Ninetales",
     "breedable":true,
-    "regional-forms":[808],
     "family":[36, 37],
     "base":[100, 73, 100, 76, 75]
   },
@@ -423,7 +419,6 @@
     "stage":0,
     "name":"Diglett",
     "breedable":true,
-    "regional-forms":[809],
     "family":[49, 50],
     "base":[95, 10, 45, 55, 25]
   },
@@ -432,7 +427,6 @@
     "stage":1,
     "name":"Dugtrio",
     "breedable":true,
-    "regional-forms":[810],
     "family":[49, 50],
     "base":[120, 35, 70, 80, 50]
   },
@@ -441,7 +435,6 @@
     "stage":0,
     "name":"Meowth",
     "breedable":true,
-    "regional-forms":[811, 908],
     "family":[51, 52],
     "forms":["Regular", "Gigantamax"],
     "base":[90, 40, 40, 45, 35]
@@ -451,7 +444,6 @@
     "stage":1,
     "name":"Persian",
     "breedable":true,
-    "regional-forms":[812],
     "family":[51, 52],
     "base":[115, 65, 65, 70, 60]
   },
@@ -492,7 +484,6 @@
     "stage":0,
     "name":"Growlithe",
     "breedable":true,
-    "regional-forms":[941],
     "family":[57, 58],
     "base":[60, 55, 50, 70, 45]
   },
@@ -501,7 +492,6 @@
     "stage":1,
     "name":"Arcanine",
     "breedable":true,
-    "regional-forms":[942],
     "family":[57, 58],
     "base":[95, 90, 80, 110, 80]
   },
@@ -631,7 +621,6 @@
     "stage":0,
     "name":"Geodude",
     "breedable":true,
-    "regional-forms":[813],
     "family":[73, 74, 75],
     "base":[20, 40, 30, 80, 100]
   },
@@ -640,7 +629,6 @@
     "stage":1,
     "name":"Graveler",
     "breedable":true,
-    "regional-forms":[814],
     "family":[73, 74, 75],
     "base":[35, 55, 45, 95, 115]
   },
@@ -649,7 +637,6 @@
     "stage":2,
     "name":"Golem",
     "breedable":true,
-    "regional-forms":[815],
     "family":[73, 74, 75],
     "base":[45, 80, 55, 110, 130]
   },
@@ -658,7 +645,6 @@
     "stage":0,
     "name":"Ponyta",
     "breedable":true,
-    "regional-forms":[909],
     "family":[76, 77],
     "base":[90, 50, 65, 85, 55]
   },
@@ -667,7 +653,6 @@
     "stage":1,
     "name":"Rapidash",
     "breedable":true,
-    "regional-forms":[910],
     "family":[76, 77],
     "base":[105, 65, 60, 100, 70]
   },
@@ -676,7 +661,6 @@
     "stage":0,
     "name":"Slowpoke",
     "breedable":true,
-    "regional-forms":[925],
     "family":[
       [78, 79],
       [78, 198]
@@ -688,7 +672,6 @@
     "stage":1,
     "name":"Slowbro",
     "breedable":true,
-    "regional-forms":[926],
     "family":[78, 79],
     "forms": ["Regular", "Mega"],
     "base":[30, 95, 80, 75, 110]
@@ -713,7 +696,6 @@
     "generation":1,
     "name":"Farfetch'd",
     "breedable":true,
-    "regional-forms":[911],
     "base":[60, 52, 58, 65, 55]
   },
   {
@@ -755,7 +737,6 @@
     "stage":0,
     "name":"Grimer",
     "breedable":true,
-    "regional-forms":[816],
     "family":[87, 88],
     "base":[25, 80, 40, 80, 50]
   },
@@ -764,7 +745,6 @@
     "stage":1,
     "name":"Muk",
     "breedable":true,
-    "regional-forms":[817],
     "family":[87, 88],
     "base":[50, 105, 65, 105, 75]
   },
@@ -856,7 +836,6 @@
     "stage":0,
     "name":"Voltorb",
     "breedable":true,
-    "regional-forms":[943],
     "family":[99, 100],
     "base":[100, 40, 55, 30, 50]
   },
@@ -865,7 +844,6 @@
     "stage":1,
     "name":"Electrode",
     "breedable":true,
-    "regional-forms":[944],
     "family":[99, 100],
     "base":[140, 60, 80, 50, 70]
   },
@@ -874,7 +852,10 @@
     "stage":0,
     "name":"Exeggcute",
     "breedable":true,
-    "family":[101, 102],
+    "family":[
+      [101, 102],
+      [101, 818]
+    ],
     "base":[40, 60, 60, 40, 80]
   },
   {
@@ -882,7 +863,6 @@
     "stage":1,
     "name":"Exeggutor",
     "breedable":true,
-    "regional-forms":[818],
     "family":[101, 102],
     "base":[55, 95, 125, 95, 85]
   },
@@ -891,7 +871,10 @@
     "stage":0,
     "name":"Cubone",
     "breedable":true,
-    "family":[103, 104],
+    "family":[
+      [103, 104],
+      [103, 819]
+    ],
     "base":[35, 50, 40, 50, 95]
   },
   {
@@ -899,7 +882,6 @@
     "stage":1,
     "name":"Marowak",
     "breedable":true,
-    "regional-forms":[819],
     "family":[103, 104],
     "base":[45, 60, 50, 80, 110]
   },
@@ -932,7 +914,10 @@
     "stage":0,
     "name":"Koffing",
     "breedable":true,
-    "family":[108, 109],
+    "family":[
+      [108, 109],
+      [108, 912]
+    ],
     "base":[35, 40, 60, 65, 95]
   },
   {
@@ -940,7 +925,6 @@
     "stage":1,
     "name":"Weezing",
     "breedable":true,
-    "regional-forms":[912],
     "family":[108, 109],
     "base":[60, 65, 85, 90, 120]
   },
@@ -1040,8 +1024,7 @@
     "stage":1,
     "name":"Mr. Mime",
     "breedable":true,
-    "regional-forms":[913],
-    "family":[121, 438],
+    "family":[438, 121],
     "base":[90, 40, 100, 45, 65]
   },
   {
@@ -1049,7 +1032,10 @@
     "stage":0,
     "name":"Scyther",
     "breedable":true,
-    "family":[122, 936],
+    "family":[
+      [122, 211],
+      [122, 936]
+    ],
     "forms":["Male", "Female"],
     "base":[105, 70, 55, 110, 80]
   },
@@ -1223,21 +1209,18 @@
     "generation":1,
     "name":"Articuno",
     "breedable":false,
-    "regional-forms":[931],
     "base":[85, 90, 125, 85, 100]
   },
   {
     "generation":1,
     "name":"Zapdos",
     "breedable":false,
-    "regional-forms":[932],
     "base":[100, 90, 125, 90, 85]
   },
   {
     "generation":1,
     "name":"Moltres",
     "breedable":false,
-    "regional-forms":[933],
     "base":[90, 90, 125, 100, 90]
   },
   {
@@ -1304,21 +1287,26 @@
     "stage":0,
     "name":"Cyndaquil",
     "breedable":true,
-    "family":[154, 155, 156]
+    "family":[
+      [154, 155, 156],
+      [154, 155, 945]
+    ]
   },
   {
     "generation":2,
     "stage":1,
     "name":"Quilava",
     "breedable":true,
-    "family":[154, 155, 156]
+    "family":[
+      [154, 155, 156],
+      [154, 155, 945]
+    ]
   },
   {
     "generation":2,
     "stage":2,
     "name":"Typhlosion",
     "breedable":true,
-    "regional-forms":[945],
     "family":[154, 155, 156]
   },
   {
@@ -1426,7 +1414,10 @@
     "stage":0,
     "name":"Pichu",
     "breedable":true,
-    "family":[24, 25, 171]
+    "family":[
+      [171, 24, 25],
+      [171, 24, 804]
+    ]
   },
   {
     "generation":2,
@@ -1623,7 +1614,6 @@
     "stage":1,
     "name":"Slowking",
     "breedable":true,
-    "regional-forms":[930],
     "family":[78, 198]
   },
   {
@@ -1705,8 +1695,7 @@
   {
     "generation":2,
     "name":"Qwilfish",
-    "breedable":true,
-    "regional-forms":[946]
+    "breedable":true
   },
   {
     "generation":2,
@@ -1732,7 +1721,6 @@
     "stage":0,
     "name":"Sneasel",
     "breedable":true,
-    "regional-forms":[947],
     "family":[214, 460],
     "forms":["Male", "Female"]
   },
@@ -1784,8 +1772,7 @@
   {
     "generation":2,
     "name":"Corsola",
-    "breedable":true,
-    "regional-forms":[914]
+    "breedable":true
   },
   {
     "generation":2,
@@ -2064,7 +2051,6 @@
     "stage":0,
     "name":"Zigzagoon",
     "breedable":true,
-    "regional-forms":[915],
     "family":[262, 263]
   },
   {
@@ -2072,7 +2058,6 @@
     "stage":1,
     "name":"Linoone",
     "breedable":true,
-    "regional-forms":[916],
     "family":[262, 263]
   },
   {
@@ -2270,7 +2255,10 @@
     "stage":0,
     "name":"Nincada",
     "breedable":true,
-    "family":[289, 290, 291]
+    "family":[
+      [289, 290],
+      [289, 291]
+    ]
   },
   {
     "generation":3,
@@ -3312,14 +3300,17 @@
     "stage":0,
     "name":"Mime Jr.",
     "breedable":true,
-    "family":[438, 883, 913]
+    "family":[
+      [438, 121],
+      [438, 913, 883]
+    ]
   },
   {
     "generation":4,
     "stage":0,
     "name":"Happiny",
     "breedable":true,
-    "family":[112, 241, 439]
+    "family":[439, 112, 241]
   },
   {
     "generation":4,
@@ -3728,21 +3719,26 @@
     "stage":0,
     "name":"Oshawott",
     "breedable":true,
-    "family":[500, 501, 502]
+    "family":[
+      [500, 501, 502],
+      [500, 501, 949]
+    ]
   },
   {
     "generation":5,
     "stage":1,
     "name":"Dewott",
     "breedable":true,
-    "family":[500, 501, 502]
+    "family":[
+      [500, 501, 502],
+      [500, 501, 949]
+    ]
   },
   {
     "generation":5,
     "stage":2,
     "name":"Samurott",
     "breedable":true,
-    "regional-forms":[948],
     "family":[500, 501, 502]
   },
   {
@@ -4054,14 +4050,16 @@
     "stage":0,
     "name":"Petilil",
     "breedable":true,
-    "family":[547, 548]
+    "family":[
+      [547, 548],
+      [547, 949]
+    ]
   },
   {
     "generation":5,
     "stage":1,
     "name":"Lilligant",
     "breedable":true,
-    "regional-forms":[949],
     "family":[547, 548]
   },
   {
@@ -4069,7 +4067,6 @@
     "stage":0,
     "name":"Basculin",
     "breedable":true,
-    "regional-forms": [958],
     "forms":["Red-Stripe", "Blue-Stripe"]
   },
   {
@@ -4098,7 +4095,6 @@
     "stage":0,
     "name":"Darumaka",
     "breedable":true,
-    "regional-forms":[917],
     "family":[553, 554]
   },
   {
@@ -4106,7 +4102,6 @@
     "stage":1,
     "name":"Darmanitan",
     "breedable":true,
-    "regional-forms":[918],
     "family":[553, 554],
     "forms":["Standard", "Zen"]
   },
@@ -4153,7 +4148,6 @@
     "stage":0,
     "name":"Yamask",
     "breedable":true,
-    "regional-forms":[919],
     "family":[561, 562]
   },
   {
@@ -4211,7 +4205,6 @@
     "stage":0,
     "name":"Zorua",
     "breedable":true,
-    "regional-forms":[950],
     "family":[569, 570]
   },
   {
@@ -4219,7 +4212,6 @@
     "stage":1,
     "name":"Zoroark",
     "breedable":true,
-    "regional-forms":[951],
     "family":[569, 570]
   },
   {
@@ -4545,8 +4537,7 @@
   {
     "generation":5,
     "name":"Stunfisk",
-    "breedable":true,
-    "regional-forms":[920]
+    "breedable":true
   },
   {
     "generation":5,
@@ -4605,14 +4596,16 @@
     "stage":0,
     "name":"Rufflet",
     "breedable":true,
-    "family":[626, 627]
+    "family":[
+      [626, 627],
+      [626, 952]
+    ]
   },
   {
     "generation":5,
     "stage":1,
     "name":"Braviary",
     "breedable":true,
-    "regional-forms":[952],
     "family":[626, 627]
   },
   {
@@ -5123,14 +5116,16 @@
     "stage":0,
     "name":"Goomy",
     "breedable":true,
-    "family":[703, 704, 705]
+    "family":[
+      [703, 704, 705],
+      [703, 954, 955]
+    ]
   },
   {
     "generation":6,
     "stage":1,
     "name":"Sliggoo",
     "breedable":true,
-    "regional-forms":[953],
     "family":[703, 704, 705]
   },
   {
@@ -5138,7 +5133,6 @@
     "stage":2,
     "name":"Goodra",
     "breedable":true,
-    "regional-forms":[954],
     "family":[703, 704, 705]
   },
   {
@@ -5179,14 +5173,16 @@
     "stage":0,
     "name":"Bergmite",
     "breedable":true,
-    "family":[711, 712]
+    "family":[
+      [711, 712],
+      [711, 955]
+    ]
   },
   {
     "generation":6,
     "stage":1,
     "name":"Avalugg",
     "breedable":true,
-    "regional-forms":[955],
     "family":[711, 712]
   },
   {
@@ -5241,21 +5237,26 @@
     "stage":0,
     "name":"Rowlet",
     "breedable":true,
-    "family":[721, 722, 723]
+    "family":[
+      [721, 722, 723],
+      [721, 722, 956]
+    ]
   },
   {
     "generation":7,
     "stage":1,
     "name":"Dartrix",
     "breedable":true,
-    "family":[721, 722, 723]
+    "family":[
+      [721, 722, 723],
+      [721, 722, 956]
+    ]
   },
   {
     "generation":7,
     "stage":2,
     "name":"Decidueye",
     "breedable":true,
-    "regional-forms":[956],
     "family":[721, 722, 723]
   },
   {
@@ -5763,127 +5764,108 @@
     "generation":7,
     "name":"Alolan Rattata",
     "breedable":true,
-    "regional-forms":[18],
     "family":[802, 803]
   },
   {
     "generation":7,
     "name":"Alolan Raticate",
     "breedable":true,
-    "regional-forms":[19],
     "family":[802, 803]
   },
   {
     "generation":7,
     "name":"Alolan Raichu",
     "breedable":true,
-    "regional-forms":[25],
-    "family":[24, 171, 804
-    ]
+    "family":[171, 24, 804]
   },
   {
     "generation":7,
     "name":"Alolan Sandshrew",
     "breedable":true,
-    "regional-forms":[26],
     "family":[805, 806]
   },
   {
     "generation":7,
     "name":"Alolan Sandslash",
     "breedable":true,
-    "regional-forms":[27],
     "family":[805, 806]
   },
   {
     "generation":7,
     "name":"Alolan Vulpix",
     "breedable":true,
-    "regional-forms":[36],
     "family":[807, 808]
   },
   {
     "generation":7,
     "name":"Alolan Ninetales",
     "breedable":true,
-    "regional-forms":[36],
     "family":[807, 808]
   },
   {
     "generation":7,
     "name":"Alolan Diglett",
     "breedable":true,
-    "regional-forms":[49],
     "family":[809, 810]
   },
   {
     "generation":7,
     "name":"Alolan Dugtrio",
     "breedable":true,
-    "regional-forms":[50],
     "family":[809, 810]
   },
   {
     "generation":7,
     "name":"Alolan Meowth",
     "breedable":true,
-    "regional-forms":[51, 908],
     "family":[811, 812]
   },
   {
     "generation":7,
     "name":"Alolan Persian",
     "breedable":true,
-    "regional-forms":[52],
     "family":[811, 812]
   },
   {
     "generation":7,
     "name":"Alolan Geodude",
     "breedable":true,
-    "regional-forms":[73],
     "family":[813, 814, 815]
   },
   {
     "generation":7,
     "name":"Alolan Graveler",
     "breedable":true,
-    "regional-forms":[74],
     "family":[813, 814, 815]
   },
   {
     "generation":7,
     "name":"Alolan Golem",
     "breedable":true,
-    "regional-forms":[75],
     "family":[813, 814, 815]
   },
   {
     "generation":7,
     "name":"Alolan Grimer",
     "breedable":true,
-    "regional-forms":[87],
     "family":[816, 817]
   },
   {
     "generation":7,
     "name":"Alolan Muk",
     "breedable":true,
-    "regional-forms":[88],
     "family":[816, 817]
   },
   {
     "generation":7,
     "name":"Alolan Exeggutor",
     "breedable":true,
-    "regional-forms":[102],
     "family":[102, 818]
   },
   {
     "generation":7,
     "name":"Alolan Marowak",
     "breedable":true,
-    "regional-forms":[104],
     "family":[103, 819]
   },
   {
@@ -6489,77 +6471,66 @@
     "generation":8,
     "name":"Galarian Meowth",
     "breedable":true,
-    "regional-forms":[51, 811],
     "family":[880, 908]
   },
   {
     "generation":8,
     "name":"Galarian Ponyta",
     "breedable":true,
-    "regional-forms":[76],
     "family":[909, 910]
   },
   {
     "generation":8,
     "name":"Galarian Rapidash",
     "breedable":true,
-    "regional-forms":[77],
     "family":[909, 910]
   },
   {
     "generation":8,
     "name":"Galarian Farfetch'd",
     "breedable":true,
-    "regional-forms":[82],
     "family":[882, 911]
   },
   {
     "generation":8,
     "name":"Galarian Weezing",
     "breedable":true,
-    "regional-forms":[109],
     "family":[108, 912]
   },
   {
     "generation":8,
     "name":"Galarian Mr. Mime",
     "breedable":true,
-    "regional-forms":[121],
     "family":[438, 883, 913]
   },
   {
     "generation":8,
     "name":"Galarian Corsola",
     "breedable":true,
-    "regional-forms":[221],
     "family":[881, 914]
   },
   {
     "generation":8,
     "name":"Galarian Zigzagoon",
     "breedable":true,
-    "regional-forms":[262],
     "family":[879, 915, 916]
   },
   {
     "generation":8,
     "name":"Galarian Linoone",
     "breedable":true,
-    "regional-forms":[263],
     "family":[879, 915, 916]
   },
   {
     "generation":8,
     "name":"Galarian Darumaka",
     "breedable":true,
-    "regional-forms":[553],
     "family":[917, 918]
   },
   {
     "generation":8,
     "name":"Galarian Darmanitan",
     "breedable":true,
-    "regional-forms":[554],
     "family":[917, 918],
     "forms": ["Standard", "Zen"]
   },
@@ -6567,14 +6538,12 @@
     "generation":8,
     "name":"Galarian Yamask",
     "breedable":true,
-    "regional-forms":[561],
     "family":[884, 919]
   },
   {
     "generation":8,
     "name":"Galarian Stunfisk",
-    "breedable":true,
-    "regional-forms":[617]
+    "breedable":true
   },
   {
     "generation":8,
@@ -6611,14 +6580,15 @@
     "generation":8,
     "name":"Galarian Slowpoke",
     "breedable":true,
-    "regional-forms":[78],
-    "family":[926, 927, 931]
+    "family":[
+      [926, 927],
+      [926, 931]
+    ]
   },
   {
     "generation":8,
     "name":"Galarian Slowbro",
     "breedable":true,
-    "regional-forms":[79],
     "family":[926, 927]
   },
   {
@@ -6641,26 +6611,22 @@
     "generation":8,
     "name":"Galarian Slowking",
     "breedable":true,
-    "regional-forms":[198],
     "family":[926, 931]
   },
   {
     "generation":8,
     "name":"Galarian Articuno",
-    "breedable":false,
-    "regional-forms":[143]
+    "breedable":false
   },
   {
     "generation":8,
     "name":"Galarian Zapdos",
-    "breedable":false,
-    "regional-forms":[144]
+    "breedable":false
   },
   {
     "generation":8,
     "name":"Galarian Moltres",
-    "breedable":false,
-    "regional-forms":[145]
+    "breedable":false
   },
   {
     "generation":8,
@@ -6714,119 +6680,102 @@
     "generation":8,
     "name":"Hisuian Growlithe",
     "breedable":true,
-    "regional-forms":[57],
     "family":[942, 943]
   },
   {
     "generation":8,
     "name":"Hisuian Arcanine",
     "breedable":true,
-    "regional-forms":[58],
     "family":[942, 943]
   },
   {
     "generation":8,
     "name":"Hisuian Voltorb",
     "breedable":true,
-    "regional-forms":[99],
     "family":[944, 945]
   },
   {
     "generation":8,
     "name":"Hisuian Electrode",
     "breedable":true,
-    "regional-forms":[100],
     "family":[944, 945]
   },
   {
     "generation":8,
     "name":"Hisuian Typhlosion",
     "breedable":true,
-    "regional-forms":[156],
     "family":[154, 155, 946]
   },
   {
     "generation":8,
     "name":"Hisuian Qwilfish",
     "breedable":true,
-    "regional-forms":[210],
     "family":[940, 947]
   },
   {
     "generation":8,
     "name":"Hisuian Sneasel",
     "breedable":true,
-    "regional-forms":[214],
     "family":[939, 948]
   },
   {
     "generation":8,
     "name":"Hisuian Samurott",
     "breedable":true,
-    "regional-forms":[502],
     "family":[500, 501, 949]
   },
   {
     "generation":8,
     "name":"Hisuian Lilligant",
     "breedable":true,
-    "regional-forms":[548],
     "family":[548, 950]
   },
   {
     "generation":8,
     "name":"Hisuian Zorua",
     "breedable":true,
-    "regional-forms":[569],
     "family":[951, 952]
   },
   {
     "generation":8,
     "name":"Hisuian Zoroark",
     "breedable":true,
-    "regional-forms":[570],
     "family":[951, 952]
   },
   {
     "generation":8,
     "name":"Hisuian Braviary",
     "breedable":true,
-    "regional-forms":[627],
     "family":[626, 953]
   },
   {
     "generation":8,
     "name":"Hisuian Sliggoo",
     "breedable":true,
-    "regional-forms":[704],
     "family":[703, 954, 955]
   },
   {
     "generation":8,
     "name":"Hisuian Goodra",
     "breedable":true,
-    "regional-forms":[705],
     "family":[703, 954, 955]
   },
   {
     "generation":8,
     "name":"Hisuian Avalugg",
     "breedable":true,
-    "regional-forms":[712],
     "family":[711, 956]
   },
   {
     "generation":8,
     "name":"Hisuian Decidueye",
     "breedable":true,
-    "regional-forms":[723],
     "family":[721, 722, 957]
   },
   {
     "generation":8,
     "name":"Hisuian Basculin",
     "breedable":true,
-    "regional-forms":[549],
     "family":[958, 938]
   }
 ]
