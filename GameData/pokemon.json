@@ -681,7 +681,7 @@
     "stage":0,
     "name":"Magnemite",
     "breedable":true,
-    "family":[80, 81, 82],
+    "family":[80, 81, 461],
     "base":[45, 25, 95, 35, 70]
   },
   {
@@ -689,7 +689,7 @@
     "stage":1,
     "name":"Magneton",
     "breedable":true,
-    "family":[80, 81, 82],
+    "family":[80, 81, 461],
     "base":[70, 50, 120, 60, 95]
   },
   {
@@ -1044,7 +1044,7 @@
     "stage":1,
     "name":"Jynx",
     "breedable":true,
-    "family":[123, 237],
+    "family":[237, 123],
     "base":[95, 65, 95, 50, 35]
   },
   {
@@ -1052,7 +1052,7 @@
     "stage":1,
     "name":"Electabuzz",
     "breedable":true,
-    "family":[124, 238, 465],
+    "family":[238, 124, 465],
     "base":[105, 65, 85, 83, 57]
   },
   {
@@ -1060,7 +1060,7 @@
     "stage":1,
     "name":"Magmar",
     "breedable":true,
-    "family":[125, 239, 466],
+    "family":[239, 125, 466],
     "base":[93, 65, 85, 95, 57]
   },
   {
@@ -1424,7 +1424,7 @@
     "stage":0,
     "name":"Cleffa",
     "breedable":true,
-    "family":[34, 35, 172]
+    "family":[172, 34, 35]
   },
   {
     "generation":2,
@@ -1496,21 +1496,21 @@
     "stage":1,
     "name":"Marill",
     "breedable":true,
-    "family":[182, 183, 297]
+    "family":[297, 182, 183]
   },
   {
     "generation":2,
     "stage":2,
     "name":"Azumarill",
     "breedable":true,
-    "family":[182, 183, 297]
+    "family":[297, 182, 183]
   },
   {
     "generation":2,
     "stage":1,
     "name":"Sudowoodo",
     "breedable":true,
-    "family":[184, 437],
+    "family":[437, 184],
     "forms":["Male", "Female"]
   },
   {
@@ -1547,7 +1547,7 @@
     "stage":0,
     "name":"Aipom",
     "breedable":true,
-    "family":[189],
+    "family":[189, 423],
     "forms":["Male", "Female"]
   },
   {
@@ -1634,7 +1634,7 @@
     "stage":1,
     "name":"Wobbuffet",
     "breedable":true,
-    "family":[201, 359],
+    "family":[359, 201],
     "forms":["Male", "Female"]
   },
   {
@@ -1758,8 +1758,7 @@
     "stage":0,
     "name":"Swinub",
     "breedable":true,
-    "family":[219, 220, 472
-    ]
+    "family":[219, 220, 472]
   },
   {
     "generation":2,
@@ -1799,7 +1798,7 @@
     "stage":1,
     "name":"Mantine",
     "breedable":true,
-    "family":[225, 457]
+    "family":[457, 225]
   },
   {
     "generation":2,
@@ -1885,21 +1884,21 @@
     "stage":0,
     "name":"Smoochum",
     "breedable":true,
-    "family":[123, 237]
+    "family":[237, 123]
   },
   {
     "generation":2,
     "stage":0,
     "name":"Elekid",
     "breedable":true,
-    "family":[124, 238, 465]
+    "family":[238, 124, 465]
   },
   {
     "generation":2,
     "stage":0,
     "name":"Magby",
     "breedable":true,
-    "family":[125, 239, 466]
+    "family":[239, 125, 466]
   },
   {
     "generation":2,
@@ -2314,7 +2313,7 @@
     "stage":0,
     "name":"Azurill",
     "breedable":true,
-    "family":[182, 183, 297]
+    "family":[297, 182, 183]
   },
   {
     "generation":3,
@@ -2427,7 +2426,7 @@
     "stage":1,
     "name":"Roselia",
     "breedable":true,
-    "family":[314, 405, 406],
+    "family":[405, 314, 406],
     "forms":["Male", "Female"]
   },
   {
@@ -2705,16 +2704,14 @@
     "stage":0,
     "name":"Duskull",
     "breedable":true,
-    "family":[354, 355, 476
-    ]
+    "family":[354, 355, 476]
   },
   {
     "generation":3,
     "stage":1,
     "name":"Dusclops",
     "breedable":true,
-    "family":[354, 355, 476
-    ]
+    "family":[354, 355, 476]
   },
   {
     "generation":3,
@@ -2726,7 +2723,7 @@
     "stage":1,
     "name":"Chimecho",
     "breedable":true,
-    "family":[357, 432]
+    "family":[432, 357]
   },
   {
     "generation":3,
@@ -2739,7 +2736,7 @@
     "stage":0,
     "name":"Wynaut",
     "breedable":true,
-    "family":[201, 359]
+    "family":[359, 201]
   },
   {
     "generation":3,
@@ -3060,14 +3057,14 @@
     "stage":0,
     "name":"Budew",
     "breedable":true,
-    "family":[314, 405, 406]
+    "family":[405, 314, 406]
   },
   {
     "generation":4,
     "stage":2,
     "name":"Roserade",
     "breedable":true,
-    "family":[314, 405, 406],
+    "family":[405, 314, 406],
     "forms":["Male", "Female"]
   },
   {
@@ -3194,6 +3191,7 @@
     "generation":4,
     "name":"Ambipom",
     "breedable":true,
+    "family": [189, 423],
     "forms":["Male", "Female"]
   },
   {
@@ -3258,7 +3256,7 @@
     "stage":0,
     "name":"Chingling",
     "breedable":true,
-    "family":[357, 432]
+    "family":[432, 357]
   },
   {
     "generation":4,
@@ -3293,7 +3291,7 @@
     "stage":0,
     "name":"Bonsly",
     "breedable":true,
-    "family":[184, 437]
+    "family":[437, 184]
   },
   {
     "generation":4,
@@ -3440,7 +3438,7 @@
     "stage":0,
     "name":"Mantyke",
     "breedable":true,
-    "family":[225, 457]
+    "family":[457, 225]
   },
   {
     "generation":4,
@@ -3501,14 +3499,14 @@
     "stage":2,
     "name":"Electivire",
     "breedable":true,
-    "family":[124, 238, 465]
+    "family":[238, 124, 465]
   },
   {
     "generation":4,
     "stage":2,
     "name":"Magmortar",
     "breedable":true,
-    "family":[125, 239, 466]
+    "family":[239, 125, 466]
   },
   {
     "generation":4,
