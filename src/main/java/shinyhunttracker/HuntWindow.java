@@ -400,6 +400,16 @@ class HuntWindow {
     }
 
     /**
+     * Decreases encounters by increment value
+     */
+    public void decrementEncounters(){
+        if(encounters.getValue() == 0)
+            return;
+        encounters.setValue(encounters.getValue() - increment);
+        combo.setValue(combo.getValue() - increment);
+    }
+
+    /**
      * Closes this window and moves pokemon data to caught list
      */
     public void pokemonCaught() {

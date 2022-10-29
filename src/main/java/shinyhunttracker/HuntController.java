@@ -218,14 +218,29 @@ public class HuntController {
         GridPane.setValignment(huntNumberLabel, VPos.CENTER);
         huntControlsLayout.add(huntNumberLabel, 1, row);
 
-        Button encountersButton = new Button();
-        encountersButton.setFocusTraversable(false);
-        ImageView encountersIcon = new ImageView(new Image("file:Images/plus.png"));
-        encountersButton.setPadding(new Insets(0, 0, 0, 0));
-        encountersButton.setGraphic(encountersIcon);
-        encountersButton.setTooltip(new Tooltip("Increment Encounters"));
-        encountersButton.setMinSize(25, 25);
-        huntControlsLayout.add(encountersButton, 2, row);
+        Button incrementButton = new Button();
+        incrementButton.setFocusTraversable(false);
+        ImageView incrementIcon = new ImageView(new Image("file:Images/increment.png"));
+        incrementButton.setPadding(new Insets(0, 0, 0, 0));
+        incrementButton.setGraphic(incrementIcon);
+        incrementButton.setTooltip(new Tooltip("+ Encounters"));
+        incrementButton.setMinSize(25, 12);
+
+        Button decrementButton = new Button();
+        decrementButton.setFocusTraversable(false);
+        ImageView decrementIcon = new ImageView(new Image("file:Images/decrement.png"));
+        decrementButton.setPadding(new Insets(0, 0, 0, 0));
+        decrementButton.setGraphic(decrementIcon);
+        decrementButton.setTooltip(new Tooltip("- Encounters"));
+        decrementButton.setMinSize(25, 12);
+
+        VBox encountersControl = new VBox();
+        encountersControl.setSpacing(1);
+        encountersControl.setMaxHeight(25);
+        encountersControl.setAlignment(Pos.CENTER);
+        encountersControl.getChildren().addAll(incrementButton, decrementButton);
+
+        huntControlsLayout.add(encountersControl, 2, row);
 
         Label nameLabel = new Label(newWindow.getPokemon().getName());
         GridPane.setHalignment(nameLabel, HPos.CENTER);
@@ -317,8 +332,13 @@ public class HuntController {
             refreshHunts();
         });
 
-        encountersButton.setOnAction(e -> {
+        incrementButton.setOnAction(e -> {
             newWindow.incrementEncounters();
+            saveHuntOrder();
+        });
+
+        decrementButton.setOnAction(e -> {
+            newWindow.decrementEncounters();
             saveHuntOrder();
         });
 
