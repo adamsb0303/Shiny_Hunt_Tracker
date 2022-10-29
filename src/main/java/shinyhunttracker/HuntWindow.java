@@ -272,7 +272,7 @@ class HuntWindow {
         HuntController.makeDraggable(CustomizeHuntScene);
 
         settings.heightProperty().addListener((o, oldVal, newVal) -> {
-            CustomizeHuntStage.setHeight(settings.getHeight() + 80);
+            CustomizeHuntStage.setHeight(settings.getHeight() + 85);
             CustomizeHuntStage.setWidth(315);
         });
 
@@ -292,8 +292,8 @@ class HuntWindow {
         layoutListLayout.setPadding(new Insets(10, 10, 10, 10));
 
         layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
-            if(layoutListLayout.getHeight() + 40 <= 540) {
-                layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
+            if(layoutListLayout.getHeight() + 45 <= 540) {
+                layoutListStage.setHeight(layoutListLayout.getHeight() + 45);
                 layoutListStage.setWidth(layoutListLayout.getWidth());
             }
             else {

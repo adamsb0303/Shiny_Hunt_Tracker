@@ -145,10 +145,7 @@ public class HuntSelection{
         }
         pokemonListRoot.getChildren().addAll(defaultPokemonList);
 
-        HBox titleBar = HuntController.titleBar(selectionPageStage);
-        titleBar.setPadding(new Insets(5, 5, 5, 5));
-
-        pokemonSelection.getChildren().addAll(titleBar, pokemonSearch, pokemonListTreeView);
+        pokemonSelection.getChildren().addAll(HuntController.titleBar(selectionPageStage), pokemonSearch, pokemonListTreeView);
 
         selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
         selectionPageLayout.setId("background");

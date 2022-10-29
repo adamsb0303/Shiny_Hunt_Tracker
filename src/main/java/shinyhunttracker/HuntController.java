@@ -67,8 +67,8 @@ public class HuntController {
             }
 
             //caps window height at 540
-            if(huntControlsLayout.getHeight() + 65 <= 540) {
-                huntControls.setHeight(huntControlsLayout.getHeight() + 65);
+            if(huntControlsLayout.getHeight() + 70 <= 540) {
+                huntControls.setHeight(huntControlsLayout.getHeight() + 70);
                 huntControls.setWidth(huntControlsLayout.getWidth() + 5);
             }
             else {
@@ -454,7 +454,7 @@ public class HuntController {
         loadLayout.setSpacing(10);
         loadLayout.setAlignment(Pos.TOP_CENTER);
 
-        Scene loadScene = new Scene(loadLayout, 275, 150);
+        Scene loadScene = new Scene(loadLayout, 275, 155);
         loadScene.getStylesheets().add("file:shinyTracker.css");
         promptStage.setTitle("Load previous save");
         promptStage.setResizable(false);
@@ -492,8 +492,8 @@ public class HuntController {
 
         previousHunts.heightProperty().addListener((o, oldVal, newVal) -> {
             //caps window height at 540
-            if(previousHunts.getHeight() + 30 <= 540) {
-                prevHuntsStage.setHeight(previousHunts.getHeight() + 30);
+            if(previousHunts.getHeight() + 35 <= 540) {
+                prevHuntsStage.setHeight(previousHunts.getHeight() + 35);
                 prevHuntsStage.setWidth(previousHunts.getWidth());
             }
             else {
@@ -631,8 +631,8 @@ public class HuntController {
         editHuntsLayout.setVgap(5);
 
         editHuntsLayout.heightProperty().addListener((o, oldValue, newValue) -> {
-            if(editHuntsLayout.getHeight() + 30 <= 540) {
-                editHunts.setHeight(editHuntsLayout.getHeight() + 30);
+            if(editHuntsLayout.getHeight() + 35 <= 540) {
+                editHunts.setHeight(editHuntsLayout.getHeight() + 35);
                 editHunts.setWidth(editHuntsLayout.getWidth());
             }
             else {
@@ -798,8 +798,8 @@ public class HuntController {
         keyBindingsLayout.setPadding(new Insets(10, 10, 10, 10));
 
         keyBindingsLayout.heightProperty().addListener((o, oldValue, newValue) -> {
-            if(keyBindingsLayout.getHeight() + 40 <= 540) {
-                keyBindingSettingsStage.setHeight(keyBindingsLayout.getHeight() + 40);
+            if(keyBindingsLayout.getHeight() + 45 <= 540) {
+                keyBindingSettingsStage.setHeight(keyBindingsLayout.getHeight() + 45);
                 keyBindingSettingsStage.setWidth(keyBindingsLayout.getWidth());
             }
             else {
@@ -982,7 +982,7 @@ public class HuntController {
         windowControls.getChildren().addAll(minimize, exit);
         windowControls.setAlignment(Pos.CENTER_RIGHT);
         windowControls.setSpacing(5);
-        windowControls.setPadding(new Insets(5,5,0,5));
+        windowControls.setPadding(new Insets(5));
 
         return windowControls;
     }
@@ -1088,7 +1088,7 @@ public class HuntController {
         DVTableLayout.setId("background");
         DVTableLayout.getChildren().addAll(titleBar(DVTableStage), levelSelect, statTable);
 
-        Scene DVTableScene = new Scene(DVTableLayout, 300, 225);
+        Scene DVTableScene = new Scene(DVTableLayout, 300, 230);
         DVTableScene.getStylesheets().add("file:shinyTracker.css");
         DVTableStage.setScene(DVTableScene);
         makeDraggable(DVTableScene);

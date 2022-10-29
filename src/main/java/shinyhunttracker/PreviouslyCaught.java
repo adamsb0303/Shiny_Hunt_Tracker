@@ -80,7 +80,7 @@ class PreviouslyCaught {
         masterLayout.setId("background");
         masterLayout.getChildren().addAll(HuntController.titleBar(previouslyCaughtSettingsStage), scrollPane);
 
-        Scene previouslyCaughtSettingsScene = new Scene(masterLayout, 340, 115);
+        Scene previouslyCaughtSettingsScene = new Scene(masterLayout, 340, 120);
         previouslyCaughtSettingsScene.getStylesheets().add("file:shinyTracker.css");
 
         if(previouslyCaughtSettingsStage.getScene() == null)
@@ -92,7 +92,7 @@ class PreviouslyCaught {
         //Caps window height at 540
         settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
             if(settingsAccordion.getHeight() + 125 <= 540)
-                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 115);
+                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 120);
             else
                 previouslyCaughtSettingsStage.setHeight(540);
             previouslyCaughtSettingsStage.setWidth(340);
@@ -281,8 +281,8 @@ class PreviouslyCaught {
 
         //Caps height at 540
         previousCatches.heightProperty().addListener((o, oldVal, newVal) -> {
-            if(previousCatches.getHeight() + 40 <= 540) {
-                prevCatchesStage.setHeight(previousCatches.getHeight() + 40);
+            if(previousCatches.getHeight() + 45 <= 540) {
+                prevCatchesStage.setHeight(previousCatches.getHeight() + 45);
                 prevCatchesStage.setWidth(previousCatches.getWidth());
             }
             else {
@@ -373,8 +373,8 @@ class PreviouslyCaught {
 
         //caps height at 540
         layoutListLayout.heightProperty().addListener((o, oldVal, newVal) -> {
-            if(layoutListLayout.getHeight() + 40 <= 540) {
-                layoutListStage.setHeight(layoutListLayout.getHeight() + 40);
+            if(layoutListLayout.getHeight() + 45 <= 540) {
+                layoutListStage.setHeight(layoutListLayout.getHeight() + 45);
                 layoutListStage.setWidth(layoutListLayout.getWidth());
             }
             else {
