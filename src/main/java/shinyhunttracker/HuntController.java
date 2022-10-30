@@ -361,8 +361,6 @@ public class HuntController {
             updatePreviousSessionDat(-1);
             newWindow.close();
             windowsList.remove(newWindow);
-            if(prevHuntsStage.isShowing())
-                loadSavedHuntsWindow();
             saveHuntOrder();
             refreshHunts();
         });
@@ -990,7 +988,8 @@ public class HuntController {
      * @return HBox with new title bar
      */
     public static HBox titleBar(Stage stage){
-        customBehaviors(stage);
+        if(!stage.isShowing())
+            customBehaviors(stage);
 
         stage.getIcons().add(new Image("file:Images/icon.png"));
 
