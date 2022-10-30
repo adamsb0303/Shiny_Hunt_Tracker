@@ -30,6 +30,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Vector;
+import java.util.concurrent.Callable;
 
 public class HuntController {
     static Stage huntControls = new Stage();
@@ -58,13 +59,13 @@ public class HuntController {
         huntControlsScroll.setContent(huntControlsLayout);
         huntControlsScroll.setId("background");
 
+        Label startHuntLabel = new Label("Press + to add a new hunt");
+        startHuntLabel.setAlignment(Pos.CENTER);
+        startHuntLabel.setMinWidth(250);
         ChangeListener<Number> resizeListener = (observableValue, o, t1) -> {
             //Sets stage size when there are hunts
-            if(huntControlsLayout.getHeight() < 25){
-                huntControls.setHeight(100);
-                huntControls.setWidth(300);
-                return;
-            }
+            if(huntControlsLayout.getChildren().size() == 0)
+                huntControlsLayout.add(startHuntLabel, 0, 0);
 
             //caps window height at 540
             if(huntControlsLayout.getHeight() + 70 <= 540) {
@@ -200,15 +201,16 @@ public class HuntController {
      * @param newWindow HuntWindow with new hunt information
      */
     public static void addHunt(HuntWindow newWindow){
+        if(windowsList.size() == 0)
+            huntControlsLayout.getChildren().clear();
+
         //Set huntNum to first available
-        if(!windowsList.contains(newWindow)){
-            int huntNum = 0;
-            for (; huntNum < windowsList.size(); ++huntNum)
-                if (windowsList.get(huntNum).getHuntNumber() != huntNum + 1)
-                    break;
-            newWindow.setHuntNumber(huntNum + 1);
-            windowsList.add(huntNum, newWindow);
-        }
+        int huntNum = 0;
+        for (; huntNum < windowsList.size(); ++huntNum)
+            if (windowsList.get(huntNum).getHuntNumber() != huntNum + 1)
+                break;
+        newWindow.setHuntNumber(huntNum + 1);
+        windowsList.add(huntNum, newWindow);
 
         refreshHunts();
     }
