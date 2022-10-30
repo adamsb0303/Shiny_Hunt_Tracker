@@ -131,7 +131,22 @@ public class HuntController {
         huntControls.show();
 
         //Check to see if there were hunts open when the hunt controller was last closed
-        refreshHunts();
+        try {
+            //reads the number of hunts that were open when the program was last closed
+            FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
+            DataInputStream previousSessionData = new DataInputStream(reader);
+            int previousHuntsNum = previousSessionData.read();
+
+            //Read JSON file
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
+
+            //Load the last n hunts in the json
+            if(huntList.length() != 0)
+                for(int i = 1; i <= previousHuntsNum; i++)
+                    SaveData.loadHunt(huntList.length() - i);
+        }catch (IOException ignored) {
+
+        }
 
         editSavedHunts.setOnAction(e -> editSavedHuntsWindow());
         keyBinding.setOnAction(e -> keyBindingSettings());
@@ -181,25 +196,42 @@ public class HuntController {
     }
 
     /**
-     * Adds a new HuntWindow to the windowsList and
-     * adds appropriate elements to controller with new hunt's information
+     * Adds a new HuntWindow to the windowsList
      * @param newWindow HuntWindow with new hunt information
      */
     public static void addHunt(HuntWindow newWindow){
         //Set huntNum to first available
-        int huntNum = 0;
-        for(; huntNum < windowsList.size(); ++huntNum)
-            if(windowsList.get(huntNum).getHuntNumber() != huntNum + 1)
-                break;
-        newWindow.setHuntNumber(huntNum + 1);
-        windowsList.add(huntNum, newWindow);
+        if(!windowsList.contains(newWindow)){
+            int huntNum = 0;
+            for (; huntNum < windowsList.size(); ++huntNum)
+                if (windowsList.get(huntNum).getHuntNumber() != huntNum + 1)
+                    break;
+            newWindow.setHuntNumber(huntNum + 1);
+            windowsList.add(huntNum, newWindow);
+        }
 
+        refreshHunts();
+    }
+
+    /**
+     * Adds appropriate elements to controller with new hunt's information
+     * @param newWindow HuntWindow with new hunt information
+     */
+    public static void addHuntControls(HuntWindow newWindow){
         editSavedHunts.setVisible(true);
 
         //Add hunt Labels to controller
         newWindow.getStage().setTitle("Hunt " + newWindow.getHuntNumber());
 
-        int row = newWindow.getHuntNumber() - 1;
+        int row = -1;
+        for(int i = 0; i < windowsList.size(); i++) {
+            if (newWindow.getHuntNumber() < windowsList.get(i).getHuntNumber()) {
+                row = i - 1;
+                break;
+            }
+        }
+        if(row == -1)
+            row = windowsList.size() - 1;
 
         //Hunt Information to add to controller vbox
         Button exitHuntButton = new Button();
@@ -269,6 +301,7 @@ public class HuntController {
         popOutButton.setGraphic(popOutIcon);
         popOutButton.setTooltip(new Tooltip("Hunt Window Popout"));
         popOutButton.setMinSize(25, 25);
+        popOutButton.setVisible(!newWindow.getStage().isShowing());
 
         Button windowSettingsButton = new Button();
         windowSettingsButton.setFocusTraversable(false);
@@ -277,7 +310,7 @@ public class HuntController {
         windowSettingsButton.setGraphic(windowSettingsIcon);
         windowSettingsButton.setTooltip(new Tooltip("Hunt Window Settings"));
         windowSettingsButton.setMinSize(25, 25);
-        windowSettingsButton.setVisible(false);
+        windowSettingsButton.setVisible(newWindow.getStage().isShowing());
 
         StackPane windowPopout = new StackPane();
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);
@@ -576,7 +609,6 @@ public class HuntController {
                         //loads hunt and refreshes the controller
                         updatePreviousSessionDat(1);
                         SaveData.loadHunt(index);
-                        refreshHunts();
                     });
 
                     //removes hunt i
@@ -909,29 +941,10 @@ public class HuntController {
     public static void refreshHunts(){
         //Removes all hunts from window and list
         huntControlsLayout.getChildren().clear();
-        while(windowsList.size() != 0){
-            windowsList.lastElement().close();
-            windowsList.remove(windowsList.lastElement());
-        }
-
-        try {
-            //reads the number of hunts that were open when the program was last closed
-            FileInputStream reader = new FileInputStream("SaveData/previousSession.dat");
-            DataInputStream previousSessionData = new DataInputStream(reader);
-            int previousHuntsNum = previousSessionData.read();
-
-            //Read JSON file
-            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
-
-            //Load the last n hunts in the json
-            if(huntList.length() != 0)
-                for(int i = 1; i <= previousHuntsNum; i++)
-                    SaveData.loadHunt(huntList.length() - i);
-            //Refreshes all other windows
-            refreshMiscWindows();
-        }catch (IOException ignored) {
-
-        }
+        for(HuntWindow i : windowsList)
+            addHuntControls(i);
+        //Refreshes all other windows
+        refreshMiscWindows();
     }
 
     /**
