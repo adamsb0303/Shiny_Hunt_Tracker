@@ -64,8 +64,13 @@ public class HuntController {
         startHuntLabel.setMinWidth(250);
         ChangeListener<Number> resizeListener = (observableValue, o, t1) -> {
             //Sets stage size when there are hunts
-            if(huntControlsLayout.getChildren().size() == 0)
-                huntControlsLayout.add(startHuntLabel, 0, 0);
+            if(huntControlsLayout.getHeight() < 25){
+                huntControls.setHeight(100);
+                huntControls.setWidth(300);
+                if(huntControlsLayout.getChildren().size() == 0)
+                    huntControlsLayout.add(startHuntLabel, 0, 0);
+                return;
+            }
 
             //caps window height at 540
             if(huntControlsLayout.getHeight() + 70 <= 540) {
