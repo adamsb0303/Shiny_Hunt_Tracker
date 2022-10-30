@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -61,8 +62,11 @@ public class ElementSettings {
         TextField XField = new TextField();
         XField.setMaxWidth(100);
         XField.setText(String.valueOf(image.getLayoutX()));
-        XField.promptTextProperty().bind(image.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
+        image.layoutXProperty().addListener((o, oldVal, newVal) -> {
+            if(!XField.getText().equals(newVal.toString()))
+                XField.setText(newVal.toString());
+        });
 
         //Changes Y location of image
         HBox changeY = new HBox();
@@ -74,6 +78,10 @@ public class ElementSettings {
         YField.setText(String.valueOf(image.getLayoutY()));
         YField.promptTextProperty().bind(image.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
+        image.layoutYProperty().addListener((o, oldVal, newVal) -> {
+            if(!YField.getText().equals(newVal.toString()))
+                YField.setText(newVal.toString());
+        });
 
         //Group for X and Y fields
         HBox changeLocation = new HBox();
@@ -88,9 +96,12 @@ public class ElementSettings {
         TextField sizeField = new TextField();
         sizeField.setMaxWidth(100);
         sizeField.setText(String.valueOf(image.getScaleX()));
-        sizeField.promptTextProperty().bind(image.scaleXProperty().asString());
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
+        image.scaleXProperty().addListener((o, oldVal, newVal) -> {
+            if(!sizeField.getText().equals(newVal.toString()))
+                sizeField.setText(newVal.toString());
+        });
 
         //Adjust fit of image
         HBox imageFit = new HBox();
@@ -127,7 +138,7 @@ public class ElementSettings {
                 image.setTranslateX(-image.getImage().getWidth() / 2);
                 image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
             }catch(NumberFormatException ignored){
-
+                sizeField.setText(String.valueOf(image.getScaleX()));
             }
         });
 
@@ -135,7 +146,7 @@ public class ElementSettings {
             try{
                 image.setLayoutX(parseDouble(XField.getText()));
             }catch(NumberFormatException ignored){
-
+                XField.setText(String.valueOf(image.getLayoutX()));
             }
         });
 
@@ -143,13 +154,14 @@ public class ElementSettings {
             try{
                 image.setLayoutY(parseDouble(YField.getText()));
             }catch(NumberFormatException ignored){
-
+                YField.setText(String.valueOf(image.getLayoutY()));
             }
         });
 
         visibleCheck.setOnAction(e -> image.setVisible(visibleCheck.isSelected()));
 
         imageFitButton.setOnAction(e -> {
+            sizeField.setDisable(true);
             Rectangle square = new Rectangle();
             drawBoundaryGuide(windowLayout, image, square);
             imageFit.getChildren().remove(0);
@@ -166,6 +178,7 @@ public class ElementSettings {
                 windowLayout.getChildren().remove(windowLayout.getChildren().size() - 13, windowLayout.getChildren().size());
                 imageFit.getChildren().remove(0,2);
                 imageFit.getChildren().add(imageFitButton);
+                sizeField.setDisable(false);
             });
 
             //Removes square and resets image scale
@@ -178,6 +191,7 @@ public class ElementSettings {
                 windowLayout.getChildren().remove(windowLayout.getChildren().size() - 13, windowLayout.getChildren().size());
                 imageFit.getChildren().remove(0,2);
                 imageFit.getChildren().add(imageFitButton);
+                sizeField.setDisable(false);
             });
         });
 
@@ -203,8 +217,11 @@ public class ElementSettings {
         TextField XField = new TextField();
         XField.setMaxWidth(100);
         XField.setText(String.valueOf(label.getLayoutX()));
-        XField.promptTextProperty().bind(label.layoutXProperty().asString());
         changeX.getChildren().addAll(XLabel, XField);
+        label.layoutXProperty().addListener((o, oldVal, newVal) -> {
+            if(!XField.getText().equals(newVal.toString()))
+                XField.setText(newVal.toString());
+        });
 
         //Change Y location of Label
         HBox changeY = new HBox();
@@ -214,8 +231,11 @@ public class ElementSettings {
         TextField YField = new TextField();
         YField.setMaxWidth(100);
         YField.setText(String.valueOf(label.getLayoutY()));
-        YField.promptTextProperty().bind(label.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
+        label.layoutYProperty().addListener((o, oldVal, newVal) -> {
+            if(!YField.getText().equals(newVal.toString()))
+                YField.setText(newVal.toString());
+        });
 
         //Group for X and Y
         HBox changeLocation = new HBox();
@@ -230,9 +250,12 @@ public class ElementSettings {
         TextField sizeField = new TextField();
         sizeField.setMaxWidth(100);
         sizeField.setText(String.valueOf(label.getScaleX()));
-        sizeField.promptTextProperty().bind(label.scaleXProperty().asString());
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
+        label.scaleXProperty().addListener((o, oldVal, newVal) -> {
+            if(!sizeField.getText().equals(newVal.toString()))
+                sizeField.setText(newVal.toString());
+        });
 
         //Change color of label
         HBox color = new HBox();
@@ -312,20 +335,11 @@ public class ElementSettings {
 
         TitledPane labelTitledPane = new TitledPane(labelName + " Text", labelVBox);
 
-        sizeField.setOnKeyTyped(e -> {
-            try{
-                label.setScaleX(parseDouble(sizeField.getText()));
-                label.setScaleY(parseDouble(sizeField.getText()));
-            }catch(NumberFormatException ignored){
-
-            }
-        });
-
         XField.setOnKeyTyped(e ->{
             try{
                 label.setLayoutX(parseDouble(XField.getText()));
             }catch(NumberFormatException ignored){
-
+                XField.setText(String.valueOf(label.getLayoutX()));
             }
         });
 
@@ -333,7 +347,16 @@ public class ElementSettings {
             try{
                 label.setLayoutY(parseDouble(YField.getText()));
             }catch(NumberFormatException ignored){
+                YField.setText(String.valueOf(label.getLayoutY()));
+            }
+        });
 
+        sizeField.setOnKeyTyped(e -> {
+            try{
+                label.setScaleX(parseDouble(sizeField.getText()));
+                label.setScaleY(parseDouble(sizeField.getText()));
+            }catch(NumberFormatException ignored){
+                sizeField.setText(String.valueOf(label.getScaleX()));
             }
         });
 
