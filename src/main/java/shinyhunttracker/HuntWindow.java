@@ -178,6 +178,8 @@ class HuntWindow {
             return;
         }
 
+        CustomizeHuntStage.setTitle("Hunt " + huntNumber + " Settings");
+
         //Settings for all elements
         TitledPane spriteSettings = createImageSettings(windowLayout, sprite, selectedPokemon, selectedGame);
         TitledPane currentPokemonSettings = createLabelSettings(currentHuntingPokemonText, "Pokemon");
@@ -286,6 +288,7 @@ class HuntWindow {
      */
     Stage layoutListStage = new Stage();
     public void showLayoutList(){
+        layoutListStage.setTitle("Saved Layouts");
         GridPane layoutListLayout = new GridPane();
         layoutListLayout.setHgap(10);
         layoutListLayout.setVgap(5);

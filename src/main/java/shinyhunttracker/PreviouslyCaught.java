@@ -41,6 +41,8 @@ class PreviouslyCaught {
             return;
         }
 
+        previouslyCaughtSettingsStage.setTitle("Caught Layout Settings");
+
         //Field for user to load last n caught pokemon
         Label numberCaught = new Label("Display Previously Caught");
         numberCaughtChoice.setMaxWidth(75);
@@ -273,6 +275,7 @@ class PreviouslyCaught {
      */
     static Stage prevCatchesStage = new Stage();
     public static void displayPreviouslyCaughtList() {
+        prevCatchesStage.setTitle("Previously Caught Pokemon");
         GridPane previousCatches = new GridPane();
         previousCatches.setHgap(20);
         previousCatches.setVgap(5);
@@ -378,6 +381,7 @@ class PreviouslyCaught {
      */
     static Stage layoutListStage = new Stage();
     public static void showLayoutList(){
+        layoutListStage.setTitle("Saved Layouts");
         GridPane layoutListLayout = new GridPane();
         layoutListLayout.setHgap(10);
         layoutListLayout.setVgap(5);

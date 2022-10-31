@@ -50,6 +50,8 @@ public class HuntSelection{
         if(selectionPageStage.isShowing())
             return;
 
+        selectionPageStage.setTitle("Hunt Selection");
+
         //resets variables for when the window is reopened
         resetVariables();
 

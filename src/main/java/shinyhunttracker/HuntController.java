@@ -49,6 +49,7 @@ public class HuntController {
      */
     public static void createHuntController(){
         //Initial Hunt Controller setup
+        huntControls.setTitle("Hunt Controller");
         huntControls.initStyle(StageStyle.UNDECORATED);
         huntControlsLayout.setAlignment(Pos.CENTER);
         huntControlsLayout.setVgap(10);
@@ -500,6 +501,7 @@ public class HuntController {
      */
     public static void newOrOld(){
         Stage promptStage = new Stage();
+        promptStage.setTitle("Hunt Prompt");
         promptStage.initStyle(StageStyle.UNDECORATED);
 
         Label prompt = new Label("Would you like to continue a previous hunt or\nstart a new one?");
@@ -543,6 +545,7 @@ public class HuntController {
      */
     static Stage prevHuntsStage = new Stage();
     public static void loadSavedHuntsWindow(){
+        prevHuntsStage.setTitle("Previous Hunts");
         //creates a grid to load the hunts into
         GridPane previousHunts = new GridPane();
         previousHunts.setPadding(new Insets(10, 10, 10, 10));
@@ -682,6 +685,7 @@ public class HuntController {
      */
     static Stage editHunts = new Stage();
     public static void editSavedHuntsWindow(){
+        editHunts.setTitle("Edit Saved Hunts");
         //Grid pane to add all hunts into
         GridPane editHuntsLayout = new GridPane();
         editHuntsLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -850,6 +854,7 @@ public class HuntController {
      */
     static Stage keyBindingSettingsStage = new Stage();
     public static void keyBindingSettings(){
+        keyBindingSettingsStage.setTitle("Key Bind Settings");
         VBox keyBindingsLayout = new VBox();
         keyBindingsLayout.setAlignment(Pos.CENTER);
         keyBindingsLayout.setSpacing(10);
