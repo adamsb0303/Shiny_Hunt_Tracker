@@ -37,9 +37,13 @@ class FetchImage extends Thread{
             if (image.getProgress() != 1)
                 return;
 
+            if(image.getWidth() == 0) {
+                sprite.setImage(new Image("https://github.com/adamsb0303/Shiny_Hunt_Tracker/blob/Development/Images/Sprites/" + selectedGame.getImagePath() + "/sub.gif?raw=true"));
+            }else
+                sprite.setImage(image);
+
             //Sets image and adjusts scale
-            sprite.setImage(image);
-            adjustImageScale(sprite, image);
+            adjustImageScale(sprite);
         });
 
         return image;
@@ -48,9 +52,9 @@ class FetchImage extends Thread{
     /**
      * Adjusts image to fit within sprites fit height and width
      * @param sprite ImageView to adjust
-     * @param image new image that it is changing to
      */
-    public static void adjustImageScale(ImageView sprite, Image image){
+    public static void adjustImageScale(ImageView sprite){
+        Image image = sprite.getImage();
         //Image should fit within 200x200 square by default
         if(sprite.getFitWidth() == 0 || sprite.getFitHeight() == 0){
             sprite.setFitWidth(-200);

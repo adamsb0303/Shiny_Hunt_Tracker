@@ -357,7 +357,7 @@ public class SaveData {
                     image.setFitWidth(elementData.getDouble("width"));
                     image.setFitHeight(elementData.getDouble("height"));
                     if(image.getImage() != null)
-                        FetchImage.adjustImageScale(image, image.getImage());
+                        FetchImage.adjustImageScale(image);
                     image.setVisible(elementData.getBoolean("visible"));
                 }else if(element instanceof Text && elementData.get("type").equals("text")){
                     Text text = (Text) element;
