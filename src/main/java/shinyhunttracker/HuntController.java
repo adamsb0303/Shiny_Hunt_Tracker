@@ -963,6 +963,7 @@ public class HuntController {
             loadSavedHuntsWindow();
         if(editHunts.isShowing())
             editSavedHuntsWindow();
+        PreviouslyCaught.refreshMiscWindows();
     }
 
     /**

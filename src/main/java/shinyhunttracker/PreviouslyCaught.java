@@ -100,6 +100,9 @@ class PreviouslyCaught {
 
         numberCaughtChoice.setOnAction(e -> {
             try {
+                if(displayCaught == numberCaughtChoice.getValue() || numberCaughtChoice.getValue() == null)
+                    return;
+
                 //If the previous number of pokemon displayed is 0, it creates a new blank window
                 if (displayCaught == 0)
                     createPreviouslyCaughtPokemonWindow();
@@ -158,6 +161,7 @@ class PreviouslyCaught {
         //removes all elements and re-adds them
         settingsAccordion.getPanes().remove(0, settingsAccordion.getPanes().size() - 1);
         windowLayout.getChildren().remove(0, windowLayout.getChildren().size());
+        displayPrevious = 0;
         addPreviouslyCaughtPokemon();
 
         //Loads and deletes the layout with the really long name
@@ -486,6 +490,16 @@ class PreviouslyCaught {
                 showLayoutList();
             });
         });
+    }
+
+    /**
+     * Refreshes Miscellaneous windows
+     */
+    public static void refreshMiscWindows(){
+        if(prevCatchesStage.isShowing())
+            displayPreviouslyCaughtList();
+        if(layoutListStage.isShowing())
+            showLayoutList();
     }
 
     /**
