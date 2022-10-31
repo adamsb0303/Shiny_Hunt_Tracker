@@ -425,6 +425,11 @@ public class HuntSelection{
         gameComboBox.getItems().addAll(updatedGameList);
         if(selectedGame != null)
             gameComboBox.getSelectionModel().select(selectedGame);
+
+        //For some reason, if the box isn't opened and closed after updating, when selecting the first element
+        //in a list of 1 games the combobox won't close
+        gameComboBox.show();
+        gameComboBox.hide();
     }
 
     /**
@@ -473,6 +478,11 @@ public class HuntSelection{
         methodComboBox.getItems().addAll(updatedMethodList);
         if(selectedMethod != null)
             methodComboBox.getSelectionModel().select(selectedMethod);
+
+        //For some reason, if the box isn't opened and closed after updating, when selecting the first element
+        //in a list of 1 methods the combobox won't close
+        methodComboBox.show();
+        methodComboBox.hide();
     }
 
     /**
