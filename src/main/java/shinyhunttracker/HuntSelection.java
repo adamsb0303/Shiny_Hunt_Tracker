@@ -6,16 +6,23 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -111,10 +118,6 @@ public class HuntSelection{
         methodHelp.setMinSize(25, 25);
         methodHelp.setLayoutY(315);
         methodHelp.setLayoutX(287);
-        Tooltip methodToolTip = new Tooltip();
-        methodToolTip.setShowDelay(ZERO);
-        methodToolTip.setShowDuration(INDEFINITE);
-        Tooltip.install(methodHelp, methodToolTip);
         methodHelp.visibleProperty().bind(methodComboBox.valueProperty().isNotNull());
 
         huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox, methodHelp, beginHunt);
@@ -175,6 +178,52 @@ public class HuntSelection{
         pokemonSprite.managedProperty().bind(pokemonSprite.visibleProperty());
         pokemonSprite.visibleProperty().bind(progressBar.progressProperty().isEqualTo(1));
 
+        methodHelp.setOnAction(e -> {
+            Alert methodInformation = new Alert(Alert.AlertType.INFORMATION);
+            methodInformation.setTitle("Hunt Information");
+            methodInformation.setHeaderText(null);
+            methodInformation.initStyle(StageStyle.UNDECORATED);
+            methodInformation.getDialogPane().getStylesheets().add("file:shinyTracker.css");
+            HuntController.makeDraggable(methodInformation.getDialogPane().getScene());
+
+            VBox dialogLayout = new VBox();
+            dialogLayout.setSpacing(10);
+            dialogLayout.setPadding(new Insets(10));
+            Label huntInfoLabel = new Label("Method: " + selectedMethod + "\n\n");
+
+            Label methodInfoLabel = new Label("Method Info: \n" + selectedMethod.getMethodInfo());
+            methodInfoLabel.setMaxWidth(275);
+            methodInfoLabel.setWrapText(true);
+
+            dialogLayout.getChildren().addAll(huntInfoLabel, methodInfoLabel);
+
+            Pane masterPane = new Pane();
+            masterPane.getChildren().add(dialogLayout);
+
+            VBox resourceSection = new VBox();
+            Label methodResourcesLabel = new Label("Resources:");
+            resourceSection.getChildren().add(methodResourcesLabel);
+            for(int i = 0; i < selectedMethod.getResources().get(0).size(); i++){
+                Hyperlink link = new Hyperlink(selectedMethod.getResources().get(0).get(i));
+                resourceSection.getChildren().add(link);
+
+                String url = selectedMethod.getResources().get(1).get(i);
+                link.setOnAction(f -> {
+                    try {
+                        Desktop.getDesktop().browse(new URL(url).toURI());
+                    } catch (IOException | URISyntaxException g) {
+                        g.printStackTrace();
+                    }
+                });
+            }
+            dialogLayout.getChildren().add(resourceSection);
+
+            methodInformation.getDialogPane().setContent(masterPane);
+            methodInformation.show();
+            methodInformation.setHeight(dialogLayout.getHeight() + 33);
+            methodInformation.setWidth(360);
+        });
+
         //Listeners for when selection tools are changed
         pokemonListTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
@@ -209,7 +258,6 @@ public class HuntSelection{
                         selectedMethod = newValue;
                         updateGameList();
                         updatePokemonList();
-                        methodToolTip.setText(selectedMethod.getMethodInfo());
 
                         if(selectedPokemon != null & selectedGame != null)
                             beginHunt.setDisable(false);
