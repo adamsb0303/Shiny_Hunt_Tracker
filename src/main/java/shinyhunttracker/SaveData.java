@@ -210,6 +210,26 @@ public class SaveData {
     }
 
     /**
+     * Remove caught Pokemon from json
+     * @param index Index of data to be removed
+     */
+    public static void removeCaught(int index){
+        try {
+            //Read JSON file
+            JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
+
+            //removes data point at index
+            huntList.remove(index);
+
+            FileWriter file = new FileWriter("SaveData/caughtPokemon.json");
+            file.write(huntList.toString());
+            file.close();
+        }catch (IOException  e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Saves or updates layout information
      * @param layoutName name of layout
      * @param huntLayout all elements to save data from

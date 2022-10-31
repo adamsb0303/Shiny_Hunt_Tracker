@@ -385,6 +385,7 @@ public class HuntController {
             newWindow.pokemonCaught();
             windowsList.remove(newWindow);
             previouslyCaught.setVisible(true);
+            PreviouslyCaught.updateSelection();
             saveHuntOrder();
             refreshHunts();
         });

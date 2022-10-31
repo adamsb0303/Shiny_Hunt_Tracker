@@ -19,7 +19,6 @@ import org.json.JSONTokener;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static java.lang.Integer.parseInt;
 import static shinyhunttracker.ElementSettings.*;
 
 class PreviouslyCaught {
@@ -31,7 +30,7 @@ class PreviouslyCaught {
     static Stage previouslyCaughtSettingsStage = new Stage();
     static VBox previouslyCaughtSettingsLayout = new VBox();
     static Accordion settingsAccordion = new Accordion();
-    static TextField numberCaughtField = new TextField();
+    static ComboBox<Integer> numberCaughtChoice = new ComboBox<>();
 
     /**
      * Creates elements for previously caught settings
@@ -44,8 +43,9 @@ class PreviouslyCaught {
 
         //Field for user to load last n caught pokemon
         Label numberCaught = new Label("Display Previously Caught");
-        numberCaughtField.setMaxWidth(50);
-        numberCaughtField.setPromptText(String.valueOf(displayCaught));
+        numberCaughtChoice.setMaxWidth(75);
+
+        updateSelection();
 
         HBox numberPreviouslyCaught = new HBox();
         numberPreviouslyCaught.setAlignment(Pos.CENTER);
@@ -54,7 +54,7 @@ class PreviouslyCaught {
 
         //List button to display all caught pokemon
         Button previouslyCaughtList = new Button("List");
-        numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtField, previouslyCaughtList);
+        numberPreviouslyCaught.getChildren().addAll(numberCaught, numberCaughtChoice, previouslyCaughtList);
 
         //Layout button to display list of saved layouts
         HBox layoutButton = new HBox();
@@ -98,18 +98,15 @@ class PreviouslyCaught {
             previouslyCaughtSettingsStage.setWidth(340);
         });
 
-        numberCaughtField.setOnAction(e -> {
+        numberCaughtChoice.setOnAction(e -> {
             try {
-                //Captures user input so that window doesn't open if non-int is entered
-                int newDisplay = parseInt(numberCaughtField.getText().replaceAll(",", ""));
-
                 //If the previous number of pokemon displayed is 0, it creates a new blank window
                 if (displayCaught == 0)
                     createPreviouslyCaughtPokemonWindow();
 
                 //updates displayPrevious and displayCaught
                 displayPrevious = displayCaught;
-                displayCaught = newDisplay;
+                displayCaught = numberCaughtChoice.getValue();
 
                 //Closes window and removes settings if new display = 0
                 if (displayCaught == 0) {
@@ -119,11 +116,9 @@ class PreviouslyCaught {
                     addPreviouslyCaughtPokemon();
                     windowStage.show();
                 }
-                numberCaughtField.setText("");
-                numberCaughtField.setPromptText(String.valueOf(displayCaught));
                 previouslyCaughtSettingsStage.toFront();
-            } catch (NumberFormatException f) {
-                numberCaughtField.setText("");
+            } catch (NumberFormatException | NullPointerException ignore) {
+
             }
         });
 
@@ -131,7 +126,7 @@ class PreviouslyCaught {
 
         windowStage.setOnCloseRequest(e -> {
             displayCaught = 0;
-            numberCaughtField.setPromptText("0");
+            numberCaughtChoice.getSelectionModel().select(0);
             settingsAccordion.getPanes().clear();
         });
 
@@ -328,6 +323,19 @@ class PreviouslyCaught {
                 GridPane.setHalignment(encounters, HPos.CENTER);
                 GridPane.setValignment(encounters, VPos.CENTER);
                 previousCatches.add(encounters, 4, row);
+
+                Button delete = new Button("Delete");
+                GridPane.setHalignment(encounters, HPos.CENTER);
+                GridPane.setValignment(encounters, VPos.CENTER);
+                previousCatches.add(delete, 5, row);
+
+                int index = i;
+                delete.setOnAction(e -> {
+                    SaveData.removeCaught(index);
+                    displayPreviouslyCaughtList();
+                    refreshPreviouslyCaughtPokemon();
+                    updateSelection();
+                });
             }
 
             //closes the stage if there are no elements
@@ -424,7 +432,6 @@ class PreviouslyCaught {
                         displayCaught = (layoutObject.length() - 2) / 4;
                         addPreviouslyCaughtPokemon();
                         windowStage.show();
-                        numberCaughtField.setPromptText(String.valueOf(displayCaught));
                     }
 
                     SaveData.loadLayout(layoutObject.get(0).toString(), windowLayout, false);
@@ -479,6 +486,22 @@ class PreviouslyCaught {
                 showLayoutList();
             });
         });
+    }
+
+    /**
+     * Updates the caught pokemon selection
+     */
+    public static void updateSelection(){
+        try{
+            JSONArray prevHuntsList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/caughtPokemon.json")));
+            if(prevHuntsList.length() == 0)
+                close();
+
+            numberCaughtChoice.getItems().clear();
+            for(int i = 0; i <= prevHuntsList.length(); i++)
+                numberCaughtChoice.getItems().add(i);
+            numberCaughtChoice.getSelectionModel().select(Math.min(displayCaught, prevHuntsList.length()));
+        }catch(IOException ignored){}
     }
 
     /**

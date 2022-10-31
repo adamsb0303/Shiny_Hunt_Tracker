@@ -32,7 +32,7 @@
     -fx-background-color: #505050;
 }
 
-.button:pressed, .list-cell:pressed, .tree-cell:pressed, .tree-cell:focused{
+.button:pressed, .combo-box-popup .list-cell:focused, .tree-cell:pressed, .tree-cell:focused{
     -fx-background-color: #555555;
 }
 
@@ -64,7 +64,7 @@
 
 .text-field:focused {
     -fx-background-color: #555555;
-    -fx-highlight-fill: null;
+    -fx-highlight-fill: #777777;
 }
 
 #background, .dialog-pane {
