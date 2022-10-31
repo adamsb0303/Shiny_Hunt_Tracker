@@ -50,11 +50,13 @@ public class HuntController {
     public static void createHuntController(){
         //Initial Hunt Controller setup
         huntControls.setTitle("Hunt Controller");
-        huntControls.initStyle(StageStyle.UNDECORATED);
         huntControlsLayout.setAlignment(Pos.CENTER);
         huntControlsLayout.setVgap(10);
         huntControlsLayout.setHgap(10);
         huntControlsLayout.setPadding(new Insets(10, 15, 10, 15));
+
+        if(huntControls.getScene() == null)
+            huntControls.initStyle(StageStyle.UNDECORATED);
 
         huntControlsScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         huntControlsScroll.setContent(huntControlsLayout);
@@ -136,6 +138,8 @@ public class HuntController {
         huntControlsScene.getStylesheets().add("file:shinyTracker.css");
         huntControls.setScene(huntControlsScene);
         huntControls.show();
+
+        windowsList.clear();
 
         //Check to see if there were hunts open when the hunt controller was last closed
         try {
@@ -760,7 +764,7 @@ public class HuntController {
                         huntData.put("pokemon", pokemonChoiceDialog.getSelectedItem().getDexNumber());
                         huntData.put("pokemon_form", 0);
                         SaveData.updateHunt(index, huntData);
-                        refreshHunts();
+                        createHuntController();
                     });
                 });
 
@@ -784,7 +788,7 @@ public class HuntController {
                         huntData.put("game", gameChoiceDialog.getSelectedItem().getId());
                         huntData.put("game_mods", new JSONArray());
                         SaveData.updateHunt(index, huntData);
-                        refreshHunts();
+                        createHuntController();
                     });
                 });
 
@@ -807,7 +811,7 @@ public class HuntController {
                     methodChoiceDialog.showAndWait().ifPresent(g -> {
                         huntData.put("method", methodChoiceDialog.getSelectedItem().getId());
                         SaveData.updateHunt(index, huntData);
-                        refreshHunts();
+                        createHuntController();
                     });
                 });
 
@@ -821,7 +825,7 @@ public class HuntController {
                     encountersDialog.showAndWait().ifPresent(g -> {
                         huntData.put("encounters", Integer.parseInt(encountersDialog.getEditor().getText().replaceAll(",", "")));
                         SaveData.updateHunt(index, huntData);
-                        refreshHunts();
+                        createHuntController();
                     });
                 });
             }

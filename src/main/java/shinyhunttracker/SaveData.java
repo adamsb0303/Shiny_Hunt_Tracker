@@ -150,7 +150,6 @@ public class SaveData {
             JSONArray huntList = new JSONArray(new JSONTokener(new FileInputStream("SaveData/previousHunts.json")));
 
             //removes the data at index, and replaces it with new data
-            huntList.remove(index);
             huntList.put(index, data);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
@@ -291,7 +290,6 @@ public class SaveData {
             for(int i = 0; i < layoutList.length(); i++){
                 JSONArray layoutCheck = (JSONArray) layoutList.get(i);
                 if(layoutCheck.get(0).equals(layoutName)) {
-                    layoutList.remove(i);
                     layoutList.put(i, layoutData);
                     newData = false;
                     break;
