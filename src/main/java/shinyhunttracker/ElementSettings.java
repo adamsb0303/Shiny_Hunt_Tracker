@@ -65,7 +65,7 @@ public class ElementSettings {
         XField.setText(String.valueOf(image.getLayoutX()));
         changeX.getChildren().addAll(XLabel, XField);
         image.layoutXProperty().addListener((o, oldVal, newVal) -> {
-            if(!XField.getText().equals(newVal.toString()))
+            if(Double.parseDouble(XField.getText()) != newVal.doubleValue())
                 XField.setText(newVal.toString());
         });
 
@@ -80,7 +80,7 @@ public class ElementSettings {
         YField.promptTextProperty().bind(image.layoutYProperty().asString());
         changeY.getChildren().addAll(YLabel, YField);
         image.layoutYProperty().addListener((o, oldVal, newVal) -> {
-            if(!YField.getText().equals(newVal.toString()))
+            if(Double.parseDouble(YField.getText()) != newVal.doubleValue())
                 YField.setText(newVal.toString());
         });
 
@@ -100,7 +100,7 @@ public class ElementSettings {
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
         image.scaleXProperty().addListener((o, oldVal, newVal) -> {
-            if(!sizeField.getText().equals(newVal.toString()))
+            if(Double.parseDouble(sizeField.getText()) != newVal.doubleValue())
                 sizeField.setText(newVal.toString());
         });
 
@@ -131,19 +131,9 @@ public class ElementSettings {
             }
         });
 
-        sizeField.setOnKeyTyped(e -> {
-            try{
-                double scale = parseDouble(sizeField.getText());
-                image.setScaleX(scale);
-                image.setScaleY(scale);
-                image.setTranslateX(-image.getImage().getWidth() / 2);
-                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
-            }catch(NumberFormatException ignored){
-                sizeField.setText(String.valueOf(image.getScaleX()));
-            }
-        });
-
         XField.setOnKeyTyped(e ->{
+            if(XField.getText().length() == 0)
+                XField.setText("0");
             try{
                 image.setLayoutX(parseDouble(XField.getText()));
             }catch(NumberFormatException ignored){
@@ -152,10 +142,26 @@ public class ElementSettings {
         });
 
         YField.setOnKeyTyped(e ->{
+            if(YField.getText().length() == 0)
+                YField.setText("0");
             try{
                 image.setLayoutY(parseDouble(YField.getText()));
             }catch(NumberFormatException ignored){
                 YField.setText(String.valueOf(image.getLayoutY()));
+            }
+        });
+
+        sizeField.setOnKeyTyped(e -> {
+            if(sizeField.getText().length() == 0)
+                sizeField.setText("0");
+            try{
+                double scale = parseDouble(sizeField.getText());
+                image.setScaleX(scale);
+                image.setScaleY(scale);
+                image.setTranslateX(-image.getImage().getWidth() / 2);
+                image.setTranslateY(-((image.getImage().getHeight() / 2) + (image.getImage().getHeight() * image.getScaleX()) / 2));
+            }catch(NumberFormatException ignored){
+                sizeField.setText(String.valueOf(image.getScaleX()));
             }
         });
 
@@ -248,7 +254,7 @@ public class ElementSettings {
         XField.setText(String.valueOf(label.getLayoutX()));
         changeX.getChildren().addAll(XLabel, XField);
         label.layoutXProperty().addListener((o, oldVal, newVal) -> {
-            if(!XField.getText().equals(newVal.toString()))
+            if(Double.parseDouble(XField.getText()) != newVal.doubleValue())
                 XField.setText(newVal.toString());
         });
 
@@ -262,7 +268,7 @@ public class ElementSettings {
         YField.setText(String.valueOf(label.getLayoutY()));
         changeY.getChildren().addAll(YLabel, YField);
         label.layoutYProperty().addListener((o, oldVal, newVal) -> {
-            if(!YField.getText().equals(newVal.toString()))
+            if(Double.parseDouble(YField.getText()) != newVal.doubleValue())
                 YField.setText(newVal.toString());
         });
 
@@ -282,7 +288,7 @@ public class ElementSettings {
         changeSize.setAlignment(Pos.CENTER);
         changeSize.getChildren().addAll(sizeLabel, sizeField);
         label.scaleXProperty().addListener((o, oldVal, newVal) -> {
-            if(!sizeField.getText().equals(newVal.toString()))
+            if(Double.parseDouble(sizeField.getText()) != newVal.doubleValue())
                 sizeField.setText(newVal.toString());
         });
 
@@ -365,6 +371,8 @@ public class ElementSettings {
         TitledPane labelTitledPane = new TitledPane(labelName + " Text", labelVBox);
 
         XField.setOnKeyTyped(e ->{
+            if(XField.getText().length() == 0)
+                XField.setText("0");
             try{
                 label.setLayoutX(parseDouble(XField.getText()));
             }catch(NumberFormatException ignored){
@@ -373,6 +381,8 @@ public class ElementSettings {
         });
 
         YField.setOnKeyTyped(e ->{
+            if(YField.getText().length() == 0)
+                YField.setText("0");
             try{
                 label.setLayoutY(parseDouble(YField.getText()));
             }catch(NumberFormatException ignored){
@@ -381,6 +391,8 @@ public class ElementSettings {
         });
 
         sizeField.setOnKeyTyped(e -> {
+            if(sizeField.getText().length() == 0)
+                sizeField.setText("0");
             try{
                 label.setScaleX(parseDouble(sizeField.getText()));
                 label.setScaleY(parseDouble(sizeField.getText()));
