@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -457,6 +459,14 @@ class HuntWindow {
     public void resetEncounters(){
         encounters.setValue(0);
         encountersText.setText("0");
+    }
+
+    /**
+     * Checks to see if the image boundaries are open and closes them
+     */
+    public void closeBoundaries(){
+        if(windowLayout.getChildren().get(windowLayout.getChildren().size() - 1) instanceof Line)
+            windowLayout.getChildren().remove(windowLayout.getChildren().size() - 13, windowLayout.getChildren().size());
     }
 
     /**

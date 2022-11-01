@@ -496,6 +496,7 @@ public class HuntController {
             e.consume();
             popOutButton.setVisible(true);
             windowSettingsButton.setVisible(false);
+            newWindow.closeBoundaries();
             newWindow.close();
         });
     }
