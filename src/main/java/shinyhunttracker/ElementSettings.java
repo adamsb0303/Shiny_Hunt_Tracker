@@ -431,7 +431,7 @@ public class ElementSettings {
             try{
                 label.setStrokeWidth(parseDouble(strokeWidthField.getText()));
             }catch(NumberFormatException ignored){
-
+                strokeWidthField.setText(String.valueOf(label.getStrokeWidth()));
             }
         });
 
