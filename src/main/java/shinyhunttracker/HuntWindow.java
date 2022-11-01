@@ -422,8 +422,7 @@ class HuntWindow {
         if(PreviouslyCaught.isShowing())
             PreviouslyCaught.refreshPreviouslyCaughtPokemon();
 
-        CustomizeHuntStage.close();
-        windowStage.close();
+        close();
     }
 
     /**
