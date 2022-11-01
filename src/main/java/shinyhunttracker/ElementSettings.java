@@ -501,15 +501,23 @@ public class ElementSettings {
             if(transparent.isSelected()) {
                 transparentStage.setX(windowStage.getX());
                 transparentStage.setY(windowStage.getY());
+
+                transparentStage.setHeight(windowStage.getHeight());
+                transparentStage.setWidth(windowStage.getWidth());
+
                 transparentStage.setScene(windowStage.getScene());
                 transparentStage.getScene().getRoot().setStyle("-fx-background-color:transparent;");
                 transparentStage.getScene().setFill(Color.TRANSPARENT);
+
                 windowStage.hide();
                 transparentStage.show();
             }else {
                 windowStage.setX(transparentStage.getX());
                 windowStage.setY(transparentStage.getY());
+
                 windowStage.setScene(transparentStage.getScene());
+                windowStage.getScene().getRoot().setStyle("-fx-background-color:#" + backgroundColorPicker.getValue().toString().substring(2));
+
                 windowStage.show();
                 transparentStage.hide();
             }
