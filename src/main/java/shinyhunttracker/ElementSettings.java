@@ -1,5 +1,6 @@
 package shinyhunttracker;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -161,6 +162,10 @@ public class ElementSettings {
         visibleCheck.setOnAction(e -> image.setVisible(visibleCheck.isSelected()));
 
         imageFitButton.setOnAction(e -> {
+            //doesn't draw another boundary if one is already open
+            if(windowLayout.getChildren().get(windowLayout.getChildren().size() - 1) instanceof Line)
+                return;
+
             //sets fit width and height if it wasn't already (when user changes scale with textfield)
             if(image.getImage().getWidth() * image.getScaleX() > -image.getFitWidth())
                 image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
