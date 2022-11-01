@@ -458,7 +458,6 @@ class HuntWindow {
      */
     public void resetEncounters(){
         encounters.setValue(0);
-        encountersText.setText("0");
     }
 
     /**

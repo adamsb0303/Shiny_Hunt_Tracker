@@ -106,6 +106,8 @@ public class HuntController {
         masterSettings.setGraphic(settingsIcon);
         masterSettings.setMinSize(30, 25);
         MenuItem keyBinding = new MenuItem("Key Bind Settings");
+
+        masterSettings.setTooltip(new Tooltip("General Settings"));
         masterSettings.getItems().addAll(editSavedHunts, keyBinding, previouslyCaught);
 
         try {
@@ -211,6 +213,7 @@ public class HuntController {
      * @param newWindow HuntWindow with new hunt information
      */
     public static void addHunt(HuntWindow newWindow){
+        editSavedHunts.setVisible(true);
         if(windowsList.size() == 0)
             huntControlsLayout.getChildren().clear();
 
@@ -334,6 +337,7 @@ public class HuntController {
         settingsButton.setPadding(new Insets(0, 0, 0, 0));
         settingsButton.setGraphic(settingsIcon);
         settingsButton.setMinSize(30, 25);
+        settingsButton.setTooltip(new Tooltip("Hunt Settings"));
         MenuItem increment= new MenuItem("Change Increment");
         MenuItem resetEncounters = new MenuItem("Fail");
         MenuItem phaseHunt = new MenuItem("Phase");
@@ -436,7 +440,11 @@ public class HuntController {
             }
             phaseDialog.setTitle("Phase Hunt");
             phaseDialog.setHeaderText("Phased Pokemon: ");
-            phaseDialog.showAndWait().ifPresent(response -> newWindow.phaseHunt(response.getDexNumber()));
+            phaseDialog.showAndWait().ifPresent(response -> {
+                newWindow.phaseHunt(response.getDexNumber());
+                PreviouslyCaught.updateSelection();
+                previouslyCaught.setVisible(true);
+            });
         });
 
         DVTable.setOnAction(e -> generateDVTable(newWindow.getPokemon()));
@@ -914,7 +922,7 @@ public class HuntController {
                     //updates the JSONArray updates the currently open hunts with the temporarily saved binds
                     for(int i = 0; i < keyBindsTemp.size(); i++) {
                         keyBindsList.put(i, keyBindsTemp.get(i).toString());
-                        if(windowsList.get(i).getHuntNumber() == i + 1)
+                        if(i < windowsList.size() && windowsList.get(i).getHuntNumber() == i + 1)
                             windowsList.get(i).setKeybind(keyBindsTemp.get(i));
                     }
 
