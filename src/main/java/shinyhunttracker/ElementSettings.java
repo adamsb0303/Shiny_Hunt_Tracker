@@ -104,7 +104,7 @@ public class ElementSettings {
         });
 
         //Adjust fit of image
-        HBox imageFit = new HBox();
+        VBox imageFit = new VBox();
         imageFit.setSpacing(5);
         imageFit.setAlignment(Pos.CENTER);
         Button imageFitButton = new Button("Adjust Image Layout Bounds");
@@ -161,15 +161,30 @@ public class ElementSettings {
         visibleCheck.setOnAction(e -> image.setVisible(visibleCheck.isSelected()));
 
         imageFitButton.setOnAction(e -> {
+            //sets fit width and height if it wasn't already (when user changes scale with textfield)
+            if(image.getImage().getWidth() * image.getScaleX() > -image.getFitWidth())
+                image.setFitWidth(-image.getImage().getWidth() * image.getScaleX());
+            if(image.getImage().getHeight() * image.getScaleX() > -image.getFitHeight())
+                image.setFitHeight(-image.getImage().getHeight() * image.getScaleX());
             sizeField.setDisable(true);
+
             Rectangle square = new Rectangle();
             drawBoundaryGuide(windowLayout, image, square);
             imageFit.getChildren().remove(0);
 
-            Button saveImageFit = new Button("Save Boundaries");
-            Button cancelImageFit = new Button("Cancel");
+            Button saveImageFit = new Button("Save Bounds");
+            Button resetImageFit = new Button("Fit to Image");
+            HBox saveResetHBox = new HBox();
+            saveResetHBox.setAlignment(Pos.CENTER);
+            saveResetHBox.setSpacing(5);
+            saveResetHBox.getChildren().addAll(saveImageFit, resetImageFit);
 
-            imageFit.getChildren().addAll(saveImageFit, cancelImageFit);
+            Button cancelImageFit = new Button("Cancel");
+            HBox cancelHBox = new HBox();
+            cancelHBox.setAlignment(Pos.CENTER);
+            cancelHBox.getChildren().add(cancelImageFit);
+
+            imageFit.getChildren().addAll(saveResetHBox, cancelHBox);
 
             //Sets fit height and width to the height and width of the square
             saveImageFit.setOnAction(f -> {
@@ -179,6 +194,15 @@ public class ElementSettings {
                 imageFit.getChildren().remove(0,2);
                 imageFit.getChildren().add(imageFitButton);
                 sizeField.setDisable(false);
+            });
+
+            resetImageFit.setOnAction(f-> {
+                square.setHeight(image.getImage().getHeight() * image.getScaleX());
+                square.setWidth(image.getImage().getWidth() * image.getScaleX());
+                square.setTranslateX(-square.getWidth() / 2);
+                square.setTranslateY(-square.getHeight());
+                square.setLayoutX(image.getLayoutX());
+                square.setLayoutY(image.getLayoutY());
             });
 
             //Removes square and resets image scale
@@ -393,7 +417,7 @@ public class ElementSettings {
 
         strokeCheckbox.setOnAction(e -> {
             if(strokeCheckbox.isSelected())
-                label.setStrokeWidth(parseDouble(strokeWidthField.getPromptText()));
+                label.setStrokeWidth(parseDouble(strokeWidthField.getText()));
             else
                 label.setStrokeWidth(0);
         });
@@ -644,8 +668,8 @@ public class ElementSettings {
         bottomCenter.setStroke(Color.WHITE);
         bottomCenter.startXProperty().bind(square.layoutXProperty().subtract(square.widthProperty().multiply(square.scaleXProperty()).divide(8)));
         bottomCenter.endXProperty().bind(square.layoutXProperty().add(square.widthProperty().multiply(square.scaleXProperty()).divide(8)));
-        bottomCenter.startYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().divide(64)));
-        bottomCenter.endYProperty().bind(square.layoutYProperty().subtract(square.heightProperty().divide(64)));
+        bottomCenter.startYProperty().bind(square.layoutYProperty().subtract(7/2));
+        bottomCenter.endYProperty().bind(square.layoutYProperty().subtract(7/2));
         bottomCenter.setStrokeWidth(7);
         windowLayout.getChildren().add(bottomCenter);
 
@@ -785,10 +809,12 @@ public class ElementSettings {
         //Increases scale when scrolled on
         element.setOnScroll(e -> {
             double scale = element.getScaleX() + (e.getDeltaY() / 1000);
+            element.setScaleX(scale);
+            element.setScaleY(scale);
             if(element.getImage().getWidth() * scale > -element.getFitWidth())
-                scale = -element.getFitWidth() / element.getImage().getWidth();
+                element.setFitWidth(-element.getImage().getWidth() * scale);
             if(element.getImage().getHeight() * scale > -element.getFitHeight())
-                scale = -element.getFitHeight() / element.getImage().getHeight();
+                element.setFitHeight(-element.getImage().getHeight() * scale);
             element.setScaleX(scale);
             element.setScaleY(scale);
             element.setTranslateX(-element.getImage().getWidth() / 2);
