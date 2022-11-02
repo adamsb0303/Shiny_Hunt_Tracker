@@ -69,6 +69,7 @@ class FetchImage extends Thread{
                 scale = -sprite.getFitHeight() / height;
             else
                 scale = -sprite.getFitWidth() / width;
+            scale =  Math.round(scale * 100) / 100.0;
             sprite.setScaleX(scale);
             sprite.setScaleY(scale);
         }else{
