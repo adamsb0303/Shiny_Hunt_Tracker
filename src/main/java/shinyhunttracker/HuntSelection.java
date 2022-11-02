@@ -120,6 +120,11 @@ public class HuntSelection{
         methodHelp.setLayoutX(287);
         methodHelp.visibleProperty().bind(methodComboBox.valueProperty().isNotNull());
 
+        Tooltip methodToolTip = new Tooltip();
+        methodToolTip.setShowDelay(ZERO);
+        methodToolTip.setShowDuration(INDEFINITE);
+        Tooltip.install(methodHelp, methodToolTip);
+
         huntInformation.getChildren().addAll(pokemonSprite, gameComboBox, methodComboBox, methodHelp, beginHunt);
 
         VBox pokemonSelection = new VBox();
@@ -258,6 +263,7 @@ public class HuntSelection{
                         selectedMethod = newValue;
                         updateGameList();
                         updatePokemonList();
+                        methodToolTip.setText(selectedMethod.getMethodInfo());
 
                         if(selectedPokemon != null & selectedGame != null)
                             beginHunt.setDisable(false);
