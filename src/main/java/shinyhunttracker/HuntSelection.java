@@ -362,8 +362,10 @@ public class HuntSelection{
         }
 
         pokemonListRoot.getChildren().addAll(updatedPokemonList);
-        if(selectedPokemon != null)
+        if(selectedPokemon != null) {
             pokemonListTreeView.getSelectionModel().select(defaultPokemonList.get(selectedPokemon.getDexNumber()));
+            pokemonListTreeView.scrollTo(0);
+        }
     }
 
     /**
