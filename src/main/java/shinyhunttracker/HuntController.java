@@ -344,7 +344,7 @@ public class HuntController {
         MenuItem DVTable = new MenuItem("DV Table");
 
         settingsButton.getItems().addAll(increment, resetEncounters, phaseHunt);
-        if(newWindow.getGame().getGeneration() == 1)
+        if(newWindow.getGame().getGeneration() == 1 && newWindow.getPokemon().getBase() != null)
             settingsButton.getItems().add(DVTable);
 
         huntControlsLayout.add(settingsButton, 7, row);
