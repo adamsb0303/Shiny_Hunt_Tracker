@@ -94,7 +94,7 @@ class PreviouslyCaught {
         //Caps window height at 540
         settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
             if(settingsAccordion.getHeight() + 125 <= 540)
-                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 120);
+                previouslyCaughtSettingsStage.setHeight(settingsAccordion.getHeight() + 125);
             else
                 previouslyCaughtSettingsStage.setHeight(540);
             previouslyCaughtSettingsStage.setWidth(340);
