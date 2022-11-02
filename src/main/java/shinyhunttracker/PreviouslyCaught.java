@@ -413,25 +413,21 @@ class PreviouslyCaught {
                 GridPane.setValignment(layoutNameLabel, VPos.CENTER);
                 layoutListLayout.add(layoutNameLabel, 0, row);
 
-                Button updateButton = new Button("Update");
-                GridPane.setHalignment(updateButton, HPos.CENTER);
-                GridPane.setValignment(updateButton, VPos.CENTER);
-                layoutListLayout.add(updateButton, 1, row);
-
                 Button loadButton = new Button("Load");
                 GridPane.setHalignment(loadButton, HPos.CENTER);
                 GridPane.setValignment(loadButton, VPos.CENTER);
-                layoutListLayout.add(loadButton, 2, row);
+                layoutListLayout.add(loadButton, 1, row);
+
+                Button updateButton = new Button("Update");
+                GridPane.setHalignment(updateButton, HPos.CENTER);
+                GridPane.setValignment(updateButton, VPos.CENTER);
+                layoutListLayout.add(updateButton, 2, row);
 
                 Button removeButton = new Button("Delete");
                 GridPane.setHalignment(removeButton, HPos.CENTER);
                 GridPane.setValignment(removeButton, VPos.CENTER);
                 layoutListLayout.add(removeButton, 3, row);
 
-                updateButton.setOnAction(e -> {
-                    SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, false);
-                    showLayoutList();
-                });
                 loadButton.setOnAction(e -> {
                     //ensures that the proper number of elements are in the window to load layout to if display caught is 0
                     if (displayCaught == 0) {
@@ -443,6 +439,10 @@ class PreviouslyCaught {
                     }
 
                     SaveData.loadLayout(layoutObject.get(0).toString(), windowLayout, false);
+                });
+                updateButton.setOnAction(e -> {
+                    SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, false);
+                    showLayoutList();
                 });
                 removeButton.setOnAction(e -> {
                     SaveData.removeLayout(layoutObject.get(0).toString(), false);
