@@ -326,7 +326,7 @@ public class ElementSettings {
         textProperties.getChildren().addAll(italicsCheck, boldCheck, underlinedCheck);
 
         //Turns on outline for label
-        CheckBox strokeCheckbox = new CheckBox("Stroke");
+        CheckBox strokeCheckbox = new CheckBox("Outline");
         label.setStrokeWidth(0);
 
         //Width of outline
