@@ -4596,7 +4596,7 @@
     "breedable":true,
     "family":[
       [626, 627],
-      [626, 952]
+      [626, 954]
     ]
   },
   {
@@ -5116,7 +5116,7 @@
     "breedable":true,
     "family":[
       [703, 704, 705],
-      [703, 954, 955]
+      [703, 955, 956]
     ]
   },
   {
@@ -5173,7 +5173,7 @@
     "breedable":true,
     "family":[
       [711, 712],
-      [711, 955]
+      [711, 956]
     ]
   },
   {
@@ -5237,7 +5237,7 @@
     "breedable":true,
     "family":[
       [721, 722, 723],
-      [721, 722, 956]
+      [721, 722, 958]
     ]
   },
   {
@@ -5247,7 +5247,7 @@
     "breedable":true,
     "family":[
       [721, 722, 723],
-      [721, 722, 956]
+      [721, 722, 958]
     ]
   },
   {
@@ -6652,7 +6652,7 @@
     "stage":1,
     "name":"Basculegion",
     "breedable":true,
-    "family":[958, 938]
+    "family":[951, 938]
   },
   {
     "generation":8,
@@ -6730,50 +6730,50 @@
   },
   {
     "generation":8,
+    "name":"Hisuian Basculin",
+    "breedable":true,
+    "family":[951, 938]
+  },
+  {
+    "generation":8,
     "name":"Hisuian Zorua",
     "breedable":true,
-    "family":[951, 952]
+    "family":[952, 953]
   },
   {
     "generation":8,
     "name":"Hisuian Zoroark",
     "breedable":true,
-    "family":[951, 952]
+    "family":[952, 953]
   },
   {
     "generation":8,
     "name":"Hisuian Braviary",
     "breedable":true,
-    "family":[626, 953]
+    "family":[626, 954]
   },
   {
     "generation":8,
     "name":"Hisuian Sliggoo",
     "breedable":true,
-    "family":[703, 954, 955]
+    "family":[703, 955, 956]
   },
   {
     "generation":8,
     "name":"Hisuian Goodra",
     "breedable":true,
-    "family":[703, 954, 955]
+    "family":[703, 955, 956]
   },
   {
     "generation":8,
     "name":"Hisuian Avalugg",
     "breedable":true,
-    "family":[711, 956]
+    "family":[711, 957]
   },
   {
     "generation":8,
     "name":"Hisuian Decidueye",
     "breedable":true,
-    "family":[721, 722, 957]
-  },
-  {
-    "generation":8,
-    "name":"Hisuian Basculin",
-    "breedable":true,
-    "family":[958, 938]
+    "family":[721, 722, 958]
   }
 ]
