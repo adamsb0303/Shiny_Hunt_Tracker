@@ -6652,21 +6652,22 @@
     "stage":1,
     "name":"Basculegion",
     "breedable":true,
-    "family":[951, 938]
+    "family":[951, 938],
+    "forms":["Male", "Female"]
   },
   {
     "generation":8,
     "stage":1,
     "name":"Sneasler",
     "breedable":true,
-    "family":[939, 948]
+    "family":[948, 939]
   },
   {
     "generation":8,
     "stage":1,
     "name":"Overqwil",
     "breedable":true,
-    "family":[940, 947]
+    "family":[947, 940]
   },
   {
     "generation":8,
@@ -6708,13 +6709,14 @@
     "generation":8,
     "name":"Hisuian Qwilfish",
     "breedable":true,
-    "family":[940, 947]
+    "family":[947, 940]
   },
   {
     "generation":8,
     "name":"Hisuian Sneasel",
     "breedable":true,
-    "family":[939, 948]
+    "family":[948, 939],
+    "forms":["Male", "Female"]
   },
   {
     "generation":8,
