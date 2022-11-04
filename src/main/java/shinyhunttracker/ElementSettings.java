@@ -208,12 +208,13 @@ public class ElementSettings {
             });
 
             resetImageFit.setOnAction(f-> {
-                square.setHeight(image.getImage().getHeight() * image.getScaleX());
-                square.setWidth(image.getImage().getWidth() * image.getScaleX());
-                square.setTranslateX(-square.getWidth() / 2);
-                square.setTranslateY(-square.getHeight());
-                square.setLayoutX(image.getLayoutX());
-                square.setLayoutY(image.getLayoutY());
+                double oldHeight = square.getHeight() * square.getScaleY();
+                //adjusts square to be same dimensions as image
+                square.setScaleX(image.getImage().getWidth() * image.getScaleX() / square.getWidth());
+                square.setScaleY(image.getImage().getHeight() * image.getScaleY() / square.getHeight());
+
+                //Translates square down by the half of the change in height
+                square.setTranslateY(square.getTranslateY() + (oldHeight - square.getHeight() * square.getScaleY()) / 2);
             });
 
             //Removes square and resets image scale
