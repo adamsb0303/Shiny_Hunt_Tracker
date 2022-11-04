@@ -30,7 +30,6 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Vector;
-import java.util.concurrent.Callable;
 
 public class HuntController {
     static Stage huntControls = new Stage();
@@ -504,7 +503,6 @@ public class HuntController {
             e.consume();
             popOutButton.setVisible(true);
             windowSettingsButton.setVisible(false);
-            newWindow.closeBoundaries();
             newWindow.close();
         });
     }
