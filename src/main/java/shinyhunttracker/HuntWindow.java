@@ -175,7 +175,7 @@ class HuntWindow {
      * Creates the settings window
      */
     public void customizeHuntWindowSettings(){
-        if(CustomizeHuntVBox.getChildren().size() != 0) {
+        if(CustomizeHuntStage.getScene() != null) {
             CustomizeHuntStage.show();
             return;
         }
