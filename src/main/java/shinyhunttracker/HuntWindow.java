@@ -262,7 +262,7 @@ class HuntWindow {
         CustomizeHuntLayout.setAlignment(Pos.TOP_CENTER);
         CustomizeHuntLayout.setId("background");
         CustomizeHuntLayout.setSpacing(10);
-        CustomizeHuntLayout.getChildren().addAll(HuntController.titleBar(CustomizeHuntStage), settings, layoutSettings);
+        CustomizeHuntLayout.getChildren().addAll(CustomWindowElements.titleBar(CustomizeHuntStage), settings, layoutSettings);
 
         Scene CustomizeHuntScene = new Scene(CustomizeHuntLayout, 0, 0);
         CustomizeHuntScene.getStylesheets().add("file:shinyTracker.css");
@@ -271,7 +271,7 @@ class HuntWindow {
             CustomizeHuntStage.initStyle(StageStyle.UNDECORATED);
 
         CustomizeHuntStage.setScene(CustomizeHuntScene);
-        HuntController.makeDraggable(CustomizeHuntScene);
+        CustomWindowElements.makeDraggable(CustomizeHuntScene);
 
         settings.heightProperty().addListener((o, oldVal, newVal) -> {
             CustomizeHuntStage.setHeight(settings.getHeight() + 85);
@@ -365,7 +365,7 @@ class HuntWindow {
 
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
-        masterLayout.getChildren().addAll(HuntController.titleBar(layoutListStage), parentPane);
+        masterLayout.getChildren().addAll(CustomWindowElements.titleBar(layoutListStage), parentPane);
 
         Scene layoutListScene = new Scene(masterLayout, 0, 0);
         layoutListScene.getStylesheets().add("file:shinyTracker.css");
@@ -374,7 +374,7 @@ class HuntWindow {
             layoutListStage.initStyle(StageStyle.UNDECORATED);
 
         layoutListStage.setScene(layoutListScene);
-        HuntController.makeDraggable(layoutListScene);
+        CustomWindowElements.makeDraggable(layoutListScene);
         layoutListStage.show();
 
         //Allows user to save a new layout and prompts for name
@@ -383,7 +383,7 @@ class HuntWindow {
             newNameDialog.setTitle("New Layout Name");
             newNameDialog.setHeaderText("Enter name of new layout.");
             newNameDialog.initStyle(StageStyle.UNDECORATED);
-            HuntController.makeDraggable(newNameDialog.getDialogPane().getScene());
+            CustomWindowElements.makeDraggable(newNameDialog.getDialogPane().getScene());
             newNameDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             newNameDialog.showAndWait().ifPresent(f -> {
                 SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, true);

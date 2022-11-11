@@ -155,7 +155,7 @@ public class HuntSelection{
         }
         pokemonListRoot.getChildren().addAll(defaultPokemonList);
 
-        pokemonSelection.getChildren().addAll(HuntController.titleBar(selectionPageStage), pokemonSearch, pokemonListTreeView);
+        pokemonSelection.getChildren().addAll(CustomWindowElements.titleBar(selectionPageStage), pokemonSearch, pokemonListTreeView);
 
         selectionPageLayout.getChildren().addAll(huntInformation, pokemonSelection);
         selectionPageLayout.setId("background");
@@ -167,7 +167,7 @@ public class HuntSelection{
             selectionPageStage.initStyle(StageStyle.UNDECORATED);
 
         selectionPageStage.setScene(selectionScene);
-        HuntController.makeDraggable(selectionScene);
+        CustomWindowElements.makeDraggable(selectionScene);
         selectionPageStage.show();
 
         ProgressIndicator progressBar = new ProgressIndicator();
@@ -189,7 +189,7 @@ public class HuntSelection{
             methodInformation.setHeaderText(null);
             methodInformation.initStyle(StageStyle.UNDECORATED);
             methodInformation.getDialogPane().getStylesheets().add("file:shinyTracker.css");
-            HuntController.makeDraggable(methodInformation.getDialogPane().getScene());
+            CustomWindowElements.makeDraggable(methodInformation.getDialogPane().getScene());
 
             VBox dialogLayout = new VBox();
             dialogLayout.setSpacing(10);

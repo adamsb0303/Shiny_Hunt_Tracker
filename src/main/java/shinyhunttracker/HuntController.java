@@ -20,7 +20,6 @@ import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
-import javafx.stage.Window;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -31,11 +30,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Vector;
 
+import static shinyhunttracker.CustomWindowElements.*;
+
 public class HuntController {
     static Stage huntControls = new Stage();
     static ScrollPane huntControlsScroll = new ScrollPane();
     static GridPane huntControlsLayout = new GridPane();
-    static double xOffset, yOffset;
 
     static MenuItem previouslyCaught = new MenuItem("Previously Caught Window Settings");
     static MenuItem editSavedHunts = new MenuItem("Edit Saved Hunts");
@@ -947,7 +947,7 @@ public class HuntController {
 
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
-        masterLayout.getChildren().addAll(HuntController.titleBar(keyBindingSettingsStage), parentPane);
+        masterLayout.getChildren().addAll(CustomWindowElements.titleBar(keyBindingSettingsStage), parentPane);
 
         Scene keyBindingScene = new Scene(masterLayout, 250, 300);
         keyBindingScene.getStylesheets().add("file:shinyTracker.css");
@@ -956,7 +956,7 @@ public class HuntController {
             keyBindingSettingsStage.initStyle(StageStyle.UNDECORATED);
 
         keyBindingSettingsStage.setScene(keyBindingScene);
-        HuntController.makeDraggable(keyBindingScene);
+        CustomWindowElements.makeDraggable(keyBindingScene);
         keyBindingSettingsStage.show();
     }
 
@@ -1006,82 +1006,6 @@ public class HuntController {
         }catch (IOException f){
             f.printStackTrace();
         }
-    }
-
-    /**
-     * Returns a new title bar with exit and minimize buttons
-     * @param stage window to close or minimize
-     * @return HBox with new title bar
-     */
-    public static HBox titleBar(Stage stage){
-        if(!stage.isShowing())
-            customBehaviors(stage);
-
-        stage.getIcons().add(new Image("file:Images/icon.png"));
-
-        //Exits given stage
-        Button exit = new Button();
-        exit.setFocusTraversable(false);
-        ImageView exitIcon = new ImageView(new Image("file:Images/x.png"));
-        exit.setPadding(new Insets(0, 0, 0, 0));
-        exit.setGraphic(exitIcon);
-        exit.setMinSize(25, 25);
-        exit.setOnAction(e -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
-
-        //Minimizes given stage
-        Button minimize = new Button();
-        minimize.setFocusTraversable(false);
-        ImageView minimizeIcon = new ImageView(new Image("file:Images/underscore.png"));
-        minimize.setPadding(new Insets(0, 0, 0, 0));
-        minimize.setGraphic(minimizeIcon);
-        minimize.setMinSize(25, 25);
-        minimize.setOnAction(e -> stage.setIconified(true));
-
-        //Places the buttons next to each other in the top right
-        HBox windowControls = new HBox();
-        windowControls.getChildren().addAll(minimize, exit);
-        windowControls.setAlignment(Pos.CENTER_RIGHT);
-        windowControls.setSpacing(5);
-        windowControls.setPadding(new Insets(5));
-
-        return windowControls;
-    }
-
-    /**
-     * Adds any special behaviors that aren't already on the custom stages
-     * @param stage custom stage
-     */
-    public static void customBehaviors(Stage stage){
-        Point mouse = MouseInfo.getPointerInfo().getLocation();
-
-        Screen.getScreens().forEach(e -> {
-            //checks for screen on x and y axises
-            if(e.getBounds().getMinX() <= mouse.getX() && e.getBounds().getMaxX() > mouse.getX())
-                if(e.getBounds().getMinY() <= mouse.getY() && e.getBounds().getMaxY() > mouse.getY()) {
-                    double centerX = (e.getBounds().getMinX() + e.getBounds().getMaxX()) / 2;
-                    double centerY = (e.getBounds().getMinY() + e.getBounds().getMaxY()) / 2;
-                    Platform.runLater(() -> {
-                        stage.setX(centerX - stage.getScene().getWidth() / 2);
-                        stage.setY(centerY - stage.getScene().getHeight() / 2);
-                    });
-                }
-        });
-    }
-
-    /**
-     * Allows given Scene to detect mouse movement and drag stage with mouse
-     * @param scene Scene that is going to be made draggable
-     */
-    public static void makeDraggable(Scene scene){
-        Window stage = scene.getWindow();
-        scene.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        scene.setOnMouseDragged(e -> {
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
-        });
     }
 
     /**

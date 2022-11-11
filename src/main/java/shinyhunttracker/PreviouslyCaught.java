@@ -80,7 +80,7 @@ class PreviouslyCaught {
         //Adds new title bar
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
-        masterLayout.getChildren().addAll(HuntController.titleBar(previouslyCaughtSettingsStage), scrollPane);
+        masterLayout.getChildren().addAll(CustomWindowElements.titleBar(previouslyCaughtSettingsStage), scrollPane);
 
         Scene previouslyCaughtSettingsScene = new Scene(masterLayout, 340, 120);
         previouslyCaughtSettingsScene.getStylesheets().add("file:shinyTracker.css");
@@ -89,7 +89,7 @@ class PreviouslyCaught {
             previouslyCaughtSettingsStage.initStyle(StageStyle.UNDECORATED);
 
         previouslyCaughtSettingsStage.setScene(previouslyCaughtSettingsScene);
-        HuntController.makeDraggable(previouslyCaughtSettingsScene);
+        CustomWindowElements.makeDraggable(previouslyCaughtSettingsScene);
 
         //Caps window height at 540
         settingsAccordion.heightProperty().addListener((o, oldVal, newVal) -> {
@@ -363,7 +363,7 @@ class PreviouslyCaught {
         //add custom title bar
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
-        masterLayout.getChildren().addAll(HuntController.titleBar(prevCatchesStage), parentPane);
+        masterLayout.getChildren().addAll(CustomWindowElements.titleBar(prevCatchesStage), parentPane);
 
         Scene previousHuntsScene = new Scene(masterLayout, 0, 0);
         previousHuntsScene.getStylesheets().add("file:shinyTracker.css");
@@ -372,7 +372,7 @@ class PreviouslyCaught {
             prevCatchesStage.initStyle(StageStyle.UNDECORATED);
 
         prevCatchesStage.setScene(previousHuntsScene);
-        HuntController.makeDraggable(previousHuntsScene);
+        CustomWindowElements.makeDraggable(previousHuntsScene);
         prevCatchesStage.show();
     }
 
@@ -470,7 +470,7 @@ class PreviouslyCaught {
         //add custom title bar
         VBox masterLayout = new VBox();
         masterLayout.setId("background");
-        masterLayout.getChildren().addAll(HuntController.titleBar(layoutListStage), parentPane);
+        masterLayout.getChildren().addAll(CustomWindowElements.titleBar(layoutListStage), parentPane);
 
         Scene layoutListScene = new Scene(masterLayout, 0, 0);
         layoutListScene.getStylesheets().add("file:shinyTracker.css");
@@ -479,7 +479,7 @@ class PreviouslyCaught {
             layoutListStage.initStyle(StageStyle.UNDECORATED);
 
         layoutListStage.setScene(layoutListScene);
-        HuntController.makeDraggable(layoutListScene);
+        CustomWindowElements.makeDraggable(layoutListScene);
         layoutListStage.show();
 
         newLayoutButton.setOnAction(e -> {
@@ -487,7 +487,7 @@ class PreviouslyCaught {
             newNameDialog.setTitle("New Layout Name");
             newNameDialog.setHeaderText("Enter name of new layout.");
             newNameDialog.initStyle(StageStyle.UNDECORATED);
-            HuntController.makeDraggable(newNameDialog.getDialogPane().getScene());
+            CustomWindowElements.makeDraggable(newNameDialog.getDialogPane().getScene());
             newNameDialog.getDialogPane().getStylesheets().add("file:shinyTracker.css");
             newNameDialog.showAndWait().ifPresent(f -> {
                 SaveData.saveLayout(newNameDialog.getEditor().getText(), windowLayout, false);
