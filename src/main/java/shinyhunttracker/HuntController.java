@@ -160,6 +160,9 @@ public class HuntController {
 
         }
 
+        if(windowsList.size() == 0)
+            refreshMiscWindows();
+
         editSavedHunts.setOnAction(e -> editSavedHuntsWindow());
         keyBinding.setOnAction(e -> keyBindingSettings());
         previouslyCaught.setOnAction(e -> PreviouslyCaught.previouslyCaughtPokemonSettings());
