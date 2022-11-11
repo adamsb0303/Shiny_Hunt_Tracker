@@ -370,7 +370,9 @@ public class SaveData {
                     text.setStroke(Color.web(elementData.getString("stroke")));
                     text.setUnderline(elementData.getBoolean("underline"));
                     text.setVisible(elementData.getBoolean("visible"));
-                }else
+                }else if(huntLayout.getChildren().size() < layoutData.length())
+                    i--;
+                else
                     continue;
                 layoutDataIndex++;
             }
