@@ -328,7 +328,7 @@ public class ElementSettings {
 
         //Turns on outline for label
         CheckBox strokeCheckbox = new CheckBox("Outline");
-        label.setStrokeWidth(0);
+        strokeCheckbox.setSelected(!Color.TRANSPARENT.equals(label.getStroke()));
 
         //Width of outline
         HBox strokeWidth = new HBox();
@@ -337,11 +337,13 @@ public class ElementSettings {
         TextField strokeWidthField = new TextField();
         strokeWidthField.setMaxWidth(100);
         strokeWidthField.setText(String.valueOf(label.getStrokeWidth()));
-        strokeWidthField.promptTextProperty().bind(label.strokeWidthProperty().asString());
         strokeWidth.disableProperty().bind(strokeCheckbox.selectedProperty().not());
-        strokeWidthField.disableProperty().bind(strokeCheckbox.selectedProperty().not());
         strokeWidth.setAlignment(Pos.CENTER_LEFT);
         strokeWidth.getChildren().addAll(strokeWidthLabel, strokeWidthField);
+        label.strokeWidthProperty().addListener((o, oldVal, newVal) -> {
+            if(Double.parseDouble(strokeWidthField.getText()) != newVal.doubleValue())
+                strokeWidthField.setText(newVal.toString());
+        });
 
         //Color of outline
         HBox strokeColor = new HBox();
@@ -351,8 +353,7 @@ public class ElementSettings {
         strokeColorPicker.setMinHeight(25);
         strokeColorPicker.setMaxWidth(100);
         strokeColorPicker.setValue((Color) label.getStroke());
-        strokeColorLabel.disableProperty().bind(strokeCheckbox.selectedProperty().not());
-        strokeColorPicker.disableProperty().bind(strokeCheckbox.selectedProperty().not());
+        strokeColor.disableProperty().bind(strokeCheckbox.selectedProperty().not());
         strokeColor.setAlignment(Pos.CENTER_LEFT);
         strokeColor.getChildren().addAll(strokeColorLabel, strokeColorPicker);
 
@@ -435,12 +436,14 @@ public class ElementSettings {
 
         strokeCheckbox.setOnAction(e -> {
             if(strokeCheckbox.isSelected())
-                label.setStrokeWidth(parseDouble(strokeWidthField.getText()));
+                label.setStroke(strokeColorPicker.getValue());
             else
-                label.setStrokeWidth(0);
+                label.setStroke(Color.TRANSPARENT);
         });
 
         strokeWidthField.setOnKeyTyped(e -> {
+            if(strokeWidthField.getText().length() == 0)
+                strokeWidthField.setText("0");
             try{
                 label.setStrokeWidth(parseDouble(strokeWidthField.getText()));
             }catch(NumberFormatException ignored){
