@@ -318,7 +318,7 @@ public class HuntController {
         popOutButton.setGraphic(popOutIcon);
         popOutButton.setTooltip(new Tooltip("Hunt Window Popout"));
         popOutButton.setMinSize(25, 25);
-        popOutButton.setVisible(!newWindow.getStage().isShowing());
+        popOutButton.setVisible(!newWindow.isShowing());
 
         Button windowSettingsButton = new Button();
         windowSettingsButton.setFocusTraversable(false);
@@ -327,7 +327,7 @@ public class HuntController {
         windowSettingsButton.setGraphic(windowSettingsIcon);
         windowSettingsButton.setTooltip(new Tooltip("Hunt Window Settings"));
         windowSettingsButton.setMinSize(25, 25);
-        windowSettingsButton.setVisible(newWindow.getStage().isShowing());
+        windowSettingsButton.setVisible(newWindow.isShowing());
 
         StackPane windowPopout = new StackPane();
         windowPopout.getChildren().addAll(popOutButton, windowSettingsButton);

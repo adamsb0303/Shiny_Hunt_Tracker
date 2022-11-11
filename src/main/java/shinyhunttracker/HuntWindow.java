@@ -451,6 +451,16 @@ class HuntWindow {
     }
 
     /**
+     * Returns if window is open, since the stage when transparent is different from windowStage
+     * @return if the window is showing
+     */
+    public boolean isShowing(){
+        if(windowLayout.getScene() == null)
+            return false;
+        return windowLayout.getScene().getWindow().isShowing();
+    }
+
+    /**
      * Reset Encounters
      */
     public void resetEncounters(){
