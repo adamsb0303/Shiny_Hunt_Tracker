@@ -60,7 +60,7 @@ class FetchImage extends Thread{
             sprite.setFitWidth(-200);
             sprite.setFitHeight(-200);
         }
-        if(image.getWidth() != -sprite.getFitWidth() && image.getHeight() != -sprite.getFitHeight()){
+        if(image.getWidth() != -sprite.getFitWidth() || image.getHeight() != -sprite.getFitHeight()){
             double width = image.getWidth();
             double height = image.getHeight();
             double scale;
