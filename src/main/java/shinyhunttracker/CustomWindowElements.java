@@ -63,7 +63,7 @@ public class CustomWindowElements {
 
         InnerShadow innerShadow = new InnerShadow();
         innerShadow.setChoke(0.1);
-        innerShadow.setColor(Color.web("#202020"));
+        innerShadow.setColor(Color.web("#151515"));
 
         stage.focusedProperty().addListener((o, oldV, newV) -> {
             if(newV)
