@@ -199,13 +199,6 @@ public class HuntController {
 
         //Makes sure to save all currently open hunts before closing
         huntControls.setOnCloseRequest(e -> {
-            while(windowsList.size() > 0)
-                windowsList.remove(windowsList.lastElement());
-
-            //Close all possibly open windows
-            keyBindingSettingsStage.close();
-            PreviouslyCaught.close();
-
             System.exit(0);
         });
     }
