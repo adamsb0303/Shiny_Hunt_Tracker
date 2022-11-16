@@ -435,6 +435,7 @@ class PreviouslyCaught {
                         displayPrevious = displayCaught;
                         displayCaught = (layoutObject.length() - 2) / 4;
                         addPreviouslyCaughtPokemon();
+                        updateSelection();
                         windowStage.show();
                     }
 
