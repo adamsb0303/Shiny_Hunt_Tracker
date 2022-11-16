@@ -5,9 +5,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -53,6 +60,17 @@ public class CustomWindowElements {
         windowControls.setAlignment(Pos.CENTER_RIGHT);
         windowControls.setSpacing(5);
         windowControls.setPadding(new Insets(5));
+
+        InnerShadow innerShadow = new InnerShadow();
+        innerShadow.setChoke(0.1);
+        innerShadow.setColor(Color.web("#202020"));
+
+        stage.focusedProperty().addListener((o, oldV, newV) -> {
+            if(newV)
+                stage.getScene().getRoot().setEffect(innerShadow);
+            else
+                stage.getScene().getRoot().setEffect(null);
+        });
 
         return windowControls;
     }
