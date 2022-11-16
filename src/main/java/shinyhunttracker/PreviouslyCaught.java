@@ -526,6 +526,11 @@ class PreviouslyCaught {
      * Closes all Previously Caught associated windows
      */
     public static void close() {
+        if(!windowStage.isShowing()){
+            Stage transparentStage = (Stage) windowLayout.getScene().getWindow();
+            transparentStage.close();
+        }
+
         windowStage.close();
         previouslyCaughtSettingsStage.close();
         prevCatchesStage.close();
@@ -535,5 +540,9 @@ class PreviouslyCaught {
     /**
      * @return if window is showing
      */
-    public static boolean isShowing() { return windowStage.isShowing(); }
+    public static boolean isShowing() {
+        if(windowLayout.getScene() == null)
+            return false;
+        return windowLayout.getScene().getWindow().isShowing();
+    }
 }

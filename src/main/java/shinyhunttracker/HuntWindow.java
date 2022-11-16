@@ -445,6 +445,11 @@ class HuntWindow {
      * Save hunt and it closes the window
      */
     public void close(){
+        if(!windowStage.isShowing()){
+            Stage transparentStage = (Stage) windowLayout.getScene().getWindow();
+            transparentStage.close();
+        }
+
         windowStage.close();
         CustomizeHuntStage.close();
         layoutListStage.close();
