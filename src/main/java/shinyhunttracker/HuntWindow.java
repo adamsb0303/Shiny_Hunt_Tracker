@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Vector;
 
+import static shinyhunttracker.CustomWindowElements.makeDraggable;
 import static shinyhunttracker.ElementSettings.*;
 
 class HuntWindow {
@@ -339,13 +340,32 @@ class HuntWindow {
                     currentLayout = layoutObject.get(0).toString();
                     HuntController.saveHuntOrder();
                 });
+
+                //confirmation dialog for editing hunt json
+                Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmAlert.initStyle(StageStyle.UNDECORATED);
+                confirmAlert.getDialogPane().getStylesheets().add("file:shinyTracker.css");
+                makeDraggable(confirmAlert.getDialogPane().getScene());
+
                 updateButton.setOnAction(e -> {
-                    SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, true);
-                    showLayoutList();
+                    confirmAlert.setContentText("Are you sure you want to update this layout with new positions?");
+                    confirmAlert.showAndWait().ifPresent(f -> {
+                        if (!f.getButtonData().toString().equals("OK_DONE"))
+                            return;
+
+                        SaveData.saveLayout(layoutObject.get(0).toString(), windowLayout, true);
+                        showLayoutList();
+                    });
                 });
                 removeButton.setOnAction(e -> {
-                    SaveData.removeLayout(layoutObject.get(0).toString(), true);
-                    showLayoutList();
+                    confirmAlert.setContentText("Are you sure you want to delete this layout?");
+                    confirmAlert.showAndWait().ifPresent(f -> {
+                        if (!f.getButtonData().toString().equals("OK_DONE"))
+                            return;
+
+                        SaveData.removeLayout(layoutObject.get(0).toString(), true);
+                        showLayoutList();
+                    });
                 });
             }
         }catch(IOException e){
