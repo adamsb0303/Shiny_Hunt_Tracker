@@ -468,7 +468,7 @@
     "stage":0,
     "name":"Mankey",
     "breedable":true,
-    "family":[55, 56],
+    "family":[55, 56, 1032],
     "base":[70, 40, 35, 80, 35]
   },
   {
@@ -476,7 +476,7 @@
     "stage":1,
     "name":"Primeape",
     "breedable":true,
-    "family":[55, 56],
+    "family":[55, 56, 1032],
     "base":[95, 65, 60, 105, 60]
   },
   {
@@ -1641,6 +1641,7 @@
     "generation":2,
     "name":"Girafarig",
     "breedable":true,
+    "family": [202, 1035],
     "forms":["Male", "Female"]
   },
   {
@@ -1660,7 +1661,8 @@
   {
     "generation":2,
     "name":"Dunsparce",
-    "breedable":true
+    "breedable":true,
+    "family": [205, 1036]
   },
   {
     "generation":2,
@@ -4575,14 +4577,14 @@
     "stage":0,
     "name":"Pawniard",
     "breedable":true,
-    "family":[623, 624]
+    "family":[623, 624, 1037]
   },
   {
     "generation":5,
     "stage":1,
     "name":"Bisharp",
     "breedable":true,
-    "family":[623, 624]
+    "family":[623, 624, 1037]
   },
   {
     "generation":5,
@@ -6232,11 +6234,13 @@
     "stage":0,
     "name":"Sinistea",
     "breedable":true,
-    "family":[871]},
+    "family":[871, 872]
+  },
   {
     "generation":8,
     "name":"Polteageist",
-    "breedable":true
+    "breedable":true,
+    "family":[871, 872]
   },
   {
     "generation":8,
@@ -6287,14 +6291,14 @@
     "stage":2,
     "name":"Obstagoon",
     "breedable":true,
-    "family":[879, 915, 916]
+    "family":[915, 916, 879]
   },
   {
     "generation":8,
     "stage":1,
     "name":"Perrserker",
     "breedable":true,
-    "family":[880, 908]
+    "family":[908, 880]
   },
   {
     "generation":8,
@@ -6315,14 +6319,14 @@
     "stage":2,
     "name":"Mr. Rime",
     "breedable":true,
-    "family":[438, 883, 913]
+    "family":[438, 913, 883]
   },
   {
     "generation":8,
     "stage":1,
     "name":"Runerigus",
     "breedable":true,
-    "family":[884, 919]
+    "family":[919, 884]
   },
   {
     "generation":8,
@@ -6469,7 +6473,7 @@
     "generation":8,
     "name":"Galarian Meowth",
     "breedable":true,
-    "family":[880, 908]
+    "family":[908, 880]
   },
   {
     "generation":8,
@@ -6499,7 +6503,7 @@
     "generation":8,
     "name":"Galarian Mr. Mime",
     "breedable":true,
-    "family":[438, 883, 913]
+    "family":[438, 913, 883]
   },
   {
     "generation":8,
@@ -6511,13 +6515,13 @@
     "generation":8,
     "name":"Galarian Zigzagoon",
     "breedable":true,
-    "family":[879, 915, 916]
+    "family":[915, 916, 879]
   },
   {
     "generation":8,
     "name":"Galarian Linoone",
     "breedable":true,
-    "family":[879, 915, 916]
+    "family":[915, 916, 879]
   },
   {
     "generation":8,
@@ -6536,7 +6540,7 @@
     "generation":8,
     "name":"Galarian Yamask",
     "breedable":true,
-    "family":[884, 919]
+    "family":[919, 884]
   },
   {
     "generation":8,
@@ -6777,5 +6781,611 @@
     "name":"Hisuian Decidueye",
     "breedable":true,
     "family":[721, 722, 958]
+  },
+  {
+    "generation":9,
+    "name":"Sprigatito",
+    "breedable":true,
+    "family":[959, 960, 961]
+  },
+  {
+    "generation":9,
+    "name":"Floragato",
+    "breedable":true,
+    "family":[959, 960, 961]
+  },
+  {
+    "generation":9,
+    "name":"Meowscarada",
+    "breedable":true,
+    "family":[959, 960, 961]
+  },
+  {
+    "generation":9,
+    "name":"Fuecoco",
+    "breedable":true,
+    "family":[962, 963, 964]
+  },
+  {
+    "generation":9,
+    "name":"Crocalor",
+    "breedable":true,
+    "family":[962, 963, 964]
+  },
+  {
+    "generation":9,
+    "name":"Skeledirge",
+    "breedable":true,
+    "family":[962, 963, 964]
+  },
+  {
+    "generation":9,
+    "name":"Quaxly",
+    "breedable":true,
+    "family":[965, 966, 967]
+  },
+  {
+    "generation":9,
+    "name":"Quaxwell",
+    "breedable":true,
+    "family":[965, 966, 967]
+  },
+  {
+    "generation":9,
+    "name":"Quaquaval",
+    "breedable":true,
+    "family":[965, 966, 967]
+  },
+  {
+    "generation":9,
+    "name":"Lechonk",
+    "breedable":true,
+    "family":[968, 969]
+  },
+  {
+    "generation":9,
+    "name":"Oinkologne",
+    "breedable":true,
+    "family":[968, 969],
+    "forms": ["Male", "Female"]
+  },
+  {
+    "generation":9,
+    "name":"Tarountula",
+    "breedable":true,
+    "family":[970, 971]
+  },
+  {
+    "generation":9,
+    "name":"Spidops",
+    "breedable":true,
+    "family":[970, 971]
+  },
+  {
+    "generation":9,
+    "name":"Nymble",
+    "breedable":true,
+    "family":[972, 973]
+  },
+  {
+    "generation":9,
+    "name":"Lokix",
+    "breedable":true,
+    "family":[972, 973]
+  },
+  {
+    "generation":9,
+    "name":"Pawmi",
+    "breedable":true,
+    "family":[974, 975, 976]
+  },
+  {
+    "generation":9,
+    "name":"Pawmo",
+    "breedable":true,
+    "family":[974, 975, 976]
+  },
+  {
+    "generation":9,
+    "name":"Pawmot",
+    "breedable":true,
+    "family":[974, 975, 976]
+  },
+  {
+    "generation":9,
+    "name":"Tandemaus",
+    "breedable":true,
+    "family":[977, 978]
+  },
+  {
+    "generation":9,
+    "name":"Tandemaus",
+    "breedable":true,
+    "family":[977, 978],
+    "forms": ["Fmaily of 4", "Family of 3"]
+  },
+  {
+    "generation":9,
+    "name":"Fidough",
+    "breedable":true,
+    "family":[979, 980]
+  },
+  {
+    "generation":9,
+    "name":"Dachsbun",
+    "breedable":true,
+    "family":[979, 980]
+  },
+  {
+    "generation":9,
+    "name":"Smoliv",
+    "breedable":true,
+    "family":[981, 982, 983]
+  },
+  {
+    "generation":9,
+    "name":"Dolliv",
+    "breedable":true,
+    "family":[981, 982, 983]
+  },
+  {
+    "generation":9,
+    "name":"Arboliva",
+    "breedable":true,
+    "family":[981, 982, 983]
+  },
+  {
+    "generation":9,
+    "name":"Squawkabilly",
+    "breedable":true,
+    "forms": ["Green", "Blue", "Yellow", "White"]
+  },
+  {
+    "generation":9,
+    "name":"Nacli",
+    "breedable":true,
+    "family":[985, 986, 987]
+  },
+  {
+    "generation":9,
+    "name":"Naclstack",
+    "breedable":true,
+    "family":[985, 986, 987]
+  },
+  {
+    "generation":9,
+    "name":"Garganacl",
+    "breedable":true,
+    "family":[985, 986, 987]
+  },
+  {
+    "generation":9,
+    "name":"Charcadet",
+    "breedable":true,
+    "family":[[988, 989],[988,990]]
+  },
+  {
+    "generation":9,
+    "name":"Armarouge",
+    "breedable":true,
+    "family":[988, 989]
+  },
+  {
+    "generation":9,
+    "name":"Ceruledge",
+    "breedable":true,
+    "family":[988,990]
+  },
+  {
+    "generation":9,
+    "name":"Tadbulb",
+    "breedable":true,
+    "family":[991,992]
+  },
+  {
+    "generation":9,
+    "name":"Bellibolt",
+    "breedable":true,
+    "family":[991,992]
+  },
+  {
+    "generation":9,
+    "name":"Wattrel",
+    "breedable":true,
+    "family":[993,994]
+  },
+  {
+    "generation":9,
+    "name":"Kilowattrel",
+    "breedable":true,
+    "family":[993,994]
+  },
+  {
+    "generation":9,
+    "name":"Maschiff",
+    "breedable":true,
+    "family":[995,996]
+  },
+  {
+    "generation":9,
+    "name":"Mabosstiff",
+    "breedable":true,
+    "family":[995,996]
+  },
+  {
+    "generation":9,
+    "name":"Shroodle",
+    "breedable":true,
+    "family":[997,998]
+  },
+  {
+    "generation":9,
+    "name":"Grafaiai",
+    "breedable":true,
+    "family":[997,998]
+  },
+  {
+    "generation":9,
+    "name":"Bramblin",
+    "breedable":true,
+    "family":[999,1000]
+  },
+  {
+    "generation":9,
+    "name":"Brambleghast",
+    "breedable":true,
+    "family":[999,1000]
+  },
+  {
+    "generation":9,
+    "name":"Toedscool",
+    "breedable":true,
+    "family":[1001,1002]
+  },
+  {
+    "generation":9,
+    "name":"Toedscruel",
+    "breedable":true,
+    "family":[1001,1002]
+  },
+  {
+    "generation":9,
+    "name":"Klawf",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Capsakid",
+    "breedable":true,
+    "family":[1004,1005]
+  },
+  {
+    "generation":9,
+    "name":"Scovillain",
+    "breedable":true,
+    "family":[1004,1005]
+  },
+  {
+    "generation":9,
+    "name":"Rellor",
+    "breedable":true,
+    "family":[1006,1007]
+  },
+  {
+    "generation":9,
+    "name":"Rabsca",
+    "breedable":true,
+    "family":[1006,1007]
+  },
+  {
+    "generation":9,
+    "name":"Flittle",
+    "breedable":true,
+    "family":[1008,1009]
+  },
+  {
+    "generation":9,
+    "name":"Espathra",
+    "breedable":true,
+    "family":[1008,1009]
+  },
+  {
+    "generation":9,
+    "name":"Tinkatink",
+    "breedable":true,
+    "family":[1010,1011,1012]
+  },
+  {
+    "generation":9,
+    "name":"Tinkatuff",
+    "breedable":true,
+    "family":[1010,1011,1012]
+  },
+  {
+    "generation":9,
+    "name":"Tinkaton",
+    "breedable":true,
+    "family":[1010,1011,1012]
+  },
+  {
+    "generation":9,
+    "name":"Wiglett",
+    "breedable":true,
+    "family":[1013,1014]
+  },
+  {
+    "generation":9,
+    "name":"Wugtrio",
+    "breedable":true,
+    "family":[1013,1014]
+  },
+  {
+    "generation":9,
+    "name":"Bombirdier",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Finizen",
+    "breedable":true,
+    "family":[1016,1017]
+  },
+  {
+    "generation":9,
+    "name":"Palafin",
+    "breedable":true,
+    "family":[1016,1017]
+  },
+  {
+    "generation":9,
+    "name":"Varoom",
+    "breedable":true,
+    "family":[1018,1019]
+  },
+  {
+    "generation":9,
+    "name":"Revavroom",
+    "breedable":true,
+    "family":[1018,1019]
+  },
+  {
+    "generation":9,
+    "name":"Cyclizar",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Orthworm",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Glimmet",
+    "breedable":true,
+    "family":[1022,1023]
+  },
+  {
+    "generation":9,
+    "name":"Glimmora",
+    "breedable":true,
+    "family":[1022,1023]
+  },
+  {
+    "generation":9,
+    "name":"Greavard",
+    "breedable":true,
+    "family":[1024,1025]
+  },
+  {
+    "generation":9,
+    "name":"Houndstone",
+    "breedable":true,
+    "family":[1024,1025]
+  },
+  {
+    "generation":9,
+    "name":"Flamigo",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Cetoddle",
+    "breedable":true,
+    "family":[1027,1028]
+  },
+  {
+    "generation":9,
+    "name":"Cetitan",
+    "breedable":true,
+    "family":[1027,1028]
+  },
+  {
+    "generation":9,
+    "name":"Veluza",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Dondozo",
+    "breedable":true
+  },
+  {
+    "generation":9,
+    "name":"Tatsugiri",
+    "breedable":true,
+    "forms": ["Curly", "Droopy", "Stretch"]
+  },
+  {
+    "generation":9,
+    "name":"Annihilape",
+    "breedable":true,
+    "family":[55, 56, 1032]
+  },
+  {
+    "generation":9,
+    "name":"Paldean Wooper",
+    "breedable":true,
+    "family":[1033, 1034]
+  },
+  {
+    "generation":9,
+    "name":"Clodsire",
+    "breedable":true,
+    "family":[1033, 1034]
+  },
+  {
+    "generation":9,
+    "name":"Farigiraf",
+    "breedable":true,
+    "family":[202, 1035]
+  },
+  {
+    "generation":9,
+    "name":"Dudunsparce",
+    "breedable":true,
+    "family": [205, 1036],
+    "forms": ["2 Segment", "3 Segment"]
+  },
+  {
+    "generation":9,
+    "name":"Kingambit",
+    "breedable":true,
+    "family":[623, 624, 1037]
+  },
+  {
+    "generation":9,
+    "name":"Paldean Tauros",
+    "breedable":true,
+    "forms": ["Regular", "Blase Breed", "Aqua Breed"]
+  },
+  {
+    "generation":9,
+    "name":"Great Tusk",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Brute Bonnet",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Sandy Shocks",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Scream Tail",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Flutter Mane",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Slither Wing",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Treads",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Moth",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Hands",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Jugulis",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Thorns",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Bundle",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Frigibax",
+    "breedable":true,
+    "family": [1051,1052,1053]
+  },
+  {
+    "generation":9,
+    "name":"Arctibax",
+    "breedable":true,
+    "family": [1051,1052,1053]
+  },
+  {
+    "generation":9,
+    "name":"Baxcalibur",
+    "breedable":true,
+    "family": [1051,1052,1053]
+  },
+  {
+    "generation":9,
+    "name":"Gimmighoul",
+    "breedable":false,
+    "family": [1054, 1055]
+  },
+  {
+    "generation":9,
+    "name":"Gholdengo",
+    "breedable":false,
+    "family": [1054, 1055]
+  },
+  {
+    "generation":9,
+    "name":"Ting-Lu",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Chien-Pao",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Wo-Chien",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Chi-Yu",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Roaring Moon",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Iron Valiant",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Koraidon",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Miraidon",
+    "breedable":false
   }
 ]
