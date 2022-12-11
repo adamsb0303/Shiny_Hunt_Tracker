@@ -547,7 +547,7 @@ class PreviouslyCaught {
      * Closes all Previously Caught associated windows
      */
     public static void close() {
-        if(!windowStage.isShowing()){
+        if(windowStage.isShowing()){
             Stage transparentStage = (Stage) windowLayout.getScene().getWindow();
             transparentStage.close();
         }
