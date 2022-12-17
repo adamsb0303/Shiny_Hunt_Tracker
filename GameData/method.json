@@ -28,7 +28,7 @@
     "modifier": 6,
     "gen-4": 5,
     "dynamic": false,
-    "games": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34],
+    "games": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 36, 37],
     "method-info": "Breeding pokemon from different languages have boosted shiny odds.\nGeneration 4:  1/1,638\nGeneration 5:  1/1,365\nGeneration 6-: 1/683",
     "resources": [
       ["Bulbapedia"],

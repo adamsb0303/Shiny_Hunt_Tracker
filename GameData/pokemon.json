@@ -7265,17 +7265,12 @@
   },
   {
     "generation":9,
-    "name":"Brute Bonnet",
-    "breedable":false
-  },
-  {
-    "generation":9,
-    "name":"Sandy Shocks",
-    "breedable":false
-  },
-  {
-    "generation":9,
     "name":"Scream Tail",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Brute Bonnet",
     "breedable":false
   },
   {
@@ -7290,12 +7285,17 @@
   },
   {
     "generation":9,
+    "name":"Sandy Shocks",
+    "breedable":false
+  },
+  {
+    "generation":9,
     "name":"Iron Treads",
     "breedable":false
   },
   {
     "generation":9,
-    "name":"Iron Moth",
+    "name":"Iron Bundle",
     "breedable":false
   },
   {
@@ -7310,12 +7310,12 @@
   },
   {
     "generation":9,
-    "name":"Iron Thorns",
+    "name":"Iron Moth",
     "breedable":false
   },
   {
     "generation":9,
-    "name":"Iron Bundle",
+    "name":"Iron Thorns",
     "breedable":false
   },
   {
@@ -7350,7 +7350,7 @@
   },
   {
     "generation":9,
-    "name":"Ting-Lu",
+    "name":"Wo-Chien",
     "breedable":false
   },
   {
@@ -7360,7 +7360,7 @@
   },
   {
     "generation":9,
-    "name":"Wo-Chien",
+    "name":"Ting-Lu",
     "breedable":false
   },
   {
