@@ -512,6 +512,7 @@ public class ElementSettings {
         backgroundVBox.getChildren().addAll(backgroundColorSettings, transparent);
 
         Stage transparentStage = new Stage();
+        transparentStage.setTitle(windowStage.getTitle());
         transparentStage.initStyle(StageStyle.TRANSPARENT);
         transparent.setOnAction(e -> {
             if(transparent.isSelected()) {

@@ -65,7 +65,7 @@ public class SaveData {
             huntList.put(pokemonData);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
-            file.write(huntList.toString());
+            file.write(huntList.toString(2));
             file.close();
         }catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +132,7 @@ public class SaveData {
             huntList.remove(index);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
-            file.write(huntList.toString());
+            file.write(huntList.toString(2));
             file.close();
         }catch (IOException  e) {
             e.printStackTrace();
@@ -153,7 +153,7 @@ public class SaveData {
             huntList.put(index, data);
 
             FileWriter file = new FileWriter("SaveData/previousHunts.json");
-            file.write(huntList.toString());
+            file.write(huntList.toString(2));
             file.close();
         }catch (IOException e) {
             e.printStackTrace();
@@ -188,7 +188,7 @@ public class SaveData {
                     huntList.remove(i);
 
                     FileWriter listFile = new FileWriter("SaveData/previousHunts.json");
-                    listFile.write(huntList.toString());
+                    listFile.write(huntList.toString(2));
                     listFile.close();
                     break;
                 }
@@ -201,7 +201,7 @@ public class SaveData {
             caughtList.put(pokemonData);
 
             FileWriter caughtFile = new FileWriter("SaveData/caughtPokemon.json");
-            caughtFile.write(caughtList.toString());
+            caughtFile.write(caughtList.toString(2));
             caughtFile.close();
         }catch (IOException e) {
             e.printStackTrace();
@@ -221,7 +221,7 @@ public class SaveData {
             huntList.remove(index);
 
             FileWriter file = new FileWriter("SaveData/caughtPokemon.json");
-            file.write(huntList.toString());
+            file.write(huntList.toString(2));
             file.close();
         }catch (IOException  e) {
             e.printStackTrace();
@@ -302,7 +302,7 @@ public class SaveData {
 
             //Write to file
             FileWriter file = new FileWriter(filePath);
-            file.write(layoutList.toString());
+            file.write(layoutList.toString(2));
             file.close();
         }catch (IOException e) {
             e.printStackTrace();
@@ -420,7 +420,7 @@ public class SaveData {
 
             //Write to file
             FileWriter file = new FileWriter(filePath);
-            file.write(layoutList.toString());
+            file.write(layoutList.toString(2));
             file.close();
         }catch(IOException e){
             e.printStackTrace();

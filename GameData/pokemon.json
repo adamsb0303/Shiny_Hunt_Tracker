@@ -6899,10 +6899,10 @@
   },
   {
     "generation":9,
-    "name":"Tandemaus",
+    "name":"Maushold",
     "breedable":true,
     "family":[977, 978],
-    "forms": ["Fmaily of 4", "Family of 3"]
+    "forms": ["Family of 4", "Family of 3"]
   },
   {
     "generation":9,
@@ -7134,7 +7134,8 @@
     "generation":9,
     "name":"Palafin",
     "breedable":true,
-    "family":[1016,1017]
+    "family":[1016,1017],
+    "forms": ["Zero", "Hero"]
   },
   {
     "generation":9,
@@ -7213,7 +7214,7 @@
     "generation":9,
     "name":"Tatsugiri",
     "breedable":true,
-    "forms": ["Curly", "Droopy", "Stretch"]
+    "forms": ["Curly", "Droopy", "Stretchy"]
   },
   {
     "generation":9,
@@ -7256,7 +7257,7 @@
     "generation":9,
     "name":"Paldean Tauros",
     "breedable":true,
-    "forms": ["Regular", "Blase Breed", "Aqua Breed"]
+    "forms": ["Regular", "Blaze Breed", "Aqua Breed"]
   },
   {
     "generation":9,
@@ -7265,17 +7266,12 @@
   },
   {
     "generation":9,
-    "name":"Brute Bonnet",
-    "breedable":false
-  },
-  {
-    "generation":9,
-    "name":"Sandy Shocks",
-    "breedable":false
-  },
-  {
-    "generation":9,
     "name":"Scream Tail",
+    "breedable":false
+  },
+  {
+    "generation":9,
+    "name":"Brute Bonnet",
     "breedable":false
   },
   {
@@ -7290,12 +7286,17 @@
   },
   {
     "generation":9,
+    "name":"Sandy Shocks",
+    "breedable":false
+  },
+  {
+    "generation":9,
     "name":"Iron Treads",
     "breedable":false
   },
   {
     "generation":9,
-    "name":"Iron Moth",
+    "name":"Iron Bundle",
     "breedable":false
   },
   {
@@ -7310,12 +7311,12 @@
   },
   {
     "generation":9,
-    "name":"Iron Thorns",
+    "name":"Iron Moth",
     "breedable":false
   },
   {
     "generation":9,
-    "name":"Iron Bundle",
+    "name":"Iron Thorns",
     "breedable":false
   },
   {
@@ -7340,7 +7341,8 @@
     "generation":9,
     "name":"Gimmighoul",
     "breedable":false,
-    "family": [1054, 1055]
+    "family": [1054, 1055],
+    "forms": ["Chest", "Roaming"]
   },
   {
     "generation":9,
@@ -7350,7 +7352,7 @@
   },
   {
     "generation":9,
-    "name":"Ting-Lu",
+    "name":"Wo-Chien",
     "breedable":false
   },
   {
@@ -7360,7 +7362,7 @@
   },
   {
     "generation":9,
-    "name":"Wo-Chien",
+    "name":"Ting-Lu",
     "breedable":false
   },
   {
